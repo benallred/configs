@@ -1,0 +1,46 @@
+[core]
+	editor = code --wait --new-window
+[status]
+	short = true
+	branch = true
+[credential]
+	helper = wincred
+[url "https://"]
+	insteadOf = git://
+[url "https://github.com/"]
+	insteadOf = git@github.com:
+[push]
+	default = simple
+[pull]
+	rebase = true
+[fetch]
+	prune = true
+[alias]
+	logf = log -10 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset   %C(black bold)%ad%Creset   %C(green)%<(12)%an%Creset %s'
+	logfn = log -10 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset   %C(black bold)%ad%Creset   %C(green)%an%Creset%n          %s'
+	lg = log --graph --decorate -30 --all --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset%C(auto)%d %s'
+	lga = log --graph --decorate -30 --all --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(12)%an%Creset%C(auto)%d %s'
+	lgn = log --graph --decorate -30 --all --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%an%Creset%C(auto)%d%n        %C(white bold)%s%Creset'
+	lgb = log --graph --decorate -30 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset%C(auto)%d %s'
+	lgab = log --graph --decorate -30 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(12)%an%Creset%C(auto)%d %s'
+	filesincommit = diff-tree --no-commit-id --name-only -r
+	commitwip = !git add -A && git commit -m WIP
+	continuewip = "!if [ \"$(git log -1 --pretty=format:%B)\" == \"WIP\" ]; then git reset HEAD~1; else echo 'The last commit was not \"WIP\"'; fi"
+	d = difftool
+	da = "!f() { for filename in $(git diff --name-only $*); do git difftool $* $filename & done }; f"
+	dd = difftool --dir-diff
+	st = difftool HEAD~ HEAD
+	sa = "!f() { for filename in $(git diff --name-only HEAD~ HEAD); do git difftool HEAD~ HEAD $filename & done }; f"
+	sd = difftool --dir-diff HEAD~ HEAD
+	s = status
+	c = commit -m
+	ca = commit --amend
+	caa = commit --amend --reset-author
+	cc = commit -c
+	co = checkout
+	cob = checkout -b
+	b = branch -a
+	ri = rebase -i
+	rc = rebase --continue
+	ra = rebase --abort
+	site = !start `git config remote.origin.url`
