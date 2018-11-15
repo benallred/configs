@@ -1,3 +1,5 @@
+[ben]
+	difftool = VSCode
 [core]
 	editor = code --wait --new-window
 [status]
@@ -15,6 +17,14 @@
 	rebase = true
 [fetch]
 	prune = true
+[difftool "VSCode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
+[mergetool "VSCode"]
+	cmd = code --wait $MERGED
+[difftool "BeyondCompare"]
+	cmd = 'C:\\Users\\ballr\\OneDrive\\Ben\\Programs\\Scooter Software\\Beyond Compare\\Current\\BComp.exe' $LOCAL $REMOTE
+[mergetool "BeyondCompare"]
+	cmd = 'C:\\Users\\ballr\\OneDrive\\Ben\\Programs\\Scooter Software\\Beyond Compare\\Current\\BComp.exe' $LOCAL $REMOTE $BASE $MERGED
 [alias]
 	logf = log -10 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset   %C(black bold)%ad%Creset   %C(green)%<(12)%an%Creset %s'
 	logfn = log -10 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset   %C(black bold)%ad%Creset   %C(green)%an%Creset%n          %s'
@@ -26,11 +36,12 @@
 	filesincommit = diff-tree --no-commit-id --name-only -r
 	commitwip = !git add -A && git commit -m WIP
 	continuewip = "!if [ \"$(git log -1 --pretty=format:%B)\" == \"WIP\" ]; then git reset HEAD~1; else echo 'The last commit was not \"WIP\"'; fi"
-	d = difftool
-	da = "!f() { for filename in $(git diff --name-only $*); do git difftool $* $filename & done }; f"
+	d = "!git difftool -t $(git config ben.difftool)"
+	da = "!f() { for filename in $(git diff --name-only $*); do git difftool -t $(git config ben.difftool) $* $filename & done }; f"
 	dd = difftool --dir-diff
-	st = difftool HEAD~ HEAD
-	sa = "!f() { for filename in $(git diff --name-only HEAD~ HEAD); do git difftool HEAD~ HEAD $filename & done }; f"
+	m = "!git mergetool -t $(git config ben.difftool)"
+	st = "!git difftool -t $(git config ben.difftool) HEAD~ HEAD"
+	sa = "!f() { for filename in $(git diff --name-only HEAD~ HEAD); do git difftool -t $(git config ben.difftool) HEAD~ HEAD $filename & done }; f"
 	sd = difftool --dir-diff HEAD~ HEAD
 	s = status
 	c = commit -m
