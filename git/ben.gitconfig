@@ -46,7 +46,7 @@
 	s = status
 	c = commit -m
 	ca = commit --amend
-	caa = commit --amend --reset-author
+	caa = commit --amend --reset-author --no-edit
 	cc = commit -c
 	co = checkout
 	cob = checkout -b
