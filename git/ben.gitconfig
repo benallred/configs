@@ -51,6 +51,7 @@
 	co = checkout
 	cob = checkout -b
 	pushu = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
+	pushnv = push --no-verify
 	b = branch -a
 	ri = rebase -i
 	rc = rebase --continue
