@@ -9,6 +9,8 @@ Add-PoshGitToProfile -AllHosts
 
 git config --global --add include.path $PSScriptRoot\git\ben.gitconfig
 
+mkdir "C:\BenLocal\PowerShell Transcripts" -ErrorAction Ignore
+
 if (!(Test-Path $profile) -or !(Select-String "$src\\configs\\powershell\\profile.ps1" $profile))
 {
 	Add-Content -Path $profile -Value "`n. $src\configs\powershell\profile.ps1"
