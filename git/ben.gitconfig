@@ -26,6 +26,8 @@
 [mergetool "BeyondCompare"]
 	cmd = 'C:\\Users\\ballr\\OneDrive\\Ben\\Programs\\Scooter Software\\Beyond Compare\\Current\\BComp.exe' $LOCAL $REMOTE $BASE $MERGED
 [alias]
+	config-path = config --global --get include.path ben.gitconfig
+	config-edit = "!git config --edit --file $(git config-path)"
 	logf = log -10 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset   %C(black bold)%ad%Creset   %C(green)%<(12)%an%Creset %s'
 	logfn = log -10 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset   %C(black bold)%ad%Creset   %C(green)%an%Creset%n          %s'
 	lg = log --graph --decorate -30 --all --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset%C(auto)%d %s'
