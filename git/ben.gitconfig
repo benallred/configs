@@ -17,6 +17,8 @@
 	rebase = true
 [fetch]
 	prune = true
+[difftool]
+	prompt = false
 [difftool "VSCode"]
 	cmd = code --wait --diff $LOCAL $REMOTE
 [mergetool "VSCode"]
