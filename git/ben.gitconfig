@@ -24,9 +24,9 @@
 [mergetool "VSCode"]
 	cmd = code --wait $MERGED
 [difftool "BeyondCompare"]
-	cmd = 'C:\\Users\\ballr\\OneDrive\\Ben\\Programs\\Scooter Software\\Beyond Compare\\Current\\BComp.exe' $LOCAL $REMOTE
+	cmd = 'C:\\Users\\Ben\\OneDrive\\Ben\\Programs\\Scooter Software\\Beyond Compare\\Current\\BComp.exe' $LOCAL $REMOTE
 [mergetool "BeyondCompare"]
-	cmd = 'C:\\Users\\ballr\\OneDrive\\Ben\\Programs\\Scooter Software\\Beyond Compare\\Current\\BComp.exe' $LOCAL $REMOTE $BASE $MERGED
+	cmd = 'C:\\Users\\Ben\\OneDrive\\Ben\\Programs\\Scooter Software\\Beyond Compare\\Current\\BComp.exe' $LOCAL $REMOTE $BASE $MERGED
 [alias]
 	config-path = config --global --get include.path ben.gitconfig
 	config-edit = "!git config --edit --file $(git config-path)"
