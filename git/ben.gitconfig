@@ -44,6 +44,9 @@
 	continuewip = "!if [ \"$(git log -1 --pretty=format:%B)\" == \"WIP\" ]; then git reset HEAD~1; else echo 'The last commit was not \"WIP\"'; fi"
 	d = "!git difftool -t $(git config ben.difftool)"
 	da = "!f() { for filename in $(git diff --name-only $*); do git difftool -t $(git config ben.difftool) $* $filename & done }; f"
+#	da = "!git diff --name-only $* | while read filename; do git difftool -t $(git config ben.difftool) $* $filename & done"
+#	da = "!git diff --name-only $* | while read filename; do git difftool -t $(git config ben.difftool) $* $filename &; done;"
+#	da = "!f() { git diff --name-only $* | while read filename; do git difftool -t $(git config ben.difftool) $* $filename & done }; f"
 	dd = difftool --dir-diff
 	m = "!git mergetool -t $(git config ben.difftool)"
 	st = "!git difftool -t $(git config ben.difftool) HEAD~ HEAD"
