@@ -18,4 +18,6 @@ if (!(Test-Path $profile) -or !(Select-String "$src\\configs\\powershell\\profil
 
 Update-Help
 
+& '.\windows\Hide Folders Section in This PC.ps1'
+
 start powershell
