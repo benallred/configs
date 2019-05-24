@@ -16,8 +16,11 @@ if (!(Test-Path $profile) -or !(Select-String "$src\\configs\\powershell\\profil
 	Add-Content -Path $profile -Value "`n. $src\configs\powershell\profile.ps1"
 }
 
+. $profile
+
 Update-Help
 
 & '.\windows\Hide Folders Section in This PC.ps1'
+Create-Shortcut -Target "$env:LocalAppData\Programs\Microsoft VS Code\Code.exe" -Link "$((New-Object -ComObject WScript.Shell).SpecialFolders.Item("sendto"))\nCode.lnk"
 
 start powershell

@@ -2,14 +2,22 @@ $OneDrive = "$env:UserProfile\OneDrive"
 
 function SetWindowTitle($title)
 {
-	 $GitPromptSettings.EnableWindowTitle = ""
-	 $Host.UI.RawUI.WindowTitle = $title
+	$GitPromptSettings.EnableWindowTitle = ""
+	$Host.UI.RawUI.WindowTitle = $title
 }
 
 function ResetWindowTitle($title)
 {
-	 $GitPromptSettings.EnableWindowTitle = "Git:"
-	 $Host.UI.RawUI.WindowTitle = "PowerShell"
+	$GitPromptSettings.EnableWindowTitle = "Git:"
+	$Host.UI.RawUI.WindowTitle = "PowerShell"
+}
+
+function Create-Shortcut($Target, $Link)
+{
+	$shortcut = (New-Object -ComObject WScript.Shell).CreateShortcut($Link)
+	$shortcut.TargetPath = $Target
+	$shortcut.WorkingDirectory = Split-Path $Target
+	$shortcut.Save()
 }
 
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
