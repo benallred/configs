@@ -1,4 +1,5 @@
 $OneDrive = "$env:UserProfile\OneDrive"
+$git = "C:\BenLocal\git"
 
 function SetWindowTitle($title)
 {
