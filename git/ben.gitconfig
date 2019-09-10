@@ -49,7 +49,8 @@
 	sd = difftool --dir-diff HEAD~ HEAD
 	s = status
 	c = commit -m
-	ca = commit --amend
+	ca = commit --amend --no-edit
+	cae = commit --amend
 	caa = commit --amend --reset-author --no-edit
 	cc = commit -c
 	co = checkout
