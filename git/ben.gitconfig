@@ -56,8 +56,9 @@
 	cob = checkout -b
 	pushu = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
 	pushnv = push --no-verify
+	pr = !start $(echo $(git config remote.origin.url) | sed s/\\\\.git//)/pull/new/$(git rev-parse --abbrev-ref HEAD)
 	b = branch -a
 	ri = rebase -i
 	rc = rebase --continue
 	ra = rebase --abort
-	site = !start `git config remote.origin.url`
+	site = !start $(git config remote.origin.url)
