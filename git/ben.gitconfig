@@ -1,5 +1,7 @@
 [ben]
 	difftool = VSCode
+[user]
+	name = Ben Allred
 [core]
 	editor = code --wait --new-window
 [status]
