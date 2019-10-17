@@ -1,8 +1,8 @@
 $src = (Resolve-Path "$PSScriptRoot\..\..")
 
-git clone https://github.com/lukesampson/concfg.git $src\concfg
-. $src\concfg\bin\concfg.ps1 import vs-code-dark-plus -n
-. $src\concfg\bin\concfg.ps1 clean
+scoop install concfg
+concfg import vs-code-dark-plus -n
+concfg clean
 
 Install-Module posh-git
 Add-PoshGitToProfile -AllHosts
