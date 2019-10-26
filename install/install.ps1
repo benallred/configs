@@ -1,3 +1,6 @@
+iwr "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" -OutFile $env:tmp\MicrosoftEdgeSetupDev.exe
+start $env:tmp\MicrosoftEdgeSetupDev.exe
+
 scoop bucket add extras
 scoop bucket add java
 
