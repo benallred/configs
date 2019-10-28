@@ -8,7 +8,7 @@
 	short = true
 	branch = true
 [credential]
-	helper = wincred
+	helper = manager
 [url "https://"]
 	insteadOf = git://
 [url "https://github.com/"]
