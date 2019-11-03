@@ -9,9 +9,8 @@ Add-PoshGitToProfile -AllHosts
 
 mkdir "C:\BenLocal\PowerShell Transcripts" -ErrorAction Ignore
 
-if (!(Test-Path $profile) -or !(Select-String "$src\\configs\\powershell\\profile.ps1" $profile))
-{
-	Add-Content -Path $profile -Value "`n. $src\configs\powershell\profile.ps1"
+if (!(Test-Path $profile) -or !(Select-String "$src\\configs\\powershell\\profile.ps1" $profile)) {
+    Add-Content -Path $profile -Value "`n. $src\configs\powershell\profile.ps1"
 }
 
 . $profile

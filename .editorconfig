@@ -1,0 +1,10 @@
+# EditorConfig (https://editorconfig-specification.readthedocs.io/en/latest/#supported-properties)
+[*]
+indent_style = space
+indent_size = 4
+tab_width = 4
+insert_final_newline = true
+charset = utf-8-bom
+
+[*.gitconfig]
+indent_style = tab

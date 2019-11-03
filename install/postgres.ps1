@@ -8,9 +8,8 @@ Expand-Archive $archivePath $destinationFolder
 
 # psqlx
 git clone https://github.com/pluralsight/psqlx.git $git\psqlx
-if (!(Test-Path $profile) -or !(Select-String "psqlx.ps1" $profile))
-{
-	Add-Content -Path $profile -Value "`n"
-	Add-Content -Path $profile -Value "`$psqlxRunner = `"psql`" # or `"docker`""
-	Add-Content -Path $profile -Value ". $git\psqlx\psqlx.ps1"
+if (!(Test-Path $profile) -or !(Select-String "psqlx.ps1" $profile)) {
+    Add-Content -Path $profile -Value "`n"
+    Add-Content -Path $profile -Value "`$psqlxRunner = `"psql`" # or `"docker`""
+    Add-Content -Path $profile -Value ". $git\psqlx\psqlx.ps1"
 }

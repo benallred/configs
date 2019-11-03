@@ -4,7 +4,7 @@ start https://www.plex.tv/media-server-downloads/
 
 # NFO support
 function InstallPlugin($githubRepo) {
-	git clone https://github.com/$githubRepo.git "$env:LOCALAPPDATA\Plex Media Server\Plug-ins\$($githubRepo.split('/')[1])"
+    git clone https://github.com/$githubRepo.git "$env:LOCALAPPDATA\Plex Media Server\Plug-ins\$($githubRepo.split('/')[1])"
 }
 
 InstallPlugin gboudreau/XBMCnfoTVImporter.bundle
