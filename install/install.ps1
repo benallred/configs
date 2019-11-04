@@ -8,3 +8,5 @@ scoop install sysinternals
 
 scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
 scoop install sbt scala # Scala
+
+git clone https://github.com/benallred/YouTubeToPlex.git $git\YouTubeToPlex
