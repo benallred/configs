@@ -12,3 +12,6 @@ Block "Disable UAC" {
 & $PSScriptRoot\desktop.ps1
 & $PSScriptRoot\store.ps1
 & $PSScriptRoot\explorer.ps1
+
+Enable-WindowsOptionalFeature -Online -All -NoRestart -FeatureName Microsoft-Hyper-V
+Enable-WindowsOptionalFeature -Online -All -NoRestart -FeatureName Containers-DisposableClientVM

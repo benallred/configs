@@ -1,0 +1,25 @@
+<Configuration>
+    <MappedFolders>
+        <MappedFolder>
+            <HostFolder>C:\BenLocal\git\configs</HostFolder>
+            <ReadOnly>true</ReadOnly>
+        </MappedFolder>
+    </MappedFolders>
+    <LogonCommand>
+        <Command>powershell "Start-Process powershell -Verb runAs"</Command>
+    </LogonCommand>
+</Configuration>
+
+<!--
+# Initial run
+Set-ExecutionPolicy RemoteSigned -Force
+iwr -useb get.scoop.sh | iex
+scoop install git-with-openssh
+git clone $env:UserProfile\Desktop\configs\ C:\BenLocal\git\configs
+cd C:\BenLocal\git\configs
+.\config.ps1
+
+# Testing
+git pull
+.\config.ps1
+-->
