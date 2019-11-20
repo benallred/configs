@@ -5,6 +5,13 @@ Block "Install Edge (Dev)" {
     (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Microsoft Edge Dev"
 }
 
+Block "Install Authy" {
+    iwr "https://electron.authy.com/download?channel=stable&arch=x64&platform=win32&version=latest&product=authy" -OutFile "$env:tmp\Authy Desktop Setup.exe"
+    start "$env:tmp\Authy Desktop Setup.exe"
+} {
+    Test-Path "$env:LocalAppData\authy-electron\Authy Desktop.exe"
+}
+
 Block "Configure scoop extras bucket" {
     scoop bucket add extras
 }
