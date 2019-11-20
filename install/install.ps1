@@ -13,6 +13,10 @@ Block "Install Sysinternals" {
     scoop install sysinternals
 }
 
+Block "Install dotnet" {
+    scoop install dotnet-sdk
+}
+
 Block "Install Java and Scala" {
     scoop bucket add java
     scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
