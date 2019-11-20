@@ -39,6 +39,8 @@ if ($Action -eq "Start") {
     if (!(Get-Process vmconnect -ErrorAction Ignore)) {
         Start-Sleep -Seconds 3
         vmconnect $env:COMPUTERNAME $vm.Name
+        Stop-VM $vm -TurnOff
+        Start-VM $vm
     }
 }
 elseif ($Action -eq "Stop" -and $vm) {
