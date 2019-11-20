@@ -11,10 +11,11 @@ function Reset-WindowTitle($title) {
     $Host.UI.RawUI.WindowTitle = "PowerShell"
 }
 
-function Create-Shortcut($Target, $Link) {
+function Create-Shortcut($Target, $Link, $Arguments) {
     $shortcut = (New-Object -ComObject WScript.Shell).CreateShortcut($Link)
     $shortcut.TargetPath = $Target
     $shortcut.WorkingDirectory = Split-Path $Target
+    $shortcut.Arguments = $Arguments
     $shortcut.Save()
 }
 
