@@ -1,6 +1,9 @@
 Block "Desktop > View > Small icons" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\Shell\Bags\1\Desktop" -Name IconSize -Value 32; Stop-Process -ProcessName explorer
 }
+Block "Clean up items on desktop" {
+    Remove-Item "$env:UserProfile\Desktop\Microsoft Edge.lnk"
+}
 Block "Taskbar > Search = Hidden" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name SearchboxTaskbarMode -Value 0
 }
