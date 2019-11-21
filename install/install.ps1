@@ -24,6 +24,14 @@ Block "Install Everything" {
     everything -startup
 }
 
+Block "Install Slack" {
+    scoop install slack
+    if (& $configure $forWork) {
+        Create-Shortcut -Target "$env:UserProfile\scoop\apps\slack\current\slack.exe" -Link "$env:AppData\Microsoft\Windows\Start Menu\Programs\Startup\Slack.lnk"
+    }
+    slack | Out-Null
+}
+
 Block "Install Sysinternals" {
     scoop install sysinternals
 }
