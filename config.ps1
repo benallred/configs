@@ -30,3 +30,4 @@ Block "Git config" {
 }
 & $PSScriptRoot\install\install.ps1
 & $PSScriptRoot\windows\config.ps1
+& $PSScriptRoot\scheduled-tasks\config.ps1
