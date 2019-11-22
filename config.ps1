@@ -8,6 +8,19 @@ function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$Comple
     Invoke-Command $ScriptBlock
 }
 
+Block "Configure for" {
+    $forHome = "home"
+    $forWork = "work"
+    while (($configureFor = (Read-Host "Configure for ($forHome,$forWork)")) -notin @($forHome, $forWork)) { }
+    Add-Content -Path $profile -Value "`n"
+    Add-Content -Path $profile -Value "`$forHome = `"$forHome`""
+    Add-Content -Path $profile -Value "`$forWork = `"$forWork`""
+    Add-Content -Path $profile -Value "`$configureFor = `"$configureFor`""
+    Add-Content -Path $profile -Value "`$configure = { `$args[0] -eq `$configureFor }"
+} {
+    (Test-Path $profile) -and (Select-String "\`$configureFor" $profile) # -Pattern is regex
+}
+
 & $PSScriptRoot\powershell\config.ps1
 . $profile # make profile available to scripts below
 Block "Git config" {
