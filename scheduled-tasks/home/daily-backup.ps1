@@ -1,4 +1,4 @@
-function Backup([string]$from, [string]$toBase) {
+function BackupByDay([string]$from, [string]$toBase) {
     $weekday = Get-Date -Format "ddd"
     $weekdayNumber = (Get-Date).DayOfWeek.value__
     $to = "$toBase\$weekdayNumber $weekday"
@@ -16,6 +16,6 @@ function Backup([string]$from, [string]$toBase) {
     StopOnError 4 { robocopy $from $to /Z /DCOPY:T /MIR /X /NDL /NP /UNILOG:"$logFile" /TEE }
 }
 
-Backup "C:\Ben" "J:\Backup - Daily\Ben"
-Backup "$env:UserProfile\OneDrive\Ben" "J:\Backup - Daily\OneDrive_Ben"
-Backup "$env:UserProfile\OneDrive\Music" "J:\Backup - Daily\OneDrive_Music"
+BackupByDay "C:\Ben" "J:\Backup - Daily\Ben"
+BackupByDay "$env:UserProfile\OneDrive\Ben" "J:\Backup - Daily\OneDrive_Ben"
+BackupByDay "$env:UserProfile\OneDrive\Music" "J:\Backup - Daily\OneDrive_Music"
