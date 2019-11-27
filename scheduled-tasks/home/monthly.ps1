@@ -15,10 +15,12 @@ function StopOnError([int]$MinimumErrorCode, [scriptblock]$ScriptBlock) {
     }
 }
 
-function Backup([string]$from, [string]$to) {
+function Backup([string]$from, [string]$to, [bool]$isMediaBackup = $false) {
     $logFile = "$to.log"
     Write-Output "Backing up $from to $to"
     Write-Output "Writing log file to $logFile"
+    # /J           = copy using unbuffered I/O (recommended for large files)
+    $mediaBackupSwitches = if ($isMediaBackup) { "/J" } else { "" }
     # /Z           = copy files in restartable mode
     # /DCOPY:T     = COPY Directory Timestamps
     # /MIR         = MIRror a directory tree (equivalent to /E plus /PURGE)
@@ -27,7 +29,7 @@ function Backup([string]$from, [string]$to) {
     # /NP          = No Progress - don't display percentage copied
     # /UNILOG:file = output status to LOG file as UNICODE (overwrite existing log)
     # /TEE         = output to console window, as well as the log file
-    StopOnError 4 { robocopy $from $to /Z /DCOPY:T /MIR /X /NDL /NP /UNILOG:"$logFile" /TEE }
+    StopOnError 4 { robocopy $from $to /Z /DCOPY:T /MIR /X /NDL /NP /UNILOG:"$logFile" /TEE $mediaBackupSwitches }
     start $logFile
 }
 
@@ -56,5 +58,10 @@ BackupByMonth "$env:UserProfile\OneDrive\Ben" "J:\Backup - Monthly\OneDrive_Ben"
 BackupByMonth "$env:UserProfile\OneDrive\Music" "J:\Backup - Monthly\OneDrive_Music"
 BackupByMonth "$env:UserProfile\OneDrive\BenEx" "J:\Backup - Monthly\OneDrive_BenEx"
 Backup "$env:UserProfile\OneDrive\BenEx2" "J:\Backup - Monthly\OneDrive_BenEx2"
+
+Backup E:\Media\Ben N:\MediaBackup\Media\Ben $true
+Backup "E:\Media (Korean)" "N:\MediaBackup\Media (Korean)" $true
+Backup "$env:LOCALAPPDATA\Plex Media Server" "E:\Media\Tools\PlexBK\AppData\Local\Plex Media Server" $true
+Backup E:\Media\Tools N:\MediaBackup\Media\Tools $true
 
 ${C:\BenLocal\.ps.monthly-lastruntime.txt} = Get-Date
