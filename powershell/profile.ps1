@@ -23,6 +23,12 @@ function Get-TimestampForFileName() {
     (Get-Date -Format o) -replace ":", "_"
 }
 
+function TestPathOrNewItem([string]$path) {
+    if (!(Test-Path $path)) {
+        New-Item $path -Force
+    }
+}
+
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
 Get-ChildItem "$transcriptDir\*.log" | ? { !(sls -Path $_ -Pattern "Command start time:" -SimpleMatch -Quiet) } | rm -ErrorAction SilentlyContinue
 $Transcript = "$transcriptDir\$(Get-TimestampForFileName).log"
