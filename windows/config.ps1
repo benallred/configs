@@ -24,3 +24,4 @@ Block "Clock" {
 & $PSScriptRoot\store.ps1
 & $PSScriptRoot\explorer.ps1
 & $PSScriptRoot\ease-of-access.ps1
+& $PSScriptRoot\personalization.ps1
