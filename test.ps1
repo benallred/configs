@@ -73,7 +73,7 @@ elseif ($Action -eq "Connect") {
 Set-ExecutionPolicy RemoteSigned -Force
 iwr -useb get.scoop.sh | iex
 scoop install git-with-openssh
-git clone -b testing https://github.com/benallred/configs.git C:\BenLocal\git\configs
+git clone https://github.com/benallred/configs.git C:\BenLocal\git\configs
 cd C:\BenLocal\git\configs
 .\config.ps1
 

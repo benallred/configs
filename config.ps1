@@ -12,6 +12,9 @@ Block "Configure for" {
     $forHome = "home"
     $forWork = "work"
     while (($configureFor = (Read-Host "Configure for ($forHome,$forWork)")) -notin @($forHome, $forWork)) { }
+    if (!(Test-Path $profile)) {
+        New-Item $profile -Force
+    }
     Add-Content -Path $profile -Value "`n"
     Add-Content -Path $profile -Value "`$forHome = `"$forHome`""
     Add-Content -Path $profile -Value "`$forWork = `"$forWork`""
