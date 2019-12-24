@@ -32,6 +32,10 @@ Block "Install Slack" {
     slack | Out-Null
 }
 
+Block "Install AutoHotkey" {
+    scoop install autohotkey-installer
+}
+
 Block "Install Sysinternals" {
     scoop install sysinternals
 }
@@ -46,6 +50,17 @@ Block "Install Java and Scala" {
     scoop install sbt scala # Scala
 }
 
-Block "Install/clone git projects" {
-    git clone https://github.com/benallred/YouTubeToPlex.git $git\YouTubeToPlex
+function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone) {
+    Block "Install $User/$Repo" {
+        git clone https://github.com/$User/$Repo.git $git\$Repo
+        if ($AfterClone) {
+            Invoke-Command $AfterClone
+        }
+    } {
+        Test-Path $git\$Repo
+    }
 }
+
+InstallFromGitHubBlock "benallred" "Bahk" { . $git\Bahk\Ben.ahk }
+
+InstallFromGitHubBlock "benallred" "YouTubeToPlex"
