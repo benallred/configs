@@ -79,6 +79,6 @@ cd C:\BenLocal\git\configs
 
 # Testing
 git fetch
-git reset origin/testing --hard
+git checkout origin/testing
 .\config.ps1
 #>
