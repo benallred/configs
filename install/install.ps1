@@ -14,40 +14,49 @@ Block "Install Authy" {
 
 Block "Configure scoop extras bucket" {
     scoop bucket add extras
+} {
+    scoop bucket list | Select-String extras
 }
 
-Block "Install Everything" {
-    scoop install everything
+function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$AfterInstall) {
+    Block "Install $AppName" {
+        scoop install $AppId
+        if ($AfterInstall) {
+            Invoke-Command $AfterInstall
+        }
+    } {
+        scoop export | Select-String $AppId
+    }
+}
+
+InstallFromScoopBlock Everything everything {
     Stop-Process -Name Everything -ErrorAction Ignore
     Copy-Item $PSScriptRoot\..\programs\Everything.ini $env:UserProfile\scoop\persist\everything\Everything.ini -Force
     Create-Shortcut -Target "$env:UserProfile\scoop\apps\everything\current\Everything.exe" -Link "$env:AppData\Microsoft\Windows\Start Menu\Programs\Startup\Everything.lnk" -Arguments "-startup"
     everything -startup
 }
 
-Block "Install Slack" {
-    scoop install slack
+InstallFromScoopBlock AutoHotkey autohotkey-installer
+
+InstallFromScoopBlock Slack slack {
     if (& $configure $forWork) {
         Create-Shortcut -Target "$env:UserProfile\scoop\apps\slack\current\slack.exe" -Link "$env:AppData\Microsoft\Windows\Start Menu\Programs\Startup\Slack.lnk"
     }
     slack | Out-Null
 }
 
-Block "Install AutoHotkey" {
-    scoop install autohotkey-installer
-}
+InstallFromScoopBlock Sysinternals sysinternals
 
-Block "Install Sysinternals" {
-    scoop install sysinternals
-}
-
-Block "Install dotnet" {
-    scoop install dotnet-sdk
-}
+InstallFromScoopBlock .NET dotnet-sdk
 
 Block "Install Java and Scala" {
-    scoop bucket add java
-    scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
-    scoop install sbt scala # Scala
+    if (& $configure $forWork) {
+        scoop bucket add java
+        scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
+        scoop install sbt scala # Scala
+    }
+} {
+    scoop export | Select-String adopt8-hotspot
 }
 
 function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone) {
