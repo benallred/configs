@@ -36,6 +36,8 @@ InstallFromScoopBlock Everything everything {
     everything -startup
 }
 
+InstallFromScoopBlock "VS Code" vscode
+
 InstallFromScoopBlock AutoHotkey autohotkey-installer
 
 InstallFromScoopBlock Slack slack {
