@@ -36,7 +36,17 @@ InstallFromScoopBlock Everything everything {
     everything -startup
 }
 
-InstallFromScoopBlock "VS Code" vscode
+InstallFromScoopBlock "VS Code" vscode {
+    code --install-extension Shan.code-settings-sync
+    New-Item $env:APPDATA\Code\User -ItemType Directory -Force
+    $token = SecureRead-Host "GitHub token for VS Code Settings Sync"
+    Set-Content $env:APPDATA\Code\User\syncLocalSettings.json "{`"token`":`"$token`",`"autoUploadDelay`":300}"
+    $gistId = Read-Host "Gist Id for VS Code Settings Sync"
+    Set-Content $env:APPDATA\Code\User\settings.json "{`"sync.gist`":`"$gistId`",`"sync.autoDownload`":true}"
+    Write-Host "Monitor sync status in Output (ctrl+shift+u) > Code Settings Sync" -ForegroundColor Yellow
+    Start-Sleep -Seconds 3
+    code
+}
 
 InstallFromScoopBlock AutoHotkey autohotkey-installer
 

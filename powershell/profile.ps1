@@ -29,6 +29,13 @@ function TestPathOrNewItem([string]$path) {
     }
 }
 
+function SecureRead-Host([string]$Prompt) {
+    $secureString = Read-Host -Prompt $Prompt -AsSecureString
+    $binaryString = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secureString)
+    $string = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($binaryString)
+    return $string
+}
+
 # fix for https://github.com/PowerShell/PowerShell/issues/7130
 # can be removed when https://github.com/PowerShell/PSReadLine/pull/711 update makes it through
 Set-PSReadLineKeyHandler Shift+Spacebar -ScriptBlock { [Microsoft.PowerShell.PSConsoleReadLine]::Insert(" ") }
