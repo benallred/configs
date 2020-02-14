@@ -36,6 +36,18 @@ InstallFromScoopBlock Everything everything {
     everything -startup
 }
 
+InstallFromScoopBlock .NET dotnet-sdk
+
+Block "Install Java and Scala" {
+    if (& $configure $forWork) {
+        scoop bucket add java
+        scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
+        scoop install sbt scala # Scala
+    }
+} {
+    scoop export | Select-String adopt8-hotspot
+}
+
 InstallFromScoopBlock "VS Code" vscode {
     code --install-extension Shan.code-settings-sync
     New-Item $env:APPDATA\Code\User -ItemType Directory -Force
@@ -58,18 +70,6 @@ InstallFromScoopBlock Slack slack {
 }
 
 InstallFromScoopBlock Sysinternals sysinternals
-
-InstallFromScoopBlock .NET dotnet-sdk
-
-Block "Install Java and Scala" {
-    if (& $configure $forWork) {
-        scoop bucket add java
-        scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
-        scoop install sbt scala # Scala
-    }
-} {
-    scoop export | Select-String adopt8-hotspot
-}
 
 function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone) {
     Block "Install $User/$Repo" {
