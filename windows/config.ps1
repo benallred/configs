@@ -5,7 +5,7 @@ Block "Rename computer" {
     Rename-Computer -NewName (Read-Host "Set computer name to")
 } {
     $env:ComputerName -notlike 'desktop-*'
-}
+} -RequiresReboot
 Block "Disable UAC" {
     & "$PSScriptRoot\Disable UAC.ps1"
 }
@@ -25,3 +25,4 @@ Block "Clock" {
 & $PSScriptRoot\explorer.ps1
 & $PSScriptRoot\ease-of-access.ps1
 & $PSScriptRoot\personalization.ps1
+& $PSScriptRoot\windows-features.ps1

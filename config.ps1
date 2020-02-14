@@ -1,9 +1,12 @@
-function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$CompleteCheck) {
+function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$CompleteCheck, [switch]$RequiresReboot) {
     Write-Output (New-Object System.String -ArgumentList ('*', 100))
     Write-Output $Comment
     if ($CompleteCheck -and (Invoke-Command $CompleteCheck)) {
         Write-Output "Already done"
         return
+    }
+    if ($RequiresReboot) {
+        Write-Host "This will take effect after a reboot" -ForegroundColor Yellow
     }
     Invoke-Command $ScriptBlock
 }
@@ -31,6 +34,6 @@ Block "Git config" {
 } {
     (git config --get-all --global include.path) -match "ben.gitconfig"
 }
-& $PSScriptRoot\install\install.ps1
 & $PSScriptRoot\windows\config.ps1
+& $PSScriptRoot\install\install.ps1
 & $PSScriptRoot\scheduled-tasks\config.ps1
