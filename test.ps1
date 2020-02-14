@@ -23,7 +23,7 @@ if ($Action -eq "Start") {
     }
     else {
         Write-Output "Creating VM '$vmName'"
-        $vm = New-VM -Name $vmName -NewVHDPath $vhdx -NewVHDSizeBytes 20GB -MemoryStartupBytes 4GB -SwitchName (Get-VMSwitch -Name "Default Switch").Name
+        $vm = New-VM -Name $vmName -NewVHDPath $vhdx -NewVHDSizeBytes 40GB -MemoryStartupBytes 4GB -SwitchName (Get-VMSwitch -Name "Default Switch").Name
         Set-VMDvdDrive $vm.Name -Path (Read-Host "Path to Windows ISO").Trim('"')
         Start-VM $vm
         Write-Output "Finish Windows install and return here before testing. Press Enter when ready."
