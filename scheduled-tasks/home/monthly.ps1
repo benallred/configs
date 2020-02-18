@@ -2,7 +2,7 @@
 # Return if already run this month
 $now = Get-Date
 $beginningOfMonth = Get-Date -Year $now.Year -Month $now.Month -Day 1 -Hour 0 -Minute 0 -Second 0 -Millisecond 0
-$lastRunTime = Get-Date ${C:\BenLocal\.ps.monthly-lastruntime.txt}
+$lastRunTime = Get-Date $(if (${C:\BenLocal\.ps.monthly-lastruntime.txt}) { ${C:\BenLocal\.ps.monthly-lastruntime.txt} } else { 0 })
 if ($lastRunTime -ge $beginningOfMonth) {
     return
 }
