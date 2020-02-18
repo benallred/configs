@@ -1,13 +1,13 @@
 Block "Install Edge (Dev)" {
     iwr "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" -OutFile $env:tmp\MicrosoftEdgeSetupDev.exe
-    start $env:tmp\MicrosoftEdgeSetupDev.exe
+    . $env:tmp\MicrosoftEdgeSetupDev.exe
 } {
     (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Microsoft Edge Dev"
 }
 
 Block "Install Authy" {
     iwr "https://electron.authy.com/download?channel=stable&arch=x64&platform=win32&version=latest&product=authy" -OutFile "$env:tmp\Authy Desktop Setup.exe"
-    start "$env:tmp\Authy Desktop Setup.exe"
+    . "$env:tmp\Authy Desktop Setup.exe"
 } {
     Test-Path "$env:LocalAppData\authy-electron\Authy Desktop.exe"
 }
@@ -58,6 +58,18 @@ InstallFromScoopBlock "VS Code" vscode {
     Write-Host "Monitor sync status in Output (ctrl+shift+u) > Code Settings Sync" -ForegroundColor Yellow
     Start-Sleep -Seconds 3
     code
+}
+
+Block "Install Visual Studio" {
+    # https://visualstudio.microsoft.com/downloads/
+    iwr "https://download.visualstudio.microsoft.com/download/pr/378e5eb4-c1d7-4c05-8f5f-55678a94e7f4/bace7d50d04acb355cf67ea7bb2ef7da7ceca883d3282f9a6544cb48579cc2a2/vs_Professional.exe" -OutFile $env:tmp\vs_professional.exe
+    # https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids?view=vs-2019
+    # Microsoft.VisualStudio.Workload.ManagedDesktop    .NET desktop development
+    # Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
+    # Microsoft.VisualStudio.Workload.NetCoreTools      .NET Core cross-platform development
+    . $env:tmp\vs_professional.exe --passive --norestart --includeRecommended --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb --add Microsoft.VisualStudio.Workload.NetCoreTools
+} {
+    (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Visual Studio Professional 2019"
 }
 
 InstallFromScoopBlock AutoHotkey autohotkey-installer
