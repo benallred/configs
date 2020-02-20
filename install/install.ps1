@@ -48,6 +48,11 @@ Block "Install Java and Scala" {
     scoop export | Select-String adopt8-hotspot
 }
 
+InstallFromScoopBlock nvm nvm {
+    nvm install latest
+    nvm use (nvm list)
+}
+
 InstallFromScoopBlock "VS Code" vscode {
     code --install-extension Shan.code-settings-sync
     New-Item $env:APPDATA\Code\User -ItemType Directory -Force
