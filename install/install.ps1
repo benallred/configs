@@ -69,7 +69,7 @@ InstallFromScoopBlock "VS Code" vscode {
 
 Block "Install Visual Studio" {
     # https://visualstudio.microsoft.com/downloads/
-    iwr "https://download.visualstudio.microsoft.com/download/pr/378e5eb4-c1d7-4c05-8f5f-55678a94e7f4/bace7d50d04acb355cf67ea7bb2ef7da7ceca883d3282f9a6544cb48579cc2a2/vs_Professional.exe" -OutFile $env:tmp\vs_professional.exe
+    iwr https://download.visualstudio.microsoft.com/download/pr/378e5eb4-c1d7-4c05-8f5f-55678a94e7f4/bace7d50d04acb355cf67ea7bb2ef7da7ceca883d3282f9a6544cb48579cc2a2/vs_Professional.exe -OutFile $env:tmp\vs_professional.exe
     # https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids?view=vs-2019
     # Microsoft.VisualStudio.Workload.ManagedDesktop    .NET desktop development
     # Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
@@ -81,7 +81,7 @@ Block "Install Visual Studio" {
 
 Block "Install Docker" {
     # https://github.com/docker/docker.github.io/issues/6910#issuecomment-403502065
-    iwr "https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe" -OutFile "$env:tmp\Docker for Windows Installer.exe"
+    iwr https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe -OutFile "$env:tmp\Docker for Windows Installer.exe"
     # https://github.com/docker/for-win/issues/1322
     . "$env:tmp\Docker for Windows Installer.exe" install --quiet | Out-Default
     Remove-Item "$env:UserProfile\Desktop\Docker Desktop.lnk"
@@ -114,3 +114,10 @@ function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$Afte
 InstallFromGitHubBlock "benallred" "Bahk" { . $git\Bahk\Ben.ahk }
 
 InstallFromGitHubBlock "benallred" "YouTubeToPlex"
+
+Block "Install Steam" {
+    iwr https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe -OutFile $env:tmp\SteamSetup.exe
+    . $env:tmp\SteamSetup.exe
+} {
+    (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Steam"
+}
