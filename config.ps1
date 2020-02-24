@@ -1,3 +1,5 @@
+param([switch]$DryRun)
+
 function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$CompleteCheck, [switch]$RequiresReboot) {
     Write-Output (New-Object System.String -ArgumentList ('*', 100))
     Write-Output $Comment
@@ -5,10 +7,15 @@ function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$Comple
         Write-Output "Already done"
         return
     }
-    if ($RequiresReboot) {
-        Write-Host "This will take effect after a reboot" -ForegroundColor Yellow
+    if (!$DryRun) {
+        if ($RequiresReboot) {
+            Write-Host "This will take effect after a reboot" -ForegroundColor Yellow
+        }
+        Invoke-Command $ScriptBlock
     }
-    Invoke-Command $ScriptBlock
+    else {
+        Write-Host "This block would execute" -ForegroundColor Green
+    }
 }
 
 Block "Configure for" {
@@ -28,7 +35,9 @@ Block "Configure for" {
 }
 
 & $PSScriptRoot\powershell\config.ps1
-. $profile # make profile available to scripts below
+if (!$DryRun) {
+    . $profile # make profile available to scripts below
+}
 Block "Git config" {
     git config --global --add include.path $PSScriptRoot\git\ben.gitconfig
 } {
