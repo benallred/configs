@@ -121,3 +121,10 @@ Block "Install Steam" {
 } {
     (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Steam"
 }
+
+Block "Install Battle.net" {
+    iwr https://www.battle.net/download/getInstallerForGame -OutFile $env:tmp\Battle.net-Setup.exe
+    . $env:tmp\Battle.net-Setup.exe
+} {
+    (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Battle.net"
+}
