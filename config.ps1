@@ -1,20 +1,31 @@
-param([switch]$DryRun)
+param([switch]$DryRun, [switch]$Verbose)
+
+function Write-IfVerbose([boolean]$DryRun, [boolean]$Verbose, [string]$Comment, [ConsoleColor]$ForegroundColor = "White") {
+    if (!$DryRun -or $Verbose) {
+        Write-Host $Comment -ForegroundColor $ForegroundColor
+    }
+}
 
 function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$CompleteCheck, [switch]$RequiresReboot) {
-    Write-Output (New-Object System.String -ArgumentList ('*', 100))
-    Write-Output $Comment
+    Write-IfVerbose $DryRun $Verbose (New-Object System.String -ArgumentList ('*', 100))
+    if (!$DryRun) {
+        Write-Output $Comment
+    }
     if ($CompleteCheck -and (Invoke-Command $CompleteCheck)) {
-        Write-Output "Already done"
+        Write-IfVerbose $DryRun $Verbose "Already done"
         return
+    }
+    elseif ($DryRun) {
+        Write-Output $Comment
     }
     if (!$DryRun) {
         if ($RequiresReboot) {
-            Write-Host "This will take effect after a reboot" -ForegroundColor Yellow
+            Write-IfVerbose $DryRun $Verbose "This will take effect after a reboot" Yellow
         }
         Invoke-Command $ScriptBlock
     }
     else {
-        Write-Host "This block would execute" -ForegroundColor Green
+        Write-IfVerbose $DryRun $Verbose "This block would execute" Green
     }
 }
 
