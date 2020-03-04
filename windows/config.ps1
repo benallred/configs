@@ -1,13 +1,21 @@
+# ms-settings: URI scheme reference
+# https://docs.microsoft.com/en-us/windows/uwp/launch-resume/launch-settings-app#ms-settings-uri-scheme-reference
+
 Block "Backup Registry" {
     & $PSScriptRoot\backup.ps1
 }
 Block "Rename computer" {
+    Write-ManualStep
     Rename-Computer -NewName (Read-Host "Set computer name to")
 } {
     $env:ComputerName -notlike 'desktop-*'
 } -RequiresReboot
 Block "Disable UAC" {
     & "$PSScriptRoot\Disable UAC.ps1"
+}
+FirstRunBlock "Add Microsoft account" {
+    Write-ManualStep "Sign in with a Microsoft account instead"
+    start ms-settings:yourinfo
 }
 Block "Clock" {
     Set-TimeZone "Mountain Standard Time"

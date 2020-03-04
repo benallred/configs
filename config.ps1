@@ -18,6 +18,21 @@ function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$Comple
     }
 }
 
+function FirstRunBlock([string]$Comment, [scriptblock]$ScriptBlock, [switch]$RequiresReboot) {
+    Block $Comment {
+        Invoke-Command $ScriptBlock
+        Add-Content C:\BenLocal\backup\config.done.txt $Comment
+    }.GetNewClosure() {
+        (Get-Content C:\BenLocal\backup\config.done.txt -ErrorAction Ignore) -contains $Comment
+    } -RequiresReboot:$RequiresReboot
+}
+
+function Write-ManualStep([string]$Comment) {
+    $esc = [char]27
+    Write-Output "$esc[1;43;22;30;52mManual step:$esc[0;1;33m $Comment$esc[0m"
+    Start-Sleep -Seconds ([Math]::Ceiling($Comment.Length / 10))
+}
+
 Block "Configure for" {
     $forHome = "home"
     $forWork = "work"
@@ -41,7 +56,7 @@ if (!$DryRun) {
 Block "Git config" {
     git config --global --add include.path $PSScriptRoot\git\ben.gitconfig
 } {
-    (git config --get-all --global include.path) -match "ben.gitconfig"
+    (git config --get-all --global include.path) -match "ben\.gitconfig"
 }
 & $PSScriptRoot\windows\config.ps1
 & $PSScriptRoot\install\install.ps1
