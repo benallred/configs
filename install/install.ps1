@@ -1,3 +1,8 @@
+FirstRunBlock "Configure OneNote" {
+    Write-ManualStep "Start OneNote notebooks syncing"
+    start onenote:
+}
+
 Block "Install Edge (Dev)" {
     iwr "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" -OutFile $env:tmp\MicrosoftEdgeSetupDev.exe
     . $env:tmp\MicrosoftEdgeSetupDev.exe
@@ -62,8 +67,7 @@ InstallFromScoopBlock "VS Code" vscode {
     Set-Content $env:APPDATA\Code\User\syncLocalSettings.json "{`"token`":`"$token`",`"autoUploadDelay`":300}"
     $gistId = Read-Host "Gist Id for VS Code Settings Sync"
     Set-Content $env:APPDATA\Code\User\settings.json "{`"sync.gist`":`"$gistId`",`"sync.autoDownload`":true}"
-    Write-Host "Monitor sync status in Output (ctrl+shift+u) > Code Settings Sync" -ForegroundColor Yellow
-    Start-Sleep -Seconds 3
+    Write-ManualStep "Monitor sync status in Output (ctrl+shift+u) > Code Settings Sync"
     code
 }
 
