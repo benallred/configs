@@ -79,6 +79,7 @@ Block "Install Visual Studio" {
     # Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
     # Microsoft.VisualStudio.Workload.NetCoreTools      .NET Core cross-platform development
     . $env:tmp\vs_professional.exe --passive --norestart --includeRecommended --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb --add Microsoft.VisualStudio.Workload.NetCoreTools
+    & "$PSScriptRoot\..\programs\Visual Studio - Hide dynamic nodes in Solution Explorer.ps1"
 } {
     (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Visual Studio Professional 2019"
 }
