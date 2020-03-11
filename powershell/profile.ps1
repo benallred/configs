@@ -19,6 +19,11 @@ function Create-Shortcut($Target, $Link, $Arguments) {
     $shortcut.Save()
 }
 
+function Create-RunOnce([string]$Description, [string]$Command) {
+    # https://docs.microsoft.com/en-us/windows/win32/setupapi/run-and-runonce-registry-keys
+    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\RunOnce" -Name $Description -Value $Command
+}
+
 function Get-TimestampForFileName() {
     (Get-Date -Format o) -replace ":", "_"
 }

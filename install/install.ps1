@@ -1,3 +1,7 @@
+function DeleteDesktopShortcut([string]$LinkPath) {
+    Create-RunOnce "Delete desktop shortcut $($LinkPath.Split('\') | select -Last 1)" "powershell Remove-Item \`"$LinkPath\`""
+}
+
 FirstRunBlock "Configure OneNote" {
     Write-ManualStep "Start OneNote notebooks syncing"
     start onenote:
@@ -6,7 +10,7 @@ FirstRunBlock "Configure OneNote" {
 Block "Install Edge (Dev)" {
     iwr "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" -OutFile $env:tmp\MicrosoftEdgeSetupDev.exe
     . $env:tmp\MicrosoftEdgeSetupDev.exe
-    Remove-Item "$env:Public\Desktop\Microsoft Edge Dev.lnk"
+    DeleteDesktopShortcut "$env:Public\Desktop\Microsoft Edge Dev.lnk"
 } {
     (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Microsoft Edge Dev"
 }
@@ -14,7 +18,7 @@ Block "Install Edge (Dev)" {
 Block "Install Authy" {
     iwr "https://electron.authy.com/download?channel=stable&arch=x64&platform=win32&version=latest&product=authy" -OutFile "$env:tmp\Authy Desktop Setup.exe"
     . "$env:tmp\Authy Desktop Setup.exe"
-    Remove-Item "$env:UserProfile\Desktop\Authy Desktop.lnk"
+    DeleteDesktopShortcut "$env:UserProfile\Desktop\Authy Desktop.lnk"
 } {
     Test-Path "$env:LocalAppData\authy-electron\Authy Desktop.exe"
 }
@@ -124,6 +128,7 @@ InstallFromGitHubBlock "benallred" "YouTubeToPlex"
 Block "Install Steam" {
     iwr https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe -OutFile $env:tmp\SteamSetup.exe
     . $env:tmp\SteamSetup.exe
+    DeleteDesktopShortcut "$env:Public\Desktop\Steam.lnk"
 } {
     (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Steam"
 }
@@ -131,6 +136,7 @@ Block "Install Steam" {
 Block "Install Battle.net" {
     iwr https://www.battle.net/download/getInstallerForGame -OutFile $env:tmp\Battle.net-Setup.exe
     . $env:tmp\Battle.net-Setup.exe
+    DeleteDesktopShortcut "$env:Public\Desktop\Battle.net.lnk"
 } {
     (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Battle.net"
 }
