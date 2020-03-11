@@ -73,7 +73,8 @@ InstallFromScoopBlock "VS Code" vscode {
 
 Block "Install Visual Studio" {
     # https://visualstudio.microsoft.com/downloads/
-    iwr https://download.visualstudio.microsoft.com/download/pr/378e5eb4-c1d7-4c05-8f5f-55678a94e7f4/bace7d50d04acb355cf67ea7bb2ef7da7ceca883d3282f9a6544cb48579cc2a2/vs_Professional.exe -OutFile $env:tmp\vs_professional.exe
+    $downloadUrl = (iwr "https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Professional&rel=16" -useb | sls "https://download\.visualstudio\.microsoft\.com/download/pr/.+?/vs_Professional.exe").Matches.Value
+    iwr $downloadUrl -OutFile $env:tmp\vs_professional.exe
     # https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids?view=vs-2019
     # Microsoft.VisualStudio.Workload.ManagedDesktop    .NET desktop development
     # Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
