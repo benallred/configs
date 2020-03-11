@@ -17,6 +17,11 @@ FirstRunBlock "Add Microsoft account" {
     Write-ManualStep "Sign in with a Microsoft account instead"
     start ms-settings:yourinfo
 }
+Block "Control Panel > View by = Small icons" {
+    TestPathOrNewItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel"
+    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name AllItemsIconView -Value 1
+    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name StartupPage -Value 1
+}
 Block "Clock" {
     Set-TimeZone "Mountain Standard Time"
     function SetAdditionalClock([int]$ClockNumber, [string]$DisplayName, [string]$TimeZoneId) {
