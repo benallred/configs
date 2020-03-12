@@ -36,13 +36,15 @@ function Write-ManualStep([string]$Comment) {
 Block "Configure for" {
     $forHome = "home"
     $forWork = "work"
-    while (($configureFor = (Read-Host "Configure for ($forHome,$forWork)")) -notin @($forHome, $forWork)) { }
+    $forTest = "test"
+    while (($configureFor = (Read-Host "Configure for ($forHome,$forWork,$forTest)")) -notin @($forHome, $forWork, $forTest)) { }
     if (!(Test-Path $profile)) {
         New-Item $profile -Force
     }
     Add-Content -Path $profile -Value "`n"
     Add-Content -Path $profile -Value "`$forHome = `"$forHome`""
     Add-Content -Path $profile -Value "`$forWork = `"$forWork`""
+    Add-Content -Path $profile -Value "`$forTest = `"$forTest`""
     Add-Content -Path $profile -Value "`$configureFor = `"$configureFor`""
     Add-Content -Path $profile -Value "`$configure = { `$args[0] -eq `$configureFor }"
 } {
