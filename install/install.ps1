@@ -90,6 +90,9 @@ Block "Install Visual Studio" {
 }
 
 Block "Install Docker" {
+    if (& $configure $forTest) {
+        return
+    }
     # https://github.com/docker/docker.github.io/issues/6910#issuecomment-403502065
     iwr https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe -OutFile "$env:tmp\Docker for Windows Installer.exe"
     # https://github.com/docker/for-win/issues/1322

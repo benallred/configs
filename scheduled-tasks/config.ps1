@@ -1,6 +1,6 @@
 if (& $configure $forHome) {
     & $PSScriptRoot\home\config.ps1
 }
-else {
+elseif (& $configure $forWork) {
     & $PSScriptRoot\work\config.ps1
 }
