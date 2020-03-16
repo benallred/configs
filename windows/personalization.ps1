@@ -26,3 +26,24 @@ Block "Personalization > Start > Show most used apps = Off" {
 Block "Personalization > Start > Show suggestions occasionally in Start = Off" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name SubscribedContent-338388Enabled -Value 0
 }
+Block "Personalization > Taskbar > Lock the taskbar = On" {
+    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarSizeMove -Value 0
+}
+Block "Personalization > Taskbar > Automatically hide the taskbar in tablet mode = On" {
+    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarAutoHideInTabletMode -Value 1
+}
+Block "Personalization > Taskbar > Use small taskbar buttons = On" {
+    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarSmallIcons -Value 1
+} -RequiresReboot
+Block "Personalization > Taskbar > Combine taskbar buttons = Never" {
+    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarGlomLevel -Value 2
+} -RequiresReboot
+Block "Personalization > Taskbar > Notification area > Select which icons appear on the taskbar > Always show all icons in the notification area = On" {
+    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer" -Name EnableAutoTray -Value 0
+} -RequiresReboot
+Block "Personalization > Taskbar > Multiple displays > Show taskbar buttons on = Taskbar where window is open" {
+    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name MMTaskbarMode -Value 2
+} -RequiresReboot
+Block "Personalization > Taskbar > Multiple displays > Combine buttons on other taskbars = Never" {
+    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name MMTaskbarGlomLevel -Value 2
+} -RequiresReboot
