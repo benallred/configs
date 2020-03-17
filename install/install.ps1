@@ -12,7 +12,7 @@ Block "Install Edge (Dev)" {
     . $env:tmp\MicrosoftEdgeSetupDev.exe
     DeleteDesktopShortcut "$env:Public\Desktop\Microsoft Edge Dev.lnk"
 } {
-    (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Microsoft Edge Dev"
+    Test-ProgramInstalled "Microsoft Edge Dev"
 }
 
 Block "Install Authy" {
@@ -20,7 +20,7 @@ Block "Install Authy" {
     . "$env:tmp\Authy Desktop Setup.exe"
     DeleteDesktopShortcut "$env:UserProfile\Desktop\Authy Desktop.lnk"
 } {
-    Test-Path "$env:LocalAppData\authy-electron\Authy Desktop.exe"
+    Test-ProgramInstalled "Authy Desktop"
 }
 
 Block "Configure scoop extras bucket" {
@@ -86,7 +86,7 @@ Block "Install Visual Studio" {
     . $env:tmp\vs_professional.exe --passive --norestart --includeRecommended --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb --add Microsoft.VisualStudio.Workload.NetCoreTools
     & "$PSScriptRoot\..\programs\Visual Studio - Hide dynamic nodes in Solution Explorer.ps1"
 } {
-    (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Visual Studio Professional 2019"
+    Test-ProgramInstalled "Visual Studio Professional 2019"
 }
 
 Block "Install Docker" {
@@ -99,7 +99,7 @@ Block "Install Docker" {
     . "$env:tmp\Docker for Windows Installer.exe" install --quiet | Out-Default
     Remove-Item "$env:UserProfile\Desktop\Docker Desktop.lnk"
 } {
-    Test-Path "$env:ProgramFiles\Docker\Docker\resources\bin\docker.exe"
+    Test-ProgramInstalled "Docker Desktop"
 } -RequiresReboot
 
 InstallFromScoopBlock AutoHotkey autohotkey-installer
@@ -133,7 +133,7 @@ Block "Install Steam" {
     . $env:tmp\SteamSetup.exe
     DeleteDesktopShortcut "$env:Public\Desktop\Steam.lnk"
 } {
-    (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Steam"
+    Test-ProgramInstalled "Steam"
 }
 
 Block "Install Battle.net" {
@@ -141,5 +141,5 @@ Block "Install Battle.net" {
     . $env:tmp\Battle.net-Setup.exe
     DeleteDesktopShortcut "$env:Public\Desktop\Battle.net.lnk"
 } {
-    (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -eq "Battle.net"
+    Test-ProgramInstalled "Battle.net"
 }
