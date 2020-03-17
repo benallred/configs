@@ -89,6 +89,18 @@ Block "Install Visual Studio" {
     Test-ProgramInstalled "Visual Studio Professional 2019"
 }
 
+Block "Install ReSharper" {
+    $resharperJson = (iwr "https://data.services.jetbrains.com/products/releases?code=RSU&latest=true&type=release" -useb | ConvertFrom-Json)
+    $downloadUrl = $resharperJson.RSU[0].downloads.windows.link
+    $fileName = Split-Path $downloadUrl -Leaf
+    iwr $downloadUrl -OutFile $env:tmp\$fileName
+    . $env:tmp\$fileName /SpecificProductNames=ReSharper /VsVersion=16.0 /Silent=True
+    # ReSharper command line activation not currently available:
+    #   https://resharper-support.jetbrains.com/hc/en-us/articles/206545049-Can-I-enter-License-Key-License-Server-URL-via-Command-Line-when-installing-ReSharper-
+} {
+    Test-ProgramInstalled "JetBrains ReSharper Ultimate in Visual Studio Professional 2019"
+}
+
 Block "Install Docker" {
     if (& $configure $forTest) {
         return
