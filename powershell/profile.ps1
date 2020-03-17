@@ -1,6 +1,8 @@
 $OneDrive = "$env:UserProfile\OneDrive"
 $git = "C:\BenLocal\git"
 
+Set-Alias gh Get-Help
+
 function Set-WindowTitle($title) {
     $GitPromptSettings.EnableWindowTitle = ""
     $Host.UI.RawUI.WindowTitle = $title
