@@ -92,15 +92,21 @@ InstallFromScoopBlock nvm nvm {
     nvm use (nvm list)
 }
 
-InstallFromScoopBlock "VS Code" vscode {
-    code --install-extension Shan.code-settings-sync
+Block "Install VS Code" {
+    iwr https://aka.ms/win32-x64-user-stable -OutFile $env:tmp\VSCodeUserSetup-x64.exe
+    . $env:tmp\VSCodeUserSetup-x64.exe /SILENT /TASKS="associatewithfiles,addtopath" /LOG=$env:tmp\VSCodeInstallLog.txt
+    while (!(Test-ProgramInstalled "Visual Studio Code")) { sleep -s 10 }
+    $codeCmd = "$env:LocalAppData\Programs\Microsoft VS Code\bin\code.cmd"
+    . $codeCmd --install-extension shan.code-settings-sync
     New-Item $env:AppData\Code\User -ItemType Directory -Force
     $token = SecureRead-Host "GitHub token for VS Code Settings Sync"
     Set-Content $env:AppData\Code\User\syncLocalSettings.json "{`"token`":`"$token`",`"autoUploadDelay`":300}"
     $gistId = Read-Host "Gist Id for VS Code Settings Sync"
     Set-Content $env:AppData\Code\User\settings.json "{`"sync.gist`":`"$gistId`",`"sync.autoDownload`":true}"
     Write-ManualStep "Monitor sync status in Output (ctrl+shift+u) > Code Settings Sync"
-    code
+    . $codeCmd
+} {
+    Test-ProgramInstalled "Microsoft Visual Studio Code (User)"
 }
 
 Block "Install Visual Studio" {
