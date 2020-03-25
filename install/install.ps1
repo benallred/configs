@@ -2,6 +2,17 @@ function DeleteDesktopShortcut([string]$LinkPath) {
     Create-RunOnce "Delete desktop shortcut $($LinkPath.Split('\') | select -Last 1)" "powershell Remove-Item \`"$LinkPath\`""
 }
 
+function InstallFollowup([string]$ProgramName, [scriptblock]$Followup) {
+    $fileName = "Finish $ProgramName Install"
+    Set-Content "$env:tmp\$fileName.ps1" {
+        Write-Output "$fileName"
+        $Followup
+        Write-Output "Done. Press Enter to close."
+        Read-Host
+    }.ToString().Replace('$fileName', $fileName).Replace('$Followup', $Followup)
+    Create-RunOnce $fileName "powershell -File `"$env:tmp\$fileName.ps1`""
+}
+
 FirstRunBlock "Configure OneNote" {
     Write-ManualStep "Start OneNote notebooks syncing"
     start onenote:
@@ -95,7 +106,11 @@ Block "Install Visual Studio" {
     # Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
     # Microsoft.VisualStudio.Workload.NetCoreTools      .NET Core cross-platform development
     . $env:tmp\vs_professional.exe --passive --norestart --includeRecommended --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb --add Microsoft.VisualStudio.Workload.NetCoreTools
-    & "$PSScriptRoot\..\programs\Visual Studio - Hide dynamic nodes in Solution Explorer.ps1"
+    InstallFollowup "Visual Studio" {
+        . (. "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath) $PSCommandPath
+        while (!(Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" })) { sleep -s 10 }
+        & "$git\configs\programs\Visual Studio - Hide dynamic nodes in Solution Explorer.ps1"
+    }
 } {
     Test-ProgramInstalled "Visual Studio Professional 2019"
 }
