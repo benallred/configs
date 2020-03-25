@@ -61,7 +61,7 @@ InstallFromScoopBlock OpenVPN openvpn {
 InstallFromScoopBlock .NET dotnet-sdk
 
 Block "Install Java and Scala" {
-    if (& $configure $forWork) {
+    if ((& $configure $forWork) -or (& $configure $forTest)) {
         scoop bucket add java
         scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
         scoop install sbt scala # Scala
