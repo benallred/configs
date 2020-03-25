@@ -1,5 +1,11 @@
-function DeleteDesktopShortcut([string]$LinkPath) {
-    Create-RunOnce "Delete desktop shortcut $($LinkPath.Split('\') | select -Last 1)" "powershell Remove-Item \`"$LinkPath\`""
+function DeleteDesktopShortcut([string]$ShortcutName) {
+    $fileName = "Delete desktop shortcut $ShortcutName"
+    Set-Content "$env:tmp\$fileName.ps1" {
+        Write-Output "$fileName"
+        Remove-Item "$env:Public\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
+        Remove-Item "$env:UserProfile\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
+    }.ToString().Replace('$fileName', $fileName).Replace('$ShortcutName', $ShortcutName)
+    Create-RunOnce $fileName "powershell -File `"$env:tmp\$fileName.ps1`""
 }
 
 function InstallFollowup([string]$ProgramName, [scriptblock]$Followup) {
@@ -21,7 +27,7 @@ FirstRunBlock "Configure OneNote" {
 Block "Install Edge (Dev)" {
     iwr "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" -OutFile $env:tmp\MicrosoftEdgeSetupDev.exe
     . $env:tmp\MicrosoftEdgeSetupDev.exe
-    DeleteDesktopShortcut "$env:Public\Desktop\Microsoft Edge Dev.lnk"
+    DeleteDesktopShortcut "Microsoft Edge Dev"
 } {
     Test-ProgramInstalled "Microsoft Edge Dev"
 }
@@ -29,7 +35,7 @@ Block "Install Edge (Dev)" {
 Block "Install Authy" {
     iwr "https://electron.authy.com/download?channel=stable&arch=x64&platform=win32&version=latest&product=authy" -OutFile "$env:tmp\Authy Desktop Setup.exe"
     . "$env:tmp\Authy Desktop Setup.exe"
-    DeleteDesktopShortcut "$env:UserProfile\Desktop\Authy Desktop.lnk"
+    DeleteDesktopShortcut "Authy Desktop"
 } {
     Test-ProgramInstalled "Authy Desktop"
 }
@@ -142,11 +148,16 @@ Block "Install Docker" {
 
 InstallFromScoopBlock AutoHotkey autohotkey-installer
 
-InstallFromScoopBlock Slack slack {
-    if (& $configure $forWork) {
-        Create-Shortcut -Target "$env:UserProfile\scoop\apps\slack\current\slack.exe" -Link "$env:AppData\Microsoft\Windows\Start Menu\Programs\Startup\Slack.lnk"
+Block "Install Slack" {
+    iwr https://downloads.slack-edge.com/releases_x64/SlackSetup.exe -OutFile $env:tmp\SlackSetup.exe
+    . $env:tmp\SlackSetup.exe
+    if (!(& $configure $forWork)) {
+        while (!(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack -ErrorAction Ignore)) { sleep -s 10 }
+        Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack
     }
-    slack | Out-Null
+    DeleteDesktopShortcut Slack
+} {
+    Test-ProgramInstalled Slack
 }
 
 InstallFromScoopBlock Sysinternals sysinternals
@@ -169,7 +180,7 @@ InstallFromGitHubBlock "benallred" "YouTubeToPlex"
 Block "Install Steam" {
     iwr https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe -OutFile $env:tmp\SteamSetup.exe
     . $env:tmp\SteamSetup.exe
-    DeleteDesktopShortcut "$env:Public\Desktop\Steam.lnk"
+    DeleteDesktopShortcut Steam
 } {
     Test-ProgramInstalled "Steam"
 }
@@ -177,7 +188,7 @@ Block "Install Steam" {
 Block "Install Battle.net" {
     iwr https://www.battle.net/download/getInstallerForGame -OutFile $env:tmp\Battle.net-Setup.exe
     . $env:tmp\Battle.net-Setup.exe
-    DeleteDesktopShortcut "$env:Public\Desktop\Battle.net.lnk"
+    DeleteDesktopShortcut Battle.net
 } {
     Test-ProgramInstalled "Battle.net"
 }
