@@ -47,6 +47,17 @@ InstallFromScoopBlock Everything everything {
     everything -startup
 }
 
+InstallFromScoopBlock OpenVPN openvpn {
+    $openvpnExe = "$env:UserProfile\scoop\apps\openvpn\current\bin\openvpn-gui.exe"
+    TestPathOrNewItem "HKCU:\Software\OpenVPN-GUI"
+    Set-ItemProperty "HKCU:\Software\OpenVPN-GUI" -Name silent_connection -Value 1
+    $ovpnFile = Read-Host "Path to .ovpn file"
+    Copy-Item $ovpnFile $env:UserProfile\scoop\persist\openvpn\config
+    New-Item "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands" -ItemType Directory -Force
+    Create-Shortcut $openvpnExe "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk" "--connect $(Split-Path $ovpnFile -Leaf)"
+    Create-Shortcut $openvpnExe "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstop.lnk" "-WindowStyle Hidden `". '$openvpnExe' --command disconnect_all; . '$openvpnExe' --command exit`""
+}
+
 InstallFromScoopBlock .NET dotnet-sdk
 
 Block "Install Java and Scala" {
@@ -66,11 +77,11 @@ InstallFromScoopBlock nvm nvm {
 
 InstallFromScoopBlock "VS Code" vscode {
     code --install-extension Shan.code-settings-sync
-    New-Item $env:APPDATA\Code\User -ItemType Directory -Force
+    New-Item $env:AppData\Code\User -ItemType Directory -Force
     $token = SecureRead-Host "GitHub token for VS Code Settings Sync"
-    Set-Content $env:APPDATA\Code\User\syncLocalSettings.json "{`"token`":`"$token`",`"autoUploadDelay`":300}"
+    Set-Content $env:AppData\Code\User\syncLocalSettings.json "{`"token`":`"$token`",`"autoUploadDelay`":300}"
     $gistId = Read-Host "Gist Id for VS Code Settings Sync"
-    Set-Content $env:APPDATA\Code\User\settings.json "{`"sync.gist`":`"$gistId`",`"sync.autoDownload`":true}"
+    Set-Content $env:AppData\Code\User\settings.json "{`"sync.gist`":`"$gistId`",`"sync.autoDownload`":true}"
     Write-ManualStep "Monitor sync status in Output (ctrl+shift+u) > Code Settings Sync"
     code
 }
