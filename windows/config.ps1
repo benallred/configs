@@ -17,10 +17,6 @@ FirstRunBlock "Add Microsoft account" {
     Write-ManualStep "Sign in with a Microsoft account instead"
     start ms-settings:yourinfo
 }
-FirstRunBlock "Set sign-in options" {
-    Write-ManualStep "Windows Hello"
-    start ms-settings:signinoptions
-}
 Block "Control Panel > View by = Small icons" {
     TestPathOrNewItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel"
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name AllItemsIconView -Value 1
@@ -47,3 +43,7 @@ Block "Clock" {
 & $PSScriptRoot\ease-of-access.ps1
 & $PSScriptRoot\personalization.ps1
 & $PSScriptRoot\windows-features.ps1
+FirstRunBlock "Set sign-in options" {
+    Write-ManualStep "Windows Hello"
+    start ms-settings:signinoptions
+}
