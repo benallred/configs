@@ -1,4 +1,10 @@
 function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$CompleteCheck, [switch]$RequiresReboot) {
+    if ($Comment -notin (
+            "Add Microsoft account",
+            "Configure OneNote")) {
+        Write-Output "Skipping `"$Comment`""
+        return
+    }
     if ($Run -and $Run -ne $Comment) {
         return
     }
