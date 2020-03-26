@@ -198,3 +198,5 @@ Block "Install Battle.net" {
 } {
     Test-ProgramInstalled "Battle.net"
 }
+
+InstallFromScoopBlock Paint.NET paint.net
