@@ -5,9 +5,6 @@ Block "Home > Organize > Delete (options) > Show recycle confirmation = On" {
 Block "View > Options > General > Open File Explorer to = This PC" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name LaunchTo -Value 1
 }
-Block "View > Options > View > Advanced settings > Files and Folders > Hidden files and folders = Show hidden files, folders, and drives" {
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name Hidden -Value 1
-}
 Block "View > Options > View > Advanced settings > Files and Folders > Hide empty drives = Off" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name HideDrivesWithNoMedia -Value 0
 }
@@ -17,9 +14,6 @@ Block "View > Options > View > Advanced settings > Files and Folders > Hide exte
 Block "View > Options > View > Advanced settings > Files and Folders > Hide folder merge conflicts = Off" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name HideMergeConflicts -Value 0
 }
-Block "View > Options > View > Advanced settings > Files and Folders > Hide protected operating system files (Recommended) = Off" {
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name ShowSuperHidden -Value 1
-} -RequiresReboot
 Block "View > Options > View > Advanced settings > Files and Folders > Restore previous folder windows at logon = On" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name PersistBrowsers -Value 1
 }
@@ -49,10 +43,4 @@ Block "Internet Options > Advanced > Browsing > Use inline AutoComplete in File 
 }
 Block "Hide Folders Section in This PC" {
     & "$PSScriptRoot\Hide Folders Section in This PC.ps1"
-}
-Block "Associate Extensionless Files with VS Code" {
-    & "$PSScriptRoot\Associate Extensionless Files with VS Code.ps1"
-}
-Block "shell:sendto VS Code" {
-    Create-Shortcut -Target "$env:LocalAppData\Programs\Microsoft VS Code\Code.exe" -Link "$((New-Object -ComObject WScript.Shell).SpecialFolders.Item("sendto"))\nCode.lnk"
 }

@@ -2,11 +2,6 @@ Block "Personalization > Colors > Choose your color = Dark" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name AppsUseLightTheme -Value 0
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name SystemUsesLightTheme -Value 0
 }
-Block "Personalization > Colors > Windows colors = Seafoam teal (4, 4)" {
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\DWM" -Name AccentColor -Value 4287070979
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\DWM" -Name ColorizationAfterglow -Value 3288564615
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\DWM" -Name ColorizationColor -Value 3288564615
-}
 Block "Personalization > Lock screen > Get fun facts, tips, and more from Windows and Cortana on your lock screen = Off" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name RotatingLockScreenOverlayEnabled -Value 0
 }
