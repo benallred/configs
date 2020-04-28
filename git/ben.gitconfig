@@ -32,13 +32,13 @@
 [alias]
 	config-path = config --global --get include.path ben.gitconfig
 	config-edit = "!git config --edit --file $(git config-path)"
-	logf = log -10 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset   %C(black bold)%ad%Creset   %C(green)%<(12)%an%Creset %s'
-	logfn = log -10 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset   %C(black bold)%ad%Creset   %C(green)%an%Creset%n          %s'
-	lg = log --graph --decorate -30 --all --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset%C(auto)%d %s'
-	lga = log --graph --decorate -30 --all --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(12)%an%Creset%C(auto)%d %s'
-	lgn = log --graph --decorate -30 --all --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%an%Creset%C(auto)%d%n        %C(white bold)%s%Creset'
-	lgb = log --graph --decorate -30 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset%C(auto)%d %s'
-	lgab = log --graph --decorate -30 --date-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(12)%an%Creset%C(auto)%d %s'
+	logf = log -10 --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset   %C(black bold)%ad%Creset   %C(green)%<(12)%an%Creset %s'
+	logfn = log -10 --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset   %C(black bold)%ad%Creset   %C(green)%an%Creset%n          %s'
+	lg = log --graph --decorate -30 --all --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset%C(auto)%d %s'
+	lga = log --graph --decorate -30 --all --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(12)%an%Creset%C(auto)%d %s'
+	lgn = log --graph --decorate -30 --all --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%an%Creset%C(auto)%d%n        %C(white bold)%s%Creset'
+	lgb = log --graph --decorate -30 --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset%C(auto)%d %s'
+	lgab = log --graph --decorate -30 --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(12)%an%Creset%C(auto)%d %s'
 	commitwip = !git add -A && git commit -m WIP
 	continuewip = "!if [ \"$(git log -1 --pretty=format:%B)\" == \"WIP\" ]; then git reset HEAD~1; else echo 'The last commit was not \"WIP\"'; fi"
 	d = "!git difftool -t $(git config ben.difftool)"
