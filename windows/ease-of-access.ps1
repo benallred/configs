@@ -13,3 +13,6 @@ Block "Ease of Access > Keyboard > Allow the shortcut key to start Filter Keys =
 Block "Ease of Access > Keyboard > Underline access keys when available = On" {
     Set-ItemProperty "HKCU:\Control Panel\Accessibility\Keyboard Preference" -Name On -Value 1
 } -RequiresReboot
+Block "Ease of Access > Keyboard > Use the PrtScn button to open screen snipping = On" {
+    Set-ItemProperty "HKCU:\Control Panel\Keyboard" -Name PrintScreenKeyForSnippingEnabled -Value 1
+} -RequiresReboot
