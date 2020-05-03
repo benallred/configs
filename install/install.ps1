@@ -231,3 +231,5 @@ Block "Install Battle.net" {
 }
 
 InstallFromScoopBlock Paint.NET paint.net
+
+InstallFromScoopBlock "TreeSize Free" treesize-free
