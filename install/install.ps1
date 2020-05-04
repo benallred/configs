@@ -92,6 +92,8 @@ InstallFromScoopBlock nvm nvm {
     nvm use (nvm list)
 }
 
+InstallFromScoopBlock Yarn yarn
+
 Block "Install VS Code" {
     iwr https://aka.ms/win32-x64-user-stable -OutFile $env:tmp\VSCodeUserSetup-x64.exe
     . $env:tmp\VSCodeUserSetup-x64.exe /SILENT /TASKS="associatewithfiles,addtopath" /LOG=$env:tmp\VSCodeInstallLog.txt
