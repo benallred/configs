@@ -1,3 +1,4 @@
+// Windows Terminal 0.11.1251.0
 // To view the default settings, hold "alt" while clicking on the "Settings" button.
 // https://github.com/microsoft/terminal/blob/master/src/cascadia/TerminalApp/defaults.json
 // For documentation on these settings, see:
@@ -69,29 +70,37 @@
     ],
     // To unbind a default keybinding, set the command to "unbound"
     // Some defaults:
-    //  { "command": "openSettings", "keys": [ "ctrl+," ] }
-    //  { "command": "copy", "keys": [ "ctrl+shift+c" ] }
-    //  { "command": "paste", "keys": [ "ctrl+shift+v" ] }
-    //  { "command": "find", "keys": [ "ctrl+shift+f" ] }
-    //  { "command": "newTab", "keys": [ "ctrl+shift+t" ] }
-    //  { "command": "openNewTabDropdown", "keys": [ "ctrl+shift+space" ] }
-    //  { "command": "scrollDown", "keys": [ "ctrl+shift+down" ] }
-    //  { "command": "scrollDownPage", "keys": [ "ctrl+shift+pgdn" ] }
-    //  { "command": "scrollUp", "keys": [ "ctrl+shift+up" ] }
-    //  { "command": "scrollUpPage", "keys": [ "ctrl+shift+pgup" ] }
-    //  { "command": { "action": "splitPane", "split": "horizontal" }, "keys": [ "alt+shift+-" ] }
-    //  { "command": { "action": "splitPane", "split": "vertical" }, "keys": [ "alt+shift+plus" ] }
-    //  { "command": "closePane", "keys": [ "ctrl+shift+w" ] }
-    //  { "command": { "action": "moveFocus", "direction": "down" }, "keys": [ "alt+down" ] }
-    //  { "command": { "action": "moveFocus", "direction": "left" }, "keys": [ "alt+left" ] }
-    //  { "command": { "action": "moveFocus", "direction": "right" }, "keys": [ "alt+right" ] }
-    //  { "command": { "action": "moveFocus", "direction": "up" }, "keys": [ "alt+up" ] }
-    //  { "command": { "action": "resizePane", "direction": "down" }, "keys": [ "alt+shift+down" ] }
-    //  { "command": { "action": "resizePane", "direction": "left" }, "keys": [ "alt+shift+left" ] }
-    //  { "command": { "action": "resizePane", "direction": "right" }, "keys": [ "alt+shift+right" ] }
-    //  { "command": { "action": "resizePane", "direction": "up" }, "keys": [ "alt+shift+up" ] }
+    //  Application-level Keys
+    //      { "command": "openSettings", "keys": "ctrl+," },
+    //      { "command": "find", "keys": "ctrl+shift+f" }
+    //      { "command": "newTab", "keys": "ctrl+shift+t" }
+    //      { "command": "openNewTabDropdown", "keys": "ctrl+shift+space" }
+    //  Clipboard Integration
+    //      { "command": { "action": "copy", "singleLine": false }, "keys": "ctrl+shift+c" },
+    //      { "command": "paste", "keys": "ctrl+shift+v" }
+    //  Scrollback
+    //      { "command": "scrollDown", "keys": "ctrl+shift+down" }
+    //      { "command": "scrollDownPage", "keys": "ctrl+shift+pgdn" }
+    //      { "command": "scrollUp", "keys": "ctrl+shift+up" }
+    //      { "command": "scrollUpPage", "keys": "ctrl+shift+pgup" }
+    //  Pane Management
+    //      { "command": { "action": "splitPane", "split": "horizontal" }, "keys": "alt+shift+-" }
+    //      { "command": { "action": "splitPane", "split": "vertical" }, "keys": "alt+shift+plus" }
+    //      { "command": "closePane", "keys": "ctrl+shift+w" }
+    //      { "command": { "action": "moveFocus", "direction": "down" }, "keys": "alt+down" }
+    //      { "command": { "action": "moveFocus", "direction": "left" }, "keys": "alt+left" }
+    //      { "command": { "action": "moveFocus", "direction": "right" }, "keys": "alt+right" }
+    //      { "command": { "action": "moveFocus", "direction": "up" }, "keys": "alt+up" }
+    //      { "command": { "action": "resizePane", "direction": "down" }, "keys": "alt+shift+down" }
+    //      { "command": { "action": "resizePane", "direction": "left" }, "keys": "alt+shift+left" }
+    //      { "command": { "action": "resizePane", "direction": "right" }, "keys": "alt+shift+right" }
+    //      { "command": { "action": "resizePane", "direction": "up" }, "keys": "alt+shift+up" }
+    //  Visual Adjustments
+    //      { "command": { "action": "adjustFontSize", "delta": 1 }, "keys": "ctrl+=" },
+    //      { "command": { "action": "adjustFontSize", "delta": -1 }, "keys": "ctrl+-" },
+    //      { "command": "resetFontSize", "keys": "ctrl+0" }
     "keybindings": [
-        { "command": "copy", "keys": [ "ctrl+c" ] },
+        { "command": {"action": "copy", "singleLine": false }, "keys": "ctrl+c" },
         { "command": "find", "keys": [ "ctrl+f" ] },
         { "command": "newTab", "keys": [ "ctrl+t" ] }
         // { "command": { "action": "splitPane", "split": "horizontal", "splitMode": "duplicate" }, "keys": [ "alt+shift+-" ] },
