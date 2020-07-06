@@ -184,9 +184,9 @@ Block "Install Office" {
     #               LICENSE DESCRIPTION: Office 19, RETAIL channel
     #               LICENSE STATUS:  ---LICENSED---
     #               Last 5 characters of installed product key: <correct>
-    #       Automated install, no activation
+    #       Automated install (product id = Professional2019Retail), no activation
     #           Word > Account: Activation Required \ Microsoft Office Professional 2019
-    #       Automated install, activation by filling in PIDKEY
+    #       Automated install (product id = Professional2019Retail), activation by filling in PIDKEY
     #           Word > Account: Subscription Product \ Microsoft Office 365 ProPlus
     #           cscript ... /dstatus
     #               Other stuff about a grace period, even though in-product it says activated
