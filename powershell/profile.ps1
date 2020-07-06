@@ -36,12 +36,15 @@ function TestPathOrNewItem([Parameter(Mandatory)][string]$path) {
     }
 }
 
+function Get-ProgramsInstalled() {
+    return (Get-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName +
+    (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName +
+    (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName |
+    sort
+}
+
 function Test-ProgramInstalled([Parameter(Mandatory)][string]$NameLike) {
-    return (
-        (Get-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -like "*$NameLike*" -or
-        (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -like "*$NameLike*" -or
-        (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName -like "*$NameLike*"
-    )
+    return (Get-ProgramsInstalled) -like "*$NameLike*"
 }
 
 function SecureRead-Host([string]$Prompt) {
