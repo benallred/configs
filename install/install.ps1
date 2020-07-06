@@ -59,3 +59,11 @@ Block "Install Battle.net" {
 } {
     Test-ProgramInstalled "Battle.net"
 }
+
+Block "Install Scratch" {
+    iwr https://downloads.scratch.mit.edu/desktop/Scratch%20Setup.exe -OutFile "$env:tmp\Scratch Setup.exe"
+    . "$env:tmp\Scratch Setup.exe"
+    DeleteDesktopShorcutt "Scratch Desktop"
+} {
+    Test-ProgramInstalled "Scratch Desktop"
+}
