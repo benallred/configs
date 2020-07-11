@@ -12,6 +12,12 @@ Block "posh-git" {
     Get-Module posh-git
 }
 
+Block "BurntToast" {
+    Install-Module BurntToast -Force
+} {
+    Get-Module BurntToast
+}
+
 Block "PowerShell Transcripts" {
     mkdir "C:\BenLocal\PowerShell Transcripts" -ErrorAction Ignore
 }

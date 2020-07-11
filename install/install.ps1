@@ -267,3 +267,5 @@ Block "Install Zoom" {
 } {
     Test-ProgramInstalled Zoom
 }
+
+InstallFromScoopBlock "Speedtest CLI" speedtest-cli
