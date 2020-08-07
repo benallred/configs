@@ -149,7 +149,7 @@ Block "Install Docker" {
     iwr https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe -OutFile "$env:tmp\Docker for Windows Installer.exe"
     # https://github.com/docker/for-win/issues/1322
     . "$env:tmp\Docker for Windows Installer.exe" install --quiet | Out-Default
-    Remove-Item "$env:UserProfile\Desktop\Docker Desktop.lnk"
+    DeleteDesktopShortcut "Docker Desktop"
 } {
     Test-ProgramInstalled "Docker Desktop"
 } -RequiresReboot
@@ -235,3 +235,13 @@ Block "Install Battle.net" {
 InstallFromScoopBlock Paint.NET paint.net
 
 InstallFromScoopBlock "TreeSize Free" treesize-free
+
+Block "Install Zoom" {
+    if ((& $configure $forWork) -or (& $configure $forTest)) {
+        iwr https://zoom.us/client/latest/ZoomInstaller.exe -OutFile "$env:tmp\ZoomInstaller.exe"
+        . "$env:tmp\ZoomInstaller.exe"
+        DeleteDesktopShortcut Zoom
+    }
+} {
+    Test-ProgramInstalled Zoom
+}
