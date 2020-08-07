@@ -61,6 +61,7 @@
 	pushnv = push --no-verify
 	pr = !start $(echo $(git config remote.origin.url) | sed s/\\\\.git//)/pull/new/$(git rev-parse --abbrev-ref HEAD)
 	b = branch -a
+	unsynced = log --branches --not --remotes --no-walk --oneline
 	ri = rebase -i
 	rc = rebase --continue
 	ra = rebase --abort
