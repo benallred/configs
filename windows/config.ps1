@@ -2,7 +2,9 @@
 # https://docs.microsoft.com/en-us/windows/uwp/launch-resume/launch-settings-app#ms-settings-uri-scheme-reference
 
 Block "Backup Registry" {
-    & $PSScriptRoot\backup.ps1
+    if (!(& $configure $forTest)) {
+        & $PSScriptRoot\backup.ps1
+    }
 }
 Block "Rename computer" {
     Write-ManualStep
