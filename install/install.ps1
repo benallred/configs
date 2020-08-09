@@ -68,7 +68,7 @@ InstallFromScoopBlock OpenVPN openvpn {
     $openvpnExe = "$env:UserProfile\scoop\apps\openvpn\current\bin\openvpn-gui.exe"
     TestPathOrNewItem "HKCU:\Software\OpenVPN-GUI"
     Set-ItemProperty "HKCU:\Software\OpenVPN-GUI" -Name silent_connection -Value 1
-    $ovpnFile = Read-Host "Path to .ovpn file"
+    $ovpnFile = (Read-Host "Path to .ovpn file").Trim('"')
     Copy-Item $ovpnFile $env:UserProfile\scoop\persist\openvpn\config
     New-Item "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands" -ItemType Directory -Force
     Create-Shortcut $openvpnExe "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk" "--connect $(Split-Path $ovpnFile -Leaf)"
