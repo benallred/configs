@@ -23,5 +23,7 @@ Block "profile.ps1" {
 }
 
 Block "Update PS help" {
-    Update-Help
+    if (!(& $configure $forTest)) {
+        Update-Help
+    }
 }
