@@ -1,11 +1,6 @@
 # ms-settings: URI scheme reference
 # https://docs.microsoft.com/en-us/windows/uwp/launch-resume/launch-settings-app#ms-settings-uri-scheme-reference
 
-Block "Backup Registry" {
-    if (!(& $configure $forTest)) {
-        & $PSScriptRoot\backup.ps1
-    }
-}
 Block "Rename computer" {
     Write-ManualStep
     Rename-Computer -NewName (Read-Host "Set computer name to")

@@ -1,5 +1,4 @@
 $now = Get-TimestampForFileName
-mkdir C:\BenLocal\backup -ErrorAction Ignore
 
 function BackupRegistryRootKey($rootkey) {
     Write-Output "Backing up $rootkey"
