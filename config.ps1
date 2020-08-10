@@ -20,6 +20,7 @@ Block "Configure for" {
 } {
     (Test-Path $profile) -and (Select-String "\`$configureFor" $profile) # -Pattern is regex
 }
+if (!$DryRun) { . $profile } # make profile available to scripts below
 
 Block "Backup Registry" {
     if (!(& $configure $forTest)) {
@@ -28,9 +29,7 @@ Block "Backup Registry" {
 }
 
 & $PSScriptRoot\powershell\config.ps1
-if (!$DryRun) {
-    . $profile # make profile available to scripts below
-}
+if (!$DryRun) { . $profile } # make profile available to scripts below
 
 Block "Git config" {
     git config --global --add include.path $PSScriptRoot\git\ben.gitconfig
