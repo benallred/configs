@@ -22,7 +22,7 @@ Block "profile.ps1" {
     (Test-Path $profile) -and (Select-String "$($PSScriptRoot -replace "\\", "\\")\\profile.ps1" $profile) # <original> is regex, <substitute> is PS string
 }
 
-Block "Update PS help" {
+FirstRunBlock "Update PS help" {
     if (!(& $configure $forTest)) {
         Update-Help
     }
