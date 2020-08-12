@@ -214,6 +214,8 @@ function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$Afte
 
 InstallFromGitHubBlock "benallred" "Bahk" { . $git\Bahk\Ben.ahk }
 
+InstallFromGitHubBlock "benallred" "SnapX" { . $git\SnapX\SnapX.ahk }
+
 InstallFromGitHubBlock "benallred" "YouTubeToPlex"
 
 Block "Install Steam" {
