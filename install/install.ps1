@@ -191,8 +191,17 @@ Block "Install Office" {
     #           cscript ... /dstatus
     #               Other stuff about a grace period, even though in-product it says activated
     #               Last 5 characters of installed product key: <different>
+    #       Automated install (product id = ProPlus2019Volume), activation by filling in PIDKEY
+    #           THIS ATTEMPT WORKED
+    #           Word > Account: Product Activated \ Microsoft Office Professional Plus 2019
+    #           cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /dstatus
+    #               LICENSE NAME: Office 19, Office19ProPlus2019MSDNR_Retail edition
+    #               LICENSE DESCRIPTION: Office 19, RETAIL channel
+    #               LICENSE STATUS:  ---LICENSED---
+    #               Last 5 characters of installed product key: <correct>
     #   Next attempts:
     #       1. <Product ID="ProPlus2019Volume>, fill in PIDKEY
+    #           THIS ATTEMPT WORKED
     #       2. https://support.office.com/en-us/article/Change-your-Office-product-key-d78cf8f7-239e-4649-b726-3a8d2ceb8c81#ID0EABAAA=Command_line
     #       3. Manual activation
 } {
