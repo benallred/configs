@@ -58,9 +58,8 @@ function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$A
 }
 
 InstallFromScoopBlock Everything everything {
-    Stop-Process -Name Everything -ErrorAction Ignore
-    Copy-Item $PSScriptRoot\..\programs\Everything.ini $env:UserProfile\scoop\persist\everything\Everything.ini -Force
-    Create-Shortcut -Target "$env:UserProfile\scoop\apps\everything\current\Everything.exe" -Link "$env:AppData\Microsoft\Windows\Start Menu\Programs\Startup\Everything.lnk" -Arguments "-startup"
+    Copy-Item $PSScriptRoot\..\programs\Everything.ini (scoop prefix everything)
+    everything -install-run-on-system-startup
     everything -startup
 }
 
