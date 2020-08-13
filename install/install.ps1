@@ -118,7 +118,9 @@ Block "Install Visual Studio" {
     # Microsoft.VisualStudio.Workload.ManagedDesktop    .NET desktop development
     # Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
     # Microsoft.VisualStudio.Workload.NetCoreTools      .NET Core cross-platform development
-    . $env:tmp\vs_professional.exe --passive --norestart --wait --includeRecommended --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb --add Microsoft.VisualStudio.Workload.NetCoreTools
+    # https://docs.microsoft.com/en-us/visualstudio/install/command-line-parameter-examples?view=vs-2019#using---wait
+    $vsInstallArgs = '--passive', '--norestart', '--wait', '--includeRecommended', '--add', 'Microsoft.VisualStudio.Workload.ManagedDesktop', '--add', 'Microsoft.VisualStudio.Workload.NetWeb', '--add', 'Microsoft.VisualStudio.Workload.NetCoreTools'
+    Start-Process $env:tmp\vs_professional.exe $vsInstallArgs -Wait -PassThru
     InstallFollowup "Visual Studio" {
         . (. "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath) $PSCommandPath
         while (!(Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" })) { sleep -s 10 }
