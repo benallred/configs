@@ -139,7 +139,7 @@ Block "Install ReSharper" {
     # ReSharper command line activation not currently available:
     #   https://resharper-support.jetbrains.com/hc/en-us/articles/206545049-Can-I-enter-License-Key-License-Server-URL-via-Command-Line-when-installing-ReSharper-
 } {
-    Test-ProgramInstalled "JetBrains ReSharper Ultimate in Visual Studio Professional 2019"
+    Test-ProgramInstalled "JetBrains ReSharper in Visual Studio Professional 2019"
 }
 
 Block "Install Docker" {
