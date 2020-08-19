@@ -19,6 +19,28 @@ function InstallFollowup([string]$ProgramName, [scriptblock]$Followup) {
     Create-RunOnce $fileName "powershell -File `"$env:tmp\$fileName.ps1`""
 }
 
+function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$AfterInstall) {
+    Block "Install $AppName" {
+        scoop install $AppId
+        if ($AfterInstall) {
+            Invoke-Command $AfterInstall
+        }
+    } {
+        scoop export | Select-String $AppId
+    }
+}
+
+function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone) {
+    Block "Install $User/$Repo" {
+        git clone https://github.com/$User/$Repo.git $git\$Repo
+        if ($AfterClone) {
+            Invoke-Command $AfterClone
+        }
+    } {
+        Test-Path $git\$Repo
+    }
+}
+
 FirstRunBlock "Configure OneNote" {
     Write-ManualStep "Start OneNote notebooks syncing"
     start onenote:
@@ -46,17 +68,6 @@ Block "Configure scoop extras bucket" {
     scoop bucket list | Select-String extras
 }
 
-function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$AfterInstall) {
-    Block "Install $AppName" {
-        scoop install $AppId
-        if ($AfterInstall) {
-            Invoke-Command $AfterInstall
-        }
-    } {
-        scoop export | Select-String $AppId
-    }
-}
-
 InstallFromScoopBlock Everything everything {
     Copy-Item $PSScriptRoot\..\programs\Everything.ini (scoop prefix everything)
     everything -install-run-on-system-startup
@@ -76,14 +87,24 @@ InstallFromScoopBlock OpenVPN openvpn {
 
 InstallFromScoopBlock .NET dotnet-sdk
 
-Block "Install Java and Scala" {
-    if ((& $configure $forWork) -or (& $configure $forTest)) {
+if ((& $configure $forWork) -or (& $configure $forTest)) {
+    Block "Configure scoop java bucket and install Java" {
         scoop bucket add java
         scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
-        scoop install sbt scala # Scala
+    } {
+        scoop export | Select-String adopt8-hotspot
     }
-} {
-    scoop export | Select-String adopt8-hotspot
+    InstallFromScoopBlock SBT sbt
+    InstallFromScoopBlock Scala scala
+
+    InstallFromScoopBlock Postgres postgresql
+    InstallFromGitHubBlock pluralsight psqlx {
+        if (!(Test-Path $profile) -or !(Select-String "psqlx\.ps1" $profile)) {
+            Add-Content -Path $profile -Value "`n"
+            Add-Content -Path $profile -Value "`$psqlxRunner = `"psql`" # or `"docker`""
+            Add-Content -Path $profile -Value ". $git\psqlx\psqlx.ps1"
+        }
+    }
 }
 
 InstallFromScoopBlock nvm nvm {
@@ -210,17 +231,6 @@ Block "Install Office" {
 }
 
 InstallFromScoopBlock Sysinternals sysinternals
-
-function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone) {
-    Block "Install $User/$Repo" {
-        git clone https://github.com/$User/$Repo.git $git\$Repo
-        if ($AfterClone) {
-            Invoke-Command $AfterClone
-        }
-    } {
-        Test-Path $git\$Repo
-    }
-}
 
 InstallFromGitHubBlock "benallred" "Bahk" { . $git\Bahk\Ben.ahk }
 
