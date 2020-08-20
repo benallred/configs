@@ -19,3 +19,5 @@ function AssociateFileBlock([string]$Extension, [string]$Handler) {
 
 AssociateFileBlock creds VSCodeSourceFile
 AssociateFileBlock pgpass VSCodeSourceFile
+AssociateFileBlock yarnrc VSCodeSourceFile
+AssociateFileBlock nvmrc VSCodeSourceFile
