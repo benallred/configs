@@ -1,18 +1,9 @@
-# New-ScheduledTaskTrigger doesn't currently have a -Monthly option so this script is set to run daily
-# Return if already run this month
-$now = Get-Date
-$beginningOfMonth = Get-Date -Year $now.Year -Month $now.Month -Day 1 -Hour 0 -Minute 0 -Second 0 -Millisecond 0
-$lastRunTime = Get-Date $(if (${C:\BenLocal\.ps.monthly-lastruntime.txt}) { ${C:\BenLocal\.ps.monthly-lastruntime.txt} } else { 0 })
-if ($lastRunTime -ge $beginningOfMonth) {
-    return
-}
+. $PSScriptRoot\..\functions.ps1
 
-function StopOnError([int]$MinimumErrorCode, [scriptblock]$ScriptBlock) {
-    Invoke-Command $ScriptBlock
-    if ($LastExitCode -ge $MinimumErrorCode) {
-        Read-Host
-        Exit $LastExitCode
-    }
+$runTimeId = "monthly"
+
+if (AlreadyRunThisMonth $runTimeId) {
+    return
 }
 
 function Backup([string]$from, [string]$to, [bool]$isMediaBackup = $false) {
@@ -64,4 +55,4 @@ Backup "E:\Media (Korean)" "N:\MediaBackup\Media (Korean)" $true
 Backup "$env:LOCALAPPDATA\Plex Media Server" "E:\Media\Tools\PlexBK\AppData\Local\Plex Media Server" $true
 Backup E:\Media\Tools N:\MediaBackup\Media\Tools $true
 
-${C:\BenLocal\.ps.monthly-lastruntime.txt} = Get-Date
+RecordRunTime $runTimeId
