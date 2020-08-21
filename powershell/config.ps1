@@ -24,6 +24,6 @@ Block "profile.ps1" {
 
 FirstRunBlock "Update PS help" {
     if (!(& $configure $forTest)) {
-        Update-Help
+        Update-Help -ErrorAction Ignore
     }
 }
