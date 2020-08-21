@@ -55,4 +55,6 @@ Backup "E:\Media (Korean)" "N:\MediaBackup\Media (Korean)" $true
 Backup "$env:LOCALAPPDATA\Plex Media Server" "E:\Media\Tools\PlexBK\AppData\Local\Plex Media Server" $true
 Backup E:\Media\Tools N:\MediaBackup\Media\Tools $true
 
+Update-Help -ErrorAction Ignore
+
 RecordRunTime $runTimeId
