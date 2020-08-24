@@ -41,11 +41,6 @@ function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$Afte
     }
 }
 
-FirstRunBlock "Configure OneNote" {
-    Write-ManualStep "Start OneNote notebooks syncing"
-    start onenote:
-}
-
 Block "Install Edge (Dev)" {
     iwr "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" -OutFile $env:tmp\MicrosoftEdgeSetupDev.exe
     . $env:tmp\MicrosoftEdgeSetupDev.exe

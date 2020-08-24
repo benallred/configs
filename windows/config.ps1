@@ -38,8 +38,9 @@ Block "Clock" {
 & $PSScriptRoot\store.ps1
 & $PSScriptRoot\explorer.ps1
 & $PSScriptRoot\file-handlers.ps1
-& $PSScriptRoot\ease-of-access.ps1
 & $PSScriptRoot\personalization.ps1
+& $PSScriptRoot\apps.ps1
+& $PSScriptRoot\ease-of-access.ps1
 & $PSScriptRoot\windows-features.ps1
 FirstRunBlock "Set sign-in options" {
     Write-ManualStep "Windows Hello"
