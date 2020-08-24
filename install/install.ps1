@@ -222,9 +222,13 @@ Block "Install Office" {
     #               LICENSE STATUS:  ---LICENSED---
     #               Last 5 characters of installed product key: <correct>
     #   Next attempts:
-    #       1. <Product ID="ProPlus2019Volume>, fill in PIDKEY
-    #           THIS ATTEMPT WORKED
-    #       2. https://support.office.com/en-us/article/Change-your-Office-product-key-d78cf8f7-239e-4649-b726-3a8d2ceb8c81#ID0EABAAA=Command_line
+    #       1. Don't put PIDKEY in xml. Activate from command line.
+    #           Example:    cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
+    #           Actual:     cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:(SecureRead-Host "Office key")
+    #           Maybe also: cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /act
+    #           From: https://support.office.com/en-us/article/Change-your-Office-product-key-d78cf8f7-239e-4649-b726-3a8d2ceb8c81#ID0EABAAA=Command_line
+    #           From: https://docs.microsoft.com/en-us/deployoffice/vlactivation/tools-to-manage-volume-activation-of-office#ospp
+    #       2. SecureRead-Host to get Office key; write to copy of xml in tmp; use tmp configuration
     #       3. Manual activation
 } {
     Test-ProgramInstalled "Microsoft Office Professional Plus 2019 - en-us"
