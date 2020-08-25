@@ -9,13 +9,13 @@ Block "posh-git" {
     Install-Module posh-git -Force
     Add-PoshGitToProfile -AllHosts
 } {
-    Get-Module posh-git
+    Get-Module -ListAvailable posh-git
 }
 
 Block "BurntToast" {
     Install-Module BurntToast -Force
 } {
-    Get-Module BurntToast
+    Get-Module -ListAvailable BurntToast
 }
 
 Block "PowerShell Transcripts" {
