@@ -253,6 +253,15 @@ Block "Install Battle.net" {
     Test-ProgramInstalled "Battle.net"
 }
 
+Block "Install Microsoft To Do" {
+    Write-ManualStep "Install Microsoft To Do"
+    start ms-windows-store://pdp/?ProductId=9nblggh5r558
+    while (!(Get-AppxPackage -Name Microsoft.Todos)) { sleep -s 10 }
+    start ms-todo:
+} {
+    Get-AppxPackage -Name Microsoft.Todos
+}
+
 InstallFromScoopBlock Paint.NET paint.net
 
 InstallFromScoopBlock "TreeSize Free" treesize-free
