@@ -1,4 +1,4 @@
-param([switch]$DryRun)
+param([switch]$DryRun, [switch]$SkipBackup)
 
 . $PSScriptRoot\config-functions.ps1
 mkdir C:\BenLocal\backup -ErrorAction Ignore
@@ -26,6 +26,8 @@ Block "Backup Registry" {
     if (!(& $configure $forTest)) {
         & $PSScriptRoot\backup-registry.ps1
     }
+} {
+    $SkipBackup
 }
 
 & $PSScriptRoot\powershell\config.ps1
