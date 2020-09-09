@@ -266,6 +266,8 @@ Block "Install Battle.net" {
 
 InstallFromMicrosoftStoreBlock "Microsoft To Do" 9nblggh5r558 Microsoft.Todos
 
+InstallFromMicrosoftStoreBlock "Surface Audio" 9nxjnfwnvm8d Microsoft.SurfaceAudio
+
 InstallFromMicrosoftStoreBlock "Dynamic Theme" 9nblggh1zbkw 55888ChristopheLavalle.DynamicTheme
 
 InstallFromScoopBlock Paint.NET paint.net
