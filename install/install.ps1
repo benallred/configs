@@ -41,6 +41,17 @@ function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$Afte
     }
 }
 
+function InstallFromMicrosoftStoreBlock([string]$AppName, [string]$ProductId, [string]$AppPackageName) {
+    Block "Install $AppName" {
+        Write-ManualStep "Install $AppName"
+        start ms-windows-store://pdp/?ProductId=$ProductId
+        while (!(Get-AppxPackage -Name $AppPackageName)) { sleep -s 10 }
+        start "shell:AppsFolder\$(Get-StartApps $AppName | select -ExpandProperty AppId)"
+    } {
+        Get-AppxPackage -Name $AppPackageName
+    }
+}
+
 Block "Install Edge (Dev)" {
     iwr "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" -OutFile $env:tmp\MicrosoftEdgeSetupDev.exe
     . $env:tmp\MicrosoftEdgeSetupDev.exe
@@ -253,14 +264,9 @@ Block "Install Battle.net" {
     Test-ProgramInstalled "Battle.net"
 }
 
-Block "Install Microsoft To Do" {
-    Write-ManualStep "Install Microsoft To Do"
-    start ms-windows-store://pdp/?ProductId=9nblggh5r558
-    while (!(Get-AppxPackage -Name Microsoft.Todos)) { sleep -s 10 }
-    start ms-todo:
-} {
-    Get-AppxPackage -Name Microsoft.Todos
-}
+InstallFromMicrosoftStoreBlock "Microsoft To Do" 9nblggh5r558 Microsoft.Todos
+
+InstallFromMicrosoftStoreBlock "Dynamic Theme" 9nblggh1zbkw 55888ChristopheLavalle.DynamicTheme
 
 InstallFromScoopBlock Paint.NET paint.net
 
