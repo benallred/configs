@@ -3,6 +3,32 @@
     xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout"
     xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout"
     xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout" Version="1">
+    <LayoutOptions StartTileGroupsColumnCount="2" />
+    <DefaultLayoutOverride>
+        <StartLayoutCollection>
+            <defaultlayout:StartLayout>
+                <start:Group Name="">
+                    <start:Tile Size="4x4" Column="0" Row="0" AppUserModelID="Microsoft.Windows.Photos_8wekyb3d8bbwe!App" />
+                    <start:Tile Size="2x2" Column="4" Row="0" AppUserModelID="Microsoft.WindowsStore_8wekyb3d8bbwe!App" />
+                    <start:Folder Name="" Size="2x2" Column="4" Row="2">
+                        <start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="55888ChristopheLavalle.DynamicTheme_jdggxwd41xcr0!App" />
+                        <start:Tile Size="2x2" Column="2" Row="0" AppUserModelID="Microsoft.SurfaceAudio_8wekyb3d8bbwe!App" />
+                        <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ProgramFiles%\Logitech Gaming Software\LCore.exe" />
+                    </start:Folder>
+                </start:Group>
+                <start:Group Name="">
+                    <start:DesktopApplicationTile Size="2x2" Column="0" Row="0" DesktopApplicationLinkPath="%ProgramData%\Microsoft\Windows\Start Menu\Programs\Excel.lnk" />
+                </start:Group>
+                <start:Group Name="">
+                    <start:Folder Name="" Size="2x2" Column="0" Row="0">
+                        <start:Tile Size="2x2" Column="0" Row="0" AppUserModelID="Microsoft.XboxApp_8wekyb3d8bbwe!Microsoft.XboxApp" />
+                        <start:DesktopApplicationTile Size="2x2" Column="2" Row="0" DesktopApplicationLinkPath="%AppData%\Microsoft\Windows\Start Menu\Programs\Steam\Steam.lnk" />
+                        <start:DesktopApplicationTile Size="2x2" Column="4" Row="0" DesktopApplicationLinkPath="%ProgramData%\Microsoft\Windows\Start Menu\Programs\Battle.net\Battle.net.lnk" />
+                    </start:Folder>
+                </start:Group>
+            </defaultlayout:StartLayout>
+        </StartLayoutCollection>
+    </DefaultLayoutOverride>
     <CustomTaskbarLayoutCollection PinListPlacement="Replace">
         <defaultlayout:TaskbarLayout>
             <taskbar:TaskbarPinList>
