@@ -1,4 +1,4 @@
-param([switch]$DryRun, [switch]$SkipBackup)
+param([switch]$DryRun, [switch]$SkipBackup, [string]$Run)
 
 . $PSScriptRoot\config-functions.ps1
 mkdir C:\BenLocal\backup -ErrorAction Ignore
@@ -20,7 +20,7 @@ Block "Configure for" {
 } {
     (Test-Path $profile) -and (Select-String "\`$configureFor" $profile) # -Pattern is regex
 }
-if (!$DryRun) { . $profile } # make profile available to scripts below
+if (!$DryRun -and !$Run) { . $profile } # make profile available to scripts below
 
 Block "Backup Registry" {
     if (!(& $configure $forTest)) {
@@ -31,7 +31,7 @@ Block "Backup Registry" {
 }
 
 & $PSScriptRoot\powershell\config.ps1
-if (!$DryRun) { . $profile } # make profile available to scripts below
+if (!$DryRun -and !$Run) { . $profile } # make profile available to scripts below
 
 Block "Git config" {
     git config --global --add include.path $PSScriptRoot\git\ben.gitconfig

@@ -1,9 +1,17 @@
 function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$CompleteCheck, [switch]$RequiresReboot) {
+    if ($Run -and $Run -ne $Comment) {
+        return
+    }
     Write-Output (New-Object System.String -ArgumentList ('*', 100))
     Write-Output $Comment
     if ($CompleteCheck -and (Invoke-Command $CompleteCheck)) {
         Write-Output "Already done"
-        return
+        if (!$Run) {
+            return
+        }
+        else {
+            Write-Output "But running anyway as requested"
+        }
     }
     if (!$DryRun) {
         if ($RequiresReboot) {
