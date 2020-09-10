@@ -52,6 +52,18 @@ function InstallFromMicrosoftStoreBlock([string]$AppName, [string]$ProductId, [s
     }
 }
 
+Block "Configure scoop extras bucket" {
+    scoop bucket add extras
+} {
+    scoop bucket list | Select-String extras
+}
+
+Block "Configure scoop nonportable bucket" {
+    scoop bucket add nonportable
+} {
+    scoop bucket list | Select-String nonportable
+}
+
 Block "Install Edge (Dev)" {
     iwr "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" -OutFile $env:tmp\MicrosoftEdgeSetupDev.exe
     . $env:tmp\MicrosoftEdgeSetupDev.exe
@@ -66,12 +78,6 @@ Block "Install Authy" {
     DeleteDesktopShortcut "Authy Desktop"
 } {
     Test-ProgramInstalled "Authy Desktop"
-}
-
-Block "Configure scoop extras bucket" {
-    scoop bucket add extras
-} {
-    scoop bucket list | Select-String extras
 }
 
 InstallFromScoopBlock Everything everything {
@@ -269,6 +275,8 @@ InstallFromMicrosoftStoreBlock "Microsoft To Do" 9nblggh5r558 Microsoft.Todos
 InstallFromMicrosoftStoreBlock "Surface Audio" 9nxjnfwnvm8d Microsoft.SurfaceAudio
 
 InstallFromMicrosoftStoreBlock "Dynamic Theme" 9nblggh1zbkw 55888ChristopheLavalle.DynamicTheme
+
+InstallFromScoopBlock "Logitech Gaming Software" logitech-gaming-software-np
 
 InstallFromScoopBlock Paint.NET paint.net
 
