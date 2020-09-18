@@ -91,3 +91,7 @@ FirstRunBlock "Start Menu and Taskbar items" {
     # But we are already having to restart explorer during this block anyway and this makes testing or re-configuring easier
     Stop-Process -Name explorer
 }
+
+FirstRunBlock "Order system tray" {
+    .\windows\order-tray-icons.ahk
+}
