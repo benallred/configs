@@ -188,7 +188,12 @@ Block "Install Docker" {
     Test-ProgramInstalled "Docker Desktop"
 } -RequiresReboot
 
-InstallFromScoopBlock AutoHotkey autohotkey-installer
+Block "Install AutoHotkey" {
+    iwr https://www.autohotkey.com/download/ahk-install.exe -OutFile $env:tmp\ahk-install.exe
+    . $env:tmp\ahk-install.exe /S /IsHostApp
+} {
+    Test-ProgramInstalled AutoHotkey
+}
 
 Block "Install Slack" {
     iwr https://downloads.slack-edge.com/releases_x64/SlackSetup.exe -OutFile $env:tmp\SlackSetup.exe
