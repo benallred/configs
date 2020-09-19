@@ -11,9 +11,14 @@ function RecordRunTime([string]$Id) {
     Set-Content C:\BenLocal\.ps.lastRunTime.$Id.txt (Get-Date)
 }
 
-function StopOnError([int]$MinimumErrorCode, [scriptblock]$ScriptBlock) {
+function StopOnError(
+    [Parameter(ParameterSetName = "MinimumErrorCode", Mandatory, Position = 0)]
+    [int]$MinimumErrorCode,
+    [Parameter(ParameterSetName = "MinimumErrorCode", Mandatory, Position = 1)]
+    [Parameter(ParameterSetName = "NonZero", Mandatory, Position = 0)]
+    [scriptblock]$ScriptBlock) {
     Invoke-Command $ScriptBlock
-    if ($LastExitCode -ge $MinimumErrorCode) {
+    if (($PSCmdlet.ParameterSetName -eq "NonZero" -and $LastExitCode) -or ($PSCmdlet.ParameterSetName -eq "MinimumErrorCode" -and $LastExitCode -ge $MinimumErrorCode)) {
         Write-Host "Received exit code $LastExitCode" -ForegroundColor Red
         Read-Host
         Exit $LastExitCode
