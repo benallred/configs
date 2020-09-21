@@ -14,11 +14,17 @@ if not A_IsAdmin
 programTitle = Rearrange tray icons
 TrayTip, % programTitle, Running
 
+#Include, lib\TrayIcon.ahk
+
+MsgBox, Make sure the mouse is over the left-most tray icon and press Enter
+
+CoordMode, Mouse, Screen
+MouseGetPos, trayX, trayY
+originalTrayIconCount := TrayIcon_GetInfo().MaxIndex()
+
 volumeIconPercentage := 33
 SoundGet, originalVolume
 SoundSet, % volumeIconPercentage
-
-#Include, lib\TrayIcon.ahk
 
 order := []
 order.Push({ property: "tooltip", value: volumeIconPercentage . "%" }) ; Volume
@@ -47,12 +53,12 @@ Loop, % order.MaxIndex()
         trayIcon := trayIcons[A_Index]
         if InStr(trayIcon[orderItem.property], orderItem.value)
         {
-            TrayIcon_Move(trayIcon.idx, 0)
+            MoveTrayIcon(trayIcon.idx, trayX, trayY, originalTrayIconCount)
         }
     }
 }
 
-Loop
+Loop, % order.MaxIndex() ; circuit breaker if icon moving is not working
 {
     trayIcons := TrayIcon_GetInfo()
     unprocessedTrayIcon := trayIcons[trayIcons.MaxIndex()]
@@ -60,8 +66,17 @@ Loop
     {
         break
     }
-    TrayIcon_Move(unprocessedTrayIcon.idx, 0)
+    MoveTrayIcon(unprocessedTrayIcon.idx, trayX, trayY, originalTrayIconCount)
 }
 
 SoundSet, % originalVolume
 TrayTip, % programTitle, Finished
+
+MoveTrayIcon(idx, originalTrayX, trayY, originalTrayIconCount)
+{
+    local
+    ; TrayIcon_Move(trayIcon.idx, 0) ; This is not persisted through reboots, so do manual mouse clicks
+    trayX := originalTrayX + 32 * (originalTrayIconCount - TrayIcon_GetInfo().MaxIndex()) ; handle new icons appearing while we're sorting
+    MouseClick, Left, trayX + idx * 32, trayY, 1, 5, D
+    MouseClick, Left, trayX, trayY, 1, 5, U
+}

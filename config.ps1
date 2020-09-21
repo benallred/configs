@@ -93,5 +93,5 @@ FirstRunBlock "Start Menu and Taskbar items" {
 }
 
 FirstRunBlock "Order system tray" {
-    .\windows\order-tray-icons.ahk
+    Start-Process .\windows\order-tray-icons.ahk -Wait -PassThru
 }
