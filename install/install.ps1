@@ -88,13 +88,14 @@ InstallFromScoopBlock Everything everything {
 
 InstallFromScoopBlock OpenVPN openvpn {
     $openvpnExe = "$env:UserProfile\scoop\apps\openvpn\current\bin\openvpn-gui.exe"
-    TestPathOrNewItem "HKCU:\Software\OpenVPN-GUI"
-    Set-ItemProperty "HKCU:\Software\OpenVPN-GUI" -Name silent_connection -Value 1
     $ovpnFile = (Read-Host "Path to .ovpn file").Trim('"')
     Copy-Item $ovpnFile $env:UserProfile\scoop\persist\openvpn\config
     New-Item "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands" -ItemType Directory -Force
     Create-Shortcut $openvpnExe "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk" "--connect $(Split-Path $ovpnFile -Leaf)"
-    Create-Shortcut $openvpnExe "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstop.lnk" "-WindowStyle Hidden `". '$openvpnExe' --command disconnect_all; . '$openvpnExe' --command exit`""
+    Create-Shortcut powershell "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstop.lnk" "-WindowStyle Hidden `". '$openvpnExe' --command disconnect_all; . '$openvpnExe' --command exit`""
+    . "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk"
+    while (!(Test-Path "HKCU:\Software\OpenVPN-GUI")) { sleep -s 10 }
+    Set-ItemProperty "HKCU:\Software\OpenVPN-GUI" -Name silent_connection -Value 1
 }
 
 InstallFromScoopBlock .NET dotnet-sdk
