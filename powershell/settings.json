@@ -1,4 +1,4 @@
-// Windows Terminal 0.11.1251.0
+// Windows Terminal v1.1.2021.0
 // To view the default settings, hold "alt" while clicking on the "Settings" button.
 // https://github.com/microsoft/terminal/blob/master/src/cascadia/TerminalApp/defaults.json
 // For documentation on these settings, see:
@@ -72,6 +72,7 @@
     // Some defaults:
     //  Application-level Keys
     //      { "command": "openSettings", "keys": "ctrl+," },
+    //      { "command": { "action": "openSettings", "target": "defaultsFile" }, "keys": "ctrl+alt+," },
     //      { "command": "find", "keys": "ctrl+shift+f" }
     //      { "command": "newTab", "keys": "ctrl+shift+t" }
     //      { "command": "openNewTabDropdown", "keys": "ctrl+shift+space" }
