@@ -14,6 +14,11 @@ FirstRunBlock "Configure OneNote" {
 FirstRunBlock "Connect phone" {
     Write-ManualStep "Connect phone"
     start ms-phone:
+    ConfigureNotifications "Messages (via Your Phone)"
+}
+
+FirstRunBlock "Configure Mail" {
+    ConfigureNotifications Mail
 }
 
 UninstallBlock Microsoft.BingWeather

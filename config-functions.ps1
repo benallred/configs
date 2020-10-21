@@ -38,3 +38,14 @@ function Write-ManualStep([string]$Comment) {
     Write-Output "$esc[1;43;22;30;52mManual step:$esc[0;1;33m $Comment$esc[0m"
     Start-Sleep -Seconds ([Math]::Ceiling($Comment.Length / 10))
 }
+
+function ConfigureNotifications([string]$ProgramName) {
+    while (Get-Process SystemSettings -ErrorAction Ignore) {
+        Write-Host -ForegroundColor Yellow "Waiting for the Settings app to close"
+        sleep -s 10
+    }
+    Write-ManualStep "Configure notifications for: $ProgramName"
+    start ms-settings:notifications
+    Write-ManualStep "`tShow notifications in action center = Off"
+    Write-ManualStep "`tClose settings when done"
+}

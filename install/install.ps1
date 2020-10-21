@@ -96,6 +96,10 @@ InstallFromScoopBlock OpenVPN openvpn {
     . "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk"
     while (!(Test-Path "HKCU:\Software\OpenVPN-GUI")) { sleep -s 10 }
     Set-ItemProperty "HKCU:\Software\OpenVPN-GUI" -Name silent_connection -Value 1
+    ConfigureNotifications "OpenVPN GUI for Windows"
+    if (!(& $configure $forWork)) {
+        . "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstop.lnk"
+    }
 }
 
 InstallFromScoopBlock .NET dotnet-sdk
@@ -185,6 +189,7 @@ Block "Install Docker" {
     # https://github.com/docker/for-win/issues/1322
     . "$env:tmp\Docker for Windows Installer.exe" install --quiet | Out-Default
     DeleteDesktopShortcut "Docker Desktop"
+    ConfigureNotifications "Docker Desktop"
 } {
     Test-ProgramInstalled "Docker Desktop"
 } -RequiresReboot
@@ -204,6 +209,7 @@ Block "Install Slack" {
         Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack
     }
     DeleteDesktopShortcut Slack
+    ConfigureNotifications Slack
 } {
     Test-ProgramInstalled Slack
 }
