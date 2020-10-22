@@ -1,6 +1,5 @@
 Block "Home > Organize > Delete (options) > Show recycle confirmation = On" {
-    TestPathOrNewItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name ConfirmFileDelete -Value 1
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name ConfirmFileDelete -Value 1
 }
 Block "View > Options > General > Open File Explorer to = This PC" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name LaunchTo -Value 1
@@ -36,16 +35,13 @@ Block "Hide Quick access in Navigation pane" {
     Set-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer" -Name HubMode -Value 1
 }
 Block "Hide Libraries in Navigation pane" {
-    TestPathOrNewItem "HKCU:\Software\Classes\CLSID\{031E4825-7B94-4dc3-B131-E946B44C8DD5}\ShellFolder"
-    Set-ItemProperty "HKCU:\Software\Classes\CLSID\{031E4825-7B94-4dc3-B131-E946B44C8DD5}\ShellFolder" -Name Attributes -Value 0xb090010d
+    Set-RegistryValue "HKCU:\Software\Classes\CLSID\{031E4825-7B94-4dc3-B131-E946B44C8DD5}\ShellFolder" -Name Attributes -Value 0xb090010d
 } -RequiresReboot
 Block "Hide Control Panel in Navigation pane" {
-    TestPathOrNewItem "HKCU:\Software\Classes\CLSID\{26EE0668-A00A-44D7-9371-BEB064C98683}\ShellFolder"
-    Set-ItemProperty "HKCU:\Software\Classes\CLSID\{26EE0668-A00A-44D7-9371-BEB064C98683}\ShellFolder" -Name Attributes -Value 0xa0900004
+    Set-RegistryValue "HKCU:\Software\Classes\CLSID\{26EE0668-A00A-44D7-9371-BEB064C98683}\ShellFolder" -Name Attributes -Value 0xa0900004
 } -RequiresReboot
 Block "Internet Options > Advanced > Browsing > Use inline AutoComplete in File Explorer and Run Dialog = On" {
-    TestPathOrNewItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoComplete"
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoComplete" -Name "Append Completion" -Value "yes"
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\AutoComplete" -Name "Append Completion" -Value "yes"
 }
 Block "Hide Folders Section in This PC" {
     & "$PSScriptRoot\Hide Folders Section in This PC.ps1"

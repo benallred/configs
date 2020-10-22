@@ -15,9 +15,8 @@ FirstRunBlock "Add Microsoft account" {
     start ms-settings:yourinfo
 }
 Block "Control Panel > View by = Small icons" {
-    TestPathOrNewItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel"
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name AllItemsIconView -Value 1
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name StartupPage -Value 1
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name AllItemsIconView -Value 1
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name StartupPage -Value 1
 }
 Block "Control Panel > System > Remote settings > Allow Remote Assistance connections to this computer = Off" {
     Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name fAllowToGetHelp -Value 0
@@ -26,10 +25,9 @@ Block "Control Panel > System > Remote settings > Allow Remote Assistance connec
 Block "Clock" {
     Set-TimeZone "Mountain Standard Time"
     function SetAdditionalClock([int]$ClockNumber, [string]$DisplayName, [string]$TimeZoneId) {
-        TestPathOrNewItem "HKCU:\Control Panel\TimeDate\AdditionalClocks\$ClockNumber"
-        Set-ItemProperty "HKCU:\Control Panel\TimeDate\AdditionalClocks\$ClockNumber" -Name Enable -Value 1
-        Set-ItemProperty "HKCU:\Control Panel\TimeDate\AdditionalClocks\$ClockNumber" -Name DisplayName -Value $DisplayName
-        Set-ItemProperty "HKCU:\Control Panel\TimeDate\AdditionalClocks\$ClockNumber" -Name TzRegKeyName -Value $TimeZoneId
+        Set-RegistryValue "HKCU:\Control Panel\TimeDate\AdditionalClocks\$ClockNumber" -Name Enable -Value 1
+        Set-RegistryValue "HKCU:\Control Panel\TimeDate\AdditionalClocks\$ClockNumber" -Name DisplayName -Value $DisplayName
+        Set-RegistryValue "HKCU:\Control Panel\TimeDate\AdditionalClocks\$ClockNumber" -Name TzRegKeyName -Value $TimeZoneId
     }
     SetAdditionalClock 1 "UTC" "UTC"
     SetAdditionalClock 2 "Korea" "Korea Standard Time"

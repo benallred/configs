@@ -30,10 +30,11 @@ function Get-TimestampForFileName() {
     (Get-Date -Format o) -replace ":", "_"
 }
 
-function TestPathOrNewItem([Parameter(Mandatory)][string]$path) {
+function Set-RegistryValue([Parameter(Mandatory)][string]$Path, [Parameter(Mandatory)][string]$Name, [Parameter(Mandatory)][object]$Value) {
     if (!(Test-Path $path)) {
         New-Item $path -Force
     }
+    Set-ItemProperty $Path -Name $Name -Value $Value
 }
 
 function Get-ProgramsInstalled() {

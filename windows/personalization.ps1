@@ -20,8 +20,7 @@ Block "Personalization > Lock screen > Screen saver settings > On resume, displa
     Set-ItemProperty "HKCU:\Control Panel\Desktop" -Name ScreenSaverIsSecure -Value 1
 }
 Block "Personalization > Start > Show most used apps = Off" {
-    TestPathOrNewItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer"
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name NoStartMenuMFUprogramsList -Value 1
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name NoStartMenuMFUprogramsList -Value 1
 }
 Block "Personalization > Start > Show suggestions occasionally in Start = Off" {
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name SubscribedContent-338388Enabled -Value 0
