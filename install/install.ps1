@@ -164,6 +164,17 @@ Block "Install Visual Studio" {
         while (!(Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" })) { sleep -s 10 }
         & "$git\configs\programs\Visual Studio - Hide dynamic nodes in Solution Explorer.ps1"
     }
+    
+    function InstallVisualStudioExtension([string]$Publisher, [string]$Extension) {
+        $downloadUrl = (iwr "https://marketplace.visualstudio.com/items?itemName=$Publisher.$Extension" -useb | sls "/_apis/public/gallery/publishers/$Publisher/vsextensions/$Extension/(\d+\.?)+/vspackage").Matches.Value | % { "https://marketplace.visualstudio.com$_" }
+        iwr $downloadUrl -OutFile $env:tmp\$Publisher.$Extension.vsix
+        $vsixInstaller = . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath | Split-Path | % { "$_\VSIXInstaller.exe" }
+        . $vsixInstaller /quiet /admin $env:tmp\$Publisher.$Extension.vsix
+    }
+
+    InstallVisualStudioExtension VisualStudioPlatformTeam SolutionErrorVisualizer
+    InstallVisualStudioExtension VisualStudioPlatformTeam FixMixedTabs
+    InstallVisualStudioExtension VisualStudioPlatformTeam PowerCommandsforVisualStudio
 } {
     Test-ProgramInstalled "Visual Studio Professional 2019"
 }
