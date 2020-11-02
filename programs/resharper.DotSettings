@@ -1,13 +1,16 @@
-﻿<wpf:ResourceDictionary xml:space="preserve" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-    xmlns:s="clr-namespace:System;assembly=mscorlib" 
-    xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" 
+﻿<wpf:ResourceDictionary xml:space="preserve"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:s="clr-namespace:System;assembly=mscorlib"
+    xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml"
     xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-    <s:Boolean x:Key="/Default/Environment/UserInterface/OverrideVsRefactorings/@EntryValue">False</s:Boolean>
-    <s:Boolean x:Key="/Default/Environment/UserInterface/HideVsMenus/@EntryValue">False</s:Boolean>
-    <s:Boolean x:Key="/Default/Environment/ParameterNameHintsOptions/ShowParameterNameHints/@EntryValue">False</s:Boolean>
-    <s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=CommentTypo/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-    <s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=IdentifierTypo/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-    <s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=StringLiteralTypo/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-    <s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=InvertIf/@EntryIndexedValue">DO_NOT_SHOW</s:String>
+    <s:String x:Key="/Default/CodeEditing/Intellisense/CodeCompletion/IntellisenseGloballyEnabled/IntellisenseEnabled/@EntryValue">Disabled</s:String>
+    <s:Boolean x:Key="/Default/CodeEditing/TypingAssist/InsertAsteriskInBlockComments/@EntryValue">False</s:Boolean>
+    <s:Boolean x:Key="/Default/CodeInspection/Highlighting/MergeVsBulbItemsIntoReSharperBulb/@EntryValue">True</s:Boolean>
+    <s:String x:Key="/Default/Environment/Editor/MatchingBraceHighlighting/Style/@EntryValue">OUTLINE</s:String>
+    <s:String x:Key="/Default/Environment/ErrorStripe/ErrorStripeWidth/@EntryValue">Narrow</s:String>
+    <s:Boolean x:Key="/Default/Environment/Feedback/ShouldPrompt/@EntryValue">False</s:Boolean>
+    <s:Boolean x:Key="/Default/Environment/InlayHintsOptions/ShowInlayHints/@EntryValue">False</s:Boolean>
+    <s:Boolean x:Key="/Default/Environment/MemoryUsageIndicator/IsVisible/@EntryValue">True</s:Boolean>
+    <s:Boolean x:Key="/Default/Environment/SearchAndNavigation/AutoExpandResults/@EntryValue">True</s:Boolean>
+    <s:Boolean x:Key="/Default/Environment/SearchAndNavigation/NavigateByControlClick/@EntryValue">False</s:Boolean>
 </wpf:ResourceDictionary>

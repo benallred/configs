@@ -185,8 +185,21 @@ Block "Install ReSharper" {
     $fileName = Split-Path $downloadUrl -Leaf
     iwr $downloadUrl -OutFile $env:tmp\$fileName
     . $env:tmp\$fileName /SpecificProductNames=ReSharper /VsVersion=16.0 /Silent=True
-    # ReSharper command line activation not currently available:
+    # Activation:
+    #   ReSharper command line activation not currently available:
     #   https://resharper-support.jetbrains.com/hc/en-us/articles/206545049-Can-I-enter-License-Key-License-Server-URL-via-Command-Line-when-installing-ReSharper-
+    # Settings:
+    #   No CLI that I can find to import settings file
+    #   It might be roamed?
+    #   Or try editing $env:AppData\JetBrains\Shared\vAny\GlobalSettingsStorage.DotSettings
+    #       <s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=8232C3A8D8B5804BBE2C12625C76862A/@KeyIndexDefined">True</s:Boolean>
+    #       <s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=8232C3A8D8B5804BBE2C12625C76862A/AbsolutePath/@EntryValue">C:\BenLocal\git\configs\programs\resharper.DotSettings</s:String>
+    #       <s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8232C3A8D8B5804BBE2C12625C76862A/@KeyIndexDefined">True</s:Boolean>
+    #       <s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8232C3A8D8B5804BBE2C12625C76862A/RelativePriority/@EntryValue">1</s:Double>
+    # Conflicting shortcuts
+    #   Can't find a setting to disable the popup
+    #   Perhaps edit $env:LocalAppData\JetBrains\ReSharper\vAny\vs16.0_ef96ec49\vsActionManager.DotSettings
+    #       Remove all keys with "ConflictingActions" and corresponding "ActionsWithShortcuts"?
 } {
     Test-ProgramInstalled "JetBrains ReSharper in Visual Studio Professional 2019"
 }
