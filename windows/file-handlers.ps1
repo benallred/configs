@@ -17,6 +17,8 @@ function AssociateFileBlock([string]$Extension, [string]$Handler) {
     }
 }
 
+AssociateFileBlock xml VSCodeSourceFile
+AssociateFileBlock DotSettings VSCodeSourceFile
 AssociateFileBlock creds VSCodeSourceFile
 AssociateFileBlock pgpass VSCodeSourceFile
 AssociateFileBlock yarnrc VSCodeSourceFile
