@@ -284,11 +284,13 @@ Block "Install Office" {
 
 InstallFromScoopBlock Sysinternals sysinternals
 
-InstallFromGitHubBlock "benallred" "Bahk" { . $git\Bahk\Ben.ahk }
+InstallFromGitHubBlock benallred Bahk { . $git\Bahk\Ben.ahk }
 
-InstallFromGitHubBlock "benallred" "SnapX" { . $git\SnapX\SnapX.ahk }
+InstallFromGitHubBlock benallred SnapX { . $git\SnapX\SnapX.ahk }
 
-InstallFromGitHubBlock "benallred" "YouTubeToPlex"
+InstallFromGitHubBlock benallred YouTubeToPlex
+
+InstallFromGitHubBlock benallred mob
 
 Block "Install Steam" {
     iwr https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe -OutFile $env:tmp\SteamSetup.exe
