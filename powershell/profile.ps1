@@ -32,9 +32,9 @@ function Get-TimestampForFileName() {
     (Get-Date -Format o) -replace ":", "_"
 }
 
-function Set-RegistryValue([Parameter(Mandatory)][string]$Path, [Parameter(Mandatory)][string]$Name, [Parameter(Mandatory)][object]$Value) {
-    if (!(Test-Path $path)) {
-        New-Item $path -Force
+function Set-RegistryValue([Parameter(Mandatory)][string]$Path, [string]$Name = "(Default)", [Parameter(Mandatory)][object]$Value) {
+    if (!(Test-Path $Path)) {
+        New-Item $Path -Force
     }
     Set-ItemProperty $Path -Name $Name -Value $Value
 }
