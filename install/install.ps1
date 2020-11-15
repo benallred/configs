@@ -318,6 +318,8 @@ InstallFromScoopBlock "Logitech Gaming Software" logitech-gaming-software-np
 
 InstallFromScoopBlock Paint.NET paint.net
 
+InstallFromScoopBlock scrcpy scrcpy
+
 InstallFromScoopBlock "TreeSize Free" treesize-free
 
 Block "Install Zoom" {
