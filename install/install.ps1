@@ -206,6 +206,12 @@ Block "Install ReSharper" {
     #   Can't find a setting to disable the popup
     #   Perhaps edit $env:LocalAppData\JetBrains\ReSharper\vAny\vs16.0_ef96ec49\vsActionManager.DotSettings
     #       Remove all keys with "ConflictingActions" and corresponding "ActionsWithShortcuts"?
+    # External source navigation
+    #   Perhaps edit $env:AppData\JetBrains\Shared\vAny\GlobalSettingsStorage.DotSettings
+    #       Remove? <s:String x:Key="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue">ExternalSources</s:String>
+    #       Edit? <s:Int64 x:Key="/Default/Environment/SearchAndNavigation/DefaultOccurrencesGroupingIndices/=JetBrains_002EReSharper_002EFeature_002EServices_002ENavigation_002EDescriptors_002ESearchUsagesDescriptor/@EntryIndexedValue">12</s:Int64>
+    #             <s:Int64 x:Key="/Default/Environment/SearchAndNavigation/DefaultOccurrencesGroupingIndices/=JetBrains_002EReSharper_002EFeature_002EServices_002ENavigation_002EDescriptors_002ESearchUsagesDescriptor/@EntryIndexedValue">12</s:Int64>
+    #       Neither of the above seem to change when selecting an option in the popup
 } {
     Test-ProgramInstalled "JetBrains ReSharper in Visual Studio Professional 2019"
 }
