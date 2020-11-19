@@ -40,7 +40,7 @@
                 <taskbar:DesktopApp DesktopApplicationLinkPath="%ProgramData%\Microsoft\Windows\Start Menu\Programs\Visual Studio 2019.lnk" />
                 <taskbar:UWA AppUserModelID="Microsoft.WindowsTerminal_8wekyb3d8bbwe!App" />
                 <taskbar:UWA AppUserModelID="Microsoft.YourPhone_8wekyb3d8bbwe!App" />
-                <taskbar:UWA AppUserModelID="Microsoft.Todos_8wekyb3d8bbwe!App" />
+                <taskbar:UWA AppUserModelID="88449BC3.TodoistTo-DoListTaskManager_71ef4824z52ta!App" />
             </taskbar:TaskbarPinList>
         </defaultlayout:TaskbarLayout>
     </CustomTaskbarLayoutCollection>

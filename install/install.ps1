@@ -41,6 +41,12 @@ function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$Afte
     }
 }
 
+# Get AppName with
+#   Get-StartApps name
+# Get ProductId by searching for app at
+#   https://www.microsoft.com/en-us/search
+# Get AppPackageName with
+#   (Get-AppxPackage -Name "*name*").Name
 function InstallFromMicrosoftStoreBlock([string]$AppName, [string]$ProductId, [string]$AppPackageName) {
     Block "Install $AppName" {
         Write-ManualStep "Install $AppName"
@@ -309,6 +315,8 @@ Block "Install Battle.net" {
 }
 
 InstallFromMicrosoftStoreBlock "Microsoft To Do" 9nblggh5r558 Microsoft.Todos
+
+InstallFromMicrosoftStoreBlock "Todoist: To-Do List and Task Manager" 9nblggh1rl1k 88449BC3.TodoistTo-DoListTaskManager
 
 InstallFromMicrosoftStoreBlock "Surface Audio" 9nxjnfwnvm8d Microsoft.SurfaceAudio
 
