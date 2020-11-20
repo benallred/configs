@@ -93,7 +93,7 @@ InstallFromScoopBlock Everything everything {
 }
 
 InstallFromScoopBlock OpenVPN openvpn {
-    $openvpnExe = "$env:UserProfile\scoop\apps\openvpn\current\bin\openvpn-gui.exe"
+    $openvpnExe = "$(scoop prefix openvpn)\bin\openvpn-gui.exe"
     $ovpnFile = (Read-Host "Path to .ovpn file").Trim('"')
     Copy-Item $ovpnFile $env:UserProfile\scoop\persist\openvpn\config
     New-Item "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands" -ItemType Directory -Force
@@ -318,6 +318,27 @@ Block "Install Battle.net" {
     DeleteDesktopShortcut Battle.net
 } {
     Test-ProgramInstalled "Battle.net"
+}
+
+FirstRunBlock "Configure 7-Zip" {
+    Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name ShowDots -Value 1
+    Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name ShowRealFileIcons -Value 1
+    Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name FullRow -Value 1
+    Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name ShowSystemMenu -Value 1
+    . "$(scoop prefix 7zip)\7zFM.exe"
+    Write-ManualStep "Tools >"
+    Write-ManualStep "`tOptions >"
+    Write-ManualStep "`t`t7-Zip >"
+    Write-ManualStep "`t`t`tContext menu items > [only the following]"
+    Write-ManualStep "`t`t`t`tOpen archive"
+    Write-ManualStep "`t`t`t`tExtract Here"
+    Write-ManualStep "`t`t`t`tExtract to <Folder>"
+    Write-ManualStep "`t`t`t`tAdd to <Archive>.zip"
+    Write-ManualStep "`t`t`t`tCRC SHA >"
+    while (Get-Process 7zFM -ErrorAction Ignore) {
+        Write-Host -ForegroundColor Yellow "Waiting for 7zFM to close"
+        sleep -s 10
+    }
 }
 
 InstallFromMicrosoftStoreBlock "Microsoft To Do" 9nblggh5r558 Microsoft.Todos
