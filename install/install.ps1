@@ -320,6 +320,16 @@ Block "Install Battle.net" {
     Test-ProgramInstalled "Battle.net"
 }
 
+Block "Install Firefox" {
+    if ((& $configure $forWork) -or (& $configure $forTest)) {
+        iwr "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US" -OutFile "$env:tmp\Firefox Installer.exe"
+        . "$env:tmp\Firefox Installer.exe"
+        DeleteDesktopShortcut Firefox
+    }
+} {
+    Test-ProgramInstalled "Mozilla Firefox"
+}
+
 FirstRunBlock "Configure 7-Zip" {
     Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name ShowDots -Value 1
     Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name ShowRealFileIcons -Value 1
