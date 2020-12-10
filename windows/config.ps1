@@ -37,6 +37,7 @@ Block "Clock" {
 & $PSScriptRoot\explorer.ps1
 & $PSScriptRoot\file-handlers.ps1
 & $PSScriptRoot\system.ps1
+& $PSScriptRoot\devices.ps1
 & $PSScriptRoot\personalization.ps1
 & $PSScriptRoot\apps.ps1
 & $PSScriptRoot\ease-of-access.ps1
