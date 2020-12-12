@@ -42,7 +42,7 @@ Block "Configure Windows Terminal" {
 }
 
 FirstRunBlock "Update PS help" {
-    if (!(& $configure $forTest)) {
+    if (!(Configured $forTest)) {
         Update-Help -ErrorAction Ignore
     }
 }

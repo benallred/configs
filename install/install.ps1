@@ -103,14 +103,14 @@ InstallFromScoopBlock OpenVPN openvpn {
     while (!(Test-Path "HKCU:\Software\OpenVPN-GUI")) { sleep -s 10 }
     Set-ItemProperty "HKCU:\Software\OpenVPN-GUI" -Name silent_connection -Value 1
     ConfigureNotifications "OpenVPN GUI for Windows"
-    if (!(& $configure $forWork)) {
+    if (!(Configured $forWork)) {
         . "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstop.lnk"
     }
 }
 
 InstallFromScoopBlock .NET dotnet-sdk
 
-if ((& $configure $forWork) -or (& $configure $forTest)) {
+if ((Configured $forWork) -or (Configured $forTest)) {
     Block "Configure scoop java bucket and install Java" {
         scoop bucket add java
         scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
@@ -217,7 +217,7 @@ Block "Install ReSharper" {
 }
 
 Block "Install Docker" {
-    if (& $configure $forTest) {
+    if (Configured $forTest) {
         return
     }
     # https://github.com/docker/docker.github.io/issues/6910#issuecomment-403502065
@@ -240,7 +240,7 @@ Block "Install AutoHotkey" {
 Block "Install Slack" {
     iwr https://downloads.slack-edge.com/releases_x64/SlackSetup.exe -OutFile $env:tmp\SlackSetup.exe
     . $env:tmp\SlackSetup.exe
-    if (!(& $configure $forWork)) {
+    if (!(Configured $forWork)) {
         while (!(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack -ErrorAction Ignore)) { sleep -s 10 }
         Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack
     }
@@ -321,7 +321,7 @@ Block "Install Battle.net" {
 }
 
 Block "Install Firefox" {
-    if ((& $configure $forWork) -or (& $configure $forTest)) {
+    if ((Configured $forWork) -or (Configured $forTest)) {
         iwr "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US" -OutFile "$env:tmp\Firefox Installer.exe"
         . "$env:tmp\Firefox Installer.exe"
         DeleteDesktopShortcut Firefox
@@ -368,7 +368,7 @@ InstallFromScoopBlock scrcpy scrcpy
 InstallFromScoopBlock "TreeSize Free" treesize-free
 
 Block "Install Zoom" {
-    if ((& $configure $forWork) -or (& $configure $forTest)) {
+    if ((Configured $forWork) -or (Configured $forTest)) {
         iwr https://zoom.us/client/latest/ZoomInstaller.exe -OutFile "$env:tmp\ZoomInstaller.exe"
         . "$env:tmp\ZoomInstaller.exe"
         DeleteDesktopShortcut Zoom

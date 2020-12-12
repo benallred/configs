@@ -11,9 +11,9 @@ function ScheduledTaskBlock([Parameter(Mandatory)][string]$Comment, [Parameter(M
     }
 }
 
-if (& $configure $forHome) {
+if (Configured $forHome) {
     & $PSScriptRoot\home\config.ps1
 }
-elseif (& $configure $forWork) {
+elseif (Configured $forWork) {
     & $PSScriptRoot\work\config.ps1
 }

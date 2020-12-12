@@ -4,26 +4,37 @@ param([switch]$DryRun, [switch]$SkipBackup, [string]$Run)
 mkdir C:\BenLocal\backup -ErrorAction Ignore
 
 Block "Configure for" {
-    $forHome = "home"
-    $forWork = "work"
-    $forTest = "test"
+    $configureForOptions = {
+        $forHome = "home"
+        $forWork = "work"
+        $forTest = "test"
+    }
+    . $configureForOptions
+
     while (($configureFor = (Read-Host "Configure for ($forHome,$forWork,$forTest)")) -notin @($forHome, $forWork, $forTest)) { }
+
     if (!(Test-Path $profile)) {
         New-Item $profile -Force
     }
+
     Add-Content -Path $profile -Value "`n"
-    Add-Content -Path $profile -Value "`$forHome = `"$forHome`""
-    Add-Content -Path $profile -Value "`$forWork = `"$forWork`""
-    Add-Content -Path $profile -Value "`$forTest = `"$forTest`""
+    Add-Content -Path $profile $configureForOptions
     Add-Content -Path $profile -Value "`$configureFor = `"$configureFor`""
-    Add-Content -Path $profile -Value "`$configure = { `$args[0] -eq `$configureFor }"
+    Add-Content -Path $profile {
+        function Configured([Parameter(Mandatory = $true)][ValidateSet("home", "work", "test")][string]$for) {
+            if (!$configureFor) {
+                throw '$configureFor not set'
+            }
+            $for -eq $configureFor
+        }
+    }
 } {
     (Test-Path $profile) -and (Select-String "\`$configureFor" $profile) # -Pattern is regex
 }
 if (!$DryRun -and !$Run) { . $profile } # make profile available to scripts below
 
 Block "Backup Registry" {
-    if (!(& $configure $forTest)) {
+    if (!(Configured $forTest)) {
         & $PSScriptRoot\backup-registry.ps1
     }
 } {
