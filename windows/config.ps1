@@ -22,16 +22,6 @@ Block "Control Panel > System > Remote settings > Allow Remote Assistance connec
     Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name fAllowToGetHelp -Value 0
     Disable-NetFirewallRule -DisplayGroup "Remote Assistance"
 }
-Block "Clock" {
-    Set-TimeZone "Mountain Standard Time"
-    function SetAdditionalClock([int]$ClockNumber, [string]$DisplayName, [string]$TimeZoneId) {
-        Set-RegistryValue "HKCU:\Control Panel\TimeDate\AdditionalClocks\$ClockNumber" -Name Enable -Value 1
-        Set-RegistryValue "HKCU:\Control Panel\TimeDate\AdditionalClocks\$ClockNumber" -Name DisplayName -Value $DisplayName
-        Set-RegistryValue "HKCU:\Control Panel\TimeDate\AdditionalClocks\$ClockNumber" -Name TzRegKeyName -Value $TimeZoneId
-    }
-    SetAdditionalClock 1 "UTC" "UTC"
-    SetAdditionalClock 2 "Korea" "Korea Standard Time"
-}
 & $PSScriptRoot\desktop.ps1
 & $PSScriptRoot\store.ps1
 & $PSScriptRoot\explorer.ps1
@@ -40,6 +30,7 @@ Block "Clock" {
 & $PSScriptRoot\devices.ps1
 & $PSScriptRoot\personalization.ps1
 & $PSScriptRoot\apps.ps1
+& $PSScriptRoot\time-and-language.ps1
 & $PSScriptRoot\ease-of-access.ps1
 & $PSScriptRoot\windows-features.ps1
 FirstRunBlock "Set sign-in options" {
