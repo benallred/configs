@@ -1,8 +1,6 @@
 $OneDrive = "$env:UserProfile\OneDrive"
 $git = "C:\BenLocal\git"
 
-. $git\mob\mob.ps1
-
 Set-Alias gh Get-Help
 
 function Set-WindowTitle([string]$title) {

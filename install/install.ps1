@@ -303,7 +303,12 @@ InstallFromGitHubBlock benallred SnapX { . $git\SnapX\SnapX.ahk }
 
 InstallFromGitHubBlock benallred YouTubeToPlex
 
-InstallFromGitHubBlock benallred mob
+InstallFromGitHubBlock benallred mob {
+    if (!(Test-Path $profile) -or !(Select-String "mob\.ps1" $profile)) {
+        Add-Content -Path $profile -Value "`n"
+        Add-Content -Path $profile -Value ". $git\mob\mob.ps1"
+    }
+}
 
 Block "Install Steam" {
     iwr https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe -OutFile $env:tmp\SteamSetup.exe
