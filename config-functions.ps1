@@ -33,6 +33,13 @@ function FirstRunBlock([string]$Comment, [scriptblock]$ScriptBlock, [switch]$Req
     } -RequiresReboot:$RequiresReboot
 }
 
+function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
+    while (Invoke-Command $ScriptBlock) {
+        Write-Host -ForegroundColor Yellow $WaitingFor
+        sleep -s 10
+    }
+}
+
 function Write-ManualStep([string]$Comment) {
     $esc = [char]27
     Write-Output "$esc[1;43;22;30;52mManual step:$esc[0;1;33m $Comment$esc[0m"
@@ -40,10 +47,7 @@ function Write-ManualStep([string]$Comment) {
 }
 
 function ConfigureNotifications([string]$ProgramName) {
-    while (Get-Process SystemSettings -ErrorAction Ignore) {
-        Write-Host -ForegroundColor Yellow "Waiting for the Settings app to close"
-        sleep -s 10
-    }
+    WaitWhile { Get-Process SystemSettings -ErrorAction Ignore } "Waiting for the Settings app to close"
     Write-ManualStep "Configure notifications for: $ProgramName"
     start ms-settings:notifications
     Write-ManualStep "`tShow notifications in action center = Off"

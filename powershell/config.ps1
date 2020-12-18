@@ -36,9 +36,11 @@ Block "Install Windows Terminal" {
 }
 
 Block "Configure Windows Terminal" {
-    $settingsDir = "$env:LocalAppData\Packages\$((Get-AppxPackage -Name Microsoft.WindowsTerminal).PackageFamilyName)\LocalState"
-    while (!(Test-Path $settingsDir)) { sleep -s 10 }
-    Copy-Item $PSScriptRoot\settings.json $settingsDir\settings.json
+    function GetSettingsDir() {
+        "$env:LocalAppData\Packages\$((Get-AppxPackage -Name Microsoft.WindowsTerminal).PackageFamilyName)\LocalState"
+    }
+    WaitWhile { !(Test-Path (GetSettingsDir)) } "Waiting for Windows Terminal to be installed"
+    Copy-Item $PSScriptRoot\settings.json "$(GetSettingsDir)\settings.json"
 }
 
 FirstRunBlock "Update PS help" {

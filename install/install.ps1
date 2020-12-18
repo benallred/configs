@@ -12,6 +12,7 @@ function InstallFollowup([string]$ProgramName, [scriptblock]$Followup) {
     $fileName = "Finish $ProgramName Install"
     Set-Content "$env:tmp\$fileName.ps1" {
         Write-Output "$fileName"
+        . $git\configs\config-functions.ps1
         $Followup
         Write-Output "Done. Press Enter to close."
         Read-Host
@@ -51,7 +52,7 @@ function InstallFromMicrosoftStoreBlock([string]$AppName, [string]$ProductId, [s
     Block "Install $AppName" {
         Write-ManualStep "Install $AppName"
         start ms-windows-store://pdp/?ProductId=$ProductId
-        while (!(Get-AppxPackage -Name $AppPackageName)) { sleep -s 10 }
+        WaitWhile { !(Get-AppxPackage -Name $AppPackageName) } "Waiting for $AppName to be installed"
         start "shell:AppsFolder\$(Get-StartApps $AppName | select -ExpandProperty AppId)"
     } {
         Get-AppxPackage -Name $AppPackageName
@@ -100,7 +101,7 @@ InstallFromScoopBlock OpenVPN openvpn {
     Create-Shortcut $openvpnExe "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk" "--connect $(Split-Path $ovpnFile -Leaf)"
     Create-Shortcut powershell "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstop.lnk" "-WindowStyle Hidden `". '$openvpnExe' --command disconnect_all; . '$openvpnExe' --command exit`""
     . "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk"
-    while (!(Test-Path "HKCU:\Software\OpenVPN-GUI")) { sleep -s 10 }
+    WaitWhile { !(Test-Path "HKCU:\Software\OpenVPN-GUI") } "Waiting for OpenVPN registry key"
     Set-ItemProperty "HKCU:\Software\OpenVPN-GUI" -Name silent_connection -Value 1
     ConfigureNotifications "OpenVPN GUI for Windows"
     if (!(Configured $forWork)) {
@@ -140,7 +141,7 @@ InstallFromScoopBlock Yarn yarn
 Block "Install VS Code" {
     iwr https://aka.ms/win32-x64-user-stable -OutFile $env:tmp\VSCodeUserSetup-x64.exe
     . $env:tmp\VSCodeUserSetup-x64.exe /SILENT /TASKS="associatewithfiles,addtopath" /LOG=$env:tmp\VSCodeInstallLog.txt
-    while (!(Test-ProgramInstalled "Visual Studio Code")) { sleep -s 10 }
+    WaitWhile { !(Test-ProgramInstalled "Visual Studio Code") } "Waiting for VS Code to be installed"
     $codeCmd = "$env:LocalAppData\Programs\Microsoft VS Code\bin\code.cmd"
     . $codeCmd --install-extension shan.code-settings-sync
     New-Item $env:AppData\Code\User -ItemType Directory -Force
@@ -167,7 +168,7 @@ Block "Install Visual Studio" {
     Start-Process $env:tmp\vs_professional.exe $vsInstallArgs -Wait -PassThru
     InstallFollowup "Visual Studio" {
         . (. "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath) $PSCommandPath
-        while (!(Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" })) { sleep -s 10 }
+        WaitWhile { !(Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" }) } "Waiting for Visual Studio registry key"
         & "$git\configs\programs\Visual Studio - Hide dynamic nodes in Solution Explorer.ps1"
     }
     
@@ -241,7 +242,7 @@ Block "Install Slack" {
     iwr https://downloads.slack-edge.com/releases_x64/SlackSetup.exe -OutFile $env:tmp\SlackSetup.exe
     . $env:tmp\SlackSetup.exe
     if (!(Configured $forWork)) {
-        while (!(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack -ErrorAction Ignore)) { sleep -s 10 }
+        WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack -ErrorAction Ignore) } "Waiting for Slack registry key"
         Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack
     }
     DeleteDesktopShortcut Slack
@@ -255,7 +256,7 @@ Block "Install Office" {
     $downloadUrl = (iwr "https://www.microsoft.com/en-in/download/confirmation.aspx?id=49117" -useb | sls "https://download\.microsoft\.com/download/.+?/officedeploymenttool_.+?.exe").Matches.Value
     iwr $downloadUrl -OutFile $env:tmp\officedeploymenttool.exe
     . $env:tmp\officedeploymenttool.exe /extract:$env:tmp\officedeploymenttool /passive /quiet
-    while (!(Test-Path $env:tmp\officedeploymenttool\setup.exe)) { sleep -s 10 }
+    WaitWhile { !(Test-Path $env:tmp\officedeploymenttool\setup.exe) } "Waiting for Office setup to be extracted"
     . $env:tmp\officedeploymenttool\setup.exe /configure $PSScriptRoot\OfficeConfiguration.xml
     # TODO: Activate
     #   Observed differences
@@ -345,10 +346,7 @@ FirstRunBlock "Configure 7-Zip" {
     Write-ManualStep "`t`t`t`tExtract to <Folder>"
     Write-ManualStep "`t`t`t`tAdd to <Archive>.zip"
     Write-ManualStep "`t`t`t`tCRC SHA >"
-    while (Get-Process 7zFM -ErrorAction Ignore) {
-        Write-Host -ForegroundColor Yellow "Waiting for 7zFM to close"
-        sleep -s 10
-    }
+    WaitWhile { Get-Process 7zFM -ErrorAction Ignore } "Waiting for 7zFM to close"
 }
 
 InstallFromMicrosoftStoreBlock "Microsoft To Do" 9nblggh5r558 Microsoft.Todos
