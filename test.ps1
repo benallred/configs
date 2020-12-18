@@ -42,6 +42,7 @@ if ($Action -eq "Start") {
     }
 }
 elseif ($Action -eq "Stop" -and $vm) {
+    Stop-Process -Name vmconnect -ErrorAction Ignore
     Save-VM $vm
     Write-Output "Saved '$vmName'"
 }
