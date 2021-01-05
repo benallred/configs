@@ -362,6 +362,13 @@ InstallFromMicrosoftStoreBlock "Surface Audio" 9nxjnfwnvm8d Microsoft.SurfaceAud
 
 InstallFromMicrosoftStoreBlock "Dynamic Theme" 9nblggh1zbkw 55888ChristopheLavalle.DynamicTheme
 
+Block "Install Wally" {
+    iwr https://configure.ergodox-ez.com/wally/win -OutFile $env:tmp\Wally.exe
+    . $env:tmp\Wally.exe /SILENT /NORESTART /LOG=$env:tmp\WallyInstallLog.txt
+} {
+    Test-ProgramInstalled Wally
+}
+
 InstallFromScoopBlock "Logitech Gaming Software" logitech-gaming-software-np
 
 InstallFromScoopBlock Paint.NET paint.net
