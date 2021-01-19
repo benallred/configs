@@ -9,15 +9,7 @@ function DeleteDesktopShortcut([string]$ShortcutName) {
 }
 
 function InstallFollowup([string]$ProgramName, [scriptblock]$Followup) {
-    $fileName = "Finish $ProgramName Install"
-    Set-Content "$env:tmp\$fileName.ps1" {
-        Write-Output "$fileName"
-        . $git\configs\config-functions.ps1
-        $Followup
-        Write-Output "Done. Press Enter to close."
-        Read-Host
-    }.ToString().Replace('$fileName', $fileName).Replace('$Followup', $Followup)
-    Create-RunOnce $fileName "powershell -File `"$env:tmp\$fileName.ps1`""
+    ConfigFollowup "Finish $ProgramName Install" $Followup
 }
 
 function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$AfterInstall) {

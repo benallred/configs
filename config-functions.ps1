@@ -33,6 +33,17 @@ function FirstRunBlock([string]$Comment, [scriptblock]$ScriptBlock, [switch]$Req
     } -RequiresReboot:$RequiresReboot
 }
 
+function ConfigFollowup([string]$FileName, [scriptblock]$Followup) {
+    Set-Content "$env:tmp\$FileName.ps1" {
+        Write-Output "$FileName"
+        . $git\configs\config-functions.ps1
+        $Followup
+        Write-Output "Done. Press Enter to close."
+        Read-Host
+    }.ToString().Replace('$FileName', $FileName).Replace('$Followup', $Followup)
+    Create-RunOnce $FileName "powershell -File `"$env:tmp\$FileName.ps1`""
+}
+
 function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
     while (Invoke-Command $ScriptBlock) {
         Write-Host -ForegroundColor Yellow $WaitingFor
