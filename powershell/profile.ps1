@@ -26,6 +26,10 @@ function Create-RunOnce([Parameter(Mandatory)][string]$Description, [Parameter(M
     Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\RunOnce" -Name $Description -Value $Command
 }
 
+function Create-FileRunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$FilePath) {
+    Create-RunOnce $Description "powershell -File `"$FilePath`""
+}
+
 function Get-TimestampForFileName() {
     (Get-Date -Format o) -replace ":", "_"
 }

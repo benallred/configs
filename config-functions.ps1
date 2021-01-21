@@ -41,7 +41,7 @@ function ConfigFollowup([string]$FileName, [scriptblock]$Followup) {
         Write-Output "Done. Press Enter to close."
         Read-Host
     }.ToString().Replace('$FileName', $FileName).Replace('$Followup', $Followup)
-    Create-RunOnce $FileName "powershell -File `"$env:tmp\$FileName.ps1`""
+    Create-FileRunOnce $FileName "$env:tmp\$FileName.ps1"
 }
 
 function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
