@@ -3,6 +3,14 @@ $git = "C:\BenLocal\git"
 
 Set-Alias gh Get-Help
 
+function Test-IsAdmin() {
+    ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+function Run-AsAdmin([Parameter(Mandatory)][string]$FilePath) {
+    Start-Process powershell -Verb RunAs -ArgumentList "-File $FilePath"
+}
+
 function Set-WindowTitle([string]$title) {
     $GitPromptSettings.EnableWindowTitle = ""
     $Host.UI.RawUI.WindowTitle = $title
@@ -27,7 +35,7 @@ function Create-RunOnce([Parameter(Mandatory)][string]$Description, [Parameter(M
 }
 
 function Create-FileRunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$FilePath) {
-    Create-RunOnce $Description "powershell -File `"$FilePath`""
+    Create-RunOnce $Description "powershell -Command `"Run-AsAdmin $FilePath`""
 }
 
 function Get-TimestampForFileName() {

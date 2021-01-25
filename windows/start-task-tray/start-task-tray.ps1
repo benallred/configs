@@ -38,12 +38,6 @@ sleep -s $sleepSeconds
 # Tried doing this at the end, but if explorer.exe is not started up yet, it generates an error
 #   start : This command cannot be run due to the error: Unknown error (0x87b20c15).
 start ms-photos:
-# There are multiple ways to pin Edge Dev (various .lnk's or the .exe)
-# When clicking the taskbar item, however, Edge starts as a new taskbar item, not in the place it was clicked from
-# I think it is because the process that actually starts has a flag being passed to the exe (--profile-directory=Default)
-# The only .lnk I can find that is passing this flag is in a place with what seems like a random identifier
-# So copy that .lnk to a place I can count on when pinning it
-Copy-Item (Get-ChildItem "$env:AppData\Microsoft\Internet Explorer\Quick Launch\User Pinned\ImplicitAppShortcuts" "Microsoft Edge Dev.lnk" -Recurse).FullName "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands"
 # The start menu is not updated when importing the desired layout
 # Clearing this registry key solves that and the key is recreated with default values when explorer.exe starts
 Remove-Item "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\CloudStore\Store\Cache\DefaultAccount" -Recurse

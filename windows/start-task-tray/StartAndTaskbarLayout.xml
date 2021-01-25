@@ -34,7 +34,7 @@
             <taskbar:TaskbarPinList>
                 <taskbar:DesktopApp DesktopApplicationLinkPath="%AppData%\Microsoft\Windows\Start Menu\Programs\System Tools\File Explorer.lnk" />
                 <taskbar:UWA AppUserModelID="microsoft.windowscommunicationsapps_8wekyb3d8bbwe!microsoft.windowslive.mail" />
-                <taskbar:DesktopApp DesktopApplicationLinkPath="%AppData%\Microsoft\Windows\Start Menu\Programs\BenCommands\Microsoft Edge Dev.lnk" />
+                <taskbar:DesktopApp DesktopApplicationLinkPath="%ProgramData%\Microsoft\Windows\Start Menu\Programs\Microsoft Edge Dev.lnk" />
                 <taskbar:UWA AppUserModelID="Microsoft.Office.OneNote_8wekyb3d8bbwe!microsoft.onenoteim" />
                 <taskbar:DesktopApp DesktopApplicationLinkPath="%AppData%\Microsoft\Windows\Start Menu\Programs\Visual Studio Code\Visual Studio Code.lnk" />
                 <taskbar:DesktopApp DesktopApplicationLinkPath="%ProgramData%\Microsoft\Windows\Start Menu\Programs\Visual Studio 2019.lnk" />
