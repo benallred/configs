@@ -1,37 +1,5 @@
-function DeleteDesktopShortcut([string]$ShortcutName) {
-    $fileName = "Delete desktop shortcut $ShortcutName"
-    Set-Content "$env:tmp\$fileName.ps1" {
-        Write-Output "$fileName"
-        Remove-Item "$env:Public\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
-        Remove-Item "$env:UserProfile\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
-    }.ToString().Replace('$fileName', $fileName).Replace('$ShortcutName', $ShortcutName)
-    Create-RunOnce $fileName "powershell -File `"$env:tmp\$fileName.ps1`""
-}
-
 function InstallFollowup([string]$ProgramName, [scriptblock]$Followup) {
     ConfigFollowup "Finish $ProgramName Install" $Followup
-}
-
-function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$AfterInstall) {
-    Block "Install $AppName" {
-        scoop install $AppId
-        if ($AfterInstall) {
-            Invoke-Command $AfterInstall
-        }
-    } {
-        scoop export | Select-String $AppId
-    }
-}
-
-function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone) {
-    Block "Install $User/$Repo" {
-        git clone https://github.com/$User/$Repo.git $git\$Repo
-        if ($AfterClone) {
-            Invoke-Command $AfterClone
-        }
-    } {
-        Test-Path $git\$Repo
-    }
 }
 
 # Get AppName with
@@ -85,43 +53,7 @@ InstallFromScoopBlock Everything everything {
     everything -startup
 }
 
-InstallFromScoopBlock OpenVPN openvpn {
-    $openvpnExe = "$(scoop prefix openvpn)\bin\openvpn-gui.exe"
-    $ovpnFile = (Read-Host "Path to .ovpn file").Trim('"')
-    Copy-Item $ovpnFile $env:UserProfile\scoop\persist\openvpn\config
-    New-Item "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands" -ItemType Directory -Force
-    Create-Shortcut $openvpnExe "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk" "--connect $(Split-Path $ovpnFile -Leaf)"
-    Create-Shortcut powershell "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstop.lnk" "-WindowStyle Hidden `". '$openvpnExe' --command disconnect_all; . '$openvpnExe' --command exit`""
-    . "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk"
-    WaitWhile { !(Test-Path "HKCU:\Software\OpenVPN-GUI") } "Waiting for OpenVPN registry key"
-    Set-ItemProperty "HKCU:\Software\OpenVPN-GUI" -Name silent_connection -Value 1
-    ConfigureNotifications "OpenVPN GUI for Windows"
-    if (!(Configured $forWork)) {
-        . "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstop.lnk"
-    }
-}
-
 InstallFromScoopBlock .NET dotnet-sdk
-
-if ((Configured $forWork) -or (Configured $forTest)) {
-    Block "Configure scoop java bucket and install Java" {
-        scoop bucket add java
-        scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
-    } {
-        scoop export | Select-String adopt8-hotspot
-    }
-    InstallFromScoopBlock SBT sbt
-    InstallFromScoopBlock Scala scala
-
-    InstallFromScoopBlock Postgres postgresql
-    InstallFromGitHubBlock pluralsight psqlx {
-        if (!(Test-Path $profile) -or !(Select-String "psqlx\.ps1" $profile)) {
-            Add-Content -Path $profile -Value "`n"
-            Add-Content -Path $profile -Value "`$psqlxRunner = `"psql`" # or `"docker`""
-            Add-Content -Path $profile -Value ". $git\psqlx\psqlx.ps1"
-        }
-    }
-}
 
 InstallFromScoopBlock nvm nvm {
     nvm install latest
@@ -207,19 +139,18 @@ Block "Install ReSharper" {
     Test-ProgramInstalled "JetBrains ReSharper in Visual Studio Professional 2019"
 }
 
-Block "Install Docker" {
-    if (Configured $forTest) {
-        return
-    }
-    # https://github.com/docker/docker.github.io/issues/6910#issuecomment-403502065
-    iwr https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe -OutFile "$env:tmp\Docker for Windows Installer.exe"
-    # https://github.com/docker/for-win/issues/1322
-    . "$env:tmp\Docker for Windows Installer.exe" install --quiet | Out-Default
-    DeleteDesktopShortcut "Docker Desktop"
-    ConfigureNotifications "Docker Desktop"
-} {
-    Test-ProgramInstalled "Docker Desktop"
-} -RequiresReboot
+if (!(Configured $forTest)) {
+    Block "Install Docker" {
+        # https://github.com/docker/docker.github.io/issues/6910#issuecomment-403502065
+        iwr https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe -OutFile "$env:tmp\Docker for Windows Installer.exe"
+        # https://github.com/docker/for-win/issues/1322
+        . "$env:tmp\Docker for Windows Installer.exe" install --quiet | Out-Default
+        DeleteDesktopShortcut "Docker Desktop"
+        ConfigureNotifications "Docker Desktop"
+    } {
+        Test-ProgramInstalled "Docker Desktop"
+    } -RequiresReboot
+}
 
 Block "Install AutoHotkey" {
     iwr https://www.autohotkey.com/download/ahk-install.exe -OutFile $env:tmp\ahk-install.exe
@@ -318,14 +249,14 @@ Block "Install Battle.net" {
     Test-ProgramInstalled "Battle.net"
 }
 
-Block "Install Firefox" {
-    if ((Configured $forWork) -or (Configured $forTest)) {
+if ((Configured $forWork) -or (Configured $forTest)) {
+    Block "Install Firefox" {
         iwr "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US" -OutFile "$env:tmp\Firefox Installer.exe"
         . "$env:tmp\Firefox Installer.exe"
         DeleteDesktopShortcut Firefox
+    } {
+        Test-ProgramInstalled "Mozilla Firefox"
     }
-} {
-    Test-ProgramInstalled "Mozilla Firefox"
 }
 
 FirstRunBlock "Configure 7-Zip" {
@@ -368,35 +299,5 @@ InstallFromScoopBlock Paint.NET paint.net
 InstallFromScoopBlock scrcpy scrcpy
 
 InstallFromScoopBlock "TreeSize Free" treesize-free
-
-Block "Install Zoom" {
-    if ((Configured $forWork) -or (Configured $forTest)) {
-        iwr https://zoom.us/client/latest/ZoomInstaller.exe -OutFile "$env:tmp\ZoomInstaller.exe"
-        . "$env:tmp\ZoomInstaller.exe"
-        DeleteDesktopShortcut Zoom
-
-        # Configure during install:
-        #   https://support.zoom.us/hc/en-us/articles/201362163-Mass-Installation-and-Configuration-for-Windows#h_b82f0349-4d8f-45dd-898a-1ab98389a4b7
-        #   Code
-        #       iwr https://zoom.us/client/latest/ZoomInstallerFull.msi -OutFile "$env:tmp\ZoomInstallerFull.msi"
-        #       msiexec /package "$env:tmp\ZoomInstallerFull.msi" ZRecommend="AutoHideToolbar=1"
-        #   I can't get ZRecommend or ZConfig to work (settings are not changed)
-        # Group policy:
-        #   https://support.zoom.us/hc/en-us/articles/360039100051-Group-Policy-Options-for-the-Windows-Desktop-Client-and-Zoom-Rooms#h_e5b756c6-5e06-4a22-ad78-f19922a6e94f
-        #   This works but the downside is the options are uneditable from the UI
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name AlwaysShowMeetingControls -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name EnableRemindMeetingTime -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name MuteWhenLockScreen -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name TurnOffVideoCameraOnJoin -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name AlwaysShowVideoPreviewDialog -Value 0
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name SetUseSystemDefaultMicForVOIP -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name SetUseSystemDefaultSpeakerForVOIP -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name AutoJoinVoIP -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name MuteVoIPWhenJoinMeeting -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name EnterFullScreenWhenViewingSharedScreen -Value 0
-    }
-} {
-    Test-ProgramInstalled Zoom
-}
 
 InstallFromScoopBlock "Speedtest CLI" speedtest-cli

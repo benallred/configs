@@ -52,6 +52,7 @@ Block "Git config" {
 
 & $PSScriptRoot\windows\config.ps1
 & $PSScriptRoot\install\install.ps1
+& $PSScriptRoot\work\config.ps1
 & $PSScriptRoot\scheduled-tasks\config.ps1
 
 FirstRunBlock "Defer config for Start Menu, Taskbar, and System Tray" {

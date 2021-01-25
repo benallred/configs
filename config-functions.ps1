@@ -64,3 +64,35 @@ function ConfigureNotifications([string]$ProgramName) {
     Write-ManualStep "`tShow notifications in action center = Off"
     Write-ManualStep "`tClose settings when done"
 }
+
+function DeleteDesktopShortcut([string]$ShortcutName) {
+    $fileName = "Delete desktop shortcut $ShortcutName"
+    Set-Content "$env:tmp\$fileName.ps1" {
+        Write-Output "$fileName"
+        Remove-Item "$env:Public\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
+        Remove-Item "$env:UserProfile\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
+    }.ToString().Replace('$fileName', $fileName).Replace('$ShortcutName', $ShortcutName)
+    Create-FileRunOnce $fileName "$env:tmp\$fileName.ps1"
+}
+
+function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone) {
+    Block "Install $User/$Repo" {
+        git clone https://github.com/$User/$Repo.git $git\$Repo
+        if ($AfterClone) {
+            Invoke-Command $AfterClone
+        }
+    } {
+        Test-Path $git\$Repo
+    }
+}
+
+function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$AfterInstall) {
+    Block "Install $AppName" {
+        scoop install $AppId
+        if ($AfterInstall) {
+            Invoke-Command $AfterInstall
+        }
+    } {
+        scoop export | Select-String $AppId
+    }
+}
