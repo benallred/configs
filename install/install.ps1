@@ -135,13 +135,11 @@ Block "Install VS Code" {
     . $env:tmp\VSCodeUserSetup-x64.exe /SILENT /TASKS="associatewithfiles,addtopath" /LOG=$env:tmp\VSCodeInstallLog.txt
     WaitWhile { !(Test-ProgramInstalled "Visual Studio Code") } "Waiting for VS Code to be installed"
     $codeCmd = "$env:LocalAppData\Programs\Microsoft VS Code\bin\code.cmd"
-    . $codeCmd --install-extension shan.code-settings-sync
-    New-Item $env:AppData\Code\User -ItemType Directory -Force
-    $token = SecureRead-Host "GitHub token for VS Code Settings Sync"
-    Set-Content $env:AppData\Code\User\syncLocalSettings.json "{`"token`":`"$token`",`"autoUploadDelay`":300}"
-    $gistId = Read-Host "Gist Id for VS Code Settings Sync"
-    Set-Content $env:AppData\Code\User\settings.json "{`"sync.gist`":`"$gistId`",`"sync.autoDownload`":true}"
-    Write-ManualStep "Monitor sync status in Output (ctrl+shift+u) > Code Settings Sync"
+    Write-ManualStep "Turn on Settings Sync"
+    Write-ManualStep "`tReplace Local"
+    Write-ManualStep "Watch log with ctrl+shift+u"
+    Write-ManualStep "Show synced data"
+    Write-ManualStep "`tUpdate name of synced machine"
     . $codeCmd
 } {
     Test-ProgramInstalled "Microsoft Visual Studio Code (User)"
