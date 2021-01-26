@@ -60,4 +60,10 @@ if ((Configured $forWork) -or (Configured $forTest)) {
     }
     InstallFromScoopBlock SBT sbt
     InstallFromScoopBlock Scala scala
+    InstallFromScoopBlock hadoop-winutils
+
+    Block "Install IntelliJ" {
+        scoop bucket add jetbrains
+        scoop install IntelliJ-IDEA
+    }
 }
