@@ -11,10 +11,12 @@ FirstRunBlock "Configure OneNote" {
     start onenote:
 }
 
-FirstRunBlock "Connect phone" {
-    Write-ManualStep "Connect phone"
-    start ms-phone:
-    ConfigureNotifications "Messages (via Your Phone)"
+if (!(Configured $forKids)) {
+    FirstRunBlock "Connect phone" {
+        Write-ManualStep "Connect phone"
+        start ms-phone:
+        ConfigureNotifications "Messages (via Your Phone)"
+    }
 }
 
 FirstRunBlock "Configure Mail" {

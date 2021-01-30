@@ -12,10 +12,12 @@ Block "posh-git" {
     Get-Module -ListAvailable posh-git
 }
 
-Block "BurntToast" {
-    Install-Module BurntToast -Force
-} {
-    Get-Module -ListAvailable BurntToast
+if (!(Configured $forKids)) {
+    Block "BurntToast" {
+        Install-Module BurntToast -Force
+    } {
+        Get-Module -ListAvailable BurntToast
+    }
 }
 
 Block "PowerShell Transcripts" {
@@ -43,8 +45,8 @@ Block "Configure Windows Terminal" {
     Copy-Item $PSScriptRoot\settings.json "$(GetSettingsDir)\settings.json"
 }
 
-FirstRunBlock "Update PS help" {
-    if (!(Configured $forTest)) {
+if (!(Configured $forTest)) {
+    FirstRunBlock "Update PS help" {
         Update-Help -ErrorAction Ignore
     }
 }
