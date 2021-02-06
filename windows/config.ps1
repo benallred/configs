@@ -13,6 +13,11 @@ Block "Disable UAC" {
 FirstRunBlock "Add Microsoft account" {
     Write-ManualStep "Sign in with a Microsoft account instead"
     start ms-settings:yourinfo
+    WaitWhileProcess SystemSettings
+}
+FirstRunBlock "Configure OneDrive" {
+    Write-ManualStep "Start OneDrive syncing"
+    . "$env:LocalAppData\Microsoft\OneDrive\OneDrive.exe"
 }
 Block "Control Panel > View by = Small icons" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name AllItemsIconView -Value 1
