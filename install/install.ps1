@@ -286,7 +286,7 @@ FirstRunBlock "Configure 7-Zip" {
     Write-ManualStep "`t`t`t`tExtract to <Folder>"
     Write-ManualStep "`t`t`t`tAdd to <Archive>.zip"
     Write-ManualStep "`t`t`t`tCRC SHA >"
-    WaitWhile { Get-Process 7zFM -ErrorAction Ignore } "Waiting for 7zFM to close"
+    WaitWhileProcess 7zFM
 }
 
 InstallFromMicrosoftStoreBlock "Dynamic Theme" 9nblggh1zbkw 55888ChristopheLavalle.DynamicTheme

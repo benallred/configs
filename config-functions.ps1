@@ -51,6 +51,10 @@ function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
     }
 }
 
+function WaitWhileProcess([string]$ProcessName, [string]$WaitingFor) {
+    WaitWhile { Get-Process $ProcessName -ErrorAction Ignore } "Waiting for $ProcessName to close"
+}
+
 function Write-ManualStep([string]$Comment) {
     $esc = [char]27
     Write-Output "$esc[1;43;22;30;52mManual step:$esc[0;1;33m $Comment$esc[0m"
@@ -58,7 +62,7 @@ function Write-ManualStep([string]$Comment) {
 }
 
 function ConfigureNotifications([string]$ProgramName) {
-    WaitWhile { Get-Process SystemSettings -ErrorAction Ignore } "Waiting for the Settings app to close"
+    WaitWhileProcess SystemSettings
     Write-ManualStep "Configure notifications for: $ProgramName"
     start ms-settings:notifications
     Write-ManualStep "`tShow notifications in action center = Off"
