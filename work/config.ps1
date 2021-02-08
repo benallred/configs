@@ -1,19 +1,3 @@
-InstallFromScoopBlock OpenVPN openvpn {
-    $openvpnExe = "$(scoop prefix openvpn)\bin\openvpn-gui.exe"
-    $ovpnFile = (Read-Host "Path to .ovpn file").Trim('"')
-    Copy-Item $ovpnFile $env:UserProfile\scoop\persist\openvpn\config
-    New-Item "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands" -ItemType Directory -Force
-    Create-Shortcut $openvpnExe "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk" "--connect $(Split-Path $ovpnFile -Leaf)"
-    Create-Shortcut powershell "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstop.lnk" "-WindowStyle Hidden `". '$openvpnExe' --command disconnect_all; . '$openvpnExe' --command exit`""
-    . "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstart.lnk"
-    WaitWhile { !(Test-Path "HKCU:\Software\OpenVPN-GUI") } "Waiting for OpenVPN registry key"
-    Set-ItemProperty "HKCU:\Software\OpenVPN-GUI" -Name silent_connection -Value 1
-    ConfigureNotifications "OpenVPN GUI for Windows"
-    if (!(Configured $forWork)) {
-        . "$env:AppData\Microsoft\Windows\Start Menu\Programs\BenCommands\vpnstop.lnk"
-    }
-}
-
 if ((Configured $forWork) -or (Configured $forTest)) {
     Block "Install Zoom" {
         iwr https://zoom.us/client/latest/ZoomInstaller.exe -OutFile "$env:tmp\ZoomInstaller.exe"
@@ -41,29 +25,5 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name EnterFullScreenWhenViewingSharedScreen -Value 0
     } {
         Test-ProgramInstalled Zoom
-    }
-
-    InstallFromScoopBlock Postgres postgresql
-    InstallFromGitHubBlock pluralsight psqlx {
-        if (!(Test-Path $profile) -or !(Select-String "psqlx\.ps1" $profile)) {
-            Add-Content -Path $profile -Value "`n"
-            Add-Content -Path $profile -Value "`$psqlxRunner = `"psql`" # or `"docker`""
-            Add-Content -Path $profile -Value ". $git\psqlx\psqlx.ps1"
-        }
-    }
-
-    Block "Configure scoop java bucket and install Java" {
-        scoop bucket add java
-        scoop install adopt8-hotspot -a 32bit # Java 1.8 JDK; Metals for VS Code does not work with 64-bit
-    } {
-        scoop export | Select-String adopt8-hotspot
-    }
-    InstallFromScoopBlock SBT sbt
-    InstallFromScoopBlock Scala scala
-    InstallFromScoopBlock hadoop-winutils
-
-    Block "Install IntelliJ" {
-        scoop bucket add jetbrains
-        scoop install IntelliJ-IDEA
     }
 }
