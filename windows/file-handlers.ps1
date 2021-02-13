@@ -27,7 +27,12 @@ function 7ZipFileBlock([string]$Extension, [int]$IconIndex) {
     AssociateFileBlock $Extension $handler
 }
 
+AssociateFileBlock txt VSCodeSourceFile
+AssociateFileBlock log VSCodeSourceFile
+AssociateFileBlock ps1 VSCodeSourceFile
+AssociateFileBlock json VSCodeSourceFile
 AssociateFileBlock xml VSCodeSourceFile
+AssociateFileBlock config VSCodeSourceFile
 AssociateFileBlock DotSettings VSCodeSourceFile
 AssociateFileBlock creds VSCodeSourceFile
 AssociateFileBlock pgpass VSCodeSourceFile
