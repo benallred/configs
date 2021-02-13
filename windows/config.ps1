@@ -5,7 +5,7 @@ Block "Rename computer" {
     Write-ManualStep
     Rename-Computer -NewName (Read-Host "Set computer name to")
 } {
-    $env:ComputerName -notlike 'desktop-*'
+    $env:ComputerName -notlike 'desktop-*' -and $env:ComputerName -notlike 'laptop-*'
 } -RequiresReboot
 Block "Disable UAC" {
     & "$PSScriptRoot\Disable UAC.ps1"
