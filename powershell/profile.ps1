@@ -44,7 +44,7 @@ function Get-TimestampForFileName() {
 
 function Set-RegistryValue([Parameter(Mandatory)][string]$Path, [string]$Name = "(Default)", [Parameter(Mandatory)][object]$Value) {
     if (!(Test-Path $Path)) {
-        New-Item $Path -Force
+        New-Item $Path -Force | Out-Null
     }
     Set-ItemProperty $Path -Name $Name -Value $Value
 }
