@@ -75,8 +75,13 @@ TrayTip, % programTitle, Finished
 MoveTrayIcon(idx, originalTrayX, trayY, originalTrayIconCount)
 {
     local
+    trayIconSizeAndPadding := 24
     ; TrayIcon_Move(trayIcon.idx, 0) ; This is not persisted through reboots, so do manual mouse clicks
-    trayX := originalTrayX + 32 * (originalTrayIconCount - TrayIcon_GetInfo().MaxIndex()) ; handle new icons appearing while we're sorting
-    MouseClick, Left, trayX + idx * 32, trayY, 1, 5, D
-    MouseClick, Left, trayX, trayY, 1, 5, U
+    trayX := originalTrayX + trayIconSizeAndPadding * (originalTrayIconCount - TrayIcon_GetInfo().MaxIndex()) ; handle new icons appearing while we're sorting
+    MouseMove, trayX + idx * trayIconSizeAndPadding, trayY
+    Sleep, 500
+    MouseClick, Left, , , 1, , D
+    MouseMove, trayX, trayY
+    Sleep, 500
+    MouseClick, Left, , , 1, , U
 }
