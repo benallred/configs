@@ -33,7 +33,7 @@ Block "Configure scoop nonportable bucket" {
 
 if (!(Configured $forKids)) {
     Block "Install Edge (Dev)" {
-        iwr "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" -OutFile $env:tmp\MicrosoftEdgeSetupDev.exe
+        Download-File "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" $env:tmp\MicrosoftEdgeSetupDev.exe
         . $env:tmp\MicrosoftEdgeSetupDev.exe
         DeleteDesktopShortcut "Microsoft Edge Dev"
     } {
@@ -43,7 +43,7 @@ if (!(Configured $forKids)) {
 
 if (!(Configured $forKids)) {
     Block "Install Authy" {
-        iwr "https://electron.authy.com/download?channel=stable&arch=x64&platform=win32&version=latest&product=authy" -OutFile "$env:tmp\Authy Desktop Setup.exe"
+        Download-File "https://electron.authy.com/download?channel=stable&arch=x64&platform=win32&version=latest&product=authy" "$env:tmp\Authy Desktop Setup.exe"
         . "$env:tmp\Authy Desktop Setup.exe"
         DeleteDesktopShortcut "Authy Desktop"
     } {
@@ -69,7 +69,7 @@ if (!(Configured $forKids)) {
 }
 
 Block "Install VS Code" {
-    iwr https://aka.ms/win32-x64-user-stable -OutFile $env:tmp\VSCodeUserSetup-x64.exe
+    Download-File https://aka.ms/win32-x64-user-stable $env:tmp\VSCodeUserSetup-x64.exe
     . $env:tmp\VSCodeUserSetup-x64.exe /SILENT /TASKS="associatewithfiles,addtopath" /LOG=$env:tmp\VSCodeInstallLog.txt
     WaitWhile { !(Test-ProgramInstalled "Visual Studio Code") } "Waiting for VS Code to be installed"
     $codeCmd = "$env:LocalAppData\Programs\Microsoft VS Code\bin\code.cmd"
@@ -87,7 +87,7 @@ if (!(Configured $forKids)) {
     Block "Install Visual Studio" {
         # https://visualstudio.microsoft.com/downloads/
         $downloadUrl = (iwr "https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Professional&rel=16" -useb | sls "https://download\.visualstudio\.microsoft\.com/download/pr/.+?/vs_Professional.exe").Matches.Value
-        iwr $downloadUrl -OutFile $env:tmp\vs_professional.exe
+        Download-File $downloadUrl $env:tmp\vs_professional.exe
         # https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids?view=vs-2019
         # Microsoft.VisualStudio.Workload.ManagedDesktop    .NET desktop development
         # Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
@@ -103,7 +103,7 @@ if (!(Configured $forKids)) {
 
         function InstallVisualStudioExtension([string]$Publisher, [string]$Extension) {
             $downloadUrl = (iwr "https://marketplace.visualstudio.com/items?itemName=$Publisher.$Extension" -useb | sls "/_apis/public/gallery/publishers/$Publisher/vsextensions/$Extension/(\d+\.?)+/vspackage").Matches.Value | % { "https://marketplace.visualstudio.com$_" }
-            iwr $downloadUrl -OutFile $env:tmp\$Publisher.$Extension.vsix
+            Download-File $downloadUrl $env:tmp\$Publisher.$Extension.vsix
             $vsixInstaller = . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath | Split-Path | % { "$_\VSIXInstaller.exe" }
             . $vsixInstaller /quiet /admin $env:tmp\$Publisher.$Extension.vsix
         }
@@ -119,7 +119,7 @@ if (!(Configured $forKids)) {
         $resharperJson = (iwr "https://data.services.jetbrains.com/products/releases?code=RSU&latest=true&type=release" -useb | ConvertFrom-Json)
         $downloadUrl = $resharperJson.RSU[0].downloads.windows.link
         $fileName = Split-Path $downloadUrl -Leaf
-        iwr $downloadUrl -OutFile $env:tmp\$fileName
+        Download-File $downloadUrl $env:tmp\$fileName
         . $env:tmp\$fileName /SpecificProductNames=ReSharper /VsVersion=16.0 /Silent=True
         # Activation:
         #   ReSharper command line activation not currently available:
@@ -149,7 +149,7 @@ if (!(Configured $forKids)) {
     if (!(Configured $forTest)) {
         Block "Install Docker" {
             # https://github.com/docker/docker.github.io/issues/6910#issuecomment-403502065
-            iwr https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe -OutFile "$env:tmp\Docker for Windows Installer.exe"
+            Download-File https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe "$env:tmp\Docker for Windows Installer.exe"
             # https://github.com/docker/for-win/issues/1322
             . "$env:tmp\Docker for Windows Installer.exe" install --quiet | Out-Default
             DeleteDesktopShortcut "Docker Desktop"
@@ -161,7 +161,7 @@ if (!(Configured $forKids)) {
 }
 
 Block "Install AutoHotkey" {
-    iwr https://www.autohotkey.com/download/ahk-install.exe -OutFile $env:tmp\ahk-install.exe
+    Download-File https://www.autohotkey.com/download/ahk-install.exe $env:tmp\ahk-install.exe
     . $env:tmp\ahk-install.exe /S /IsHostApp
 } {
     Test-ProgramInstalled AutoHotkey
@@ -169,7 +169,7 @@ Block "Install AutoHotkey" {
 
 if (!(Configured $forKids)) {
     Block "Install Slack" {
-        iwr https://downloads.slack-edge.com/releases_x64/SlackSetup.exe -OutFile $env:tmp\SlackSetup.exe
+        Download-File https://downloads.slack-edge.com/releases_x64/SlackSetup.exe $env:tmp\SlackSetup.exe
         . $env:tmp\SlackSetup.exe
         if (!(Configured $forWork)) {
             WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack -ErrorAction Ignore) } "Waiting for Slack registry key"
@@ -185,7 +185,7 @@ if (!(Configured $forKids)) {
 Block "Install Office" {
     # https://www.microsoft.com/en-in/download/details.aspx?id=49117
     $downloadUrl = (iwr "https://www.microsoft.com/en-in/download/confirmation.aspx?id=49117" -useb | sls "https://download\.microsoft\.com/download/.+?/officedeploymenttool_.+?.exe").Matches.Value
-    iwr $downloadUrl -OutFile $env:tmp\officedeploymenttool.exe
+    Download-File $downloadUrl $env:tmp\officedeploymenttool.exe
     . $env:tmp\officedeploymenttool.exe /extract:$env:tmp\officedeploymenttool /passive /quiet
     WaitWhile { !(Test-Path $env:tmp\officedeploymenttool\setup.exe) } "Waiting for Office setup to be extracted"
     . $env:tmp\officedeploymenttool\setup.exe /configure $PSScriptRoot\OfficeConfiguration.xml
@@ -246,7 +246,7 @@ if (!(Configured $forKids)) {
 }
 
 Block "Install Steam" {
-    iwr https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe -OutFile $env:tmp\SteamSetup.exe
+    Download-File https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe $env:tmp\SteamSetup.exe
     . $env:tmp\SteamSetup.exe
     DeleteDesktopShortcut Steam
 } {
@@ -254,7 +254,7 @@ Block "Install Steam" {
 }
 
 Block "Install Battle.net" {
-    iwr https://www.battle.net/download/getInstallerForGame -OutFile $env:tmp\Battle.net-Setup.exe
+    Download-File https://www.battle.net/download/getInstallerForGame $env:tmp\Battle.net-Setup.exe
     . $env:tmp\Battle.net-Setup.exe
     DeleteDesktopShortcut Battle.net
 } {
@@ -263,7 +263,7 @@ Block "Install Battle.net" {
 
 if (!(Configured $forKids) -and ((Configured $forWork) -or (Configured $forTest))) {
     Block "Install Firefox" {
-        iwr "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US" -OutFile "$env:tmp\Firefox Installer.exe"
+        Download-File "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US" "$env:tmp\Firefox Installer.exe"
         . "$env:tmp\Firefox Installer.exe"
         DeleteDesktopShortcut Firefox
     } {
@@ -299,7 +299,7 @@ if (!(Configured $forKids)) {
     InstallFromMicrosoftStoreBlock "Surface Audio" 9nxjnfwnvm8d Microsoft.SurfaceAudio
 
     Block "Install Wally" {
-        iwr https://configure.ergodox-ez.com/wally/win -OutFile $env:tmp\Wally.exe
+        Download-File https://configure.ergodox-ez.com/wally/win $env:tmp\Wally.exe
         . $env:tmp\Wally.exe /SILENT /NORESTART /LOG=$env:tmp\WallyInstallLog.txt
     } {
         Test-ProgramInstalled Wally

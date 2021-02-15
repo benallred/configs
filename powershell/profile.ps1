@@ -67,6 +67,14 @@ function SecureRead-Host([string]$Prompt) {
     return $string
 }
 
+function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)][string]$OutFile) {
+    $savedProgressPreference = $ProgressPreference
+    $ProgressPreference = "SilentlyContinue"
+    Write-Host "Downloading $Uri`n`tto $OutFile"
+    Invoke-WebRequest $Uri -OutFile $OutFile
+    $ProgressPreference = $savedProgressPreference
+}
+
 # fix for https://github.com/PowerShell/PowerShell/issues/7130
 # can be removed when https://github.com/PowerShell/PSReadLine/pull/711 update makes it through
 Set-PSReadLineKeyHandler Shift+Spacebar -ScriptBlock { [Microsoft.PowerShell.PSConsoleReadLine]::Insert(" ") }
