@@ -148,10 +148,9 @@ if (!(Configured $forKids)) {
 
     if (!(Configured $forTest)) {
         Block "Install Docker" {
-            # https://github.com/docker/docker.github.io/issues/6910#issuecomment-403502065
-            Download-File https://download.docker.com/win/stable/Docker%20for%20Windows%20Installer.exe "$env:tmp\Docker for Windows Installer.exe"
+            Download-File https://desktop.docker.com/win/stable/Docker%20Desktop%20Installer.exe "$env:tmp\Docker Desktop Installer.exe"
             # https://github.com/docker/for-win/issues/1322
-            . "$env:tmp\Docker for Windows Installer.exe" install --quiet | Out-Default
+            . "$env:tmp\Docker Desktop Installer.exe" install --quiet | Out-Default
             DeleteDesktopShortcut "Docker Desktop"
             ConfigureNotifications "Docker Desktop"
         } {
