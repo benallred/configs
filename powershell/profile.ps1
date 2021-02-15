@@ -8,7 +8,7 @@ function Test-IsAdmin() {
 }
 
 function Run-AsAdmin([Parameter(Mandatory)][string]$FilePath) {
-    Start-Process powershell -Verb RunAs -ArgumentList "-File $FilePath"
+    Start-Process powershell -Verb RunAs -ArgumentList "-File `"$FilePath`""
 }
 
 function Set-WindowTitle([string]$title) {
@@ -35,7 +35,7 @@ function Create-RunOnce([Parameter(Mandatory)][string]$Description, [Parameter(M
 }
 
 function Create-FileRunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$FilePath) {
-    Create-RunOnce $Description "powershell -Command `"Run-AsAdmin $FilePath`""
+    Create-RunOnce $Description "powershell -Command `"Run-AsAdmin '$FilePath'`""
 }
 
 function Get-TimestampForFileName() {
