@@ -58,8 +58,8 @@ if (!(Configured $forKids)) {
 }
 & $PSScriptRoot\scheduled-tasks\config.ps1
 
-if (!(Configured $forKids)) {
-    FirstRunBlock "Defer config for Start Menu, Taskbar, and System Tray" {
-        Create-FileRunOnce "Config for Start Menu, Taskbar, and System Tray" "$PSScriptRoot\windows\start-task-tray\start-task-tray.ps1"
-    } -RequiresReboot
-}
+# if (!(Configured $forKids)) {
+#     FirstRunBlock "Defer config for Start Menu, Taskbar, and System Tray" {
+#         Create-FileRunOnce "Config for Start Menu, Taskbar, and System Tray" "$PSScriptRoot\windows\start-task-tray\start-task-tray.ps1"
+#     } -RequiresReboot
+# }
