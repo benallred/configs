@@ -260,6 +260,16 @@ Block "Install Battle.net" {
     Test-ProgramInstalled "Battle.net"
 }
 
+if (!(Configured $forKids)) {
+    Block "Install Discord" {
+        Download-File https://discord.com/api/download?platform=win $env:tmp\DiscordSetup.exe
+        . $env:tmp\DiscordSetup.exe
+        DeleteDesktopShortcut Discord
+    } {
+        Test-ProgramInstalled Discord
+    }
+}
+
 if (!(Configured $forKids) -and ((Configured $forWork) -or (Configured $forTest))) {
     Block "Install Firefox" {
         Download-File "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US" "$env:tmp\Firefox Installer.exe"
