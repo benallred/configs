@@ -1,7 +1,6 @@
 function UninstallBlock([string]$AppName) {
     Block "Uninstall Appx package $AppName" {
-        Get-AppxPackage $AppName | Remove-AppxPackage
-        sleep -s 2 # not a big deal, but when the uninstalls are run so quickly, the PowerShell progress messages don't get cleaned up
+        Get-AppxPackage $AppName | Remove-AppxPackage | Out-Default
     } {
         !(Get-AppxPackage $AppName)
     }
