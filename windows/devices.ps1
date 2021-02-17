@@ -5,3 +5,6 @@ FirstRunBlock "Devices > Printers & scanners > Add a printer or scanner > The pr
         WaitWhileProcess rundll32
     }
 }
+Block "Devices > Touchpad > Three-finger gestures > Taps = Middle mouse button" {
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\PrecisionTouchPad" -Name ThreeFingerTapEnabled -Value 4
+} -RequiresReboot
