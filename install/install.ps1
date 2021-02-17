@@ -316,6 +316,17 @@ if (!(Configured $forKids)) {
 
     InstallFromScoopBlock "Logitech Gaming Software" logitech-gaming-software-np
 
+    Block "Install mac-precision-touchpad" {
+        $asset = (iwr https://api.github.com/repos/imbushuo/mac-precision-touchpad/releases/latest | ConvertFrom-Json).assets | ? { $_.name -eq "Drivers-amd64-ReleaseMSSigned.zip" }
+        $downloadUrl = $asset | select -exp browser_download_url
+        $fileName = $asset | select -exp name
+        Download-File $downloadUrl $env:tmp\$fileName
+        Expand-Archive $env:tmp\$fileName $env:tmp\mac-precision-touchpad
+        pnputil /add-driver $env:tmp\mac-precision-touchpad\drivers\amd64\AmtPtpDevice.inf /install
+    } {
+        pnputil /enum-drivers | sls AmtPtpDevice.inf
+    }
+
     InstallFromScoopBlock scrcpy scrcpy
 
     InstallFromScoopBlock "Speedtest CLI" speedtest-cli
