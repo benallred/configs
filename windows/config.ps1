@@ -24,7 +24,7 @@ Block "Control Panel > View by = Small icons" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name StartupPage -Value 1
 }
 Block "Control Panel > System > Remote settings > Allow Remote Assistance connections to this computer = Off" {
-    Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name fAllowToGetHelp -Value 0
+    Set-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name fAllowToGetHelp -Value 0
     Disable-NetFirewallRule -DisplayGroup "Remote Assistance"
 }
 & $PSScriptRoot\desktop.ps1

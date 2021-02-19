@@ -11,5 +11,5 @@ Block "Time & Language > Date & time > Add clocks for different time zones" {
     SetAdditionalClock 2 "Korea" "Korea Standard Time"
 }
 Block "Time & Language > Language > Keyboard > Input language hot keys > Between input languages > Change Key Sequence > Switch Input Language = Not Assigned" {
-    Set-ItemProperty "HKCU:\Keyboard Layout\Toggle" -Name "Language Hotkey" -Value 3
+    Set-RegistryValue "HKCU:\Keyboard Layout\Toggle" -Name "Language Hotkey" -Value 3
 }

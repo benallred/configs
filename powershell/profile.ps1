@@ -31,7 +31,7 @@ function Create-Shortcut([Parameter(Mandatory)][string]$Target, [Parameter(Manda
 
 function Create-RunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$Command) {
     # https://docs.microsoft.com/en-us/windows/win32/setupapi/run-and-runonce-registry-keys
-    Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\RunOnce" -Name $Description -Value $Command
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\RunOnce" -Name $Description -Value $Command
 }
 
 function Create-FileRunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$FilePath) {
