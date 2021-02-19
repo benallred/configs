@@ -7,6 +7,7 @@ if (!(Configured $forKids)) {
         Set-RegistryValue "HKCU:\Software\Microsoft\Windows\DWM" -Name AccentColor -Value 4287070979
         Set-RegistryValue "HKCU:\Software\Microsoft\Windows\DWM" -Name ColorizationAfterglow -Value 3288564615
         Set-RegistryValue "HKCU:\Software\Microsoft\Windows\DWM" -Name ColorizationColor -Value 3288564615
+        Set-RegistryValue "HKCU:\Software\Microsoft\Windows\DWM" -Name EnableWindowColorization -Value 1
     }
 }
 Block "Personalization > Lock screen > Get fun facts, tips, and more from Windows and Cortana on your lock screen = Off" {
