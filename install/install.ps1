@@ -222,7 +222,50 @@ Block "Install Office" {
     #       2. SecureRead-Host to get Office key; write to copy of xml in tmp; use tmp configuration
     #       3. Manual activation
 } {
-    Test-ProgramInstalled "Microsoft Office Professional Plus 2019 - en-us"
+    (Test-ProgramInstalled "Microsoft Office") -or (Test-ProgramInstalled "Microsoft 365")
+}
+
+Block "Configure Office" {
+    # Options > Mail > Compose messages > Editor Options > Proofing > AutoCorrect Options > AutoCorrect > Replace ... with ... = Delete
+    # Options > Mail > Compose messages > Editor Options > Proofing > AutoCorrect Options > AutoCorrect > Replace hsa with has = Delete
+    # Options > Mail > Compose messages > Editor Options > Proofing > AutoCorrect Options > AutoFormat As You Type > "Straight quotes" with "smart quotes" = Off
+    # Options > Mail > Compose messages > Editor Options > Proofing > AutoCorrect Options > AutoFormat As You Type > Hyphens (--) with dash (--) = Off
+    # Options > Mail > Compose messages > Editor Options > Proofing > AutoCorrect Options > AutoFormat > "Straight quotes" with "smart quotes" = Off
+    # Options > Mail > Compose messages > Editor Options > Proofing > AutoCorrect Options > AutoFormat > Hyphens (--) with dash (--) = Off
+    # Options > Mail > Compose messages > Editor Options > Advanced > Cut, copy, and paste > Use smart cut and paste > Settings > Adjust sentence and word spacing automatically = Off
+    # Options > Mail > Outlook panes > Reading Pane > Mark items as read when viewed in the Reading Pane = Yes
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" -Name PreviewMarkMessage -Value 1
+    # Options > Mail > Outlook panes > Reading Pane > Mark items as read when viewed in the Reading Pane = Yes > Wait seconds = 0
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" -Name PreviewWaitSeconds -Value 0
+    # Options > Calendar > Display options > Automatically switch from vertical layout to schedule view ... = Off
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\WunderBar" -Name EnableAutoSwitchingVerticalToHorizontal -Value 0
+    # Options > People > Online status and photographs > Show user photographs when available = Off
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Common" -Name TurnOffPhotograph -Value 1
+    # Options > Search > Results > Include messages from the Deleted Items folder in each data file when searching in All Items = Yes
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Search" -Name IncludeDeletedItems -Value 1
+    # Options > Advanced > AutoArchive > AutoArchive Settings > Run AutoArchive every = 7 days
+    # Options > Advanced > AutoArchive > AutoArchive Settings > Delete expired items (e-mail folders only) = Off
+    # If home machine: Options > Advanced > AutoArchive > AutoArchive Settings > Archive or delete old items = Off
+    # If work machine: Options > Advanced > AutoArchive > AutoArchive Settings > Clean out items older than: 2 months
+    # If work machine: Options > Advanced > AutoArchive > AutoArchive Settings > Move old items to: <Current Year>.pst
+    # Options > Advanced > Reminders > Show reminders = Off
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\Reminders" -Name Type -Value 0
+    # Options > Advanced > Other > Allow analysis ... = Off
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Common\Portal\ColleagueImport" -Name Enabled -Value 0
+    # Options > Quick Access Toolbar > Choose commands from = All Commands
+    # Options > Quick Access Toolbar > Choose commands from = All Commands > Add > Message Options...
+    # Options > Add-ins > Manage COM Add-ins > Microsoft SharePoint Server Colleague Import Add-in = Off
+    # Options > Add-ins > Manage COM Add-ins > OneNote Notes about Outlook Items = Off
+    # Options > Add-ins > Manage COM Add-ins > Outlook Social Connector 2016 = Off
+    # If home machine: Options > Add-ins > Manage COM Add-ins > Skype Meeting Add-in for Microsoft Office 2016 = Off
+    # UI Changes > View > Layout > Folder Pane > Favorites = Off
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" -Name HideMailFavorites -Value 1
+    # UI Changes > View > Layout > Use Tighter Spacing = Yes
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" -Name DensitySetting -Value 1
+    # UI Changes > Open e-mail message > Remove items in Quick Access Toolbar
+    # UI Changes > Open e-mail message > Add "Mark Unread" (not "Mark as Unread"; "Mark as Unread" does not toggle)
+    # UI Changes > Open new e-mail > Remove items in Quick Access Toolbar
+    # UI Changes > Open new e-mail > Add "Save Sent Item To"
 }
 
 InstallFromScoopBlock Sysinternals sysinternals

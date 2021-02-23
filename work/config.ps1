@@ -1,6 +1,6 @@
 if ((Configured $forWork) -or (Configured $forTest)) {
     Block "Install Zoom" {
-        iwr https://zoom.us/client/latest/ZoomInstaller.exe -OutFile "$env:tmp\ZoomInstaller.exe"
+        iwr https://zoom.us/client/latest/ZoomInstaller.exe -OutFile $env:tmp\ZoomInstaller.exe
         . "$env:tmp\ZoomInstaller.exe"
         DeleteDesktopShortcut Zoom
 
@@ -25,5 +25,10 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name EnterFullScreenWhenViewingSharedScreen -Value 0
     } {
         Test-ProgramInstalled Zoom
+    }
+    
+    Block "Outlook > Options > Add-ins > Manage COM Add-ins > Mimecast for Outlook = Off" {
+        Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Addins\MimecastServicesForOutlook.AddinModule" -Name ADXStartMode -Value FIRSTSTART
+        Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Addins\MimecastServicesForOutlook.AddinModule" -Name LoadBehavior -Value 2
     }
 }
