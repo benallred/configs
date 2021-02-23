@@ -19,7 +19,7 @@ if (!(Configured $forKids)) {
         ConfigFollowup "Update to WSL 2" {
             #https://docs.microsoft.com/en-us/windows/wsl/wsl2-kernel
             #https://docs.microsoft.com/en-us/windows/wsl/install-win10#:~:text=install%20the%20MSI%20from%20that%20page%20on%20our%20documentation%20to%20install%20a%20Linux%20kernel%20on%20your%20machine%20for%20WSL%202%20to%20use
-            iwr https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi -OutFile $env:tmp\wsl_update_x64.msi
+            Download-File https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi $env:tmp\wsl_update_x64.msi
             . $env:tmp\wsl_update_x64.msi /passive /norestart
             wsl --set-default-version 2
         }

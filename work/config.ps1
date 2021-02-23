@@ -1,13 +1,13 @@
 if ((Configured $forWork) -or (Configured $forTest)) {
     Block "Install Zoom" {
-        iwr https://zoom.us/client/latest/ZoomInstaller.exe -OutFile $env:tmp\ZoomInstaller.exe
+        Download-File https://zoom.us/client/latest/ZoomInstaller.exe $env:tmp\ZoomInstaller.exe
         . "$env:tmp\ZoomInstaller.exe"
         DeleteDesktopShortcut Zoom
 
         # Configure during install:
         #   https://support.zoom.us/hc/en-us/articles/201362163-Mass-Installation-and-Configuration-for-Windows#h_b82f0349-4d8f-45dd-898a-1ab98389a4b7
         #   Code
-        #       iwr https://zoom.us/client/latest/ZoomInstallerFull.msi -OutFile "$env:tmp\ZoomInstallerFull.msi"
+        #       Download-File https://zoom.us/client/latest/ZoomInstallerFull.msi $env:tmp\ZoomInstallerFull.msi
         #       msiexec /package "$env:tmp\ZoomInstallerFull.msi" ZRecommend="AutoHideToolbar=1"
         #   I can't get ZRecommend or ZConfig to work (settings are not changed)
         # Group policy:
