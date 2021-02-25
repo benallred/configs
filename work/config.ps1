@@ -26,7 +26,7 @@ if ((Configured $forWork) -or (Configured $forTest)) {
     } {
         Test-ProgramInstalled Zoom
     }
-    
+
     Block "Outlook > Options > Add-ins > Manage COM Add-ins > Mimecast for Outlook = Off" {
         Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Addins\MimecastServicesForOutlook.AddinModule" -Name ADXStartMode -Value FIRSTSTART
         Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Addins\MimecastServicesForOutlook.AddinModule" -Name LoadBehavior -Value 2

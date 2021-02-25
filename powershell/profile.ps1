@@ -75,6 +75,18 @@ function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)
     $ProgressPreference = $savedProgressPreference
 }
 
+function AddNuGetSource([Parameter(Mandatory)][string]$Name, [Parameter(Mandatory)][string]$Path) {
+    $nugetConfigPath = "$env:AppData\NuGet\nuget.config"
+    if (!(Select-String $Path $nugetConfigPath)) {
+        [xml]$nugetConfigXml = Get-Content $nugetConfigPath
+        $newPackageSource = $nugetConfigXml.CreateElement("add")
+        $newPackageSource.SetAttribute("key", $Name)
+        $newPackageSource.SetAttribute("value", $Path)
+        $nugetConfigXml.configuration.packageSources.AppendChild($newPackageSource)
+        $nugetConfigXml.Save($nugetConfigPath)
+    }
+}
+
 # fix for https://github.com/PowerShell/PowerShell/issues/7130
 # can be removed when https://github.com/PowerShell/PSReadLine/pull/711 update makes it through
 Set-PSReadLineKeyHandler Shift+Spacebar -ScriptBlock { [Microsoft.PowerShell.PSConsoleReadLine]::Insert(" ") }
