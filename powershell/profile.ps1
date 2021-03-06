@@ -87,6 +87,26 @@ function AddNuGetSource([Parameter(Mandatory)][string]$Name, [Parameter(Mandator
     }
 }
 
+function GitAudit() {
+    function CheckDir($dir) {
+        pushd $dir
+        if (Test-Path (Join-Path $dir .git)) {
+            $unsynced = git unsynced
+            $status = git status --porcelain
+            if ($unsynced -or $status) {
+                Write-Output (New-Object System.String -ArgumentList ('*', 100))
+                Write-Host $dir -ForegroundColor Red
+                git unsynced
+                git status --porcelain
+            }
+        }
+        popd
+    }
+    (Get-ChildItem $git) +
+    (Get-ChildItem C:\Work | Get-ChildItem) |
+    % { CheckDir $_.FullName }
+}
+
 # fix for https://github.com/PowerShell/PowerShell/issues/7130
 # can be removed when https://github.com/PowerShell/PSReadLine/pull/711 update makes it through
 Set-PSReadLineKeyHandler Shift+Spacebar -ScriptBlock { [Microsoft.PowerShell.PSConsoleReadLine]::Insert(" ") }
