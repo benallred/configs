@@ -111,6 +111,7 @@ if (!(Configured $forKids)) {
         InstallVisualStudioExtension VisualStudioPlatformTeam SolutionErrorVisualizer
         InstallVisualStudioExtension VisualStudioPlatformTeam FixMixedTabs
         InstallVisualStudioExtension VisualStudioPlatformTeam PowerCommandsforVisualStudio
+        InstallVisualStudioExtension maksim-vorobiev PeasyMotion
     } {
         Test-ProgramInstalled "Visual Studio Professional 2019"
     }
