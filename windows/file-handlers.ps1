@@ -39,6 +39,10 @@ AssociateFileBlock pgpass VSCodeSourceFile
 AssociateFileBlock yarnrc VSCodeSourceFile
 AssociateFileBlock nvmrc VSCodeSourceFile
 
+Block "Set .ahk Edit command to VS Code" {
+    Set-RegistryValue "HKLM:\SOFTWARE\Classes\AutoHotkeyScript\Shell\Edit\Command" -Value "code.exe %1"
+}
+
 7ZipFileBlock 7z 0
 7ZipFileBlock zip 1
 7ZipFileBlock rar 3
