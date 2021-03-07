@@ -51,7 +51,7 @@ function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
     }
 }
 
-function WaitWhileProcess([string]$ProcessName, [string]$WaitingFor) {
+function WaitWhileProcess([string]$ProcessName) {
     WaitWhile { Get-Process $ProcessName -ErrorAction Ignore } "Waiting for $ProcessName to close"
 }
 
