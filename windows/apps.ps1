@@ -1,6 +1,9 @@
 function UninstallBlock([string]$AppName) {
     Block "Uninstall Appx package $AppName" {
-        Get-AppxPackage $AppName | Remove-AppxPackage | Out-Default
+        $savedProgressPreference = $ProgressPreference
+        $ProgressPreference = "SilentlyContinue"
+        Get-AppxPackage $AppName | Remove-AppxPackage
+        $ProgressPreference = $savedProgressPreference
     } {
         !(Get-AppxPackage $AppName)
     }
