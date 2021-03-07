@@ -11,7 +11,7 @@ function UninstallBlock([string]$AppName) {
 
 FirstRunBlock "Configure OneNote" {
     Write-ManualStep "Start OneNote notebooks syncing"
-    start onenote:
+    start "shell:AppsFolder\$(Get-StartApps "OneNote for Windows 10" | select -ExpandProperty AppId)"
 }
 
 if (!(Configured $forKids)) {
