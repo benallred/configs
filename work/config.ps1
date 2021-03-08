@@ -1,3 +1,7 @@
+Block "Prevent `"Allow my organization to manage my device`"" {
+    Set-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WorkplaceJoin" -Name BlockAADWorkplaceJoin -Value 1
+}
+
 if ((Configured $forWork) -or (Configured $forTest)) {
     Block "Install Zoom" {
         Download-File https://zoom.us/client/latest/ZoomInstaller.exe $env:tmp\ZoomInstaller.exe
