@@ -9,6 +9,10 @@ function UninstallBlock([string]$AppName) {
     }
 }
 
+FirstRunBlock "Clean up items on desktop" {
+    DeleteDesktopShortcut "Microsoft Edge"
+}
+
 FirstRunBlock "Configure OneNote" {
     Write-ManualStep "Start OneNote notebooks syncing"
     start "shell:AppsFolder\$(Get-StartApps "OneNote for Windows 10" | select -ExpandProperty AppId)"
