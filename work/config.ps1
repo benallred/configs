@@ -51,4 +51,13 @@ if ((Configured $forWork) -or (Configured $forTest)) {
     } {
         Test-ProgramInstalled "SQL Server 2017"
     }
+
+    Block "Install SQL Server Management Studio" {
+        # https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
+        Download-File https://aka.ms/ssmsfullsetup $env:tmp\SSMS-Setup-ENU.exe
+        $installArgs = "/Passive", "/NoRestart"
+        Start-Process $env:tmp\SSMS-Setup-ENU.exe $installArgs -Wait -PassThru
+    } {
+        Test-ProgramInstalled "SQL Server Management Studio"
+    }
 }
