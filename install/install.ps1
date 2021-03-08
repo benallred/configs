@@ -94,7 +94,7 @@ if (!(Configured $forKids)) {
         # Microsoft.VisualStudio.Workload.NetCoreTools      .NET Core cross-platform development
         # https://docs.microsoft.com/en-us/visualstudio/install/command-line-parameter-examples?view=vs-2019#using---wait
         $vsInstallArgs = '--passive', '--norestart', '--wait', '--includeRecommended', '--add', 'Microsoft.VisualStudio.Workload.ManagedDesktop', '--add', 'Microsoft.VisualStudio.Workload.NetWeb', '--add', 'Microsoft.VisualStudio.Workload.NetCoreTools'
-        Start-Process $env:tmp\vs_professional.exe $vsInstallArgs -Wait -PassThru
+        Start-Process $env:tmp\vs_professional.exe $vsInstallArgs -Wait
         InstallFollowup "Visual Studio" {
             . (. "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath) $PSCommandPath
             WaitWhile { !(Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" }) } "Waiting for Visual Studio registry key"

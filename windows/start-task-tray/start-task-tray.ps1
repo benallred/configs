@@ -51,7 +51,7 @@ Stop-Process -Name explorer
 
 #####
 # Order system tray
-Start-Process $PSScriptRoot\order-tray-icons.ahk -Wait -PassThru
+Start-Process $PSScriptRoot\order-tray-icons.ahk -Wait
 
 
 #####

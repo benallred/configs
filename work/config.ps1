@@ -47,7 +47,7 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         # Download-File https://go.microsoft.com/fwlink/?linkid=866662 $env:tmp\SQL2019-SSEI-Dev.exe
         Download-File https://go.microsoft.com/fwlink/?linkid=853016 $env:tmp\SQLServer2017-SSEI-Dev.exe
         $installArgs = "/Action=Install", "/IAcceptSqlServerLicenseTerms", "/InstallPath=`"C:\Program Files\Microsoft SQL Server`"", "/Features=FullText", "/SecurityMode=SQL", "/Verbose"
-        Start-Process $env:tmp\SQLServer2017-SSEI-Dev.exe $installArgs -Wait -PassThru
+        Start-Process $env:tmp\SQLServer2017-SSEI-Dev.exe $installArgs -Wait
     } {
         Test-ProgramInstalled "SQL Server 2017"
     }
@@ -56,7 +56,7 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         # https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms
         Download-File https://aka.ms/ssmsfullsetup $env:tmp\SSMS-Setup-ENU.exe
         $installArgs = "/Passive", "/NoRestart"
-        Start-Process $env:tmp\SSMS-Setup-ENU.exe $installArgs -Wait -PassThru
+        Start-Process $env:tmp\SSMS-Setup-ENU.exe $installArgs -Wait
     } {
         Test-ProgramInstalled "SQL Server Management Studio"
     }
