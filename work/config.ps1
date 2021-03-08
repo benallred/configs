@@ -31,6 +31,12 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Test-ProgramInstalled Zoom
     }
 
+    Block "Install Teams" {
+        Download-File https://aka.ms/teamswin64 $env:tmp\Teams_windows_x64.exe
+        . $env:tmp\Teams_windows_x64.exe
+        DeleteDesktopShortcut "Microsoft Teams"
+    }
+
     Block "Outlook > Options > Add-ins > Manage COM Add-ins > Mimecast for Outlook = Off" {
         Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Addins\MimecastServicesForOutlook.AddinModule" -Name ADXStartMode -Value FIRSTSTART
         Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Addins\MimecastServicesForOutlook.AddinModule" -Name LoadBehavior -Value 2
