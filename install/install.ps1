@@ -156,6 +156,8 @@ if (!(Configured $forKids)) {
             . "$env:tmp\Docker Desktop Installer.exe" install --quiet | Out-Default
             DeleteDesktopShortcut "Docker Desktop"
             ConfigureNotifications "Docker Desktop"
+            WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "Docker Desktop" -ErrorAction Ignore) } "Waiting for Docker startup registry key"
+            Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "Docker Desktop"
         } {
             Test-ProgramInstalled "Docker Desktop"
         } -RequiresReboot
@@ -174,7 +176,7 @@ if (!(Configured $forKids)) {
         Download-File https://downloads.slack-edge.com/releases_x64/SlackSetup.exe $env:tmp\SlackSetup.exe
         . $env:tmp\SlackSetup.exe
         if (!(Configured $forWork)) {
-            WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack -ErrorAction Ignore) } "Waiting for Slack registry key"
+            WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack -ErrorAction Ignore) } "Waiting for Slack startup registry key"
             Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack
         }
         DeleteDesktopShortcut Slack
@@ -292,8 +294,12 @@ if (!(Configured $forKids)) {
 
 Block "Install Steam" {
     Download-File https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe $env:tmp\SteamSetup.exe
-    . $env:tmp\SteamSetup.exe
+    Start-Process $env:tmp\SteamSetup.exe "/S" -Wait
     DeleteDesktopShortcut Steam
+    if (Configured $forWork) {
+        WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name Steam -ErrorAction Ignore) } "Waiting for Steam startup registry key"
+        Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name Steam
+    }
 } {
     Test-ProgramInstalled "Steam"
 }
