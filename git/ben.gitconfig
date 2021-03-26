@@ -57,9 +57,9 @@
 	cc = commit -c
 	co = checkout
 	cob = checkout -b
-	pushu = "!git push -u origin $(git rev-parse --abbrev-ref HEAD)"
+	pushu = "!git push -u origin $(git branch --show-current)"
 	pushnv = push --no-verify
-	pr = !start $(echo $(git config remote.origin.url) | sed s/\\\\.git//)/pull/new/$(git rev-parse --abbrev-ref HEAD)
+	pr = !start $(echo $(git config remote.origin.url) | sed s/\\\\.git//)/pull/new/$(git branch --show-current)
 	b = branch -a
 	unsynced = log --branches --not --remotes --no-walk --oneline
 	ri = rebase -i
