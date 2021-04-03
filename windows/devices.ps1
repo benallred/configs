@@ -5,6 +5,9 @@ FirstRunBlock "Devices > Printers & scanners > Add a printer or scanner > The pr
         WaitWhileProcess rundll32
     }
 }
+Block "Devices > Touchpad > Taps > Press the lower right corner of the touchpad to right-click = Off" {
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\PrecisionTouchPad" -Name RightClickZoneEnabled -Value 0
+} -RequiresReboot
 Block "Devices > Touchpad > Three-finger gestures > Taps = Middle mouse button" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\PrecisionTouchPad" -Name ThreeFingerTapEnabled -Value 4
 } -RequiresReboot
