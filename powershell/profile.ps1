@@ -3,6 +3,7 @@ $git = "C:\BenLocal\git"
 
 Set-Alias gh Get-Help
 
+Import-Module Appx -UseWindowsPowerShell
 Copy-Item $PSScriptRoot\settings.json "$env:LocalAppData\Packages\$((Get-AppxPackage -Name Microsoft.WindowsTerminal).PackageFamilyName)\LocalState\settings.json"
 
 function Test-IsAdmin() {
@@ -117,7 +118,3 @@ $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
 Get-ChildItem "$transcriptDir\*.log" | ? { !(sls -Path $_ -Pattern "Command start time:" -SimpleMatch -Quiet) } | rm -ErrorAction SilentlyContinue
 $Transcript = "$transcriptDir\$(Get-TimestampForFileName).log"
 Start-Transcript $Transcript -NoClobber -IncludeInvocationHeader
-
-if ((Get-Location) -like "*system32") {
-    Set-Location $git
-}

@@ -113,3 +113,21 @@ function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$A
         scoop export | Select-String $AppId
     }
 }
+
+# Get AppName with
+#   Get-StartApps name
+# Get ProductId by searching for app at
+#   https://www.microsoft.com/en-us/search
+# Get AppPackageName with
+#   (Get-AppxPackage -Name "*name*").Name
+function InstallFromMicrosoftStoreBlock([string]$AppName, [string]$ProductId, [string]$AppPackageName) {
+    Block "Install $AppName" {
+        Write-ManualStep "Install $AppName"
+        start ms-windows-store://pdp/?ProductId=$ProductId
+        WaitWhile { !(Get-AppxPackage -Name $AppPackageName) } "Waiting for $AppName to be installed"
+        start "shell:AppsFolder\$(Get-StartApps $AppName | ? { $_.Name -eq $AppName } | select -ExpandProperty AppId)"
+    } {
+        Import-Module Appx -UseWindowsPowerShell
+        Get-AppxPackage -Name $AppPackageName
+    }
+}

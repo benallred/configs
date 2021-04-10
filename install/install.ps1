@@ -2,23 +2,6 @@ function InstallFollowup([string]$ProgramName, [scriptblock]$Followup) {
     ConfigFollowup "Finish $ProgramName Install" $Followup
 }
 
-# Get AppName with
-#   Get-StartApps name
-# Get ProductId by searching for app at
-#   https://www.microsoft.com/en-us/search
-# Get AppPackageName with
-#   (Get-AppxPackage -Name "*name*").Name
-function InstallFromMicrosoftStoreBlock([string]$AppName, [string]$ProductId, [string]$AppPackageName) {
-    Block "Install $AppName" {
-        Write-ManualStep "Install $AppName"
-        start ms-windows-store://pdp/?ProductId=$ProductId
-        WaitWhile { !(Get-AppxPackage -Name $AppPackageName) } "Waiting for $AppName to be installed"
-        start "shell:AppsFolder\$(Get-StartApps $AppName | select -ExpandProperty AppId)"
-    } {
-        Get-AppxPackage -Name $AppPackageName
-    }
-}
-
 Block "Configure scoop extras bucket" {
     scoop bucket add extras
 } {

@@ -1,8 +1,9 @@
 function WindowsFeatureBlock([string]$Comment, [string]$FeatureName) {
     Block "Windows Features > $Comment = On" {
-        Enable-WindowsOptionalFeature -Online -FeatureName $FeatureName -All -NoRestart
+        # https://github.com/PowerShell/PowerShell/issues/13866
+        powershell -Command "Enable-WindowsOptionalFeature -Online -FeatureName $FeatureName -All -NoRestart"
     } {
-        (Get-WindowsOptionalFeature -Online -FeatureName $FeatureName).State -eq "Enabled"
+        ((powershell -Command "(Get-WindowsOptionalFeature -Online -FeatureName $FeatureName).State -eq 'Enabled'") -eq "True")
     } -RequiresReboot
 }
 
