@@ -66,6 +66,8 @@ if (!(Configured $forKids)) {
     }
 
     InstallFromScoopBlock Yarn yarn
+
+    InstallFromScoopBlock "AWS CLI" aws
 }
 
 Block "Install VS Code" {
