@@ -90,6 +90,19 @@ function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$Afte
     }
 }
 
+function InstallFromGitHubAssetBlock([string]$User, [string]$Repo, [string]$Asset, [scriptblock]$Install, [scriptblock]$CompleteCheck) {
+    Block "Install $User/$Repo/$Asset" {
+        $asset = (iwr https://api.github.com/repos/$User/$Repo/releases/latest | ConvertFrom-Json).assets | ? { $_.name -like $Asset }
+        $downloadUrl = $asset | select -exp browser_download_url
+        $fileName = $asset | select -exp name
+        Download-File $downloadUrl $env:tmp\$fileName
+        Expand-Archive $env:tmp\$fileName $env:tmp\$Repo
+        pushd $env:tmp\$Repo
+        Invoke-Command $Install
+        popd
+    } $CompleteCheck
+}
+
 function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$AfterInstall) {
     Block "Install $AppName" {
         scoop install $AppId
