@@ -389,3 +389,13 @@ if (!(Configured $forKids)) {
 InstallFromScoopBlock Paint.NET paint.net
 
 InstallFromScoopBlock "TreeSize Free" treesize-free
+
+if (Configured $forKids) {
+    Block "Install Scratch" {
+        Download-File https://downloads.scratch.mit.edu/desktop/Scratch%20Setup.exe "$env:tmp\Scratch Setup.exe"
+        . "$env:tmp\Scratch Setup.exe"
+        DeleteDesktopShortcut "Scratch Desktop"
+    } {
+        Test-ProgramInstalled "Scratch Desktop"
+    }
+}
