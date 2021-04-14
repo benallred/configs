@@ -301,6 +301,10 @@ if (!(Configured $forKids)) {
         Download-File https://discord.com/api/download?platform=win $env:tmp\DiscordSetup.exe
         . $env:tmp\DiscordSetup.exe
         DeleteDesktopShortcut Discord
+        WaitWhile { !(Test-Path $env:AppData\discord\settings.json) } "Waiting for Discord settings file"
+        $discordSettings = Get-Content $env:AppData\discord\settings.json | ConvertFrom-Json
+        $discordSettings.START_MINIMIZED = $true
+        ConvertTo-Json $discordSettings | Set-Content $env:AppData\discord\settings.json
     } {
         Test-ProgramInstalled Discord
     }
