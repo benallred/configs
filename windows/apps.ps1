@@ -1,9 +1,6 @@
 function UninstallBlock([string]$AppName) {
     Block "Uninstall Appx package $AppName" {
-        $savedProgressPreference = $ProgressPreference
-        $ProgressPreference = "SilentlyContinue"
-        Get-AppxPackage $AppName | Remove-AppxPackage
-        $ProgressPreference = $savedProgressPreference
+        pwsh -Command "Import-Module Appx -UseWindowsPowerShell; Get-AppxPackage $AppName | Remove-AppxPackage"
     } {
         !(Get-AppxPackage $AppName)
     }
