@@ -1,7 +1,7 @@
 function ScheduledTaskBlock([Parameter(Mandatory)][string]$Comment, [Parameter(Mandatory)][string]$ScriptFilePath, [Parameter(Mandatory)][string]$TaskName, [DateTime]$Time) {
     Block $Comment {
         $at = if ($Time) { $Time } else { "07:00" }
-        $action = New-ScheduledTaskAction -Execute "%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe" -Argument "& '$ScriptFilePath'"
+        $action = New-ScheduledTaskAction -Execute "%ProgramFiles%\PowerShell\7\pwsh.exe" -Argument "& '$ScriptFilePath'"
         $trigger = New-ScheduledTaskTrigger -Daily -At $at
         $settingsSet = New-ScheduledTaskSettingsSet -StartWhenAvailable
         $task = New-ScheduledTask -Action $action -Trigger $trigger -Settings $settingsSet
