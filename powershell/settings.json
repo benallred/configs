@@ -11,6 +11,7 @@
     "profiles": {
         "defaults": {
             "colorScheme": "VS Code DarkPlus",
+            "fontFace": "CaskaydiaCove NF",
             "fontSize": 10,
             "padding": "4"
         },

@@ -5,6 +5,12 @@ Block "Install posh-git" {
     Get-Module -ListAvailable posh-git
 }
 
+Block "Install oh-my-posh" {
+    Install-Module oh-my-posh -Scope CurrentUser -AllowPrerelease -Force
+} {
+    Get-Module -ListAvailable oh-my-posh
+}
+
 if (!(Configured $forKids)) {
     Block "Install BurntToast" {
         Install-Module BurntToast -Force
@@ -22,6 +28,14 @@ Block "Configure profile.ps1" {
 } {
     (Test-Path $profile) -and (Select-String "$($PSScriptRoot -replace "\\", "\\")\\profile.ps1" $profile) # <original> is regex, <substitute> is PS string
 }
+
+Block "Configure scoop nerd-fonts bucket" {
+    scoop bucket add nerd-fonts
+} {
+    scoop bucket list | Select-String nerd-fonts
+}
+
+InstallFromScoopBlock "Cascadia Code" CascadiaCode-NF
 
 InstallFromMicrosoftStoreBlock "Windows Terminal" 9n0dx20hk701 Microsoft.WindowsTerminal
 

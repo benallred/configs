@@ -1,0 +1,134 @@
+{
+    "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+    "final_space": true,
+    "console_title": true,
+    "console_title_style": "folder",
+    "blocks": [
+        {
+            "type": "prompt",
+            "alignment": "left",
+            "segments": [
+                {
+                    "type": "executiontime",
+                    "style": "powerline",
+                    "powerline_symbol": "\uE0B0",
+                    "foreground": "#1e1e1e",
+                    "background": "#d4d4d4",
+                    "properties": {
+                        "always_enabled": true,
+                        "style": "austin"
+                    }
+                },
+                {
+                    "type": "time",
+                    "style": "plain",
+                    "powerline_symbol": "\uE0B0",
+                    "foreground": "#d4d4d4",
+                    "background": "transparent"
+                }
+            ]
+        },
+        { "type": "newline" },
+        {
+            "type": "prompt",
+            "alignment": "left",
+            "segments": [
+                {
+                    "type": "text",
+                    "style": "powerline",
+                    "powerline_symbol": "\uE0B0",
+                    "foreground": "#ffffff",
+                    "background": "#646695",
+                    "properties": {
+                        "text": "git",
+                        "include_folders": ["C:\\\\BenLocal\\\\git.*"]
+                    }
+                },
+                {
+                    "type": "text",
+                    "style": "powerline",
+                    "powerline_symbol": "\uE0B0",
+                    "foreground": "#ffffff",
+                    "background": "#646695",
+                    "properties": {
+                        "text": "OneDrive",
+                        "include_folders": [
+                            "C:\\\\Users\\\\Ben\\\\OneDrive.*",
+                            "C:\\\\BenLocal\\\\OneDrive.*"
+                        ]
+                    }
+                },
+                {
+                    "type": "text",
+                    "style": "powerline",
+                    "powerline_symbol": "\uE0B0",
+                    "foreground": "#ffffff",
+                    "background": "#646695",
+                    "properties": {
+                        "text": "cricut",
+                        "include_folders": ["C:\\\\Work\\\\cricut.*"]
+                    }
+                },
+                {
+                    "type": "path",
+                    "style": "powerline",
+                    "powerline_symbol": "\uE0B0",
+                    "foreground": "#ffffff",
+                    "background": "#569cd6",
+                    "properties": {
+                        "style": "full",
+                        // "enable_hyperlink": true,
+                        "mapped_locations": [
+                            ["C:\\BenLocal\\git\\", ""],
+                            ["C:\\BenLocal\\git", "\\"],
+                            ["C:\\Users\\Ben\\OneDrive\\", ""],
+                            ["C:\\Users\\Ben\\OneDrive", "\\"],
+                            ["C:\\BenLocal\\OneDrive\\", ""],
+                            ["C:\\BenLocal\\OneDrive", "\\"],
+                            ["C:\\Work\\cricut\\", ""],
+                            ["C:\\Work\\cricut", "\\"]
+                        ]
+                    }
+                },
+                // {
+                //     "type": "git",
+                //     "style": "powerline",
+                //     "powerline_symbol": "\uE0B0",
+                //     "foreground": "#d4d4d4",
+                //     "background": "transparent",
+                //     "properties": {
+                //         "local_staged_icon": "",
+                //         "local_working_icon": "",
+                //         "display_stash_count": true,
+                //         "status_colors_enabled": true,
+                //         "color_background": true,
+                //         "ahead_color": "#8db07b",
+                //         "behind_color": "#d16969",
+                //         "ahead_and_behind_color": "#dcdcaa",
+                //         "local_changes_color": "#c586c0"
+                //     }
+                // },
+                {
+                    "type": "git",
+                    "style": "diamond",
+                    "foreground": "#d4d4d4",
+                    "background": "#1e1e1e",
+                    "properties": {
+                        "postfix": " \ue0b1",
+                        "branch_icon": "<#d7ba7d>\uE0A0</>",
+                        "branch_identical_icon": "<#569cd6>\u2261</>",
+                        "branch_ahead_icon": "<#8db07b>\u2191</>",
+                        "branch_behind_icon": "<#d16969>\u2193</>",
+                        "branch_gone_icon": "<#c586c0>\u2262</>",
+                        "local_staged_icon": "",
+                        "staging_color": "#8db07b",
+                        "status_separator_icon": "",
+                        "local_working_icon": "",
+                        "working_color": "#d16969",
+                        "display_stash_count": true
+                    }
+                }
+            ]
+        }
+    ]
+}
