@@ -100,6 +100,15 @@ function GitAudit() {
     % { CheckDir $_.FullName }
 }
 
+function ReallyUpdate-Module([Parameter(Mandatory)][string]$Name) {
+    Update-Module $Name -Force
+
+    Get-Module $Name -ListAvailable |
+    sort Version -Descending |
+    select -Skip 1 |
+    % { Uninstall-Module $Name -RequiredVersion $_.Version }
+}
+
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
 Get-ChildItem "$transcriptDir\*.log" | ? { !(sls -Path $_ -Pattern "Command start time:" -SimpleMatch -Quiet) } | rm -ErrorAction SilentlyContinue
 $Transcript = "$transcriptDir\$(Get-TimestampForFileName).log"
