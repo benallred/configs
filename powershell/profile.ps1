@@ -14,16 +14,6 @@ function Run-AsAdmin([Parameter(Mandatory)][string]$FilePath) {
     Start-Process pwsh -Verb RunAs -ArgumentList "-File `"$FilePath`""
 }
 
-function Set-WindowTitle([string]$title) {
-    $GitPromptSettings.EnableWindowTitle = ""
-    $Host.UI.RawUI.WindowTitle = $title
-}
-
-function Reset-WindowTitle() {
-    $GitPromptSettings.EnableWindowTitle = "Git:"
-    $Host.UI.RawUI.WindowTitle = "PowerShell"
-}
-
 function Create-Shortcut([Parameter(Mandatory)][string]$Target, [Parameter(Mandatory)][string]$Link, [string]$Arguments) {
     $shortcut = (New-Object -ComObject WScript.Shell).CreateShortcut($Link)
     $shortcut.TargetPath = $Target
