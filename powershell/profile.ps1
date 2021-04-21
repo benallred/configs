@@ -100,10 +100,6 @@ function GitAudit() {
     % { CheckDir $_.FullName }
 }
 
-# fix for https://github.com/PowerShell/PowerShell/issues/7130
-# can be removed when https://github.com/PowerShell/PSReadLine/pull/711 update makes it through
-Set-PSReadLineKeyHandler Shift+Spacebar -ScriptBlock { [Microsoft.PowerShell.PSConsoleReadLine]::Insert(" ") }
-
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
 Get-ChildItem "$transcriptDir\*.log" | ? { !(sls -Path $_ -Pattern "Command start time:" -SimpleMatch -Quiet) } | rm -ErrorAction SilentlyContinue
 $Transcript = "$transcriptDir\$(Get-TimestampForFileName).log"
