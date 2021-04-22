@@ -9,6 +9,22 @@
             "alignment": "left",
             "segments": [
                 {
+                    "type": "exit",
+                    "style": "powerline",
+                    "powerline_symbol": "\uE0B0",
+                    "foreground": "#d4d4d4",
+                    "background": "#8db07b",
+                    "properties": {
+                        "always_enabled": true,
+                        // "always_numeric": true,
+                        "display_exit_code": false,
+                        "color_background": true,
+                        "error_color": "#d16969",
+                        "error_icon": "\uf655",
+                        "success_icon": "\uf42e"
+                    }
+                },
+                {
                     "type": "executiontime",
                     "style": "powerline",
                     "powerline_symbol": "\uE0B0",
