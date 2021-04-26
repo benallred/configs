@@ -1,6 +1,8 @@
 $OneDrive = "$env:UserProfile\OneDrive"
 $git = "C:\BenLocal\git"
 
+$tmp = "C:\BenLocal\ToDelete\$(Get-Date -Format "yyyyMM")"
+
 Set-Alias gh Get-Help
 
 Import-Module Appx -UseWindowsPowerShell
