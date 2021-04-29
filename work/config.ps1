@@ -42,6 +42,21 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Addins\MimecastServicesForOutlook.AddinModule" -Name LoadBehavior -Value 2
     }
 
+    InstallFromScoopBlock "AWS CLI" aws {
+        Add-Content -Path $profile {
+            Register-ArgumentCompleter -Native -CommandName aws -ScriptBlock {
+                param($wordToComplete, $commandAst, $cursorPosition)
+                $env:COMP_LINE = $commandAst
+                $env:COMP_POINT = $cursorPosition
+                . "$(scoop prefix aws)\aws_completer.exe" | ForEach-Object {
+                    [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+                }
+                Remove-Item Env:\COMP_LINE
+                Remove-Item Env:\COMP_POINT
+            }
+        }
+    }
+
     Block "Install SQL Server" {
         # https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-command-prompt
         # Download-File https://go.microsoft.com/fwlink/?linkid=866662 $env:tmp\SQL2019-SSEI-Dev.exe

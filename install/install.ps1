@@ -49,8 +49,6 @@ if (!(Configured $forKids)) {
     }
 
     InstallFromScoopBlock Yarn yarn
-
-    InstallFromScoopBlock "AWS CLI" aws
 }
 
 Block "Install VS Code" {
@@ -99,6 +97,7 @@ if (!(Configured $forKids)) {
         InstallVisualStudioExtension VisualStudioPlatformTeam FixMixedTabs
         InstallVisualStudioExtension VisualStudioPlatformTeam PowerCommandsforVisualStudio
         InstallVisualStudioExtension maksim-vorobiev PeasyMotion
+        InstallVisualStudioExtension JustinClareburtMSFT HotStatus
     } {
         Test-ProgramInstalled "Visual Studio Professional 2019"
     }
