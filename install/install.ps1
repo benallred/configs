@@ -339,9 +339,15 @@ InstallFromMicrosoftStoreBlock "Dynamic Theme" 9nblggh1zbkw 55888ChristopheLaval
 if (!(Configured $forKids)) {
     InstallFromMicrosoftStoreBlock "Microsoft To Do" 9nblggh5r558 Microsoft.Todos
 
-    InstallFromMicrosoftStoreBlock "Todoist: To-Do List and Task Manager" 9nblggh1rl1k 88449BC3.TodoistTo-DoListTaskManager
-
     InstallFromMicrosoftStoreBlock "Surface Audio" 9nxjnfwnvm8d Microsoft.SurfaceAudio
+
+    Block "Install Todoist" {
+        Download-File "https://todoist.com/windows_app" "$env:tmp\Todoist.exe"
+        . "$env:tmp\Todoist.exe"
+        DeleteDesktopShortcut Todoist
+    } {
+        Test-ProgramInstalled Todoist
+    }
 
     Block "Install Wally" {
         Download-File https://configure.ergodox-ez.com/wally/win $env:tmp\Wally.exe
