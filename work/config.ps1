@@ -35,6 +35,8 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Download-File https://aka.ms/teamswin64 $env:tmp\Teams_windows_x64.exe
         . $env:tmp\Teams_windows_x64.exe
         DeleteDesktopShortcut "Microsoft Teams"
+    } {
+        Test-ProgramInstalled "Microsoft Teams"
     }
 
     Block "Outlook > Options > Add-ins > Manage COM Add-ins > Mimecast for Outlook = Off" {
