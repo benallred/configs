@@ -69,7 +69,7 @@ Block "Install VS Code" {
 if (!(Configured $forKids)) {
     Block "Install Visual Studio" {
         # https://visualstudio.microsoft.com/downloads/
-        $downloadUrl = (iwr "https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Professional&rel=16" -useb | sls "https://download\.visualstudio\.microsoft\.com/download/pr/.+?/vs_Professional.exe").Matches.Value
+        $downloadUrl = (iwr "https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Professional&rel=16" | sls "https://download\.visualstudio\.microsoft\.com/download/pr/.+?/vs_Professional.exe").Matches.Value
         Download-File $downloadUrl $env:tmp\vs_professional.exe
         # https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids?view=vs-2019
         # Microsoft.VisualStudio.Workload.ManagedDesktop    .NET desktop development
@@ -85,7 +85,7 @@ if (!(Configured $forKids)) {
         }
 
         function InstallVisualStudioExtension([string]$Publisher, [string]$Extension) {
-            $downloadUrl = (iwr "https://marketplace.visualstudio.com/items?itemName=$Publisher.$Extension" -useb | sls "/_apis/public/gallery/publishers/$Publisher/vsextensions/$Extension/(\d+\.?)+/vspackage").Matches.Value | % { "https://marketplace.visualstudio.com$_" }
+            $downloadUrl = (iwr "https://marketplace.visualstudio.com/items?itemName=$Publisher.$Extension" | sls "/_apis/public/gallery/publishers/$Publisher/vsextensions/$Extension/(\d+\.?)+/vspackage").Matches.Value | % { "https://marketplace.visualstudio.com$_" }
             Download-File $downloadUrl $env:tmp\$Publisher.$Extension.vsix
             $vsixInstaller = . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath | Split-Path | % { "$_\VSIXInstaller.exe" }
             $installArgs = "/quiet", "/admin", "$env:tmp\$Publisher.$Extension.vsix"
@@ -103,7 +103,7 @@ if (!(Configured $forKids)) {
     }
 
     Block "Install ReSharper" {
-        $resharperJson = (iwr "https://data.services.jetbrains.com/products/releases?code=RSU&latest=true&type=release" -useb | ConvertFrom-Json)
+        $resharperJson = (iwr "https://data.services.jetbrains.com/products/releases?code=RSU&latest=true&type=release" | ConvertFrom-Json)
         $downloadUrl = $resharperJson.RSU[0].downloads.windows.link
         $fileName = Split-Path $downloadUrl -Leaf
         Download-File $downloadUrl $env:tmp\$fileName
@@ -172,7 +172,7 @@ if (!(Configured $forKids)) {
 
 Block "Install Office" {
     # https://www.microsoft.com/en-in/download/details.aspx?id=49117
-    $downloadUrl = (iwr "https://www.microsoft.com/en-in/download/confirmation.aspx?id=49117" -useb | sls "https://download\.microsoft\.com/download/.+?/officedeploymenttool_.+?.exe").Matches.Value
+    $downloadUrl = (iwr "https://www.microsoft.com/en-in/download/confirmation.aspx?id=49117" | sls "https://download\.microsoft\.com/download/.+?/officedeploymenttool_.+?.exe").Matches.Value
     Download-File $downloadUrl $env:tmp\officedeploymenttool.exe
     . $env:tmp\officedeploymenttool.exe /extract:$env:tmp\officedeploymenttool /passive /quiet
     WaitWhile { !(Test-Path $env:tmp\officedeploymenttool\setup.exe) } "Waiting for Office setup to be extracted"
