@@ -41,7 +41,16 @@ InstallFromScoopBlock Everything everything {
 }
 
 if (!(Configured $forKids)) {
-    InstallFromScoopBlock .NET dotnet-sdk
+    InstallFromScoopBlock .NET dotnet-sdk {
+        Add-Content -Path $profile {
+            Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
+                param($wordToComplete, $commandAst, $cursorPosition)
+                dotnet complete --position $cursorPosition $commandAst | ForEach-Object {
+                    [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+                }
+            }
+        }
+    }
 
     InstallFromScoopBlock nvm nvm {
         nvm install latest
