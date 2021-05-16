@@ -57,6 +57,7 @@
 	cc = commit -c
 	co = checkout
 	cob = checkout -b
+	wippull = "!git commitwip && git pull && git continuewip"
 	pushu = "!git push -u origin $(git branch --show-current)"
 	pushnv = push --no-verify
 	pr = !start $(echo $(git config remote.origin.url) | sed s/\\\\.git//)/pull/new/$(git branch --show-current)
