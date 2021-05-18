@@ -6,6 +6,8 @@ if (AlreadyRunThisMonth $runTimeId) {
     return
 }
 
+mkdir $tmp -ErrorAction Ignore | Out-Null
+
 function Backup([string]$from, [string]$to, [bool]$isMediaBackup = $false) {
     $logFile = "$to.log"
     Write-Output "Backing up $from to $to"
