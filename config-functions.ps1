@@ -97,7 +97,9 @@ function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$Afte
     Block "Install $User/$Repo" {
         git clone https://github.com/$User/$Repo.git $git\$Repo
         if ($AfterClone) {
+            pushd $git\$Repo
             Invoke-Command $AfterClone
+            popd
         }
     } {
         Test-Path $git\$Repo

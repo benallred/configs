@@ -282,14 +282,17 @@ if (!(Configured $forKids)) {
 
     InstallFromGitHubBlock benallred DilbertImageDownloader
 
+    InstallFromGitHubBlock benallred qmk_firmware {
+        git submodule update --init --recursive
+        git remote add upstream https://github.com/qmk/qmk_firmware.git
+        git co ben
+    }
+
     InstallFromGitHubAssetBlock qmk qmk_distro_msys QMK_MSYS.exe {
         Start-Process QMK_MSYS.exe "/silent" -Wait
         C:\QMK_MSYS\shell_connector.cmd -c "qmk config user.hide_welcome=True"
         C:\QMK_MSYS\shell_connector.cmd -c "qmk config user.qmk_home=$($git -replace "\\", "/")/qmk_firmware"
-        C:\QMK_MSYS\shell_connector.cmd -c "qmk setup benallred/qmk_firmware -y"
-        pushd $git/qmk_firmware
-        git co ben
-        popd
+        C:\QMK_MSYS\shell_connector.cmd -c "qmk setup"
     } {
         Test-ProgramInstalled "QMK MSYS"
     }
