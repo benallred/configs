@@ -13,7 +13,7 @@ if (!(Configured $forKids)) {
     WindowsFeatureBlock "Internet Information Services > Web Management Tools > IIS Management Console" IIS-ManagementConsole
     WindowsFeatureBlock "Internet Information Services > World Wide Web Services > Application Development Features > ASP.NET 4.x" IIS-ASPNET45
     WindowsFeatureBlock "Hyper-V" Microsoft-Hyper-V
-    WindowsFeatureBlock "Windows Subsystem for Linux" Microsoft-Windows-Subsystem-Linux
+    WindowsFeatureBlock "Windows Subsystem for Linux" Microsoft-Windows-Subsystem-Linux # watch https://docs.microsoft.com/en-us/windows/wsl/install-win10 for updates to simplified install
     WindowsFeatureBlock "Virtual Machine Platform" VirtualMachinePlatform # part of updating to WSL 2
 
     Block "Update to WSL 2" {
@@ -23,6 +23,7 @@ if (!(Configured $forKids)) {
             Download-File https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi $env:tmp\wsl_update_x64.msi
             . $env:tmp\wsl_update_x64.msi /passive /norestart
             wsl --set-default-version 2
+            InstallFromMicrosoftStoreBlock Ubuntu 9nblggh4msv6 CanonicalGroupLimited.UbuntuonWindows
         }
     } {
         (Get-Command wsl -ErrorAction Ignore) -and ((wsl -l) -replace "`0", "" | Select-String "Windows Subsystem for Linux Distributions:")
