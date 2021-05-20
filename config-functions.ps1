@@ -110,7 +110,13 @@ function InstallFromGitHubAssetBlock([string]$User, [string]$Repo, [string]$Asse
         $downloadUrl = $asset | select -exp browser_download_url
         $fileName = $asset | select -exp name
         Download-File $downloadUrl $env:tmp\$fileName
-        Expand-Archive $env:tmp\$fileName $env:tmp\$Repo
+        if ($fileName -like "*.zip") {
+            Expand-Archive $env:tmp\$fileName $env:tmp\$Repo
+        }
+        else {
+            mkdir $env:tmp\$Repo
+            mv $env:tmp\$fileName $env:tmp\$Repo\$fileName
+        }
         pushd $env:tmp\$Repo
         Invoke-Command $Install
         popd
