@@ -1,6 +1,3 @@
-Block "System > Multitasking > Alt + Tab > Pressing Alt + Tab shows = Open windows only" {
-    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" MultiTaskingAltTabFilter 3
-} -RequiresReboot
 Block "System > Power & sleep > Screen > On battery power, turn off after = 10 minutes" {
     powercfg /change monitor-timeout-dc 10
 }
@@ -19,4 +16,10 @@ Block "System > Power & sleep > Additional power settings > Choose what closing 
     # https://docs.microsoft.com/en-us/windows-hardware/customize/power-settings/power-button-and-lid-settings-lid-switch-close-action
     powercfg /SetACValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 0
     powercfg /SetDCValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 0
+}
+Block "System > Multitasking > Alt + Tab > Pressing Alt + Tab shows = Open windows only" {
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" MultiTaskingAltTabFilter 3
+} -RequiresReboot
+Block "System > Clipboard > Clipboard history = On" {
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Clipboard" EnableClipboardHistory 1
 }
