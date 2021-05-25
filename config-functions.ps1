@@ -2,25 +2,35 @@ function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$Comple
     if ($Run -and $Run -ne $Comment) {
         return
     }
-    Write-Output (New-Object System.String -ArgumentList ('*', 100))
-    Write-Output $Comment
+    function Write-OrSilent([string]$Text, [System.ConsoleColor]$ForegroundColor) {
+        if (!$Silent) {
+            if ($ForegroundColor) {
+                Write-Host $Text -ForegroundColor $ForegroundColor
+            }
+            else {
+                Write-Output $Text
+            }
+        }
+    }
+    Write-OrSilent ('*' * 100)
+    Write-OrSilent $Comment
     if ($CompleteCheck -and (Invoke-Command $CompleteCheck)) {
-        Write-Output "Already done"
+        Write-OrSilent "Already done"
         if (!$Run) {
             return
         }
         else {
-            Write-Output "But running anyway as requested"
+            Write-OrSilent "But running anyway as requested"
         }
     }
     if (!$DryRun) {
         if ($RequiresReboot) {
-            Write-Host "This will take effect after a reboot" -ForegroundColor Yellow
+            Write-OrSilent "This will take effect after a reboot" -ForegroundColor Yellow
         }
         Invoke-Command $ScriptBlock
     }
     else {
-        Write-Host "This block would execute" -ForegroundColor Green
+        Write-OrSilent "This block would execute" -ForegroundColor Green
     }
 }
 
