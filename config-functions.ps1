@@ -51,6 +51,10 @@ function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
     }
 }
 
+function WaitForPath([string]$Path) {
+    WaitWhile { !(Test-Path $Path) } "Waiting for path $Path"
+}
+
 function WaitWhileProcess([string]$ProcessName) {
     WaitWhile { Get-Process $ProcessName -ErrorAction Ignore } "Waiting for $ProcessName to close"
 }

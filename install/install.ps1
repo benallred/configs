@@ -184,7 +184,7 @@ Block "Install Office" {
     $downloadUrl = (iwr "https://www.microsoft.com/en-in/download/confirmation.aspx?id=49117" | sls "https://download\.microsoft\.com/download/.+?/officedeploymenttool_.+?.exe").Matches.Value
     Download-File $downloadUrl $env:tmp\officedeploymenttool.exe
     . $env:tmp\officedeploymenttool.exe /extract:$env:tmp\officedeploymenttool /passive /quiet
-    WaitWhile { !(Test-Path $env:tmp\officedeploymenttool\setup.exe) } "Waiting for Office setup to be extracted"
+    WaitForPath $env:tmp\officedeploymenttool\setup.exe
     . $env:tmp\officedeploymenttool\setup.exe /configure $PSScriptRoot\OfficeConfiguration.xml
     # TODO: Activate
     #   Observed differences
@@ -310,7 +310,7 @@ if (!(Configured $forKids)) {
         Download-File https://discord.com/api/download?platform=win $env:tmp\DiscordSetup.exe
         . $env:tmp\DiscordSetup.exe
         DeleteDesktopShortcut Discord
-        WaitWhile { !(Test-Path $env:AppData\discord\settings.json) } "Waiting for Discord settings file"
+        WaitForPath $env:AppData\discord\settings.json
         $discordSettings = Get-Content $env:AppData\discord\settings.json | ConvertFrom-Json
         $discordSettings.START_MINIMIZED = $true
         ConvertTo-Json $discordSettings | Set-Content $env:AppData\discord\settings.json
