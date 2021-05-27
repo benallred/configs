@@ -49,6 +49,8 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Download-File https://staticcontent.cricut.com/a/software/win32-native/$fileName $env:tmp\$fileName
         . $env:tmp\$fileName
         DeleteDesktopShortcut "Cricut Design Space"
+    } {
+        Test-ProgramInstalled "Cricut Design Space"
     }
 
     InstallFromScoopBlock "AWS CLI" aws {
