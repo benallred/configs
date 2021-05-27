@@ -111,6 +111,22 @@ function ReallyUpdate-Module([Parameter(Mandatory)][string]$Name) {
     % { Uninstall-Module $Name -RequiredVersion $_.Version }
 }
 
+Register-ArgumentCompleter -Native -CommandName .\config.ps1 -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+    if ((Get-Location).Path -ne "$git\configs") {
+        return
+    }
+
+    dir $git\configs *.ps1 -Recurse |
+    sls "Block `"(.+?)`"" |
+    % { "`"$($_.Matches.Groups[1].Value)`"" } |
+    ? { $_ -like "*$wordToComplete*" } |
+    sort |
+    % {
+        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+    }
+}
+
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
 Get-ChildItem "$transcriptDir\*.log" | ? { !(sls -Path $_ -Pattern "Command start time:" -SimpleMatch -Quiet) } | rm -ErrorAction SilentlyContinue
 $Transcript = "$transcriptDir\$(Get-TimestampForFileName).log"
