@@ -3,8 +3,6 @@ $git = "C:\BenLocal\git"
 
 $tmp = "C:\BenLocal\ToDelete\$(Get-Date -Format "yyyyMM")"
 
-Set-Alias gh Get-Help
-
 Import-Module Appx -UseWindowsPowerShell
 Copy-Item $PSScriptRoot\settings.json "$env:LocalAppData\Packages\$((Get-AppxPackage -Name Microsoft.WindowsTerminal).PackageFamilyName)\LocalState\settings.json"
 

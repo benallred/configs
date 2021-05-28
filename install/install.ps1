@@ -58,6 +58,10 @@ if (!(Configured $forKids)) {
     }
 
     InstallFromScoopBlock Yarn yarn
+
+    InstallFromScoopBlock "GitHub CLI" gh {
+        gh auth login -w
+    }
 }
 
 Block "Install VS Code" {
