@@ -111,6 +111,7 @@ if (!(Configured $forKids)) {
         InstallVisualStudioExtension VisualStudioPlatformTeam PowerCommandsforVisualStudio
         InstallVisualStudioExtension maksim-vorobiev PeasyMotion
         InstallVisualStudioExtension JustinClareburtMSFT HotStatus
+        InstallVisualStudioExtension MadsKristensen ResetZoom
     } {
         Test-ProgramInstalled "Visual Studio Professional 2019"
     }
