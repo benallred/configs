@@ -7,7 +7,7 @@ git config --local user.email (Read-Host "git user.email")
 
 dotnet new sln
 
-dotnet new console -o $solutionName
+dotnet new classlib -o $solutionName
 dotnet sln add $solutionName
 
 dotnet new xunit -o "$solutionName.Tests"
@@ -26,10 +26,6 @@ Set-Content .\readme.md "# $solutionName
 git add .
 git c "dotnet new"
 
-dotnet add $solutionName package System.CommandLine --prerelease
-Add-Content .\readme.md "
-## Usage
-
-``dotnet run -p .\$solutionName\ -- --help``"
+dotnet add "$solutionName.Tests" package Shouldly
 git add .
-git c "NuGet: System.CommandLine"
+git c "NuGet: Shouldly"
