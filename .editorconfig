@@ -1,4 +1,4 @@
-# EditorConfig (https://editorconfig-specification.readthedocs.io/en/latest/#supported-properties)
+# EditorConfig (https://editorconfig-specification.readthedocs.io/)
 [*]
 indent_style = space
 indent_size = 4
