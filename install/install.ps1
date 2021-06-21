@@ -415,3 +415,12 @@ if (Configured $forKids) {
         Test-ProgramInstalled "Scratch Desktop"
     }
 }
+
+Block "Install Cricut Design Space" {
+    $fileName = (iwr https://s3-us-west-2.amazonaws.com/staticcontent.cricut.com/a/software/win32-native/latest.json | ConvertFrom-Json).rolloutInstallFile
+    Download-File https://staticcontent.cricut.com/a/software/win32-native/$fileName $env:tmp\$fileName
+    . $env:tmp\$fileName
+    DeleteDesktopShortcut "Cricut Design Space"
+} {
+    Test-ProgramInstalled "Cricut Design Space"
+}

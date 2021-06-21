@@ -44,15 +44,6 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Addins\MimecastServicesForOutlook.AddinModule" -Name LoadBehavior -Value 2
     }
 
-    Block "Install Cricut Design Space" {
-        $fileName = (iwr https://s3-us-west-2.amazonaws.com/staticcontent.cricut.com/a/software/win32-native/latest.json | ConvertFrom-Json).rolloutInstallFile
-        Download-File https://staticcontent.cricut.com/a/software/win32-native/$fileName $env:tmp\$fileName
-        . $env:tmp\$fileName
-        DeleteDesktopShortcut "Cricut Design Space"
-    } {
-        Test-ProgramInstalled "Cricut Design Space"
-    }
-
     InstallFromScoopBlock "AWS CLI" aws {
         Add-Content -Path $profile {
             Register-ArgumentCompleter -Native -CommandName aws -ScriptBlock {
