@@ -35,6 +35,7 @@ AssociateFileBlock json VSCodeSourceFile
 AssociateFileBlock xml VSCodeSourceFile
 AssociateFileBlock config VSCodeSourceFile
 AssociateFileBlock DotSettings VSCodeSourceFile
+AssociateFileBlock nuspec VSCodeSourceFile
 AssociateFileBlock creds VSCodeSourceFile
 AssociateFileBlock pgpass VSCodeSourceFile
 AssociateFileBlock yarnrc VSCodeSourceFile
@@ -51,3 +52,4 @@ Block "Set .ahk Edit command to VS Code" {
 7ZipFileBlock tar 13
 7ZipFileBlock gz 14
 7ZipFileBlock gzip 14
+7ZipFileBlock nupkg 1
