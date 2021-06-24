@@ -2,6 +2,11 @@ function InstallFollowup([string]$ProgramName, [scriptblock]$Followup) {
     ConfigFollowup "Finish $ProgramName Install" $Followup
 }
 
+function RemoveStartupRegistryKey([string]$ValueName) {
+    WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $ValueName -ErrorAction Ignore) } "Waiting for `"$ValueName`" startup registry key"
+    Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $ValueName
+}
+
 Block "Configure scoop extras bucket" {
     scoop bucket add extras
 } {
@@ -154,8 +159,7 @@ if (!(Configured $forKids)) {
             . "$env:tmp\Docker Desktop Installer.exe" install --quiet | Out-Default
             DeleteDesktopShortcut "Docker Desktop"
             ConfigureNotifications "Docker Desktop"
-            WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "Docker Desktop" -ErrorAction Ignore) } "Waiting for Docker startup registry key"
-            Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "Docker Desktop"
+            RemoveStartupRegistryKey "Docker Desktop"
         } {
             Test-ProgramInstalled "Docker Desktop"
         } -RequiresReboot
@@ -174,8 +178,7 @@ if (!(Configured $forKids)) {
         Download-File https://downloads.slack-edge.com/releases_x64/SlackSetup.exe $env:tmp\SlackSetup.exe
         . $env:tmp\SlackSetup.exe
         if (!(Configured $forWork)) {
-            WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack -ErrorAction Ignore) } "Waiting for Slack startup registry key"
-            Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name com.squirrel.slack.slack
+            RemoveStartupRegistryKey com.squirrel.slack.slack
         }
         DeleteDesktopShortcut Slack
         ConfigureNotifications Slack
@@ -310,8 +313,7 @@ Block "Install Steam" {
     Start-Process $env:tmp\SteamSetup.exe "/S" -Wait
     DeleteDesktopShortcut Steam
     if (Configured $forWork) {
-        WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name Steam -ErrorAction Ignore) } "Waiting for Steam startup registry key"
-        Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name Steam
+        RemoveStartupRegistryKey Steam
     }
 } {
     Test-ProgramInstalled "Steam"
@@ -326,6 +328,20 @@ Block "Install Battle.net" {
 }
 
 if (!(Configured $forKids)) {
+    if (!(Configured $forWork)) {
+        Block "Install Epic Games" {
+            Download-File https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi $env:tmp\EpicGamesLauncherInstaller.msi
+            Start-Process $env:tmp\EpicGamesLauncherInstaller.msi "/passive" -Wait
+            DeleteDesktopShortcut "Epic Games Launcher"
+            RemoveStartupRegistryKey EpicGamesLauncher
+            $epicGamesSettingsFile = "$env:LocalAppData\EpicGamesLauncher\Saved\Config\Windows\GameUserSettings.ini"
+            (Get-Content $epicGamesSettingsFile) -replace "\[Launcher\]", "`$0`nDefaultAppInstallLocation=D:\Installs\Epic Games" | Set-Content $epicGamesSettingsFile
+            (Get-Content $epicGamesSettingsFile) -replace "\[.+?_General\]", "`$0`nNotificationsEnabled_Adverts=False" | Set-Content $epicGamesSettingsFile
+        } {
+            Test-ProgramInstalled "Epic Games Launcher"
+        }
+    }
+
     Block "Install Discord" {
         Download-File https://discord.com/api/download?platform=win $env:tmp\DiscordSetup.exe
         . $env:tmp\DiscordSetup.exe
