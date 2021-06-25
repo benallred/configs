@@ -287,7 +287,7 @@ if (!(Configured $forKids)) {
 
     InstallFromGitHubBlock benallred qmk_firmware {
         git submodule update --init --recursive
-        git remote add upstream https://github.com/qmk/qmk_firmware.git
+        git remote add upstream https://github.com/zsa/qmk_firmware.git
         git co ben
     }
 
