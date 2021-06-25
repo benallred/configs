@@ -125,6 +125,15 @@ Register-ArgumentCompleter -Native -CommandName .\config.ps1 -ScriptBlock {
     }
 }
 
+function qmk-ps([Parameter(ValueFromRemainingArguments = $true)]$Rest) {
+    C:\QMK_MSYS\shell_connector.cmd -c "qmk $Rest"
+}
+
+function flash() {
+    qmk-ps compile -kb moonlander -km ben
+    qmk-ps flash -kb moonlander -km ben
+}
+
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
 Get-ChildItem "$transcriptDir\*.log" | ? { !(sls -Path $_ -Pattern "Command start time:" -SimpleMatch -Quiet) } | rm -ErrorAction SilentlyContinue
 $Transcript = "$transcriptDir\$(Get-TimestampForFileName).log"
