@@ -65,6 +65,7 @@ if (!(Configured $forKids)) {
     InstallFromScoopBlock Yarn yarn
 
     InstallFromScoopBlock "GitHub CLI" gh {
+        gh config set editor (git config core.editor)
         gh auth login -w
     }
 }
