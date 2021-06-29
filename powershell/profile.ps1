@@ -80,6 +80,17 @@ function AddNuGetSource([Parameter(Mandatory)][string]$Name, [Parameter(Mandator
     }
 }
 
+function Find-RepoRoot() {
+    $repoRoot = Get-Location
+    while (!(Test-Path $repoRoot\.git)) {
+        if ($repoRoot -like "*:\") {
+            throw "No git repo found between $pwd and $repoRoot"
+        }
+        $repoRoot = Resolve-Path "$repoRoot\.."
+    }
+    return $repoRoot
+}
+
 function GitAudit() {
     function CheckDir($dir) {
         pushd $dir
