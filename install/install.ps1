@@ -122,37 +122,6 @@ if (!(Configured $forKids)) {
         Test-ProgramInstalled "Visual Studio Professional 2019"
     }
 
-    Block "Install ReSharper" {
-        $resharperJson = (iwr "https://data.services.jetbrains.com/products/releases?code=RSU&latest=true&type=release" | ConvertFrom-Json)
-        $downloadUrl = $resharperJson.RSU[0].downloads.windows.link
-        $fileName = Split-Path $downloadUrl -Leaf
-        Download-File $downloadUrl $env:tmp\$fileName
-        . $env:tmp\$fileName /SpecificProductNames=ReSharper /VsVersion=16.0 /Silent=True
-        # Activation:
-        #   ReSharper command line activation not currently available:
-        #   https://resharper-support.jetbrains.com/hc/en-us/articles/206545049-Can-I-enter-License-Key-License-Server-URL-via-Command-Line-when-installing-ReSharper-
-        # Settings:
-        #   No CLI that I can find to import settings file
-        #   It might be roamed?
-        #   Or try editing $env:AppData\JetBrains\Shared\vAny\GlobalSettingsStorage.DotSettings
-        #       <s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=8232C3A8D8B5804BBE2C12625C76862A/@KeyIndexDefined">True</s:Boolean>
-        #       <s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=8232C3A8D8B5804BBE2C12625C76862A/AbsolutePath/@EntryValue">C:\BenLocal\git\configs\programs\resharper.DotSettings</s:String>
-        #       <s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8232C3A8D8B5804BBE2C12625C76862A/@KeyIndexDefined">True</s:Boolean>
-        #       <s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File8232C3A8D8B5804BBE2C12625C76862A/RelativePriority/@EntryValue">1</s:Double>
-        # Conflicting shortcuts
-        #   Can't find a setting to disable the popup
-        #   Perhaps edit $env:LocalAppData\JetBrains\ReSharper\vAny\vs16.0_ef96ec49\vsActionManager.DotSettings
-        #       Remove all keys with "ConflictingActions" and corresponding "ActionsWithShortcuts"?
-        # External source navigation
-        #   Perhaps edit $env:AppData\JetBrains\Shared\vAny\GlobalSettingsStorage.DotSettings
-        #       Remove? <s:String x:Key="/Default/Housekeeping/OptionsDialog/SelectedPageId/@EntryValue">ExternalSources</s:String>
-        #       Edit? <s:Int64 x:Key="/Default/Environment/SearchAndNavigation/DefaultOccurrencesGroupingIndices/=JetBrains_002EReSharper_002EFeature_002EServices_002ENavigation_002EDescriptors_002ESearchUsagesDescriptor/@EntryIndexedValue">12</s:Int64>
-        #             <s:Int64 x:Key="/Default/Environment/SearchAndNavigation/DefaultOccurrencesGroupingIndices/=JetBrains_002EReSharper_002EFeature_002EServices_002ENavigation_002EDescriptors_002ESearchUsagesDescriptor/@EntryIndexedValue">12</s:Int64>
-        #       Neither of the above seem to change when selecting an option in the popup
-    } {
-        Test-ProgramInstalled "JetBrains ReSharper in Visual Studio Professional 2019"
-    }
-
     if (!(Configured $forTest)) {
         Block "Install Docker" {
             Download-File https://desktop.docker.com/win/stable/Docker%20Desktop%20Installer.exe "$env:tmp\Docker Desktop Installer.exe"
