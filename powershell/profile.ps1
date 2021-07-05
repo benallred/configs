@@ -64,7 +64,7 @@ function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)
     $savedProgressPreference = $ProgressPreference
     $ProgressPreference = "SilentlyContinue"
     Write-Host "Downloading $Uri`n`tto $OutFile"
-    Invoke-WebRequest $Uri -OutFile $OutFile
+    Invoke-WebRequest $Uri -OutFile $OutFile -MaximumRetryCount 3 -RetryIntervalSec 30
     $ProgressPreference = $savedProgressPreference
 }
 
