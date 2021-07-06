@@ -319,7 +319,7 @@ if (!(Configured $forKids)) {
         DeleteDesktopShortcut Discord
         WaitForPath $env:AppData\discord\settings.json
         $discordSettings = Get-Content $env:AppData\discord\settings.json | ConvertFrom-Json
-        $discordSettings.START_MINIMIZED = $true
+        $discordSettings | Add-Member NoteProperty START_MINIMIZED $true
         ConvertTo-Json $discordSettings | Set-Content $env:AppData\discord\settings.json
     } {
         Test-ProgramInstalled Discord
