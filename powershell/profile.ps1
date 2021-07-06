@@ -42,6 +42,11 @@ function Set-RegistryValue([Parameter(Mandatory)][string]$Path, [string]$Name = 
     Set-ItemProperty $Path -Name $Name -Value $Value
 }
 
+function Set-EnvironmentVariable([Parameter(Mandatory)][string]$Variable, [string]$Value) {
+    [Environment]::SetEnvironmentVariable($Variable, $Value, "User")
+    [Environment]::SetEnvironmentVariable($Variable, $Value, "Process")
+}
+
 function Get-ProgramsInstalled() {
     return (Get-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName +
     (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName +
