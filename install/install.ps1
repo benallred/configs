@@ -66,7 +66,9 @@ if (!(Configured $forKids)) {
 
     InstallFromScoopBlock "GitHub CLI" gh {
         gh config set editor (git config core.editor)
-        gh auth login -w
+        if (!(Configured $forTest)) {
+            gh auth login -w
+        }
     }
 }
 
