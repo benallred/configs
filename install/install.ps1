@@ -108,7 +108,7 @@ if (!(Configured $forKids)) {
         function InstallVisualStudioExtension([string]$Publisher, [string]$Extension) {
             $downloadUrl = (iwr "https://marketplace.visualstudio.com/items?itemName=$Publisher.$Extension" | sls "/_apis/public/gallery/publishers/$Publisher/vsextensions/$Extension/(\d+\.?)+/vspackage").Matches.Value | % { "https://marketplace.visualstudio.com$_" }
             Download-File $downloadUrl $env:tmp\$Publisher.$Extension.vsix
-            $vsixInstaller = . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath | Split-Path | % { "$_\VSIXInstaller.exe" }
+            $vsixInstaller = . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -all -property productPath | Split-Path | % { "$_\VSIXInstaller.exe" }
             $installArgs = "/quiet", "/admin", "$env:tmp\$Publisher.$Extension.vsix"
             Write-Output "Installing $Extension"
             Start-Process $vsixInstaller $installArgs -Wait
