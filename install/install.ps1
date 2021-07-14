@@ -328,13 +328,19 @@ if (!(Configured $forKids)) {
     }
 }
 
-if (!(Configured $forKids) -and ((Configured $forWork) -or (Configured $forTest))) {
+if ((Configured $forWork) -or (Configured $forTest)) {
     Block "Install Firefox" {
         Download-File "https://download.mozilla.org/?product=firefox-stub&os=win&lang=en-US" "$env:tmp\Firefox Installer.exe"
         . "$env:tmp\Firefox Installer.exe"
         DeleteDesktopShortcut Firefox
     } {
         Test-ProgramInstalled "Mozilla Firefox"
+    }
+
+    Block "Install Tor Browser" {
+        winget install TorProject.TorBrowser
+    } {
+        Test-Path "$env:UserProfile\Desktop\Tor Browser"
     }
 }
 
