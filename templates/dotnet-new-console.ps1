@@ -26,6 +26,20 @@ Set-Content .\readme.md "# $solutionName
 git add .
 git c "dotnet new"
 
+function TreatWarningsAsErrors($projectName) {
+    $csproj = [xml](Get-Content .\$projectName\$projectName.csproj)
+    $treatWarningsAsErrors = $csproj.CreateElement("TreatWarningsAsErrors")
+    $treatWarningsAsErrors.InnerText = "true"
+    $csproj.Project.PropertyGroup.AppendChild($treatWarningsAsErrors)
+    $csproj.Save("$pwd\$projectName\$projectName.csproj")
+}
+
+TreatWarningsAsErrors $solutionName
+TreatWarningsAsErrors "$solutionName.Tests"
+
+git add .
+git c "TreatWarningsAsErrors"
+
 dotnet add $solutionName package System.CommandLine --prerelease
 Add-Content .\readme.md "
 ## Usage
