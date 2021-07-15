@@ -13,5 +13,6 @@ Invoke-Command {
     iwr ($downloadUrl) -OutFile $env:tmp\$fileName
     Add-AppPackage $env:tmp\$fileName
 }
+winget install Microsoft.WindowsTerminal
 start pwsh "-NoExit", "-WindowStyle", "Maximized", "-File", "C:\BenLocal\git\configs\config.ps1"
 ```

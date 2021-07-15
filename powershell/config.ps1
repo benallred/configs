@@ -37,8 +37,6 @@ Block "Configure scoop nerd-fonts bucket" {
 
 InstallFromScoopBlock "Cascadia Code" CascadiaCode-NF
 
-InstallFromMicrosoftStoreBlock "Windows Terminal" 9n0dx20hk701 Microsoft.WindowsTerminal
-
 if (!(Configured $forTest)) {
     FirstRunBlock "Update PS help" {
         Update-Help -ErrorAction Ignore
