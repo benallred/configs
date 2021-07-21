@@ -29,6 +29,12 @@ Block "Configure profile.ps1" {
     (Test-Path $profile) -and (Select-String "$($PSScriptRoot -replace "\\", "\\")\\profile.ps1" $profile) # <original> is regex, <substitute> is PS string
 }
 
+Block "Install scoop" {
+    iwr get.scoop.sh | iex
+} {
+    Get-Command scoop -ErrorAction Ignore
+}
+
 Block "Configure scoop nerd-fonts bucket" {
     scoop bucket add nerd-fonts
 } {
