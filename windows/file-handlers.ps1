@@ -23,7 +23,7 @@ function AssociateFileBlock([string]$Extension, [string]$Handler) {
 function 7ZipFileBlock([string]$Extension, [int]$IconIndex) {
     $trimmedExtension = $Extension.Trim('.')
     $handler = "7-Zip.$trimmedExtension"
-    CreateFileHandlerBlock $handler "$trimmedExtension Archive" "$(scoop prefix 7zip)\7z.dll,$IconIndex" """$(scoop prefix 7zip)\7zFM.exe"" ""%1"""
+    CreateFileHandlerBlock $handler "$trimmedExtension Archive" "$env:ProgramFiles\7-Zip\7z.dll,$IconIndex" """$env:ProgramFiles\7-Zip\7zFM.exe"" ""%1"""
     AssociateFileBlock $Extension $handler
 }
 
