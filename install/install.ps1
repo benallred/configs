@@ -66,6 +66,9 @@ if (!(Configured $forKids)) {
 
     InstallFromScoopBlock "GitHub CLI" gh {
         gh config set editor (git config core.editor)
+        Add-Content -Path $profile {
+            (gh completion -s powershell) -join "`n" | iex
+        }
         if (!(Configured $forTest)) {
             gh auth login -w
         }
