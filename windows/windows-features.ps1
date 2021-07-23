@@ -23,7 +23,7 @@ if (!(Configured $forKids)) {
             Download-File https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi $env:tmp\wsl_update_x64.msi
             . $env:tmp\wsl_update_x64.msi /passive /norestart
             wsl --set-default-version 2
-            InstallFromMicrosoftStoreBlock Ubuntu 9nblggh4msv6 CanonicalGroupLimited.UbuntuonWindows
+            winget install Canonical.Ubuntu
         }
     } {
         (Get-Command wsl -ErrorAction Ignore) -and ((wsl -l) -replace "`0", "" | Select-String "Windows Subsystem for Linux Distributions:")
