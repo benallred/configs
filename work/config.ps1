@@ -3,6 +3,8 @@ Block "Prevent `"Allow my organization to manage my device`"" {
 }
 
 if ((Configured $forWork) -or (Configured $forTest)) {
+    InstallFromMicrosoftStoreBlock "Arc Touch Bluetooth Mouse" 9wzdncrfjblk Microsoft.ArcTouchMouseSurfaceEditionSettings
+
     Block "Install Zoom" {
         Download-File https://zoom.us/client/latest/ZoomInstaller.exe $env:tmp\ZoomInstaller.exe
         . "$env:tmp\ZoomInstaller.exe"
