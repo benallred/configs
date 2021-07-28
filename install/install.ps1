@@ -30,8 +30,7 @@ if (!(Configured $forKids)) {
 
 if (!(Configured $forKids)) {
     Block "Install Authy" {
-        Download-File "https://electron.authy.com/download?channel=stable&arch=x64&platform=win32&version=latest&product=authy" "$env:tmp\Authy Desktop Setup.exe"
-        . "$env:tmp\Authy Desktop Setup.exe"
+        winget install Twilio.Authy
         DeleteDesktopShortcut "Authy Desktop"
     } {
         Test-ProgramInstalled "Authy Desktop"
