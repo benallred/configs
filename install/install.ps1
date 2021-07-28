@@ -21,8 +21,7 @@ Block "Configure scoop nonportable bucket" {
 
 if (!(Configured $forKids)) {
     Block "Install Edge (Dev)" {
-        Download-File "https://go.microsoft.com/fwlink/?linkid=2069324&Channel=Dev&language=en&Consent=1" $env:tmp\MicrosoftEdgeSetupDev.exe
-        . $env:tmp\MicrosoftEdgeSetupDev.exe
+        winget install Microsoft.EdgeDev
         DeleteDesktopShortcut "Microsoft Edge Dev"
     } {
         Test-ProgramInstalled "Microsoft Edge Dev"
