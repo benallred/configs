@@ -11,7 +11,7 @@ function Test-IsAdmin() {
 }
 
 function Run-AsAdmin([Parameter(Mandatory)][string]$FilePath) {
-    Start-Process pwsh -Verb RunAs -ArgumentList "-File `"$FilePath`""
+    Start-Process wt -Verb RunAs -ArgumentList "-w run-as-admin pwsh -File `"$FilePath`""
 }
 
 function Create-Shortcut([Parameter(Mandatory)][string]$Target, [Parameter(Mandatory)][string]$Link, [string]$Arguments) {
@@ -28,7 +28,7 @@ function Create-RunOnce([Parameter(Mandatory)][string]$Description, [Parameter(M
 }
 
 function Create-FileRunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$FilePath) {
-    Create-RunOnce $Description "pwsh -Command `"Run-AsAdmin '$FilePath'`""
+    Create-RunOnce $Description "$((Get-Command wt).Source) -w run-once pwsh -Command `"Run-AsAdmin '$FilePath'`""
 }
 
 function Get-TimestampForFileName() {
