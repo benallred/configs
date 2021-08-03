@@ -3,8 +3,10 @@ $git = "C:\BenLocal\git"
 
 $tmp = "C:\BenLocal\ToDelete\$(Get-Date -Format "yyyyMM")"
 
-Import-Module Appx -UseWindowsPowerShell
-Copy-Item $PSScriptRoot\settings.json "$env:LocalAppData\Packages\$((Get-AppxPackage -Name Microsoft.WindowsTerminal).PackageFamilyName)\LocalState\settings.json"
+function Update-WindowsTerminalSettings() {
+    Import-Module Appx -UseWindowsPowerShell
+    Copy-Item $PSScriptRoot\settings.json "$env:LocalAppData\Packages\$((Get-AppxPackage -Name Microsoft.WindowsTerminal).PackageFamilyName)\LocalState\settings.json"
+}
 
 function Test-IsAdmin() {
     ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)

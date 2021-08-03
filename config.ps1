@@ -43,7 +43,10 @@ Block "Backup Registry" {
 }
 
 & $PSScriptRoot\powershell\config.ps1
-if (!$DryRun -and !$Run) { . $profile } # make profile available to scripts below
+if (!$DryRun -and !$Run) {
+    . $profile # make profile available to scripts below
+    Update-WindowsTerminalSettings
+}
 
 Block "Git config" {
     git config --global --add include.path $PSScriptRoot\git\ben.gitconfig
