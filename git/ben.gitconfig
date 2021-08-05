@@ -67,6 +67,7 @@
 	ri = rebase -i
 	rc = rebase --continue
 	ra = rebase --abort
+	wiprebase = "!f() { if [ $1 ]; then git commitwip && git rebase $1 && git continuewip; else echo 'No branch specified'; fi }; f"
 	autosquash = -c sequence.editor=true ri --autosquash
 	commit-fix = "!ref=$(git rev-parse --short \"$1\") && git commit --fixup $ref && git autosquash $ref~ #"
 	site = !start $(git config remote.origin.url)
