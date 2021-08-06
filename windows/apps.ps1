@@ -1,8 +1,8 @@
 function UninstallBlock([string]$AppName) {
     Block "Uninstall Appx package $AppName" {
-        pwsh -Command "Import-Module Appx -UseWindowsPowerShell; Get-AppxPackage $AppName | Remove-AppxPackage"
+        winget uninstall $AppName
     } {
-        !(Get-AppxPackage $AppName)
+        !(winget list $AppName | sls $AppName)
     }
 }
 
@@ -28,12 +28,10 @@ FirstRunBlock "Configure Mail" {
     ConfigureNotifications Mail
 }
 
-UninstallBlock Microsoft.BingWeather
-UninstallBlock Microsoft.GetHelp
-UninstallBlock Microsoft.Getstarted # Tips
-UninstallBlock Microsoft.OneConnect # Mobile Plans
-UninstallBlock Microsoft.MicrosoftSolitaireCollection
-UninstallBlock Microsoft.WindowsFeedbackHub
-UninstallBlock Microsoft.MicrosoftOfficeHub
-UninstallBlock Microsoft.WindowsMaps
-UninstallBlock SpotifyAB.SpotifyMusic
+UninstallBlock Microsoft.BingWeather_8wekyb3d8bbwe
+UninstallBlock Microsoft.GetHelp_8wekyb3d8bbwe
+UninstallBlock Microsoft.Getstarted_8wekyb3d8bbwe # Tips
+UninstallBlock Microsoft.MicrosoftSolitaireCollection_8wekyb3d8bbwe
+UninstallBlock Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe
+UninstallBlock Microsoft.MicrosoftOfficeHub_8wekyb3d8bbwe
+UninstallBlock Microsoft.WindowsMaps_8wekyb3d8bbwe
