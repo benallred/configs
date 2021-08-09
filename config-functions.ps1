@@ -125,6 +125,17 @@ function InstallFromGitHubAssetBlock([string]$User, [string]$Repo, [string]$Asse
     } $CompleteCheck
 }
 
+function InstallFromWingetBlock([string]$AppId, [scriptblock]$AfterInstall) {
+    Block "Install $AppId" {
+        winget install $AppId
+        if ($AfterInstall) {
+            Invoke-Command $AfterInstall
+        }
+    } {
+        winget list $AppId | sls $AppId
+    }
+}
+
 function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$AfterInstall) {
     Block "Install $AppName" {
         scoop install $AppId
@@ -132,7 +143,7 @@ function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$A
             Invoke-Command $AfterInstall
         }
     } {
-        scoop export | Select-String $AppId
+        scoop export | sls $AppId
     }
 }
 

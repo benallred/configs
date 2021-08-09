@@ -20,8 +20,7 @@ Block "Configure scoop nonportable bucket" {
 }
 
 if (!(Configured $forKids)) {
-    Block "Install Edge (Dev)" {
-        winget install Microsoft.EdgeDev
+    InstallFromWingetBlock Microsoft.EdgeDev {
         DeleteDesktopShortcut "Microsoft Edge Dev"
     } {
         Test-ProgramInstalled "Microsoft Edge Dev"
@@ -29,18 +28,17 @@ if (!(Configured $forKids)) {
 }
 
 if (!(Configured $forKids)) {
-    Block "Install Authy" {
-        winget install Twilio.Authy
+    InstallFromWingetBlock Twilio.Authy {
         DeleteDesktopShortcut "Authy Desktop"
     } {
         Test-ProgramInstalled "Authy Desktop"
     }
 }
 
-InstallFromScoopBlock Everything everything {
-    Copy-Item $PSScriptRoot\..\programs\Everything.ini (scoop prefix everything)
-    everything -install-run-on-system-startup
-    everything -startup
+InstallFromWingetBlock voidtools.Everything {
+    Copy-Item $PSScriptRoot\..\programs\Everything.ini $env:ProgramFiles\Everything\
+    . $env:ProgramFiles\Everything\Everything.exe -install-run-on-system-startup
+    . $env:ProgramFiles\Everything\Everything.exe -startup
 }
 
 if (!(Configured $forKids)) {
