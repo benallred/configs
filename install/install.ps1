@@ -58,7 +58,7 @@ if (!(Configured $forKids)) {
         nvm use (nvm list)
     }
 
-    InstallFromScoopBlock Yarn yarn
+    InstallFromWingetBlock Yarn.Yarn
 
     InstallFromScoopBlock "GitHub CLI" gh {
         gh config set editor (git config core.editor)
