@@ -141,6 +141,10 @@ Register-ArgumentCompleter -Native -CommandName .\config.ps1 -ScriptBlock {
     }
 }
 
+function tmpfor([Parameter(Mandatory)][string]$For) {
+    "$tmp\$($For)_$(Get-TimestampForFileName)"
+}
+
 . $PSScriptRoot\one-liners.ps1
 
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
