@@ -71,19 +71,13 @@ if (!(Configured $forKids)) {
     }
 }
 
-Block "Install VS Code" {
-    Download-File https://aka.ms/win32-x64-user-stable $env:tmp\VSCodeUserSetup-x64.exe
-    . $env:tmp\VSCodeUserSetup-x64.exe /SILENT /TASKS="associatewithfiles,addtopath" /LOG=$env:tmp\VSCodeInstallLog.txt
-    WaitWhile { !(Test-ProgramInstalled "Visual Studio Code") } "Waiting for VS Code to be installed"
-    $codeCmd = "$env:LocalAppData\Programs\Microsoft VS Code\bin\code.cmd"
+InstallFromWingetBlock Microsoft.VisualStudioCode {
     Write-ManualStep "Turn on Settings Sync"
     Write-ManualStep "`tReplace Local"
     Write-ManualStep "Watch log with ctrl+shift+u"
     Write-ManualStep "Show synced data"
     Write-ManualStep "`tUpdate name of synced machine"
-    . $codeCmd
-} {
-    Test-ProgramInstalled "Microsoft Visual Studio Code (User)"
+    code
 }
 
 if (!(Configured $forKids)) {
