@@ -67,4 +67,6 @@
 	ri = rebase -i
 	rc = rebase --continue
 	ra = rebase --abort
+	autosquash = -c sequence.editor=true ri --autosquash
+	commit-fix = "!ref=$(git rev-parse --short \"$1\") && git commit --fixup $ref && git autosquash $ref~ #"
 	site = !start $(git config remote.origin.url)
