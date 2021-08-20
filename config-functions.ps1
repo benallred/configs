@@ -128,6 +128,7 @@ function InstallFromGitHubAssetBlock([string]$User, [string]$Repo, [string]$Asse
 function InstallFromWingetBlock([string]$AppId, [scriptblock]$AfterInstall) {
     Block "Install $AppId" {
         winget install $AppId
+        $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
         if ($AfterInstall) {
             Invoke-Command $AfterInstall
         }

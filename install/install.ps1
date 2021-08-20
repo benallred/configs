@@ -60,7 +60,7 @@ if (!(Configured $forKids)) {
 
     InstallFromWingetBlock Yarn.Yarn
 
-    InstallFromScoopBlock "GitHub CLI" gh {
+    InstallFromWingetBlock GitHub.cli {
         gh config set editor (git config core.editor)
         Add-Content -Path $profile {
             (gh completion -s powershell) -join "`n" | iex
