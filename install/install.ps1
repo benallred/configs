@@ -338,7 +338,7 @@ if (!(Configured $forKids)) {
         Test-ProgramInstalled Wally
     }
 
-    InstallFromScoopBlock "Logitech Gaming Software" logitech-gaming-software-np
+    InstallFromWingetBlock Logitech.LGS
 
     InstallFromGitHubAssetBlock imbushuo mac-precision-touchpad Drivers-amd64-ReleaseMSSigned.zip {
         pnputil /add-driver .\drivers\amd64\AmtPtpDevice.inf /install
