@@ -148,7 +148,7 @@ function InstallFromWingetBlock {
             Invoke-Command $AfterInstall
         }
     } {
-        winget list $AppId | sls $AppId
+        winget list $AppId -e | sls $AppId
     }
 }
 

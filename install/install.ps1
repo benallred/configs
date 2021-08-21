@@ -134,48 +134,42 @@ if (!(Configured $forKids)) {
     }
 }
 
-Block "Install Office" {
-    # https://www.microsoft.com/en-in/download/details.aspx?id=49117
-    $downloadUrl = (iwr "https://www.microsoft.com/en-in/download/confirmation.aspx?id=49117" | sls "https://download\.microsoft\.com/download/.+?/officedeploymenttool_.+?.exe").Matches.Value
-    Download-File $downloadUrl $env:tmp\officedeploymenttool.exe
-    . $env:tmp\officedeploymenttool.exe /extract:$env:tmp\officedeploymenttool /passive /quiet
-    WaitForPath $env:tmp\officedeploymenttool\setup.exe
-    . $env:tmp\officedeploymenttool\setup.exe /configure $PSScriptRoot\OfficeConfiguration.xml
-    # TODO: Activate
-    #   Observed differences
-    #       Manual install and activation
-    #           Word > Account: Product Activated \ Microsoft Office Professional Plus 2019
-    #           cscript "C:\Program Files (x86)\Microsoft Office\Office16\OSPP.VBS" /dstatus
-    #               LICENSE NAME: Office 19, Office19ProPlus2019MSDNR_Retail edition
-    #               LICENSE DESCRIPTION: Office 19, RETAIL channel
-    #               LICENSE STATUS:  ---LICENSED---
-    #               Last 5 characters of installed product key: <correct>
-    #       Automated install (product id = Professional2019Retail), no activation
-    #           Word > Account: Activation Required \ Microsoft Office Professional 2019
-    #       Automated install (product id = Professional2019Retail), activation by filling in PIDKEY
-    #           Word > Account: Subscription Product \ Microsoft Office 365 ProPlus
-    #           cscript ... /dstatus
-    #               Other stuff about a grace period, even though in-product it says activated
-    #               Last 5 characters of installed product key: <different>
-    #       Automated install (product id = ProPlus2019Volume), activation by filling in PIDKEY
-    #           THIS ATTEMPT WORKED
-    #           Word > Account: Product Activated \ Microsoft Office Professional Plus 2019
-    #           cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /dstatus
-    #               LICENSE NAME: Office 19, Office19ProPlus2019MSDNR_Retail edition
-    #               LICENSE DESCRIPTION: Office 19, RETAIL channel
-    #               LICENSE STATUS:  ---LICENSED---
-    #               Last 5 characters of installed product key: <correct>
-    #   Next attempts:
-    #       1. Don't put PIDKEY in xml. Activate from command line.
-    #           Example:    cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
-    #           Actual:     cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:(SecureRead-Host "Office key")
-    #           Maybe also: cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /act
-    #           From: https://support.office.com/en-us/article/Change-your-Office-product-key-d78cf8f7-239e-4649-b726-3a8d2ceb8c81#ID0EABAAA=Command_line
-    #           From: https://docs.microsoft.com/en-us/deployoffice/vlactivation/tools-to-manage-volume-activation-of-office#ospp
-    #       2. SecureRead-Host to get Office key; write to copy of xml in tmp; use tmp configuration
-    #       3. Manual activation
-} {
-    (Test-ProgramInstalled "Microsoft Office") -or (Test-ProgramInstalled "Microsoft 365")
+if (!(Test-ProgramInstalled "Microsoft 365")) {
+    InstallFromWingetBlock Microsoft.Office "/configure $PSScriptRoot\OfficeConfiguration.xml" {
+        # TODO: Activate
+        #   Observed differences
+        #       Manual install and activation
+        #           Word > Account: Product Activated \ Microsoft Office Professional Plus 2019
+        #           cscript "C:\Program Files (x86)\Microsoft Office\Office16\OSPP.VBS" /dstatus
+        #               LICENSE NAME: Office 19, Office19ProPlus2019MSDNR_Retail edition
+        #               LICENSE DESCRIPTION: Office 19, RETAIL channel
+        #               LICENSE STATUS:  ---LICENSED---
+        #               Last 5 characters of installed product key: <correct>
+        #       Automated install (product id = Professional2019Retail), no activation
+        #           Word > Account: Activation Required \ Microsoft Office Professional 2019
+        #       Automated install (product id = Professional2019Retail), activation by filling in PIDKEY
+        #           Word > Account: Subscription Product \ Microsoft Office 365 ProPlus
+        #           cscript ... /dstatus
+        #               Other stuff about a grace period, even though in-product it says activated
+        #               Last 5 characters of installed product key: <different>
+        #       Automated install (product id = ProPlus2019Volume), activation by filling in PIDKEY
+        #           THIS ATTEMPT WORKED
+        #           Word > Account: Product Activated \ Microsoft Office Professional Plus 2019
+        #           cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /dstatus
+        #               LICENSE NAME: Office 19, Office19ProPlus2019MSDNR_Retail edition
+        #               LICENSE DESCRIPTION: Office 19, RETAIL channel
+        #               LICENSE STATUS:  ---LICENSED---
+        #               Last 5 characters of installed product key: <correct>
+        #   Next attempts:
+        #       1. Don't put PIDKEY in xml. Activate from command line.
+        #           Example:    cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
+        #           Actual:     cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:(SecureRead-Host "Office key")
+        #           Maybe also: cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /act
+        #           From: https://support.office.com/en-us/article/Change-your-Office-product-key-d78cf8f7-239e-4649-b726-3a8d2ceb8c81#ID0EABAAA=Command_line
+        #           From: https://docs.microsoft.com/en-us/deployoffice/vlactivation/tools-to-manage-volume-activation-of-office#ospp
+        #       2. SecureRead-Host to get Office key; write to copy of xml in tmp; use tmp configuration
+        #       3. Manual activation
+    }
 }
 
 Block "Configure Office" {
