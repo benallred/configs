@@ -327,12 +327,8 @@ if (!(Configured $forKids)) {
 
     InstallFromMicrosoftStoreBlock "Surface Audio" 9nxjnfwnvm8d Microsoft.SurfaceAudio
 
-    Block "Install Todoist" {
-        Download-File "https://todoist.com/windows_app" "$env:tmp\Todoist.exe"
-        . "$env:tmp\Todoist.exe"
+    InstallFromWingetBlock Doist.Todoist {
         DeleteDesktopShortcut Todoist
-    } {
-        Test-ProgramInstalled Todoist
     }
 
     Block "Install Wally" {
