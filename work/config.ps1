@@ -38,13 +38,13 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Addins\MimecastServicesForOutlook.AddinModule" -Name LoadBehavior -Value 2
     }
 
-    InstallFromScoopBlock "AWS CLI" aws {
+    InstallFromWingetBlock Amazon.AWSCLI {
         Add-Content -Path $profile {
             Register-ArgumentCompleter -Native -CommandName aws -ScriptBlock {
                 param($wordToComplete, $commandAst, $cursorPosition)
                 $env:COMP_LINE = $commandAst
                 $env:COMP_POINT = $cursorPosition
-                . "$(scoop prefix aws)\aws_completer.exe" | ForEach-Object {
+                . "$env:ProgramFiles\Amazon\AWSCLIV2\aws_completer.exe" | ForEach-Object {
                     [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
                 }
                 Remove-Item Env:\COMP_LINE
