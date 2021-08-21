@@ -125,16 +125,12 @@ if (!(Configured $forKids)) {
 InstallFromWingetBlock Lexikos.AutoHotkey "/S /IsHostApp"
 
 if (!(Configured $forKids)) {
-    Block "Install Slack" {
-        Download-File https://downloads.slack-edge.com/releases_x64/SlackSetup.exe $env:tmp\SlackSetup.exe
-        . $env:tmp\SlackSetup.exe
+    InstallFromWingetBlock SlackTechnologies.Slack {
         if (!(Configured $forWork)) {
             RemoveStartupRegistryKey com.squirrel.slack.slack
         }
         DeleteDesktopShortcut Slack
         ConfigureNotifications Slack
-    } {
-        Test-ProgramInstalled Slack
     }
 }
 
