@@ -222,6 +222,8 @@ InstallFromGitHubBlock benallred SnapX { . $git\SnapX\SnapX.ahk }
 if (!(Configured $forKids)) {
     InstallFromGitHubBlock benallred Bahk { . $git\Bahk\Ben.ahk }
 
+    InstallFromGitHubBlock benallred plex-playlist-liberator
+
     InstallFromGitHubBlock benallred YouTubeToPlex
 
     InstallFromGitHubBlock benallred DilbertImageDownloader
