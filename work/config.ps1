@@ -5,9 +5,7 @@ Block "Prevent `"Allow my organization to manage my device`"" {
 if ((Configured $forWork) -or (Configured $forTest)) {
     InstallFromMicrosoftStoreBlock "Arc Touch Bluetooth Mouse" 9wzdncrfjblk Microsoft.ArcTouchMouseSurfaceEditionSettings
 
-    Block "Install Zoom" {
-        Download-File https://zoom.us/client/latest/ZoomInstaller.exe $env:tmp\ZoomInstaller.exe
-        . "$env:tmp\ZoomInstaller.exe"
+    InstallFromWingetBlock Zoom.Zoom {
         DeleteDesktopShortcut Zoom
 
         # Configure during install:
@@ -29,8 +27,6 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name AutoJoinVoIP -Value 1
         Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name MuteVoIPWhenJoinMeeting -Value 1
         Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name EnterFullScreenWhenViewingSharedScreen -Value 0
-    } {
-        Test-ProgramInstalled Zoom
     }
 
     Block "Install Teams" {
