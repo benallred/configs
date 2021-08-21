@@ -122,12 +122,7 @@ if (!(Configured $forKids)) {
     }
 }
 
-Block "Install AutoHotkey" {
-    Download-File https://www.autohotkey.com/download/ahk-install.exe $env:tmp\ahk-install.exe
-    . $env:tmp\ahk-install.exe /S /IsHostApp
-} {
-    Test-ProgramInstalled AutoHotkey
-}
+InstallFromWingetBlock Lexikos.AutoHotkey "/S /IsHostApp"
 
 if (!(Configured $forKids)) {
     Block "Install Slack" {
