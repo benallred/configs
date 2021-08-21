@@ -127,6 +127,16 @@ function ReallyUpdate-Module([Parameter(Mandatory)][string]$Name) {
     % { Uninstall-Module $Name -RequiredVersion $_.Version }
 }
 
+function winget-manifest([Parameter(Mandatory)][string]$AppId) {
+    $shardLetter = $AppId.ToLower()[0]
+    $path = $AppId -replace "\.", "/"
+    $version = (winget show $AppId | sls "(?<=Version: ).*").Matches.Value
+    $manifestUrl = "https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/$shardLetter/$path/$version/$AppId.installer.yaml"
+    Write-Output "Fetching from $manifestUrl"
+    $response = iwr $manifestUrl
+    Write-Output $response.Content
+}
+
 Register-ArgumentCompleter -Native -CommandName .\config.ps1 -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
     if ((Get-Location).Path -ne "$git\configs") {
