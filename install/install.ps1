@@ -114,16 +114,11 @@ if (!(Configured $forKids)) {
     }
 
     if (!(Configured $forTest)) {
-        Block "Install Docker" {
-            Download-File https://desktop.docker.com/win/stable/Docker%20Desktop%20Installer.exe "$env:tmp\Docker Desktop Installer.exe"
-            # https://github.com/docker/for-win/issues/1322
-            . "$env:tmp\Docker Desktop Installer.exe" install --quiet | Out-Default
+        InstallFromWingetBlock Docker.DockerDesktop {
             DeleteDesktopShortcut "Docker Desktop"
             ConfigureNotifications "Docker Desktop"
             RemoveStartupRegistryKey "Docker Desktop"
-        } {
-            Test-ProgramInstalled "Docker Desktop"
-        } -RequiresReboot
+        }
     }
 }
 
