@@ -251,15 +251,11 @@ if (!(Configured $forKids)) {
     }
 }
 
-Block "Install Steam" {
-    Download-File https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe $env:tmp\SteamSetup.exe
-    Start-Process $env:tmp\SteamSetup.exe "/S" -Wait
+InstallFromWingetBlock Valve.Steam {
     DeleteDesktopShortcut Steam
     if (Configured $forWork) {
         RemoveStartupRegistryKey Steam
     }
-} {
-    Test-ProgramInstalled "Steam"
 }
 
 Block "Install Battle.net" {
