@@ -302,9 +302,7 @@ if ((Configured $forWork) -or (Configured $forTest)) {
     }
 }
 
-Block "Install 7-Zip" {
-    winget install 7zip.7zip
-
+InstallFromWingetBlock 7zip.7zip {
     Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name ShowDots -Value 1
     Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name ShowRealFileIcons -Value 1
     Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name FullRow -Value 1
@@ -320,8 +318,6 @@ Block "Install 7-Zip" {
     Write-ManualStep "`t`t`t`tAdd to <Archive>.zip"
     Write-ManualStep "`t`t`t`tCRC SHA >"
     WaitWhileProcess 7zFM
-} {
-    Test-ProgramInstalled "7-Zip"
 }
 
 InstallFromMicrosoftStoreBlock "Dynamic Theme" 9nblggh1zbkw 55888ChristopheLavalle.DynamicTheme
