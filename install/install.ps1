@@ -268,17 +268,13 @@ Block "Install Battle.net" {
 
 if (!(Configured $forKids)) {
     if (!(Configured $forWork)) {
-        Block "Install Epic Games" {
-            Download-File https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi $env:tmp\EpicGamesLauncherInstaller.msi
-            Start-Process $env:tmp\EpicGamesLauncherInstaller.msi "/passive" -Wait
+        InstallFromWingetBlock EpicGames.EpicGamesLauncher {
             DeleteDesktopShortcut "Epic Games Launcher"
             . "${env:ProgramFiles(x86)}\Epic Games\Launcher\Portal\Binaries\Win32\EpicGamesLauncher.exe"
             RemoveStartupRegistryKey EpicGamesLauncher
             $epicGamesSettingsFile = "$env:LocalAppData\EpicGamesLauncher\Saved\Config\Windows\GameUserSettings.ini"
             (Get-Content $epicGamesSettingsFile) -replace "\[Launcher\]", "`$0`nDefaultAppInstallLocation=D:\Installs\Epic Games" | Set-Content $epicGamesSettingsFile
             (Get-Content $epicGamesSettingsFile) -replace "\[.+?_General\]", "`$0`nNotificationsEnabled_Adverts=False" | Set-Content $epicGamesSettingsFile
-        } {
-            Test-ProgramInstalled "Epic Games Launcher"
         }
     }
 
