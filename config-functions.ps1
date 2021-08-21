@@ -125,9 +125,24 @@ function InstallFromGitHubAssetBlock([string]$User, [string]$Repo, [string]$Asse
     } $CompleteCheck
 }
 
-function InstallFromWingetBlock([string]$AppId, [scriptblock]$AfterInstall) {
+function InstallFromWingetBlock {
+    [CmdletBinding(DefaultParameterSetName = "DefaultArgs")]
+    Param(
+        [Parameter(ParameterSetName = "DefaultArgs", Mandatory, Position = 0)]
+        [Parameter(ParameterSetName = "OverrideArgs", Mandatory, Position = 0)]
+        [string]$AppId,
+        [Parameter(ParameterSetName = "OverrideArgs", Position = 1)]
+        [string]$OverrideArgs,
+        [Parameter(ParameterSetName = "DefaultArgs", Position = 1)]
+        [Parameter(ParameterSetName = "OverrideArgs", Position = 2)]
+        [scriptblock]$AfterInstall)
     Block "Install $AppId" {
-        winget install $AppId
+        if ($OverrideArgs) {
+            winget install $AppId --override $OverrideArgs
+        }
+        else {
+            winget install $AppId
+        }
         $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
         if ($AfterInstall) {
             Invoke-Command $AfterInstall
