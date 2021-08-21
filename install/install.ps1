@@ -353,7 +353,7 @@ if (!(Configured $forKids)) {
 
 InstallFromScoopBlock Paint.NET paint.net
 
-InstallFromScoopBlock "TreeSize Free" treesize-free
+InstallFromWingetBlock JAMSoftware.TreeSizeFree
 
 if (Configured $forKids) {
     Block "Install Scratch" {
