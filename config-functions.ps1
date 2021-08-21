@@ -93,9 +93,14 @@ function DeleteDesktopShortcut([string]$ShortcutName) {
     Create-FileRunOnce $fileName "$env:tmp\$fileName.ps1"
 }
 
-function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone) {
+function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone, [int]$CloneDepth) {
     Block "Install $User/$Repo" {
-        git clone https://github.com/$User/$Repo.git $git\$Repo
+        if (!$CloneDepth) {
+            git clone https://github.com/$User/$Repo.git $git\$Repo
+        }
+        else {
+            git clone https://github.com/$User/$Repo.git $git\$Repo --depth $CloneDepth
+        }
         if ($AfterClone) {
             pushd $git\$Repo
             Invoke-Command $AfterClone

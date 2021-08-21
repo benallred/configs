@@ -229,10 +229,11 @@ if (!(Configured $forKids)) {
     InstallFromGitHubBlock benallred DilbertImageDownloader
 
     InstallFromGitHubBlock benallred qmk_firmware {
+        git pull --unshallow
         git submodule update --init --recursive
         git remote add upstream https://github.com/zsa/qmk_firmware.git
         git co ben
-    }
+    } -CloneDepth 1
 
     InstallFromGitHubAssetBlock qmk qmk_distro_msys QMK_MSYS.exe {
         Start-Process QMK_MSYS.exe "/silent" -Wait
