@@ -278,16 +278,14 @@ if (!(Configured $forKids)) {
         }
     }
 
-    Block "Install Discord" {
-        Download-File https://discord.com/api/download?platform=win $env:tmp\DiscordSetup.exe
-        . $env:tmp\DiscordSetup.exe
+    InstallFromWingetBlock Discord.Discord {
         DeleteDesktopShortcut Discord
+        WaitForPath "$env:AppData\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"
+        . "$env:AppData\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"
         WaitForPath $env:AppData\discord\settings.json
         $discordSettings = Get-Content $env:AppData\discord\settings.json | ConvertFrom-Json
         $discordSettings | Add-Member NoteProperty START_MINIMIZED $true
         ConvertTo-Json $discordSettings | Set-Content $env:AppData\discord\settings.json
-    } {
-        Test-ProgramInstalled Discord
     }
 }
 
