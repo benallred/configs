@@ -29,12 +29,8 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name EnterFullScreenWhenViewingSharedScreen -Value 0
     }
 
-    Block "Install Teams" {
-        Download-File https://aka.ms/teamswin64 $env:tmp\Teams_windows_x64.exe
-        . $env:tmp\Teams_windows_x64.exe
+    InstallFromWingetBlock Microsoft.Teams {
         DeleteDesktopShortcut "Microsoft Teams"
-    } {
-        Test-ProgramInstalled "Microsoft Teams"
     }
 
     Block "Outlook > Options > Add-ins > Manage COM Add-ins > Mimecast for Outlook = Off" {
