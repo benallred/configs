@@ -356,12 +356,8 @@ InstallFromScoopBlock Paint.NET paint.net
 InstallFromWingetBlock JAMSoftware.TreeSizeFree
 
 if (Configured $forKids) {
-    Block "Install Scratch" {
-        Download-File https://downloads.scratch.mit.edu/desktop/Scratch%20Setup.exe "$env:tmp\Scratch Setup.exe"
-        . "$env:tmp\Scratch Setup.exe"
-        DeleteDesktopShortcut "Scratch Desktop"
-    } {
-        Test-ProgramInstalled "Scratch Desktop"
+    InstallFromWingetBlock MITMediaLab.Scratch.3 {
+        DeleteDesktopShortcut "Scratch 3"
     }
 }
 
