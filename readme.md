@@ -12,7 +12,7 @@ Invoke-Command {
 winget install Git.Git
 winget install Microsoft.PowerShell
 winget install Microsoft.WindowsTerminal
-$env:Path = "$env:Path;$env:ProgramFiles\Git\cmd;$env:ProgramFiles\PowerShell\7"
+$env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
 git clone https://github.com/benallred/configs.git C:\BenLocal\git\configs
 wt --maximized pwsh -NoExit -File C:\BenLocal\git\configs\config.ps1
 ```
