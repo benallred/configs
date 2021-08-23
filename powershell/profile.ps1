@@ -133,7 +133,14 @@ function winget-manifest([Parameter(Mandatory)][string]$AppId) {
     $version = (winget show $AppId | sls "(?<=Version: ).*").Matches.Value
     $manifestUrl = "https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/$shardLetter/$path/$version/$AppId.installer.yaml"
     Write-Output "Fetching from $manifestUrl"
-    $response = iwr $manifestUrl
+    try {
+        $response = iwr $manifestUrl
+    }
+    catch {
+        $manifestUrl = "https://raw.githubusercontent.com/microsoft/winget-pkgs/master/manifests/$shardLetter/$path/$version/$AppId.yaml"
+        Write-Output "Fetching from $manifestUrl"
+        $response = iwr $manifestUrl
+    }
     Write-Output $response.Content
 }
 
