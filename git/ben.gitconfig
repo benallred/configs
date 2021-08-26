@@ -61,6 +61,7 @@
 	wippull = "!git commitwip && git pull && git continuewip"
 	pushu = "!git push -u origin $(git branch --show-current)"
 	pushnv = push --no-verify
+	pushprev = "!f() { if [ $1 ]; then ref=$1; shift; git push origin $ref:$(git branch --show-current) $@; else echo 'No commit-ish specified\nUsage: git pushprev <commit-ish> [options]'; fi }; f"
 	pr = !start $(echo $(git config remote.origin.url) | sed s/\\\\.git//)/pull/new/$(git branch --show-current)
 	b = branch -a
 	unsynced = log --branches --not --remotes --no-walk --oneline
