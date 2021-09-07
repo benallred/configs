@@ -164,6 +164,22 @@ function tmpfor([Parameter(Mandatory)][string]$For) {
     "$tmp\$($For)_$(Get-TimestampForFileName)"
 }
 
+function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$EndLine) {
+    if ($FilePath -notmatch "C:\\Work\\(?<org>[^\\]+)\\(?<repo>[^\\]+)") {
+        Write-Error "Could not match path"
+    }
+
+    pushd $Matches[0]
+    $branch = git branch --show-current
+    popd
+
+    $url = ($FilePath.Replace($Matches[0], "https://github.com/$($Matches["org"])/$($Matches["repo"])/blob/$branch") -replace "\\", "/") `
+        + ($BeginLine -gt 0 ? "#L$BeginLine" + ($EndLine -gt 0 ? "-L$EndLine" : "") : "")
+
+    $url | clip
+    Write-Host "$url`n`tadded to clipboard"
+}
+
 . $PSScriptRoot\one-liners.ps1
 
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
