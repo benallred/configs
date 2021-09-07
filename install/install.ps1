@@ -353,6 +353,10 @@ if (!(Configured $forKids)) {
 
 InstallFromScoopBlock Paint.NET paint.net
 
+InstallFromWingetBlock VideoLAN.VLC {
+    DeleteDesktopShortcut "VLC media player"
+}
+
 InstallFromWingetBlock JAMSoftware.TreeSizeFree
 
 if (Configured $forKids) {
