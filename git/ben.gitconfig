@@ -62,7 +62,7 @@
 	pushu = "!git push -u origin $(git branch --show-current)"
 	pushnv = push --no-verify
 	pushprev = "!f() { if [ $1 ]; then ref=$1; shift; git push origin $ref:$(git branch --show-current) $@; else echo 'No commit-ish specified\nUsage: git pushprev <commit-ish> [options]'; fi }; f"
-	pr = !start $(echo $(git config remote.origin.url) | sed s/\\\\.git//)/pull/new/$(git branch --show-current)
+	pr = !start $(git config remote.origin.url | sed s/\\\\.git//)/pull/new/$(git branch --show-current)
 	b = branch -a
 	unsynced = log --branches --not --remotes --no-walk --oneline
 	ri = rebase -i
@@ -72,3 +72,4 @@
 	autosquash = -c sequence.editor=true ri --autosquash
 	commit-fix = "!ref=$(git rev-parse --short \"$1\") && git commit --fixup $ref && git autosquash $ref~ #"
 	site = !start $(git config remote.origin.url)
+	link = "!f() { if [ $1 ]; then url="$(git config remote.origin.url | sed s/\\\\.git//)/commit/$(git rev-parse --short \"$1\")"; echo \"$url\n\tadded to clipboard\"; echo $url | clip; else echo 'No commit-ish specified\nUsage: git link <commit-ish>'; fi }; f"
