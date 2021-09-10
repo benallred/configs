@@ -170,10 +170,10 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
     }
 
     pushd $Matches[0]
-    $branch = git branch --show-current
+    $permalinkCommit = git rev-parse --short head
     popd
 
-    $url = ($FilePath.Replace($Matches[0], "https://github.com/$($Matches["org"])/$($Matches["repo"])/blob/$branch") -replace "\\", "/") `
+    $url = ($FilePath.Replace($Matches[0], "https://github.com/$($Matches["org"])/$($Matches["repo"])/blob/$permalinkCommit") -replace "\\", "/") `
         + ($BeginLine -gt 0 ? "#L$BeginLine" + ($EndLine -gt 0 ? "-L$EndLine" : "") : "")
 
     $url | clip
