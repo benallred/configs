@@ -37,6 +37,11 @@ function Get-TimestampForFileName() {
     (Get-Date -Format o) -replace ":", "_"
 }
 
+function Get-SafeFileName([Parameter(Mandatory)][string]$FileName) {
+    $invalidFileNameChars = [Regex]::Escape([IO.Path]::GetInvalidFileNameChars() -join "")
+    $FileName -replace "[$invalidFileNameChars]", ""
+}
+
 function Set-RegistryValue([Parameter(Mandatory)][string]$Path, [string]$Name = "(Default)", [Parameter(Mandatory)][object]$Value) {
     if (!(Test-Path $Path)) {
         New-Item $Path -Force | Out-Null
