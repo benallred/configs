@@ -72,10 +72,23 @@ function SecureRead-Host([string]$Prompt) {
     return $string
 }
 
-function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)][string]$OutFile) {
+function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)][string]$OutFile, [switch]$AutoDetermineExtension) {
     $savedProgressPreference = $ProgressPreference
     $ProgressPreference = "SilentlyContinue"
+    if ($AutoDetermineExtension) {
+        $contentType = (Invoke-WebRequest $Uri -Method Head).Headers["Content-Type"]
+        $ext = switch ($contentType) {
+            "image/jpeg" { ".jpg" }
+            "image/png" { ".png" }
+            Default { throw "Unknown content type `"$contentType`"" }
+        }
+        $OutFile += $ext
+    }
     Write-Host "Downloading $Uri`n`tto $OutFile"
+    $downloadFolder = Split-Path $OutFile
+    if (!(Test-Path $downloadFolder)) {
+        New-Item $downloadFolder -ItemType Directory -Force | Out-Null
+    }
     Invoke-WebRequest $Uri -OutFile $OutFile -MaximumRetryCount 3 -RetryIntervalSec 30
     $ProgressPreference = $savedProgressPreference
 }
