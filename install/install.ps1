@@ -364,6 +364,8 @@ if (!(Configured $forKids)) {
         pnputil /enum-drivers | sls AmtPtpDevice.inf
     }
 
+    InstallFromScoopBlock youtube-dl
+
     InstallFromScoopBlock scrcpy
 
     InstallFromScoopBlock speedtest-cli
