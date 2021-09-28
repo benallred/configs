@@ -176,7 +176,7 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
     $url = ($FilePath.Replace($Matches[0], "https://github.com/$($Matches["org"])/$($Matches["repo"])/blob/$permalinkCommit") -replace "\\", "/") `
         + ($BeginLine -gt 0 ? "#L$BeginLine" + ($EndLine -gt 0 ? "-L$EndLine" : "") : "")
 
-    $url | clip
+    Set-Clipboard $url
     Write-Host "$url`n`tadded to clipboard"
 }
 
