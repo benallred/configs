@@ -38,7 +38,6 @@
                 {
                     "type": "time",
                     "style": "plain",
-                    "powerline_symbol": "\uE0B0",
                     "foreground": "#d4d4d4",
                     "background": "transparent"
                 }
