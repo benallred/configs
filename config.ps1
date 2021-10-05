@@ -1,5 +1,7 @@
 param([switch]$DryRun, [switch]$SkipBackup, [string]$Run)
 
+$totalDuration = [Diagnostics.Stopwatch]::StartNew()
+
 . $PSScriptRoot\config-functions.ps1
 mkdir C:\BenLocal\backup -ErrorAction Ignore
 
@@ -66,3 +68,5 @@ if (!(Configured $forKids)) {
 #         Create-FileRunOnce "Config for Start Menu, Taskbar, and System Tray" "$PSScriptRoot\windows\start-task-tray\start-task-tray.ps1"
 #     } -RequiresReboot
 # }
+
+Write-Output "Total duration: $($totalDuration.Elapsed)"

@@ -2,36 +2,37 @@ function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$Comple
     if ($Run -and $Run -ne $Comment) {
         return
     }
+    $blockDuration = [Diagnostics.Stopwatch]::StartNew()
     function Write-OrSilent([string]$Text, [System.ConsoleColor]$ForegroundColor) {
         if (!$Silent) {
-            if ($ForegroundColor) {
-                Write-Host $Text -ForegroundColor $ForegroundColor
-            }
-            else {
-                Write-Output $Text
-            }
+            Write-Host $Text -ForegroundColor $ForegroundColor
         }
     }
-    Write-OrSilent ('*' * 100)
-    Write-OrSilent $Comment
+    function Write-BlockDuration() {
+        Write-OrSilent "Block duration: $($blockDuration.Elapsed)" Blue
+    }
+    Write-OrSilent ('*' * 100) DarkBlue
+    Write-OrSilent $Comment DarkBlue
     if ($CompleteCheck -and (Invoke-Command $CompleteCheck)) {
-        Write-OrSilent "Already done"
+        Write-OrSilent "Already done" Blue
         if (!$Run) {
+            Write-BlockDuration
             return
         }
         else {
-            Write-OrSilent "But running anyway as requested"
+            Write-OrSilent "But running anyway as requested" Green
         }
     }
     if (!$DryRun) {
         if ($RequiresReboot) {
-            Write-OrSilent "This will take effect after a reboot" -ForegroundColor Yellow
+            Write-OrSilent "This will take effect after a reboot" Yellow
         }
         Invoke-Command $ScriptBlock
     }
     else {
-        Write-OrSilent "This block would execute" -ForegroundColor Green
+        Write-OrSilent "This block would execute" Green
     }
+    Write-BlockDuration
 }
 
 function FirstRunBlock([string]$Comment, [scriptblock]$ScriptBlock, [switch]$RequiresReboot) {
