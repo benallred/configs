@@ -112,6 +112,8 @@
         { "command": "newTab", "keys": [ "ctrl+t" ] },
         { "command": { "action": "moveTab", "direction": "forward" }, "keys": [ "ctrl+shift+pgdn" ] },
         { "command": { "action": "moveTab", "direction": "backward" }, "keys": [ "ctrl+shift+pgup" ] },
+        { "command": { "action": "nextTab", "tabSwitcherMode": "inOrder" }, "keys": "ctrl+pgdn" },
+        { "command": { "action": "prevTab", "tabSwitcherMode": "inOrder" }, "keys": "ctrl+pgup" },
         { "command": "closePane", "keys": "ctrl+w" },
         { "command": "resetFontSize", "keys": "ctrl+numpad_0" }
         // { "command": { "action": "splitPane", "split": "horizontal", "splitMode": "duplicate" }, "keys": [ "alt+shift+-" ] },
