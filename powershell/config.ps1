@@ -1,3 +1,7 @@
+Block "Register the default repository for PowerShell modules" {
+    Register-PSRepository -Default
+}
+
 Block "Install posh-git" {
     Install-Module posh-git -Force
     Add-PoshGitToProfile -AllHosts
