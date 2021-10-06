@@ -144,10 +144,10 @@ function InstallFromWingetBlock {
         [scriptblock]$AfterInstall)
     Block "Install $AppId" {
         if ($OverrideArgs) {
-            winget install $AppId --override $OverrideArgs
+            winget install --id $AppId --override $OverrideArgs
         }
         else {
-            winget install $AppId
+            winget install --id $AppId
         }
         $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
         if ($AfterInstall) {

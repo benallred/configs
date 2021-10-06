@@ -11,6 +11,9 @@ Invoke-Command {
     Add-AppPackage $env:tmp\$fileName
 }
 winget list winget --accept-source-agreements
+winget install --id Git.Git
+winget install --id Microsoft.PowerShell
+winget install --id Microsoft.WindowsTerminal
 $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
 git clone https://github.com/benallred/configs.git C:\BenLocal\git\configs
 wt --maximized pwsh -NoExit -File C:\BenLocal\git\configs\config.ps1
