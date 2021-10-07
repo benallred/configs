@@ -42,7 +42,7 @@ AssociateFileBlock yarnrc VSCodeSourceFile
 AssociateFileBlock nvmrc VSCodeSourceFile
 
 Block "Set .ahk Edit command to VS Code" {
-    Set-RegistryValue "HKLM:\SOFTWARE\Classes\AutoHotkeyScript\Shell\Edit\Command" -Value "$((Get-Command code).Source) %1"
+    Set-RegistryValue "HKLM:\SOFTWARE\Classes\AutoHotkeyScript\Shell\Edit\Command" -Value "`"$env:LocalAppData\Programs\Microsoft VS Code\bin\code.cmd`" %1"
 }
 
 7ZipFileBlock 7z 0
