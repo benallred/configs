@@ -10,7 +10,7 @@ Block "Install posh-git" {
 }
 
 Block "Install oh-my-posh" {
-    Install-Module oh-my-posh -Scope CurrentUser -AllowPrerelease -Force
+    Install-Module oh-my-posh -Scope CurrentUser -Force
 } {
     Get-Module -ListAvailable oh-my-posh
 }
