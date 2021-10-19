@@ -158,8 +158,8 @@ function InstallFromWingetBlock {
     }
 }
 
-function InstallFromScoopBlock([string]$AppName, [string]$AppId, [scriptblock]$AfterInstall) {
-    Block "Install $AppName" {
+function InstallFromScoopBlock([string]$AppId, [scriptblock]$AfterInstall) {
+    Block "Install $AppId" {
         scoop install $AppId
         if ($AfterInstall) {
             Invoke-Command $AfterInstall

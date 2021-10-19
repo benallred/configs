@@ -53,7 +53,7 @@ if (!(Configured $forKids)) {
         }
     }
 
-    InstallFromScoopBlock nvm nvm {
+    InstallFromScoopBlock nvm {
         nvm install latest
         nvm use (nvm list)
     }
@@ -215,7 +215,7 @@ Block "Configure Office" {
     # UI Changes > Open new e-mail > Add "Save Sent Item To"
 }
 
-InstallFromScoopBlock Sysinternals sysinternals
+InstallFromScoopBlock sysinternals
 
 InstallFromGitHubBlock benallred SnapX { . $git\SnapX\SnapX.ahk }
 
@@ -346,12 +346,12 @@ if (!(Configured $forKids)) {
         pnputil /enum-drivers | sls AmtPtpDevice.inf
     }
 
-    InstallFromScoopBlock scrcpy scrcpy
+    InstallFromScoopBlock scrcpy
 
-    InstallFromScoopBlock "Speedtest CLI" speedtest-cli
+    InstallFromScoopBlock speedtest-cli
 }
 
-InstallFromScoopBlock Paint.NET paint.net
+InstallFromScoopBlock paint.net
 
 InstallFromWingetBlock VideoLAN.VLC {
     DeleteDesktopShortcut "VLC media player"

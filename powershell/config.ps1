@@ -61,7 +61,7 @@ Block "Configure scoop nerd-fonts bucket" {
     scoop bucket list | Select-String nerd-fonts
 }
 
-InstallFromScoopBlock "Cascadia Code" CascadiaCode-NF
+InstallFromScoopBlock CascadiaCode-NF
 
 if (!(Configured $forTest)) {
     FirstRunBlock "Update PS help" {
