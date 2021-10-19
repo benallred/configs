@@ -1,5 +1,5 @@
-Block "Register the default repository for PowerShell modules" {
-    Register-PSRepository -Default
+Block "Install NuGet package provider for PowerShellGet" {
+    Install-PackageProvider NuGet -Force
 }
 
 Block "Install posh-git" {
