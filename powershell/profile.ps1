@@ -178,8 +178,15 @@ Register-ArgumentCompleter -Native -CommandName .\config.ps1 -ScriptBlock {
     }
 }
 
-function tmpfor([Parameter(Mandatory)][string]$For) {
-    "$tmp\$($For)_$(Get-TimestampForFileName)"
+function tmpfor([Parameter(Mandatory)][string]$For, [switch]$Go) {
+    $dir = "$tmp\$($For)_$(Get-TimestampForFileName)"
+    if ($Go) {
+        mkdir $dir | Out-Null
+        pushd $dir
+    }
+    else {
+        return $dir
+    }
 }
 
 function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$EndLine) {
