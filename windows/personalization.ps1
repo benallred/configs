@@ -28,6 +28,9 @@ Block "Personalization > Start > Show most used apps = Off" {
 Block "Personalization > Start > Show suggestions occasionally in Start = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name SubscribedContent-338388Enabled -Value 0
 }
+Block "Personalization > Taskbar > Taskbar items > Search = Off" {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name SearchboxTaskbarMode -Value 0
+}
 Block "Personalization > Taskbar > Lock the taskbar = On" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarSizeMove -Value 0
 }
