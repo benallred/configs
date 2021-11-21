@@ -20,7 +20,7 @@ Block "Configure scoop nonportable bucket" {
 }
 
 if (!(Configured $forKids)) {
-    InstallFromWingetBlock Microsoft.EdgeDev {
+    InstallFromWingetBlock Microsoft.Edge.Dev {
         DeleteDesktopShortcut "Microsoft Edge Dev"
     } {
         Test-ProgramInstalled "Microsoft Edge Dev"
