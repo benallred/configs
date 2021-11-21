@@ -28,7 +28,6 @@ Block "Control Panel > System > Remote settings > Allow Remote Assistance connec
     Disable-NetFirewallRule -DisplayGroup "Remote Assistance"
 }
 & $PSScriptRoot\desktop.ps1
-& $PSScriptRoot\store.ps1
 & $PSScriptRoot\explorer.ps1
 & $PSScriptRoot\file-handlers.ps1
 & $PSScriptRoot\system.ps1
