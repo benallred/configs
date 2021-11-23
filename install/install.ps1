@@ -172,6 +172,8 @@ if (!(Test-ProgramInstalled "Microsoft 365")) {
 }
 
 Block "Configure Office" {
+    ##########
+    ## Outlook
     # Options > Mail > Compose messages > Editor Options > Proofing > AutoCorrect Options > AutoCorrect > Replace ... with ... = Delete
     # Options > Mail > Compose messages > Editor Options > Proofing > AutoCorrect Options > AutoCorrect > Replace hsa with has = Delete
     # Options > Mail > Compose messages > Editor Options > Proofing > AutoCorrect Options > AutoFormat As You Type > "Straight quotes" with "smart quotes" = Off
@@ -212,6 +214,21 @@ Block "Configure Office" {
     # UI Changes > Open e-mail message > Add "Mark Unread" (not "Mark as Unread"; "Mark as Unread" does not toggle)
     # UI Changes > Open new e-mail > Remove items in Quick Access Toolbar
     # UI Changes > Open new e-mail > Add "Save Sent Item To"
+
+    ##########
+    ## OneNote
+    # Options > Display > Place OneNote icon in the notification area of the taskbar = Off
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Other" -Name RunSystemTrayApp -Value 0
+    # Options > Display > Page tabs appear on the left = On
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Other" -Name PageTabsOnLeft -Value 1
+    # Options > Display > Navigation bar appears on the left = On
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Other" -Name NavBarOnLeft -Value 1
+    # Options > Proofing > AutoCorrect Options... > AutoCorrect > Capitalize first letter of sentences = Off
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Common\AutoCorrect" -Name CapitalizeSentence -Value 0
+    # Options > Advanced > Editing > Include link to source when pasting from the Web = Off
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Editing" -Name PasteIncludeURL -Value 0
+    # UI Changes > Pin Notebook Pane to Side
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Other" -Name NavigationBarExpColState -Value 0
 }
 
 InstallFromScoopBlock sysinternals
