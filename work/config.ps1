@@ -53,15 +53,9 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         }
     }
 
-    Block "Install SQL Server" {
-        # https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-command-prompt
-        # Download-File https://go.microsoft.com/fwlink/?linkid=866662 $env:tmp\SQL2019-SSEI-Dev.exe
-        Download-File https://go.microsoft.com/fwlink/?linkid=853016 $env:tmp\SQLServer2017-SSEI-Dev.exe
-        $installArgs = "/Action=Install", "/IAcceptSqlServerLicenseTerms", "/InstallPath=`"C:\Program Files\Microsoft SQL Server`"", "/Features=FullText", "/SecurityMode=SQL", "/Verbose"
-        Start-Process $env:tmp\SQLServer2017-SSEI-Dev.exe $installArgs -Wait
-    } {
-        Test-ProgramInstalled "SQL Server 2017"
-    }
+    # https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-command-prompt
+    InstallFromWingetBlock Microsoft.SQLServer.2019.Developer `
+        "/Action=Install /IAcceptSqlServerLicenseTerms /InstallPath=\`"C:\Program Files\Microsoft SQL Server\`" /Features=FullText /SecurityMode=SQL /Verbose"
 
     InstallFromWingetBlock Microsoft.SQLServerManagementStudio
 }
