@@ -356,7 +356,7 @@ InstallFromWingetBlock VideoLAN.VLC {
     DeleteDesktopShortcut "VLC media player"
 }
 
-InstallFromWingetBlock JAMSoftware.TreeSizeFree
+InstallFromWingetBlock JAMSoftware.TreeSize.Free
 
 if (Configured $forKids) {
     InstallFromWingetBlock MITMediaLab.Scratch.3 {
