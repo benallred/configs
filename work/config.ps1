@@ -3,7 +3,7 @@ Block "Prevent `"Allow my organization to manage my device`"" {
 }
 
 if ((Configured $forWork) -or (Configured $forTest)) {
-    InstallFromMicrosoftStoreBlock "Arc Touch Bluetooth Mouse" 9wzdncrfjblk Microsoft.ArcTouchMouseSurfaceEditionSettings
+    InstallFromWingetBlock 9WZDNCRFJBLK # Arc Touch Bluetooth Mouse
 
     InstallFromWingetBlock Zoom.Zoom {
         DeleteDesktopShortcut Zoom

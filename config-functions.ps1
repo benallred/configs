@@ -144,10 +144,10 @@ function InstallFromWingetBlock {
         [scriptblock]$AfterInstall)
     Block "Install $AppId" {
         if ($OverrideArgs) {
-            winget install --id $AppId --override $OverrideArgs
+            winget install --id $AppId --accept-package-agreements --override $OverrideArgs
         }
         else {
-            winget install --id $AppId
+            winget install --id $AppId --accept-package-agreements
         }
         $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
         if ($AfterInstall) {
@@ -166,23 +166,5 @@ function InstallFromScoopBlock([string]$AppId, [scriptblock]$AfterInstall) {
         }
     } {
         scoop export | sls $AppId
-    }
-}
-
-# Get AppName with
-#   Get-StartApps name
-# Get ProductId by searching for app at
-#   https://www.microsoft.com/en-us/search
-# Get AppPackageName with
-#   (Get-AppxPackage -Name "*name*").Name
-function InstallFromMicrosoftStoreBlock([string]$AppName, [string]$ProductId, [string]$AppPackageName) {
-    Block "Install $AppName" {
-        Write-ManualStep "Install $AppName"
-        start ms-windows-store://pdp/?ProductId=$ProductId
-        WaitWhile { !(Get-AppxPackage -Name $AppPackageName) } "Waiting for $AppName to be installed"
-        start "shell:AppsFolder\$(Get-StartApps $AppName | ? { $_.Name -eq $AppName } | select -ExpandProperty AppId)"
-    } {
-        Import-Module Appx -UseWindowsPowerShell
-        Get-AppxPackage -Name $AppPackageName
     }
 }

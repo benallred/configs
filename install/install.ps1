@@ -319,12 +319,12 @@ InstallFromWingetBlock 7zip.7zip {
     WaitWhileProcess 7zFM
 }
 
-InstallFromMicrosoftStoreBlock "Dynamic Theme" 9nblggh1zbkw 55888ChristopheLavalle.DynamicTheme
+InstallFromWingetBlock 9NBLGGH1ZBKW # Dynamic Theme
 
 if (!(Configured $forKids)) {
-    InstallFromMicrosoftStoreBlock "Microsoft To Do" 9nblggh5r558 Microsoft.Todos
+    InstallFromWingetBlock 9NBLGGH5R558 # Microsoft To Do
 
-    InstallFromMicrosoftStoreBlock "Surface Audio" 9nxjnfwnvm8d Microsoft.SurfaceAudio
+    InstallFromWingetBlock 9NXJNFWNVM8D # Surface Audio
 
     InstallFromWingetBlock Doist.Todoist {
         DeleteDesktopShortcut Todoist
