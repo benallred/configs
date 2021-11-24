@@ -118,8 +118,8 @@ function Find-RepoRoot() {
 
 function GitAudit() {
     function CheckDir($dir) {
-        pushd $dir
         if (Test-Path (Join-Path $dir .git)) {
+            pushd $dir
             $unsynced = git unsynced
             $status = git status --porcelain
             if ($unsynced -or $status) {
@@ -128,8 +128,8 @@ function GitAudit() {
                 git unsynced
                 git status --porcelain
             }
+            popd
         }
-        popd
     }
     (Get-ChildItem $git) +
     (Get-ChildItem C:\Work | Get-ChildItem) |
