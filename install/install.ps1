@@ -275,12 +275,14 @@ InstallFromWingetBlock Valve.Steam {
     }
 }
 
-Block "Install Battle.net" {
-    Download-File https://www.battle.net/download/getInstallerForGame $env:tmp\Battle.net-Setup.exe
-    . $env:tmp\Battle.net-Setup.exe
-    DeleteDesktopShortcut Battle.net
-} {
-    Test-ProgramInstalled "Battle.net"
+if (!(Configured $forWork)) {
+    Block "Install Battle.net" {
+        Download-File https://www.battle.net/download/getInstallerForGame $env:tmp\Battle.net-Setup.exe
+        . $env:tmp\Battle.net-Setup.exe
+        DeleteDesktopShortcut Battle.net
+    } {
+        Test-ProgramInstalled "Battle.net"
+    }
 }
 
 if (!(Configured $forKids)) {
