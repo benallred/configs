@@ -133,7 +133,7 @@ if (!(Configured $forKids)) {
     }
 }
 
-if (!(Test-ProgramInstalled "Microsoft 365")) {
+if (!(Test-ProgramInstalled "Microsoft Office 365")) {
     InstallFromWingetBlock Microsoft.Office "/configure $PSScriptRoot\OfficeConfiguration.xml" {
         # TODO: Activate
         #   Observed differences
