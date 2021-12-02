@@ -31,3 +31,24 @@ function ppl([Parameter(Mandatory)][ValidateSet("Plex", "M3U")][string]$Master) 
     & $git\plex-playlist-liberator\plex-playlist-liberator.ps1 -Sort -Source $env:OneDrive\Music\Playlists
     & $git\plex-playlist-liberator\plex-playlist-liberator.ps1 -Import -Source $env:OneDrive\Music\Playlists
 }
+
+##################################################
+# Manual sync
+
+function SyncKidsPmp() {
+    $destinationDrive = Get-Volume -FileSystemLabel "AGP-A19" | select -exp DriveLetter
+    if ($destinationDrive) {
+        $destinationFolder = "${destinationDrive}:\Music"
+        Remove-Item $destinationFolder\Korean -Recurse -ErrorAction Ignore
+        Remove-Item $destinationFolder\Ringtones -Recurse -ErrorAction Ignore
+        Remove-Item $destinationFolder\Playlists\*Best.m3u -ErrorAction Ignore
+        Remove-Item $destinationFolder\Playlists\Ignore.m3u -ErrorAction Ignore
+        Remove-Item $destinationFolder\Playlists\Korean.m3u -ErrorAction Ignore
+        Remove-Item $destinationFolder\Playlists\ToOrganize.m3u -ErrorAction Ignore
+        robocopy $env:OneDrive\Music $destinationFolder /XD Korean Ringtones /XF *Best.m3u Ignore.m3u Korean.m3u ToOrganize.m3u /Z /DCOPY:T /MIR /X /NDL
+
+        Get-ChildItem $destinationFolder\Playlists *.m3u | % {
+            (Get-Content $_ | ? { $_ -notlike "*Music\Korean*" }) -replace "$($env:OneDrive -replace "\\", "\\")\\Music", ".." | Set-Content $_
+        }
+    }
+}
