@@ -364,6 +364,11 @@ if (!(Configured $forKids)) {
         pnputil /enum-drivers | sls AmtPtpDevice.inf
     }
 
+    InstallFromWingetBlock SergeySerkov.TagScanner {
+        New-Item $env:AppData\TagScanner -ItemType Directory
+        Copy-Item $PSScriptRoot\..\programs\Tagscan.ini $env:AppData\TagScanner
+    }
+
     InstallFromScoopBlock youtube-dl
 
     InstallFromScoopBlock scrcpy
