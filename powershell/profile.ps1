@@ -130,6 +130,10 @@ function GitAudit() {
             }
             popd
         }
+        elseif (Test-Path $dir -PathType Container) {
+            Write-Host $dir -ForegroundColor Red
+            Write-Host "`tNot in source control"
+        }
     }
     (Get-ChildItem $git) +
     (Get-ChildItem C:\Work -ErrorAction Ignore | Get-ChildItem) |
