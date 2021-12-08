@@ -132,7 +132,7 @@ function GitAudit() {
         }
     }
     (Get-ChildItem $git) +
-    (Get-ChildItem C:\Work | Get-ChildItem) |
+    (Get-ChildItem C:\Work -ErrorAction Ignore | Get-ChildItem) |
     % { CheckDir $_.FullName }
 }
 
