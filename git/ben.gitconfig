@@ -7,8 +7,6 @@
 [status]
 	short = true
 	branch = true
-[credential]
-	helper = manager
 [url "https://"]
 	insteadOf = git://
 [url "https://github.com/"]
