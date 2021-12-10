@@ -1,6 +1,10 @@
 # configs
 
 ```powershell
+winget upgrade Microsoft.WindowsTerminal
+```
+
+```powershell
 $bootstrapDuration = [Diagnostics.Stopwatch]::StartNew()
 Set-ExecutionPolicy RemoteSigned -Force
 winget list winget --accept-source-agreements
