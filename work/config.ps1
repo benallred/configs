@@ -3,6 +3,12 @@ Block "Prevent `"Allow my organization to manage my device`"" {
 }
 
 if ((Configured $forWork) -or (Configured $forTest)) {
+    Block "Uninstall Lenovo Quick Clean" {
+        winget uninstall "Lenovo Quick Clean"
+    } {
+        !(winget list "Lenovo Quick Clean" | sls "Lenovo Quick Clean")
+    }
+
     InstallFromWingetBlock 9WZDNCRFJBLK # Arc Touch Bluetooth Mouse
 
     InstallFromWingetBlock Zoom.Zoom {
