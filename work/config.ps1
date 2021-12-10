@@ -9,6 +9,15 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         !(winget list "Lenovo Quick Clean" | sls "Lenovo Quick Clean")
     }
 
+    FirstRunBlock "Pin Plex" {
+        Write-ManualStep "Log in to Plex"
+        Write-ManualStep "Account > Plex Web > General > Automatically Sign In = On"
+        Write-ManualStep "Save Changes"
+        Write-ManualStep "Home > Music"
+        Write-ManualStep "Apps > Install this site as an app (alt+f, a, i, enter)"
+        start https://app.plex.tv
+    }
+
     InstallFromWingetBlock 9WZDNCRFJBLK # Arc Touch Bluetooth Mouse
 
     InstallFromWingetBlock Zoom.Zoom {
