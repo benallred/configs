@@ -31,6 +31,15 @@ Block "Personalization > Start > Show most used apps = Off" {
 Block "Personalization > Taskbar > Taskbar items > Search = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name SearchboxTaskbarMode -Value 0
 }
+Block "Personalization > Taskbar > Taskbar items > Task view = Off" {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name ShowTaskViewButton -Value 0
+}
+Block "Personalization > Taskbar > Taskbar items > Widgets = Off" {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarDa -Value 0
+}
+Block "Personalization > Taskbar > Taskbar items > Chat = Off" {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarMn -Value 0
+}
 # Block "Personalization > Taskbar > Lock the taskbar = On" {
 #     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarSizeMove -Value 0
 # }
