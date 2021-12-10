@@ -1,3 +1,6 @@
+Block "Bluetooth & devices > Devices > More Bluetooth settings > Show the Bluetooth icon in the notification area = Off" {
+    Set-RegistryValue "HKCU:\Control Panel\Bluetooth" -Name "Notification Area Icon" -Value 0
+} -RequiresReboot
 if (!(Configured $forHome) -and !(Configured $forTest)) {
     FirstRunBlock "Bluetooth & devices > Printers & scanners > Add a printer or scanner > The printer that I want isn't listed" {
         Write-ManualStep "Select a shared printer by name = \\{Server}\{Printer}"
