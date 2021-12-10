@@ -1,5 +1,6 @@
 # ms-settings: URI scheme reference
 # https://docs.microsoft.com/en-us/windows/uwp/launch-resume/launch-settings-app#ms-settings-uri-scheme-reference
+# https://ss64.com/nt/syntax-settings.html
 
 Block "Rename computer" {
     Write-ManualStep
