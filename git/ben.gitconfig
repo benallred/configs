@@ -39,7 +39,7 @@
 	lgab = log --graph --decorate -30 --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(15,trunc)%an%Creset%C(auto)%d %s'
 	lgc = log --graph --decorate -30 --all --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(15,trunc)%an%Creset%C(auto)%d %s%C(green)% (trailers:key=co-authored-by,valueonly,separator=%x2C )%Creset'
 	commitwip = !git add -A && git commit -m WIP
-	continuewip = "!if [ \"$(git log -1 --pretty=format:%B)\" == \"WIP\" ]; then git reset HEAD~1; else echo 'The last commit was not \"WIP\"'; fi"
+	continuewip = "!if [ \"$(git log -1 --pretty=format:%B)\" == \"WIP\" ]; then git reset HEAD~1; elif [ \"$1\" != \"-q\" ]; then echo 'The last commit was not \"WIP\"'; fi #"
 	d = "!git difftool -t $(git config ben.difftool)"
 	da = "!f() { for filename in $(git diff --name-only $*); do git difftool -t $(git config ben.difftool) $* $filename & done }; f"
 	dd = difftool --dir-diff
@@ -68,6 +68,6 @@
 	ra = rebase --abort
 	wiprebase = "!f() { if [ $1 ]; then git commitwip && git rebase $1 && git continuewip; else echo 'No branch specified'; fi }; f"
 	autosquash = -c sequence.editor=true ri --autosquash
-	commit-fix = "!ref=$(git rev-parse --short \"$1\") && git commit --fixup $ref && git autosquash $ref~ #"
+	commit-fix = "!ref=$(git rev-parse --short \"$1\") && git commit --fixup $ref && git commitwip && git autosquash $ref~ && git continuewip -q #"
 	site = !start $(git config remote.origin.url)
 	link = "!f() { if [ $1 ]; then url="$(git config remote.origin.url | sed s/\\\\.git//)/commit/$(git rev-parse --short \"$1\")"; echo \"$url\n\tadded to clipboard\"; echo $url | clip; else echo 'No commit-ish specified\nUsage: git link <commit-ish>'; fi }; f"
