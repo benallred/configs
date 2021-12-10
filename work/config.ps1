@@ -30,7 +30,13 @@ if ((Configured $forWork) -or (Configured $forTest)) {
     }
 
     InstallFromWingetBlock Microsoft.Teams {
-        DeleteDesktopShortcut "Microsoft Teams"
+        DeleteDesktopShortcut "Microsoft Teams (work or school)"
+        # Teams does not seem to pick up manual changes to the settings file
+        # $teamsSettings = Get-Content $env:AppData\Microsoft\Teams\desktop-config.json | ConvertFrom-Json
+        # $teamsSettings | Add-Member NoteProperty theme "darkV2" -Force
+        # ConvertTo-Json $teamsSettings | Set-Content $env:AppData\Microsoft\Teams\desktop-config.json
+        Write-ManualStep "General > Theme = Dark"
+        Write-ManualStep "Privacy > Surveys = Off"
     }
 
     Block "Outlook > Options > Add-ins > Manage COM Add-ins > Mimecast for Outlook = Off" {
