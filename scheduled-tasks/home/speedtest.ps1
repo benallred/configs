@@ -6,8 +6,8 @@ echo "Waiting until $((Get-Date).AddSeconds($sleepSeconds).ToString("HH:mm")) to
 sleep -Seconds ($sleepSeconds)
 $json = ConvertFrom-Json (speedtest -f json)
 $megaBitsPerSecond = ($json.download.bytes / $json.download.elapsed * 1000 / 125000)
-Add-Content C:\BenLocal\speedtest.log $megaBitsPerSecond
-$measurements = Get-Content C:\BenLocal\speedtest.log
+Add-Content $OneDrive\.speedtest.log $megaBitsPerSecond
+$measurements = Get-Content $OneDrive\.speedtest.log
 $megaBitsPerSecond_AvgDay = $measurements | select -Last 3 | Measure-Object -Average | select -ExpandProperty Average
 $megaBitsPerSecond_AvgWeek = $measurements | select -Last 21 | Measure-Object -Average | select -ExpandProperty Average
 $megaBitsPerSecond_AvgAll = $measurements | Measure-Object -Average | select -ExpandProperty Average
