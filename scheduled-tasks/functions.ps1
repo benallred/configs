@@ -19,8 +19,6 @@ function StopOnError(
     [scriptblock]$ScriptBlock) {
     Invoke-Command $ScriptBlock
     if (($PSCmdlet.ParameterSetName -eq "NonZero" -and $LastExitCode) -or ($PSCmdlet.ParameterSetName -eq "MinimumErrorCode" -and $LastExitCode -ge $MinimumErrorCode)) {
-        Write-Host "Received exit code $LastExitCode" -ForegroundColor Red
-        Read-Host
-        Exit $LastExitCode
+        throw "Received exit code $LastExitCode"
     }
 }

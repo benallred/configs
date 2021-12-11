@@ -116,21 +116,24 @@ function Find-RepoRoot() {
     return $repoRoot
 }
 
-function GitAudit() {
+function GitAudit([switch]$ReturnSuccess) {
+    $script:GitAudit_success = $true
     function CheckDir($dir) {
         if (Test-Path (Join-Path $dir .git)) {
             pushd $dir
             $unsynced = git unsynced
             $status = git status --porcelain
             if ($unsynced -or $status) {
-                Write-Output (New-Object System.String -ArgumentList ('*', 100))
+                $script:GitAudit_success = $false
+                Write-Host ('*' * 100)
                 Write-Host $dir -ForegroundColor Red
-                git unsynced
-                git status --porcelain
+                git unsynced | Write-Host
+                git status --porcelain | Write-Host
             }
             popd
         }
         elseif (Test-Path $dir -PathType Container) {
+            $script:GitAudit_success = $false
             Write-Host $dir -ForegroundColor Red
             Write-Host "`tNot in source control"
         }
@@ -138,6 +141,9 @@ function GitAudit() {
     (Get-ChildItem $git) +
     (Get-ChildItem C:\Work -ErrorAction Ignore | Get-ChildItem) |
     % { CheckDir $_.FullName }
+    if ($ReturnSuccess) {
+        return $script:GitAudit_success
+    }
 }
 
 function ReallyUpdate-Module([Parameter(Mandatory)][string]$Name) {
