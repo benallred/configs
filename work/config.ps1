@@ -74,6 +74,12 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         }
     }
 
+    Block "Install Microsoft.dotnet 5" {
+        winget install Microsoft.dotnet --version (winget show Microsoft.dotnet --versions | ? { $_ -like "5*" } | sort -d -t 1)
+    } {
+        winget list Microsoft.dotnet -e | sls (winget show Microsoft.dotnet --versions | ? { $_ -like "5*" } | sort -d -t 1)
+    }
+
     # https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-command-prompt
     InstallFromWingetBlock Microsoft.SQLServer.2019.Developer `
         "/Action=Install /IAcceptSqlServerLicenseTerms /InstallPath=\`"C:\Program Files\Microsoft SQL Server\`" /Features=FullText /SecurityMode=SQL /Verbose"
