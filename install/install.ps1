@@ -185,6 +185,8 @@ Block "Configure Office" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" -Name PreviewMarkMessage -Value 1
     # Options > Mail > Outlook panes > Reading Pane > Mark items as read when viewed in the Reading Pane = Yes > Wait seconds = 0
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" -Name PreviewWaitSeconds -Value 0
+    # Options > Mail > Send messages > CTRL + ENTER sends a message = On
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" -Name CtrlEnterSends -Value 1
     # Options > Calendar > Display options > Automatically switch from vertical layout to schedule view ... = Off
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\WunderBar" -Name EnableAutoSwitchingVerticalToHorizontal -Value 0
     # Options > People > Online status and photographs > Show user photographs when available = Off
@@ -225,6 +227,8 @@ Block "Configure Office" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Other" -Name NavBarOnLeft -Value 1
     # Options > Proofing > AutoCorrect Options... > AutoCorrect > Capitalize first letter of sentences = Off
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Common\AutoCorrect" -Name CapitalizeSentence -Value 0
+    # Options > Proofing > Hide spelling and grammar errors = On
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Shared Tools\Proofing Tools\1.0\Office" -Name OneNoteSpellingOptions -Value 7
     # Options > Advanced > Editing > Include link to source when pasting from the Web = Off
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Editing" -Name PasteIncludeURL -Value 0
     # UI Changes > Pin Notebook Pane to Side
