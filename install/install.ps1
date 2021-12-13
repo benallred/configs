@@ -338,6 +338,13 @@ InstallFromWingetBlock 7zip.7zip {
     WaitWhileProcess 7zFM
 }
 
+if (Configured $forHome) {
+    FirstRunBlock "Wait for Plex backup restore" {
+        WaitForPath "HKCU:\SOFTWARE\PlexPlaylistLiberator"
+    }
+    InstallFromWingetBlock Plex.PlexMediaServer
+}
+
 InstallFromWingetBlock 9NBLGGH1ZBKW # Dynamic Theme
 
 if (!(Configured $forKids)) {
