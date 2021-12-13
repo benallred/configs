@@ -53,6 +53,18 @@ function ConfigFollowup([string]$FileName, [scriptblock]$Followup) {
         Read-Host
     }.ToString().Replace('$FileName', $FileName).Replace('$Followup', $Followup)
     Create-FileRunOnce $FileName "$env:tmp\$FileName.ps1"
+    Add-Content C:\BenLocal\backup\runonce.txt ". $env:tmp\$FileName.ps1"
+}
+
+function DeleteDesktopShortcut([string]$ShortcutName) {
+    $fileName = "Delete desktop shortcut $ShortcutName"
+    Set-Content "$env:tmp\$fileName.ps1" {
+        Write-Output "$fileName"
+        Remove-Item "$env:Public\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
+        Remove-Item "$env:UserProfile\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
+    }.ToString().Replace('$fileName', $fileName).Replace('$ShortcutName', $ShortcutName)
+    Create-FileRunOnce $fileName "$env:tmp\$fileName.ps1"
+    Add-Content C:\BenLocal\backup\runonce.txt ". $env:tmp\$fileName.ps1"
 }
 
 function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
@@ -82,16 +94,6 @@ function ConfigureNotifications([string]$ProgramName) {
     start ms-settings:notifications
     Write-ManualStep "`tShow notifications in action center = Off"
     Write-ManualStep "`tClose settings when done"
-}
-
-function DeleteDesktopShortcut([string]$ShortcutName) {
-    $fileName = "Delete desktop shortcut $ShortcutName"
-    Set-Content "$env:tmp\$fileName.ps1" {
-        Write-Output "$fileName"
-        Remove-Item "$env:Public\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
-        Remove-Item "$env:UserProfile\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
-    }.ToString().Replace('$fileName', $fileName).Replace('$ShortcutName', $ShortcutName)
-    Create-FileRunOnce $fileName "$env:tmp\$fileName.ps1"
 }
 
 function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone, [int]$CloneDepth) {
