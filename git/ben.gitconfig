@@ -68,6 +68,6 @@
 	ra = rebase --abort
 	wiprebase = "!f() { if [ $1 ]; then git commitwip && git rebase $1 && git continuewip; else echo 'No branch specified'; fi }; f"
 	autosquash = -c sequence.editor=true ri --autosquash
-	commit-fix = "!ref=$(git rev-parse --short \"$1\") && git commit --fixup $ref && git commitwip && git autosquash $ref~ && git continuewip -q #"
+	commit-fix = "!ref=$(git rev-parse --short \"$1\") && git commit --fixup $ref && (if [ \"$(git status --porcelain)\" != \"\" ]; then git commitwip; fi) && git autosquash $ref~ && git continuewip -q #"
 	site = !start $(git config remote.origin.url)
 	link = "!f() { if [ $1 ]; then url="$(git config remote.origin.url | sed s/\\\\.git//)/commit/$(git rev-parse --short \"$1\")"; echo \"$url\n\tadded to clipboard\"; echo $url | clip; else echo 'No commit-ish specified\nUsage: git link <commit-ish>'; fi }; f"
