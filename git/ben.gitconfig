@@ -62,6 +62,7 @@
 	pushprev = "!f() { if [ $1 ]; then ref=$1; shift; git push origin $ref:$(git branch --show-current) $@; else echo 'No commit-ish specified\nUsage: git pushprev <commit-ish> [options]'; fi }; f"
 	pr = !start $(git config remote.origin.url | sed s/\\\\.git//)/pull/new/$(git branch --show-current)
 	b = branch -a
+	forget-branch = !branch=$(git branch --show-current) && git co - && git branch -d $branch
 	unsynced = log --branches --not --remotes --no-walk --oneline
 	ri = rebase -i
 	rc = rebase --continue
