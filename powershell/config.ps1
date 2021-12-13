@@ -33,7 +33,12 @@ Block "Configure profile.ps1" {
     (Test-Path $profile) -and (Select-String "$($PSScriptRoot -replace "\\", "\\")\\profile.ps1" $profile) # <original> is regex, <substitute> is PS string
 }
 
-Block "Configure winget" {
+Block "Set winget as default terminal application" {
+    Set-RegistryValue "HKCU:\Console\%%Startup" -Name DelegationConsole -Value "{2EACA947-7F5F-4CFA-BA87-8F7FBEEFBE69}"
+    Set-RegistryValue "HKCU:\Console\%%Startup" -Name DelegationTerminal -Value "{E12CFF52-A866-4C77-9A90-F570A7AA2C6B}"
+}
+
+Block "Configure winget argument completer" {
     Add-Content -Path $profile {
         Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
             param($wordToComplete, $commandAst, $cursorPosition)
