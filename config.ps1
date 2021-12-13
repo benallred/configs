@@ -44,6 +44,21 @@ Block "Backup Registry" {
     $SkipBackup
 }
 
+if (Configured $forHome) {
+    FirstRunBlock "Change drive letters" {
+        # Consider using Set-Partition or Set-Volume
+        start diskmgmt.msc
+        Write-ManualStep "Change drive letters"
+        Read-Host "Press Enter when done"
+    }
+
+    Block "Restore file backups" {
+        wt -w 0 nt pwsh -NoExit -File $PSScriptRoot\restore-file-backups.ps1
+    } {
+        Test-Path C:\Ben
+    }
+}
+
 & $PSScriptRoot\powershell\config.ps1
 if (!$DryRun -and !$Run) {
     . $profile # make profile available to scripts below

@@ -1,9 +1,9 @@
-function BackupByDay([string]$from, [string]$toBase) {
+function BackupByDay([string]$From, [string]$ToBase) {
     $weekday = Get-Date -Format "ddd"
     $weekdayNumber = (Get-Date).DayOfWeek.value__
-    $to = "$toBase\$weekdayNumber $weekday"
+    $to = "$ToBase\$weekdayNumber $weekday"
     $logFile = "$to.log"
-    Write-Output "Backing up $from to $to"
+    Write-Output "Backing up $From to $to"
     Write-Output "Writing log file to $logFile"
     # /Z           = copy files in restartable mode
     # /DCOPY:T     = COPY Directory Timestamps
@@ -13,7 +13,7 @@ function BackupByDay([string]$from, [string]$toBase) {
     # /NP          = No Progress - don't display percentage copied
     # /UNILOG:file = output status to LOG file as UNICODE (overwrite existing log)
     # /TEE         = output to console window, as well as the log file
-    StopOnError 4 { robocopy $from $to /Z /DCOPY:T /MIR /X /NDL /NP /UNILOG:"$logFile" /TEE }
+    StopOnError 4 { robocopy $From $to /Z /DCOPY:T /MIR /X /NDL /NP /UNILOG:"$logFile" /TEE }
 }
 
 BackupByDay "C:\Ben" "J:\Backup - Daily\Ben"
