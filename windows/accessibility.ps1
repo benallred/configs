@@ -1,3 +1,6 @@
+Block "Control Panel > Ease of Access Center > Make the computer easier to see > Turn on or off High Contrast when left ALT + left SHIFT + PRINT SCREEN is pressed = Off" {
+    Set-RegistryValue "HKCU:\Control Panel\Accessibility\HighContrast" -Name Flags -Value 4218
+} -RequiresReboot
 Block "Accessibility > Narrator > Keyboard shortcut for Narrator = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Narrator\NoRoam" -Name WinEnterLaunchEnabled -Value 0
 }
