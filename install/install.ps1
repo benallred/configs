@@ -365,6 +365,8 @@ if (!(Configured $forKids)) {
 
     InstallFromWingetBlock Logitech.LGS
 
+    InstallFromWingetBlock Logitech.Options
+
     InstallFromGitHubAssetBlock imbushuo mac-precision-touchpad Drivers-amd64-ReleaseMSSigned.zip {
         pnputil /add-driver .\drivers\amd64\AmtPtpDevice.inf /install
     } {
