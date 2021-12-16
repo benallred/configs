@@ -200,15 +200,13 @@ function tmpfor([Parameter(Mandatory)][string]$For, [switch]$Go) {
 }
 
 function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$EndLine) {
-    if ($FilePath -notmatch "C:\\Work\\(?<org>[^\\]+)\\(?<repo>[^\\]+)") {
-        Write-Error "Could not match path"
-    }
-
-    pushd $Matches[0]
+    pushd (Split-Path $FilePath)
+    $remote = git config remote.origin.url
     $permalinkCommit = git rev-parse --short head
+    $relativePath = git ls-files --full-name $FilePath
     popd
 
-    $url = ($FilePath.Replace($Matches[0], "https://github.com/$($Matches["org"])/$($Matches["repo"])/blob/$permalinkCommit") -replace "\\", "/") `
+    $url = ("$remote/blob/$permalinkCommit/$relativePath" -replace "\.git", "") `
         + ($BeginLine -gt 0 ? "#L$BeginLine" + ($EndLine -gt 0 ? "-L$EndLine" : "") : "")
 
     Set-Clipboard $url
