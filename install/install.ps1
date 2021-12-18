@@ -348,6 +348,15 @@ if (Configured $forHome) {
     }
     InstallFromWingetBlock Plex.PlexMediaServer
 }
+else {
+    InstallFromWingetBlock Plex.Plex {
+        Write-ManualStep "Sign in to Plex"
+        ConfigFollowup "Configure Plex" {
+            $plexSettingsFile = "$env:LocalAppData\Plex\plex.ini"
+            (Get-Content $plexSettingsFile) -replace "deviceSettings=`"\{", "deviceSettings=`"{\`"autoLogin\`":true," | Set-Content $plexSettingsFile
+        }
+    }
+}
 
 InstallFromWingetBlock 9NBLGGH1ZBKW # Dynamic Theme
 
