@@ -7,9 +7,18 @@ Block "System > Power & battery > Screen and sleep > When plugged in, turn off m
 Block "System > Power & battery > Screen and sleep > On battery power, put my device to sleep after = 20 minutes" {
     powercfg /change standby-timeout-dc 20
 }
-if ((Configured $forWork) -or (Configured $forKids)) {
-    Block "System > Power & battery > Screen and sleep > When plugged in, put my device to sleep after = 1 hour" {
-        powercfg /change standby-timeout-ac 60
+Block "System > Power & battery > Screen and sleep > When plugged in, put my device to sleep after =" {
+    if ((Configured $forHome) -or (Configured $forTest)) {
+        Write-Output "Never"
+        powercfg /change standby-timeout-ac 0
+    }
+    elseif (Configured $forWork) {
+        Write-Output "1.5 hours"
+        powercfg /change standby-timeout-ac 90
+    }
+    else {
+        Write-Output "30 minutes"
+        powercfg /change standby-timeout-ac 30
     }
 }
 Block "Control Panel > Power Options > Choose what closing the lid does > When I close the lid [both On battery and Plugged in] = Do nothing" {
