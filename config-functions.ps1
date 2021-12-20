@@ -106,6 +106,9 @@ function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$Afte
         }
         if ($AfterClone) {
             pushd $git\$Repo
+            if ($User -eq "benallred") {
+                git set-email
+            }
             Invoke-Command $AfterClone
             popd
         }
