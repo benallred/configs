@@ -29,6 +29,7 @@ Block "PowerShell Transcripts" {
 
 Block "Configure profile.ps1" {
     Add-Content -Path $profile -Value "`n. $PSScriptRoot\profile.ps1"
+    . $profile
 } {
     (Test-Path $profile) -and (Select-String "$($PSScriptRoot -replace "\\", "\\")\\profile.ps1" $profile) # <original> is regex, <substitute> is PS string
 }
