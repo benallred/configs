@@ -2,3 +2,11 @@ Block "Privacy & security > For developers > Change settings to allow remote con
     Set-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Remote Assistance" -Name fAllowToGetHelp -Value 0
     Disable-NetFirewallRule -DisplayGroup "Remote Assistance"
 }
+if (Configured $forKids) {
+    Block "Privacy & security > Search permissions > SafeSearch = Strict" {
+        Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\SearchSettings" -Name SafeSearchMode -Value 2
+    }
+}
+Block "Turn off web search in start menu" {
+    Set-RegistryValue "HKCU:\SOFTWARE\Policies\Microsoft\Windows\Explorer" -Name DisableSearchBoxSuggestions -Value 1
+}
