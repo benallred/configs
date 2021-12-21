@@ -31,6 +31,7 @@ Block "Control Panel > View by = Small icons" {
 & $PSScriptRoot\devices.ps1
 & $PSScriptRoot\personalization.ps1
 & $PSScriptRoot\apps.ps1
+& $PSScriptRoot\accounts.ps1
 & $PSScriptRoot\time-and-language.ps1
 & $PSScriptRoot\accessibility.ps1
 & $PSScriptRoot\privacy-and-security.ps1
