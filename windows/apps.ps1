@@ -18,6 +18,7 @@ if (!(Configured $forKids)) {
     }
 }
 
+UninstallBlock Microsoft.549981C3F5F10_8wekyb3d8bbwe # Cortana
 UninstallBlock Microsoft.BingNews_8wekyb3d8bbwe
 UninstallBlock Microsoft.BingWeather_8wekyb3d8bbwe
 UninstallBlock Microsoft.GetHelp_8wekyb3d8bbwe
