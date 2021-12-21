@@ -235,7 +235,9 @@ Block "Configure Office" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Other" -Name NavigationBarExpColState -Value 0
 }
 
-InstallFromScoopBlock sysinternals
+InstallFromScoopBlock sysinternals {
+    Set-RegistryValue "HKCU:\Software\Sysinternals" EulaAccepted 1
+}
 
 InstallFromGitHubBlock benallred SnapX { . $git\SnapX\SnapX.ahk }
 
