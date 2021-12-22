@@ -356,8 +356,9 @@ if ((Configured $forWork) -or (Configured $forTest)) {
 
     Block "Install Tor Browser" {
         winget install --id TorProject.TorBrowser
+        Move-Item "$env:UserProfile\Desktop\Tor Browser" C:\BenLocal\Programs
     } {
-        Test-Path "$env:UserProfile\Desktop\Tor Browser"
+        Test-Path "C:\BenLocal\Programs\Tor Browser"
     }
 }
 
