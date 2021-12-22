@@ -19,3 +19,5 @@ function BackupByDay([string]$From, [string]$ToBase) {
 BackupByDay "C:\Ben" "J:\Backup - Daily\Ben"
 BackupByDay "$env:UserProfile\OneDrive\Ben" "J:\Backup - Daily\OneDrive_Ben"
 BackupByDay "$env:UserProfile\OneDrive\Music" "J:\Backup - Daily\OneDrive_Music"
+
+StopOnError 4 { robocopy "$env:UserProfile\Documents\Heroes of the Storm\Accounts" "J:\Backup - Daily\UserProfile\Documents\Heroes of the Storm\Accounts" /XD *-Hero-* /Z /DCOPY:T /MIR /X /NDL /NP }
