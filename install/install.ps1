@@ -133,42 +133,50 @@ if (!(Configured $forKids)) {
     }
 }
 
-if (!(Test-ProgramInstalled "Microsoft Office 365")) {
-    InstallFromWingetBlock Microsoft.Office "/configure $PSScriptRoot\OfficeConfiguration.xml" {
-        # TODO: Activate
-        #   Observed differences
-        #       Manual install and activation
-        #           Word > Account: Product Activated \ Microsoft Office Professional Plus 2019
-        #           cscript "C:\Program Files (x86)\Microsoft Office\Office16\OSPP.VBS" /dstatus
-        #               LICENSE NAME: Office 19, Office19ProPlus2019MSDNR_Retail edition
-        #               LICENSE DESCRIPTION: Office 19, RETAIL channel
-        #               LICENSE STATUS:  ---LICENSED---
-        #               Last 5 characters of installed product key: <correct>
-        #       Automated install (product id = Professional2019Retail), no activation
-        #           Word > Account: Activation Required \ Microsoft Office Professional 2019
-        #       Automated install (product id = Professional2019Retail), activation by filling in PIDKEY
-        #           Word > Account: Subscription Product \ Microsoft Office 365 ProPlus
-        #           cscript ... /dstatus
-        #               Other stuff about a grace period, even though in-product it says activated
-        #               Last 5 characters of installed product key: <different>
-        #       Automated install (product id = ProPlus2019Volume), activation by filling in PIDKEY
-        #           THIS ATTEMPT WORKED
-        #           Word > Account: Product Activated \ Microsoft Office Professional Plus 2019
-        #           cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /dstatus
-        #               LICENSE NAME: Office 19, Office19ProPlus2019MSDNR_Retail edition
-        #               LICENSE DESCRIPTION: Office 19, RETAIL channel
-        #               LICENSE STATUS:  ---LICENSED---
-        #               Last 5 characters of installed product key: <correct>
-        #   Next attempts:
-        #       1. Don't put PIDKEY in xml. Activate from command line.
-        #           Example:    cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
-        #           Actual:     cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /inpkey:(SecureRead-Host "Office key")
-        #           Maybe also: cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /act
-        #           From: https://support.office.com/en-us/article/Change-your-Office-product-key-d78cf8f7-239e-4649-b726-3a8d2ceb8c81#ID0EABAAA=Command_line
-        #           From: https://docs.microsoft.com/en-us/deployoffice/vlactivation/tools-to-manage-volume-activation-of-office#ospp
-        #       2. SecureRead-Host to get Office key; write to copy of xml in tmp; use tmp configuration
-        #       3. Manual activation
-    }
+Block "Install Microsoft.Office" {
+    Copy-Item $PSScriptRoot\OfficeConfiguration.xml $env:tmp\OfficeConfiguration.xml
+    (Get-Content $env:tmp\OfficeConfiguration.xml) -replace "{office key}", (SecureRead-Host "Office key") | Set-Content $env:tmp\OfficeConfiguration.xml
+    winget install --id Microsoft.Office --override "/configure $env:tmp\OfficeConfiguration.xml"
+    # Activation attempts
+    #   Observed differences
+    #       Manual install and activation
+    #           Word > Account: Product Activated \ Microsoft Office Professional Plus 2019
+    #           cscript "C:\Program Files (x86)\Microsoft Office\Office16\OSPP.VBS" /dstatus
+    #               LICENSE NAME: Office 19, Office19ProPlus2019MSDNR_Retail edition
+    #               LICENSE DESCRIPTION: Office 19, RETAIL channel
+    #               LICENSE STATUS:  ---LICENSED---
+    #               Last 5 characters of installed product key: <correct>
+    #       Automated install (product id = Professional2019Retail), no activation
+    #           Word > Account: Activation Required \ Microsoft Office Professional 2019
+    #       Automated install (product id = Professional2019Retail), activation by filling in PIDKEY
+    #           Word > Account: Subscription Product \ Microsoft Office 365 ProPlus
+    #           cscript ... /dstatus
+    #               Other stuff about a grace period, even though in-product it says activated
+    #               Last 5 characters of installed product key: <different>
+    #       Automated install (product id = ProPlus2019Volume), activation by filling in PIDKEY
+    #           THIS ATTEMPT WORKED
+    #           Word > Account: Product Activated \ Microsoft Office Professional Plus 2019
+    #           cscript "C:\Program Files\Microsoft Office\Office16\OSPP.VBS" /dstatus
+    #               LICENSE NAME: Office 19, Office19ProPlus2019MSDNR_Retail edition
+    #               LICENSE DESCRIPTION: Office 19, RETAIL channel
+    #               LICENSE STATUS:  ---LICENSED---
+    #               Last 5 characters of installed product key: <correct>
+    #       Automated install, activate from command line
+    #           From: https://support.office.com/en-us/article/Change-your-Office-product-key-d78cf8f7-239e-4649-b726-3a8d2ceb8c81#ID0EABAAA=Command_line
+    #           Did not work:
+    #               cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /inpkey:XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
+    #           Did not work:
+    #               cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /dstatus # get last five chars
+    #               cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /unpkey:XXXXX # "<Product key uninstall successful>"
+    #               cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /inpkey:XXXXX-XXXXX-XXXXX-XXXXX-XXXXX
+    #           Both result in:
+    #               ERROR CODE: 0xC004F069
+    #               ERROR DESCRIPTION: The Software Licensing Service reported that the product SKU is not found.
+    #   Next attempts:
+    #       1. SecureRead-Host to get Office key; write to copy of xml in tmp; use tmp configuration
+    #       2. Manual activation
+} {
+    (Test-ProgramInstalled "Microsoft Office Professional Plus 2019") -or (Test-ProgramInstalled "Microsoft Office 365")
 }
 
 Block "Configure Office" {
