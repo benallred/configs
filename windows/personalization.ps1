@@ -16,15 +16,6 @@ if (!(Configured $forKids)) {
 Block "Personalization > Lock screen > Personalize your lock screen > Get fun facts, tips, tricks, and more on your lock screen = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name RotatingLockScreenOverlayEnabled -Value 0
 }
-# Block "Personalization > Lock screen > Screen saver > Screen saver = (None)" {
-#     Remove-ItemProperty "HKCU:\Control Panel\Desktop" -Name SCRNSAVE.EXE -ErrorAction Ignore
-# }
-# Block "Personalization > Lock screen > Screen saver > Wait = 10 minutes" {
-#     Set-RegistryValue "HKCU:\Control Panel\Desktop" -Name ScreenSaveTimeOut -Value 600
-# }
-# Block "Personalization > Lock screen > Screen saver > On resume, display logon screen = On" {
-#     Set-RegistryValue "HKCU:\Control Panel\Desktop" -Name ScreenSaverIsSecure -Value 1
-# }
 Block "Personalization > Start > Show most used apps = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name NoStartMenuMFUprogramsList -Value 1
 }
