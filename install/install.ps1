@@ -222,6 +222,8 @@ Block "Configure Office" {
     # UI Changes > Open e-mail message > Add "Mark Unread" (not "Mark as Unread"; "Mark as Unread" does not toggle)
     # UI Changes > Open new e-mail > Remove items in Quick Access Toolbar
     # UI Changes > Open new e-mail > Add "Save Sent Item To"
+    # Junk > Block Sender > Don't show this message again = On
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -Name PONT_STRING -Value "$((Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -ErrorAction Ignore).PONT_STRING)35,"
     # Add Sender to Safe Senders List > Don't show this message again = On
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -Name PONT_STRING -Value "$((Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -ErrorAction Ignore).PONT_STRING)36,"
 
