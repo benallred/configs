@@ -1,0 +1,27 @@
+<!-- https://docs.microsoft.com/en-us/visualstudio/ide/synchronized-settings-in-visual-studio -->
+<UserSettings>
+    <!-- <ApplicationIdentity version="17.0" /> -->
+    <Category name="Environment_Group" RegisteredName="Environment_Group">
+        <Category name="Environment_DefaultEditors" Category="{68161AEE-BCA8-4214-B2E4-7875263E49C5}" Package="{DA9FB551-C724-11d0-AE1F-00A0C90FFFC3}" RegisteredName="Environment_DefaultEditors" PackageName="Visual Studio Environment Package">
+            <PropertyValue name="NumberOfDefaultEditors">3</PropertyValue>
+            <PropertyValue name="DefaultEditor&gt;0">editorconfig&gt;1&gt;{8137C9E8-35FE-4AF2-87B0-DE3C45F395FD}&gt;NoGuid</PropertyValue>
+            <PropertyValue name="DefaultEditor&gt;1">md&gt;1&gt;{8137C9E8-35FE-4AF2-87B0-DE3C45F395FD}&gt;NoGuid</PropertyValue>
+            <PropertyValue name="DefaultEditor&gt;2">yml&gt;1&gt;{8137C9E8-35FE-4AF2-87B0-DE3C45F395FD}&gt;NoGuid</PropertyValue>
+        </Category>
+    </Category>
+</UserSettings>
+
+
+
+<Category name="Environment_Group" RegisteredName="Environment_Group">
+    <Category name="Environment_TabsAndWindows" Category="{CCF27946-63D9-4806-91BA-EEBF5F3DFA4A}" Package="{5E56B3DB-7964-4588-8D49-D3523AB7BDB9}" RegisteredName="Environment_TabsAndWindows" PackageName="Environment Package Window Management">
+        <PropertyValue name="EnablePreviewTab">False</PropertyValue>
+        <!-- <PropertyValue name="EnableSingleClickPreviewInNavigateTo">False</PropertyValue> -->
+    </Category>
+</Category>
+
+
+
+<Category name="CodeLens" Category="{04DA95C1-B198-491D-BB93-DAD8610F3019}" Package="{E269B994-EF71-4CE0-8BCD-581C217372E8}" RegisteredName="CodeLens" PackageName="Microsoft.VisualStudio.Editor.Implementation.EditorPackage">
+    <PropertyValue name="IsCodeLensEnabled">false</PropertyValue>
+</Category>
