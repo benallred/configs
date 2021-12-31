@@ -1,8 +1,12 @@
 # configs
 
-```powershell
-winget upgrade Microsoft.WindowsTerminal
-```
+## Pre-Bootstrap
+
+- Windows Update
+- Update drivers
+- `winget upgrade Microsoft.WindowsTerminal`
+
+## Bootstrap
 
 ```powershell
 $bootstrapDuration = [Diagnostics.Stopwatch]::StartNew()
