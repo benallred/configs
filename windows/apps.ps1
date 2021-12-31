@@ -31,3 +31,12 @@ UninstallBlock Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe
 UninstallBlock Microsoft.WindowsMaps_8wekyb3d8bbwe
 UninstallBlock Disney.37853FC22B2CE_6rarf9sa4v8jt # Disney+
 UninstallBlock SpotifyAB.SpotifyMusic_zpdnekdrzrea0
+
+if (Configured $forKids) {
+    UninstallBlock MicrosoftTeams_8wekyb3d8bbwe
+}
+else {
+    Block "Teams > Settings > General > Auto-start Teams = Off" {
+        Set-RegistryValue "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppModel\SystemAppData\MicrosoftTeams_8wekyb3d8bbwe\TeamsStartupTask" State 0
+    }
+}
