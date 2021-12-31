@@ -446,6 +446,17 @@ if (!(Configured $forKids)) {
     InstallFromScoopBlock scrcpy
 
     InstallFromScoopBlock speedtest-cli
+
+    Block "Install RegFromApp" {
+        Download-File https://www.nirsoft.net/utils/regfromapp-x64.zip $env:tmp\regfromapp-x64.zip
+        Expand-Archive $env:tmp\regfromapp-x64.zip C:\BenLocal\Programs\RegFromApp64
+        Create-Shortcut C:\BenLocal\Programs\RegFromApp64\RegFromApp.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\RegFromApp64.lnk"
+        Download-File https://www.nirsoft.net/utils/regfromapp.zip $env:tmp\regfromapp.zip
+        Expand-Archive $env:tmp\regfromapp.zip C:\BenLocal\Programs\RegFromApp
+        Create-Shortcut C:\BenLocal\Programs\RegFromApp\RegFromApp.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\RegFromApp.lnk"
+    } {
+        Test-Path C:\BenLocal\Programs\RegFromApp64
+    }
 }
 
 InstallFromScoopBlock paint.net

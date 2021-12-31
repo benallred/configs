@@ -17,6 +17,10 @@ function Run-AsAdmin([Parameter(Mandatory)][string]$FilePath) {
 }
 
 function Create-Shortcut([Parameter(Mandatory)][string]$Target, [Parameter(Mandatory)][string]$Link, [string]$Arguments) {
+    $dir = Split-Path $Link
+    if (!(Test-Path $dir)) {
+        New-Item $dir -ItemType Directory -Force | Out-Null
+    }
     $shortcut = (New-Object -ComObject WScript.Shell).CreateShortcut($Link)
     $shortcut.TargetPath = $Target
     $shortcut.WorkingDirectory = Split-Path $Target
