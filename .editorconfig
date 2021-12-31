@@ -7,6 +7,8 @@ insert_final_newline = true
 charset = utf-8-bom
 
 [*.md]
+indent_size = 2
+tab_width = 2
 trim_trailing_whitespace = false
 
 [*.gitconfig]
