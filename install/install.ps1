@@ -467,6 +467,14 @@ if (!(Configured $forKids)) {
     } {
         Test-Path C:\BenLocal\Programs\RegFromApp64
     }
+
+    if (Configured $forHome) {
+        Block "Install OverDrive" {
+            Download-File https://static.od-cdn.com/ODMediaConsoleSetup.msi $env:tmp\ODMediaConsoleSetup.msi
+            Start-Process $env:tmp\ODMediaConsoleSetup.msi /passive, /norestart -Wait
+            Set-RegistryValue "HKCU:\Software\OverDrive, Inc.\OverDrive Media Console\Settings" "DownloadFolder-MP3 Audiobook" "C:\BenLocal\Audio Books"
+        }
+    }
 }
 
 InstallFromScoopBlock paint.net
