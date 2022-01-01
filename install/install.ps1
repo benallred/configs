@@ -445,7 +445,9 @@ if (!(Configured $forKids)) {
 
     InstallFromScoopBlock scrcpy
 
-    InstallFromScoopBlock speedtest-cli
+    InstallFromScoopBlock speedtest-cli {
+        speedtest --accept-license --version
+    }
 
     Block "Install RegFromApp" {
         Download-File https://www.nirsoft.net/utils/regfromapp-x64.zip $env:tmp\regfromapp-x64.zip
