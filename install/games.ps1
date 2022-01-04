@@ -4,9 +4,12 @@ InstallFromWingetBlock Valve.Steam {
     if (Configured $forWork) {
         RemoveStartupRegistryKey Steam
     }
+    if (Configured $forHome) {
+        Write-ManualStep "Set install location"
+    }
 }
 
-if (!(Configured $forWork)) {
+if ((Configured $forHome) -or (Configured $forKids)) {
     Block "Install Battle.net" {
         Download-File https://www.battle.net/download/getInstallerForGame $env:tmp\Battle.net-Setup.exe
         $battleNetSettings = @{
@@ -49,15 +52,40 @@ if (!(Configured $forWork)) {
     } {
         Test-ProgramInstalled "Battle.net"
     }
+}
 
-    if (!(Configured $forKids)) {
-        InstallFromWingetBlock EpicGames.EpicGamesLauncher {
-            DeleteDesktopShortcut "Epic Games Launcher"
-            . "${env:ProgramFiles(x86)}\Epic Games\Launcher\Portal\Binaries\Win32\EpicGamesLauncher.exe"
-            RemoveStartupRegistryKey EpicGamesLauncher
-            $epicGamesSettingsFile = "$env:LocalAppData\EpicGamesLauncher\Saved\Config\Windows\GameUserSettings.ini"
-                (Get-Content $epicGamesSettingsFile) -replace "\[Launcher\]", "`$0`nDefaultAppInstallLocation=D:\Installs\Epic Games" | Set-Content $epicGamesSettingsFile
-                (Get-Content $epicGamesSettingsFile) -replace "\[.+?_General\]", "`$0`nNotificationsEnabled_Adverts=False" | Set-Content $epicGamesSettingsFile
+if (Configured $forHome) {
+    InstallFromWingetBlock EpicGames.EpicGamesLauncher {
+        DeleteDesktopShortcut "Epic Games Launcher"
+        . "${env:ProgramFiles(x86)}\Epic Games\Launcher\Portal\Binaries\Win32\EpicGamesLauncher.exe"
+        RemoveStartupRegistryKey EpicGamesLauncher
+        $epicGamesSettingsFile = "$env:LocalAppData\EpicGamesLauncher\Saved\Config\Windows\GameUserSettings.ini"
+            (Get-Content $epicGamesSettingsFile) -replace "\[Launcher\]", "`$0`nDefaultAppInstallLocation=D:\Installs\Epic Games" | Set-Content $epicGamesSettingsFile
+            (Get-Content $epicGamesSettingsFile) -replace "\[.+?_General\]", "`$0`nNotificationsEnabled_Adverts=False" | Set-Content $epicGamesSettingsFile
+    }
+
+    InstallFromWingetBlock ElectronicArts.EADesktop {
+        DeleteDesktopShortcut EA
+        Add-Type -AssemblyName System.Windows.Forms
+        $monSize = [System.Windows.Forms.SystemInformation]::PrimaryMonitorSize
+        WaitWhile { !(dir "$env:LocalAppData\Electronic Arts\EA Desktop" user_*.ini) } "Waiting for EA Desktop user settings"
+        Stop-Process -Name EADesktop
+        WaitWhileProcess EADesktop
+        $script:eaDesktopSettings = Get-Content (dir "$env:LocalAppData\Electronic Arts\EA Desktop" user_*.ini)
+        function AddOrUpdateSetting($setting, $value) {
+            if ($script:eaDesktopSettings -like "*$setting*") {
+                $script:eaDesktopSettings = $script:eaDesktopSettings -replace "$setting.+", "$setting=$value"
+            }
+            else {
+                $script:eaDesktopSettings += "$setting=$value"
+            }
         }
+        AddOrUpdateSetting "user.windowsizewidth" 1441 # > 1440 for friends pane to not collapse
+        AddOrUpdateSetting "user.windowsizeheight" 900
+        AddOrUpdateSetting "user.windowposx" (($monSize.Width - 1440) / 2)
+        AddOrUpdateSetting "user.windowposy" (($monSize.Height - 900) / 2)
+        AddOrUpdateSetting "user.automaticcontentupdates" 1
+        AddOrUpdateSetting "user.downloadinplacedir" "D:\Installs\EA Games\"
+        Set-Content (dir "$env:LocalAppData\Electronic Arts\EA Desktop" user_*.ini) $script:eaDesktopSettings
     }
 }
