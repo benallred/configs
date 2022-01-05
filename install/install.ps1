@@ -119,6 +119,10 @@ if (!(Configured $forKids)) {
             DeleteDesktopShortcut "Docker Desktop"
             ConfigureNotifications "Docker Desktop"
             RemoveStartupRegistryKey "Docker Desktop"
+            WaitForPath $env:AppData\Docker\settings.json
+            $dockerSettings = Get-Content $env:AppData\Docker\settings.json | ConvertFrom-Json
+            $dockerSettings | Add-Member NoteProperty openUIOnStartupDisabled $true
+            ConvertTo-Json $dockerSettings | Set-Content $env:AppData\Docker\settings.json
         }
     }
 }
