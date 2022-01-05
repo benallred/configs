@@ -97,18 +97,6 @@ function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)
     $ProgressPreference = $savedProgressPreference
 }
 
-function AddNuGetSource([Parameter(Mandatory)][string]$Name, [Parameter(Mandatory)][string]$Path) {
-    $nugetConfigPath = "$env:AppData\NuGet\nuget.config"
-    if (!(Select-String $Path $nugetConfigPath)) {
-        [xml]$nugetConfigXml = Get-Content $nugetConfigPath
-        $newPackageSource = $nugetConfigXml.CreateElement("add")
-        $newPackageSource.SetAttribute("key", $Name)
-        $newPackageSource.SetAttribute("value", $Path)
-        $nugetConfigXml.configuration.packageSources.AppendChild($newPackageSource)
-        $nugetConfigXml.Save($nugetConfigPath)
-    }
-}
-
 function Find-RepoRoot() {
     $repoRoot = Get-Location
     while (!(Test-Path $repoRoot\.git)) {
