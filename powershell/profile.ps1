@@ -16,6 +16,10 @@ function Run-AsAdmin([Parameter(Mandatory)][string]$FilePath) {
     Start-Process wt -Verb RunAs -ArgumentList "-w run-as-admin pwsh -File `"$FilePath`""
 }
 
+function Get-FunctionContents([Parameter(Mandatory)][string]$FunctionName) {
+    Get-Command $FunctionName | select -exp ScriptBlock
+}
+
 function Create-Shortcut([Parameter(Mandatory)][string]$Target, [Parameter(Mandatory)][string]$Link, [string]$Arguments) {
     $dir = Split-Path $Link
     if (!(Test-Path $dir)) {
