@@ -422,6 +422,10 @@ if (!(Configured $forKids)) {
             Set-RegistryValue "HKCU:\Software\OverDrive, Inc.\OverDrive Media Console\Settings" "DownloadFolder-MP3 Audiobook" "C:\BenLocal\Audio Books"
         }
     }
+
+    InstallFromWingetBlock NickeManarin.ScreenToGif {
+        Copy-Item2 ..\programs\ScreenToGif.xaml $env:AppData\ScreenToGif\Settings.xaml
+    }
 }
 
 InstallFromScoopBlock paint.net
