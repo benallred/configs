@@ -282,6 +282,7 @@ if (!(Configured $forKids)) {
 
     InstallFromGitHubBlock benallred qmk_firmware {
         git pull --unshallow
+        git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
         git submodule update --init --recursive
         git remote add upstream https://github.com/zsa/qmk_firmware.git
         git co ben
