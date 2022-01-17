@@ -44,7 +44,7 @@ dotnet add $solutionName package System.CommandLine --prerelease
 Add-Content .\readme.md "
 ## Usage
 
-``dotnet run -p .\$solutionName\ -- --help``"
+``dotnet run --project .\$solutionName\ -- --help``"
 git add .
 git c "NuGet: System.CommandLine"
 
