@@ -87,15 +87,15 @@ if (!(Configured $forKids)) {
         "--passive --norestart --wait --includeRecommended --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb" `
     {
         # https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids
-        # Microsoft.VisualStudio.Workload.ManagedDesktop    .NET desktop development
-        # Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
+        #   Microsoft.VisualStudio.Workload.ManagedDesktop    .NET desktop development
+        #   Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
         # https://docs.microsoft.com/en-us/visualstudio/install/command-line-parameter-examples#using---wait
 
-        # InstallFollowup "Visual Studio" {
-        #     . (. "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath) $PSCommandPath
-        #     WaitWhile { !(Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" }) } "Waiting for Visual Studio registry key"
-        #     & "$git\configs\programs\Visual Studio - Hide dynamic nodes in Solution Explorer.ps1"
-        # }
+        InstallFollowup "Visual Studio" {
+            . (. "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath) $PSCommandPath
+            WaitWhile { !(Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" }) } "Waiting for Visual Studio registry key"
+            & "$git\configs\programs\Visual Studio - Hide dynamic nodes in Solution Explorer.ps1"
+        }
 
         function InstallVisualStudioExtension([string]$Publisher, [string]$Extension) {
             $downloadUrl = (iwr "https://marketplace.visualstudio.com/items?itemName=$Publisher.$Extension" | sls "/_apis/public/gallery/publishers/$Publisher/vsextensions/$Extension/(\d+\.?)+/vspackage").Matches.Value | % { "https://marketplace.visualstudio.com$_" }
@@ -106,12 +106,11 @@ if (!(Configured $forKids)) {
             Start-Process $vsixInstaller $installArgs -Wait
         }
 
-        # InstallVisualStudioExtension VisualStudioPlatformTeam SolutionErrorVisualizer
-        # InstallVisualStudioExtension VisualStudioPlatformTeam FixMixedTabs
-        # InstallVisualStudioExtension VisualStudioPlatformTeam PowerCommandsforVisualStudio
-        # InstallVisualStudioExtension maksim-vorobiev PeasyMotion
-        # InstallVisualStudioExtension JustinClareburtMSFT HotStatus
-        # InstallVisualStudioExtension MadsKristensen ResetZoom
+        InstallVisualStudioExtension maksim-vorobiev PeasyMotion2022
+        InstallVisualStudioExtension OlleWestman SubwordNavigation
+        InstallVisualStudioExtension AlexanderGayko ShowInlineErrors
+        InstallVisualStudioExtension MadsKristensen CodeCleanupOnSave
+        InstallVisualStudioExtension MadsKristensen ResetZoom
     }
 
     if (!(Configured $forTest)) {
