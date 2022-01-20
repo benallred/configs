@@ -5,7 +5,7 @@
 <Configuration>
   <Add>
     <!-- https://docs.microsoft.com/en-us/office365/troubleshoot/installation/product-ids-supported-office-deployment-click-to-run -->
-    <Product ID="ProPlus2019Volume" PIDKEY="{office key}">
+    <Product ID="ProPlus2019Retail" PIDKEY="">
       <Language ID="en-us" />
       <ExcludeApp ID="Access" />
       <ExcludeApp ID="Groove" />
