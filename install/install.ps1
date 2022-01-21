@@ -316,14 +316,11 @@ if (Configured $forHome) {
     }
     InstallFromWingetBlock Plex.PlexMediaServer
 }
-else {
-    InstallFromWingetBlock Plex.Plex {
-        Write-ManualStep "Sign in to Plex"
-        ConfigFollowup "Configure Plex" {
-            $plexSettingsFile = "$env:LocalAppData\Plex\plex.ini"
-            (Get-Content $plexSettingsFile) -replace "deviceSettings=`"\{", "deviceSettings=`"{\`"autoLogin\`":true," | Set-Content $plexSettingsFile
-        }
-    }
+
+InstallFromWingetBlock Plex.Plexamp {
+    DeleteDesktopShortcut Plexamp
+    Write-ManualStep "Sign in to Plexamp"
+    . $env:LocalAppData\Programs\Plexamp\Plexamp.exe
 }
 
 InstallFromWingetBlock 9NBLGGH1ZBKW # Dynamic Theme
