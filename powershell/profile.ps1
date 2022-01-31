@@ -219,9 +219,10 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
 
 . $PSScriptRoot\one-liners.ps1
 
+$env:POSH_GIT_ENABLED = $true
+Set-PoshPrompt $PSScriptRoot\ben.omp.json
+
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
 Get-ChildItem "$transcriptDir\*.log" | ? { !(sls -Path $_ -Pattern "Command start time:" -SimpleMatch -Quiet) } | rm -ErrorAction SilentlyContinue
 $Transcript = "$transcriptDir\$(Get-TimestampForFileName).log"
 Start-Transcript $Transcript -NoClobber -IncludeInvocationHeader
-
-Set-PoshPrompt $PSScriptRoot\ben.omp.json
