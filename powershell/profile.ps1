@@ -218,6 +218,7 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
 }
 
 . $PSScriptRoot\one-liners.ps1
+. $PSScriptRoot\PSReadLine.ps1
 
 $env:POSH_GIT_ENABLED = $true
 Set-PoshPrompt $PSScriptRoot\ben.omp.json
