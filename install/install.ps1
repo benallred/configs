@@ -194,14 +194,21 @@ Block "Configure Office" {
     # UI Changes > Open e-mail message > Add "Mark Unread" (not "Mark as Unread"; "Mark as Unread" does not toggle)
     # UI Changes > Open new e-mail > Remove items in Quick Access Toolbar
     # UI Changes > Open new e-mail > Add "Save Sent Item To"
+
+    function UpdatePontString([int]$id) {
+        $pontString = (Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -ErrorAction Ignore).PONT_STRING
+        if ($pontString -notmatch "$id,") {
+            Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -Name PONT_STRING -Value "$pontString$id,"
+        }
+    }
     # Reply (Automatic Picture Download) > Don't show this message again = On
-    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -Name PONT_STRING -Value "$((Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -ErrorAction Ignore).PONT_STRING)32,"
+    UpdatePontString 32
     # Junk > Block Sender > Don't show this message again = On
-    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -Name PONT_STRING -Value "$((Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -ErrorAction Ignore).PONT_STRING)35,"
+    UpdatePontString 35
     # Add Sender to Safe Senders List > Don't show this message again = On
-    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -Name PONT_STRING -Value "$((Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -ErrorAction Ignore).PONT_STRING)36,"
+    UpdatePontString 36
     # No Response Required (This meeting request will now be deleted) > Don't show this message again = On
-    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -Name PONT_STRING -Value "$((Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -ErrorAction Ignore).PONT_STRING)44,"
+    UpdatePontString 44
 
     ##########
     ## OneNote
