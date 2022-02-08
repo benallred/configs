@@ -337,7 +337,7 @@ InstallFromWingetBlock 9NBLGGH1ZBKW # Dynamic Theme
 if (!(Configured $forKids)) {
     InstallFromWingetBlock 9NBLGGH5R558 # Microsoft To Do
 
-    InstallFromWingetBlock 9NXJNFWNVM8D # Surface Audio
+    InstallFromWingetBlock 9WZDNCRFJB8P # Surface
 
     InstallFromWingetBlock Doist.Todoist {
         DeleteDesktopShortcut Todoist
