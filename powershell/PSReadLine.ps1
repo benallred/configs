@@ -10,7 +10,7 @@ Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineKeyHandler -Key RightArrow `
-    -BriefDescription "ForwardCharAndAcceptNextSuggestionWord" `
+    -BriefDescription ForwardCharAndAcceptNextSuggestionWord `
     -LongDescription "Move cursor one character to the right in the current editing line and accept the next word in suggestion when it's at the end of current editing line" `
     -ScriptBlock {
     param($key, $arg)
@@ -27,7 +27,7 @@ Set-PSReadLineKeyHandler -Key RightArrow `
     }
 }
 Set-PSReadLineKeyHandler -Key Ctrl+RightArrow `
-    -BriefDescription "NextWordAndAcceptSuggestion" `
+    -BriefDescription NextWordAndAcceptSuggestion `
     -LongDescription "Move cursor one word to the right in the current editing line and accept entire suggestion when it's at the end of current editing line" `
     -ScriptBlock {
     param($key, $arg)
@@ -45,7 +45,7 @@ Set-PSReadLineKeyHandler -Key Ctrl+RightArrow `
 }
 
 Set-PSReadLineKeyHandler -Key Ctrl+x `
-    -BriefDescription "SmartCut" `
+    -BriefDescription SmartCut `
     -LongDescription "Cut selection or buffer" `
     -ScriptBlock {
     param($key, $arg)
@@ -59,6 +59,28 @@ Set-PSReadLineKeyHandler -Key Ctrl+x `
     }
 
     [Microsoft.PowerShell.PSConsoleReadLine]::Cut($key, $arg)
+}
+
+Set-PSReadLineKeyHandler -Key F9 `
+    -BriefDescription GitInfo `
+    -LongDescription "Show git information" `
+    -ScriptBlock {
+    param($key, $arg)
+
+    $line = $null
+    $cursor = $null
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+
+    Write-Host # don't start writing on the current buffer line
+    $line.ToCharArray() | select -Skip $cursor | ? { $_ -eq "`n" } | % { Write-Host } # move down a line for each newline in the buffer after the cursor
+
+    git -c color.ui=always lga | Write-Host
+    git -c color.ui=always s | Write-Host
+
+    (prompt).ToCharArray() | ? { $_ -eq "`n" } | % { Write-Host } # move down a line for each extra line in the prompt
+    $line.ToCharArray() | ? { $_ -eq "`n" } | % { Write-Host } # move down a line for each newline in the buffer
+
+    [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt($key, $arg)
 }
 
 # From https://github.com/PowerShell/PSReadLine/blob/master/PSReadLine/SamplePSReadLineProfile.ps1
