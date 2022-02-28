@@ -4,6 +4,8 @@
 	name = Ben Allred
 [core]
 	editor = code --wait --new-window
+[advice]
+	skippedCherryPicks = false
 [status]
 	short = true
 	branch = true
