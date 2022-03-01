@@ -122,8 +122,8 @@
                     "background": "#1e1e1e",
                     "foreground_templates": [
                         "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#d7ba7d{{ end }}",
-                        "{{ if gt .Ahead 0 }}#d16969{{ end }}",
-                        "{{ if gt .Behind 0 }}#8db07b{{ end }}"
+                        "{{ if gt .Ahead 0 }}#8db07b{{ end }}",
+                        "{{ if gt .Behind 0 }}#d16969{{ end }}"
                     ],
                     "properties": {
                         "fetch_status": true,
@@ -134,7 +134,7 @@
                         "branch_gone_icon": "<#c586c0>\u2262</>",
                         "commit_icon": "\uf417 ",
                         "templateComment_.HEAD": "master",
-                        "templateComment_.BranchStatus": "≡",
+                        "templateComment_.BranchStatus": " ≡",
                         "templateComment_.Working.String": "+2 ~6",
                         "templateComment_.Staging.String": "~1",
                         "templateComment_\ue0b1": "",
