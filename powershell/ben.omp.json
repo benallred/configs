@@ -1,5 +1,6 @@
 {
     "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+    "version": 1,
     "final_space": true,
     "console_title": true,
     "console_title_style": "folder",
@@ -11,35 +12,37 @@
                 {
                     "type": "exit",
                     "style": "powerline",
-                    "powerline_symbol": "\uE0B0",
+                    "powerline_symbol": "\ue0b0",
                     "foreground": "#d4d4d4",
                     "background": "#8db07b",
+                    "background_templates": [
+                        "{{ if gt .Code 0 }}#d16969{{ end }}"
+                    ],
                     "properties": {
                         "always_enabled": true,
-                        // "always_numeric": true,
-                        "display_exit_code": false,
-                        "color_background": true,
-                        "error_color": "#d16969",
-                        "error_icon": "\uf655",
-                        "success_icon": "\uf42e"
+                        "template": " {{ if gt .Code 0 }}\uf655{{ else }}\uf42e{{ end }} "
                     }
                 },
                 {
                     "type": "executiontime",
                     "style": "powerline",
-                    "powerline_symbol": "\uE0B0",
+                    "powerline_symbol": "\ue0b0",
                     "foreground": "#1e1e1e",
                     "background": "#d4d4d4",
                     "properties": {
                         "always_enabled": true,
-                        "style": "austin"
+                        "style": "austin",
+                        "template": " {{ .FormattedMs }} "
                     }
                 },
                 {
                     "type": "time",
                     "style": "plain",
                     "foreground": "#d4d4d4",
-                    "background": "transparent"
+                    "background": "transparent",
+                    "properties": {
+                        "template": " {{ .CurrentDate | date .Format }} "
+                    }
                 }
             ]
         },
@@ -51,22 +54,22 @@
                 {
                     "type": "text",
                     "style": "powerline",
-                    "powerline_symbol": "\uE0B0",
+                    "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#646695",
                     "properties": {
-                        "text": "git",
+                        "template": " git ",
                         "include_folders": ["C:\\\\BenLocal\\\\git.*"]
                     }
                 },
                 {
                     "type": "text",
                     "style": "powerline",
-                    "powerline_symbol": "\uE0B0",
+                    "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#646695",
                     "properties": {
-                        "text": "OneDrive",
+                        "template": " OneDrive ",
                         "include_folders": [
                             "C:\\\\Users\\\\Ben\\\\OneDrive.*",
                             "C:\\\\BenLocal\\\\OneDrive.*"
@@ -76,33 +79,33 @@
                 {
                     "type": "text",
                     "style": "powerline",
-                    "powerline_symbol": "\uE0B0",
+                    "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#646695",
                     "properties": {
-                        "text": "cricut",
+                        "template": " cricut ",
                         "include_folders": ["C:\\\\Work\\\\cricut.*"]
                     }
                 },
                 {
                     "type": "path",
                     "style": "powerline",
-                    "powerline_symbol": "\uE0B0",
+                    "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#569cd6",
                     "properties": {
                         "style": "full",
-                        // "enable_hyperlink": true,
-                        "mapped_locations": [
-                            ["C:\\BenLocal\\git\\", ""],
-                            ["C:\\BenLocal\\git", "\\"],
-                            ["C:\\Users\\Ben\\OneDrive\\", ""],
-                            ["C:\\Users\\Ben\\OneDrive", "\\"],
-                            ["C:\\BenLocal\\OneDrive\\", ""],
-                            ["C:\\BenLocal\\OneDrive", "\\"],
-                            ["C:\\Work\\cricut\\", ""],
-                            ["C:\\Work\\cricut", "\\"]
-                        ]
+                        "template": " {{ .Path }} ",
+                        "mapped_locations": {
+                            "C:\\BenLocal\\git\\": "",
+                            "C:\\BenLocal\\git": "\\",
+                            "C:\\Users\\Ben\\OneDrive\\": "",
+                            "C:\\Users\\Ben\\OneDrive": "\\",
+                            "C:\\BenLocal\\OneDrive\\": "",
+                            "C:\\BenLocal\\OneDrive": "\\",
+                            "C:\\Work\\cricut\\": "",
+                            "C:\\Work\\cricut": "\\"
+                        }
                     }
                 }
             ]
@@ -117,26 +120,25 @@
                     "style": "diamond",
                     "foreground": "#d4d4d4",
                     "background": "#1e1e1e",
+                    "foreground_templates": [
+                        "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#d7ba7d{{ end }}",
+                        "{{ if gt .Ahead 0 }}#d16969{{ end }}",
+                        "{{ if gt .Behind 0 }}#8db07b{{ end }}"
+                    ],
                     "properties": {
-                        "postfix": "<#d4d4d4> \ue0b1</>",
-                        "branch_icon": "<#d7ba7d>\uE0A0</>",
-                        "status_colors_enabled": true,
-                        "color_background": false,
-                        // "local_changes_color": "#c586c0",
-                        "ahead_color": "#8db07b",
-                        "behind_color": "#d16969",
-                        "ahead_and_behind_color": "#d7ba7d",
+                        "fetch_status": true,
+                        "branch_icon": "<#d7ba7d>\ue0a0</>",
                         "branch_identical_icon": "<#569cd6>\u2261</>",
                         "branch_ahead_icon": "<#8db07b>\u2191</>",
                         "branch_behind_icon": "<#d16969>\u2193</>",
                         "branch_gone_icon": "<#c586c0>\u2262</>",
-                        "local_staged_icon": "",
-                        "staging_color": "#8db07b",
-                        "status_separator_icon": "",
-                        "local_working_icon": "",
-                        "working_color": "#d16969",
                         "commit_icon": "\uf417 ",
-                        "display_stash_count": true
+                        "templateComment_.HEAD": "master",
+                        "templateComment_.BranchStatus": "≡",
+                        "templateComment_.Working.String": "+2 ~6",
+                        "templateComment_.Staging.String": "~1",
+                        "templateComment_\ue0b1": "",
+                        "template": " {{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }}<#d16969> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<#8db07b> {{ .Staging.String }}</>{{ end }}<#d4d4d4> \ue0b1</>"
                     }
                 }
             ]
