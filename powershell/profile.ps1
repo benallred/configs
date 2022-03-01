@@ -222,6 +222,7 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
 
 $env:POSH_GIT_ENABLED = $true
 Set-PoshPrompt $PSScriptRoot\ben.omp.json
+Enable-PoshLineError
 
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
 Get-ChildItem "$transcriptDir\*.log" | ? { !(sls -Path $_ -Pattern "Command start time:" -SimpleMatch -Quiet) } | rm -ErrorAction SilentlyContinue

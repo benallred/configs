@@ -4,6 +4,16 @@
     "final_space": true,
     "console_title": true,
     "console_title_style": "folder",
+    "valid_line": {
+        "foreground": "#8db07b",
+        "background": "transparent",
+        "template": " "
+    },
+    "error_line": {
+        "foreground": "#d16969",
+        "background": "transparent",
+        "template": "\uf12a"
+    },
     "blocks": [
         {
             "type": "prompt",
