@@ -221,7 +221,7 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
 . $PSScriptRoot\PSReadLine.ps1
 
 $env:POSH_GIT_ENABLED = $true
-Set-PoshPrompt $PSScriptRoot\ben.omp.json
+oh-my-posh --init --shell pwsh --config $PSScriptRoot\ben.omp.json | Invoke-Expression
 Enable-PoshLineError
 
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"

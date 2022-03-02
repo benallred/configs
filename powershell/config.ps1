@@ -9,11 +9,7 @@ Block "Install posh-git" {
     Get-Module -ListAvailable posh-git
 }
 
-Block "Install oh-my-posh" {
-    Install-Module oh-my-posh -Scope CurrentUser -Force
-} {
-    Get-Module -ListAvailable oh-my-posh
-}
+InstallFromWingetBlock JanDeDobbeleer.OhMyPosh
 
 if (!(Configured $forKids)) {
     Block "Install BurntToast" {
