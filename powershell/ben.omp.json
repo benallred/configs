@@ -14,6 +14,9 @@
         "background": "transparent",
         "template": "\uf12a"
     },
+    "secondary_prompt": {
+        "template": "  \ue0b1 "
+    },
     "blocks": [
         {
             "type": "prompt",
