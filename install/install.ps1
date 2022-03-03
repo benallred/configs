@@ -109,7 +109,6 @@ if (!(Configured $forKids)) {
         InstallVisualStudioExtension maksim-vorobiev PeasyMotion2022
         InstallVisualStudioExtension OlleWestman SubwordNavigation
         InstallVisualStudioExtension AlexanderGayko ShowInlineErrors
-        InstallVisualStudioExtension MadsKristensen CodeCleanupOnSave
         InstallVisualStudioExtension MadsKristensen ResetZoom
     }
 
