@@ -32,6 +32,7 @@ if (!(Configured $forKids)) {
 }
 
 InstallFromWingetBlock voidtools.Everything {
+    DeleteDesktopShortcut Everything
     Copy-Item $PSScriptRoot\..\programs\Everything.ini $env:ProgramFiles\Everything\
     . $env:ProgramFiles\Everything\Everything.exe -install-run-on-system-startup
     . $env:ProgramFiles\Everything\Everything.exe -startup
@@ -362,6 +363,7 @@ if (!(Configured $forKids)) {
     }
 
     InstallFromWingetBlock SergeySerkov.TagScanner {
+        DeleteDesktopShortcut TagScanner
         New-Item $env:AppData\TagScanner -ItemType Directory
         Copy-Item $PSScriptRoot\..\programs\Tagscan.ini $env:AppData\TagScanner
     }
@@ -389,11 +391,13 @@ if (!(Configured $forKids)) {
         Block "Install OverDrive" {
             Download-File https://static.od-cdn.com/ODMediaConsoleSetup.msi $env:tmp\ODMediaConsoleSetup.msi
             Start-Process $env:tmp\ODMediaConsoleSetup.msi /passive, /norestart -Wait
+            DeleteDesktopShortcut "OverDrive for Windows"
             Set-RegistryValue "HKCU:\Software\OverDrive, Inc.\OverDrive Media Console\Settings" "DownloadFolder-MP3 Audiobook" "C:\BenLocal\Audio Books"
         }
     }
 
     InstallFromWingetBlock NickeManarin.ScreenToGif {
+        DeleteDesktopShortcut ScreenToGif
         Copy-Item2 ..\programs\ScreenToGif.xaml $env:AppData\ScreenToGif\Settings.xaml
     }
 }
