@@ -57,14 +57,7 @@ function ConfigFollowup([string]$FileName, [scriptblock]$Followup) {
 }
 
 function DeleteDesktopShortcut([string]$ShortcutName) {
-    $fileName = "Delete desktop shortcut $ShortcutName"
-    Set-Content "$env:tmp\$fileName.ps1" {
-        Write-Output "$fileName"
-        Remove-Item "$env:Public\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
-        Remove-Item "$env:UserProfile\Desktop\$ShortcutName.lnk" -ErrorAction Ignore
-    }.ToString().Replace('$fileName', $fileName).Replace('$ShortcutName', $ShortcutName)
-    Create-FileRunOnce $fileName "$env:tmp\$fileName.ps1"
-    Add-Content C:\BenLocal\backup\runonce.txt ". $env:tmp\$fileName.ps1"
+    Add-Content C:\BenLocal\.delete-desktop-shortcuts.txt $ShortcutName
 }
 
 function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
