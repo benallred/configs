@@ -71,6 +71,10 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         winget list Microsoft.dotnet -e | sls (winget show Microsoft.dotnet --versions | ? { $_ -like "5*" } | sort -d -t 1)
     }
 
+    Block "Set Elasticsearch Docker settings" {
+        Set-Content $env:UserProfile\.wslconfig "[wsl2]", "kernelCommandLine=sysctl.vm.max_map_count=262144"
+    }
+
     # https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-command-prompt
     InstallFromWingetBlock Microsoft.SQLServer.2019.Developer `
         "/Action=Install /IAcceptSqlServerLicenseTerms /InstallPath=\`"C:\Program Files\Microsoft SQL Server\`" /Features=FullText /SecurityMode=SQL /Verbose"
