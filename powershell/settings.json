@@ -11,7 +11,8 @@
             "colorScheme": "VS Code DarkPlus",
             "fontFace": "CaskaydiaCove NF",
             "fontSize": 10,
-            "padding": "4"
+            "padding": "4",
+            "historySize": 92345
         },
         "list": [
             {
@@ -26,10 +27,7 @@
                 "name": "Windows PowerShell",
                 "commandline": "powershell.exe",
                 "hidden": false,
-                "startingDirectory": "C:\\BenLocal\\git",
-                "historySize": 92345,
-                "useAcrylic": false,
-                "acrylicOpacity": 0.9
+                "startingDirectory": "C:\\BenLocal\\git"
             },
             {
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
