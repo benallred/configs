@@ -56,6 +56,14 @@
                     "properties": {
                         "template": " {{ .CurrentDate | date .Format }} "
                     }
+                },
+                {
+                    "type": "text",
+                    "style": "plain",
+                    "foreground": "#1e1e1e",
+                    "properties": {
+                        "template": "anchor123"
+                    }
                 }
             ]
         },
