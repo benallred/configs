@@ -159,6 +159,16 @@ function ReallyUpdate-Module([Parameter(Mandatory)][string]$Name) {
     % { Uninstall-Module $Name -RequiredVersion $_.Version }
 }
 
+function dotnet-really-clean() {
+    Write-Output "Removing ``bin`` and ``obj`` directories"
+    Get-ChildItem bin, obj -Directory -Recurse |
+    sort |
+    % {
+        Write-Output "`t$(Resolve-Path $_ -Relative)"
+        Remove-Item $_ -Recurse -Force
+    }
+}
+
 function winget-manifest([Parameter(Mandatory)][string]$AppId) {
     $shardLetter = $AppId.ToLower()[0]
     $path = $AppId -replace "\.", "/"
