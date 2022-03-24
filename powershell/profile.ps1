@@ -215,12 +215,12 @@ function tmpfor([Parameter(Mandatory)][string]$For, [switch]$Go) {
 
 function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$EndLine) {
     pushd (Split-Path $FilePath)
-    $remote = git config remote.origin.url
+    $remote = (git config remote.origin.url) -replace "\.git", ""
     $permalinkCommit = git rev-parse --short head
     $relativePath = git ls-files --full-name $FilePath
     popd
 
-    $url = ("$remote/blob/$permalinkCommit/$relativePath" -replace "\.git", "") `
+    $url = "$remote/blob/$permalinkCommit/$relativePath" `
         + ($BeginLine -gt 0 ? "#L$BeginLine" + ($EndLine -gt 0 ? "-L$EndLine" : "") : "")
 
     Set-Clipboard $url
