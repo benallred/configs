@@ -44,13 +44,23 @@ function BackupByMonth([string]$From, [string]$ToBase) {
     Backup $From $to
 }
 
+function BackupOneDrive() {
+    $from = "$env:UserProfile\OneDrive"
+    $to = "M:\Backup - Monthly\OneDrive"
+    $logFile = "$to.log"
+    Write-Output "Backing up $from to $to"
+    Write-Output "Writing log file to $logFile"
+    StopOnError 4 { robocopy $from $to /XD $env:UserProfile\OneDrive\Ben $env:UserProfile\OneDrive\BenEx $env:UserProfile\OneDrive\Music /XF (Get-ChildItem $env:UserProfile\OneDrive\ -Hidden) /Z /DCOPY:T /MIR /X /NDL /NP /UNILOG:"$logFile" /TEE }
+    start $logFile
+}
+
 BackupByMonth "C:\Ben" "J:\Backup - Monthly\Ben"
 Backup "C:\BenEx" "J:\Backup - Monthly\BenEx"
 Backup "C:\BenEx2" "J:\Backup - Monthly\BenEx2"
 BackupByMonth "$env:UserProfile\OneDrive\Ben" "J:\Backup - Monthly\OneDrive_Ben"
 BackupByMonth "$env:UserProfile\OneDrive\Music" "J:\Backup - Monthly\OneDrive_Music"
 BackupByMonth "$env:UserProfile\OneDrive\BenEx" "J:\Backup - Monthly\OneDrive_BenEx"
-Backup "$env:UserProfile\OneDrive\BenEx2" "J:\Backup - Monthly\OneDrive_BenEx2"
+BackupOneDrive
 
 Backup E:\Media\Ben N:\MediaBackup\Media\Ben -IsMediaBackup
 Backup "E:\Media (Korean)" "N:\MediaBackup\Media (Korean)" -IsMediaBackup
