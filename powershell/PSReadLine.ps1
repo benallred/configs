@@ -27,7 +27,8 @@ Set-PSReadLineKeyHandler -Key Ctrl+`| `
     }
 }
 
-Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -PredictionSource HistoryAndPlugin
+Set-PSReadLineOption -PredictionViewStyle ListView
 Set-PSReadLineKeyHandler -Key RightArrow `
     -BriefDescription ForwardCharAndAcceptNextSuggestionWord `
     -LongDescription "Move cursor one character to the right in the current editing line and accept the next word in suggestion when it's at the end of current editing line" `
