@@ -8,6 +8,25 @@ Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
+Set-PSReadLineKeyHandler -Key Ctrl+`| `
+    -BriefDescription SmartGotoBrace `
+    -LongDescription "Go to the matching brace, parenthesis, or square bracket" `
+    -ScriptBlock {
+    param($key, $arg)
+
+    $line = $null
+    $cursor = $null
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+
+    if ($line[$cursor] -in '(', ')', '{', '}', '[', ']') {
+        [Microsoft.PowerShell.PSConsoleReadLine]::GotoBrace($key, $arg)
+    }
+    elseif ($line[$cursor - 1] -in '(', ')', '{', '}', '[', ']') {
+        [Microsoft.PowerShell.PSConsoleReadLine]::BackwardChar($key, $arg)
+        [Microsoft.PowerShell.PSConsoleReadLine]::GotoBrace($key, $arg)
+    }
+}
+
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineKeyHandler -Key RightArrow `
     -BriefDescription ForwardCharAndAcceptNextSuggestionWord `
