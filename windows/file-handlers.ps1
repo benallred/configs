@@ -30,6 +30,8 @@ function 7ZipFileBlock([string]$Extension, [int]$IconIndex) {
 AssociateFileBlock txt VSCodeSourceFile
 AssociateFileBlock log VSCodeSourceFile
 AssociateFileBlock ps1 VSCodeSourceFile
+AssociateFileBlock bat VSCodeSourceFile
+AssociateFileBlock sh VSCodeSourceFile
 AssociateFileBlock ini VSCodeSourceFile
 AssociateFileBlock json VSCodeSourceFile
 AssociateFileBlock xml VSCodeSourceFile
