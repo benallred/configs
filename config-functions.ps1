@@ -1,4 +1,4 @@
-function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$CompleteCheck, [switch]$RequiresReboot) {
+function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$CompleteCheck, [scriptblock]$UpdateAvailable, [scriptblock]$UpdateScript, [switch]$RequiresReboot) {
     if ($Run -and $Run -ne $Comment) {
         return
     }
@@ -15,12 +15,16 @@ function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$Comple
     Write-OrSilent $Comment DarkBlue
     if ($CompleteCheck -and (Invoke-Command $CompleteCheck)) {
         Write-OrSilent "Already done" Blue
-        if (!$Run) {
-            Write-BlockDuration
-            return
+        if ($Run) {
+            Write-OrSilent "But running anyway as requested" Green
         }
         else {
-            Write-OrSilent "But running anyway as requested" Green
+            if ($UpdateAvailable -and (Invoke-Command $UpdateAvailable)) {
+                Write-OrSilent "Updating" Green
+                Invoke-Command $UpdateScript
+            }
+            Write-BlockDuration
+            return
         }
     }
     if (!$DryRun) {
