@@ -239,12 +239,14 @@ InstallFromGitHubBlock benallred SnapX { . $git\SnapX\SnapX.ahk }
 if (!(Configured $forKids)) {
     InstallFromGitHubBlock benallred Bahk { . $git\Bahk\Ben.ahk }
 
-    Block "Install CrashPlan" {
-        Download-File https://download.code42.com/installs/agent/latest-smb-win64.msi $env:tmp\CrashPlan.msi
-        Start-Process $env:tmp\CrashPlan.msi /passive, /norestart -Wait
-        Write-ManualStep "Sign in"
-        Write-ManualStep "Replace Existing"
-        Write-ManualStep "Skip File Transfer"
+    if (Configured $forHome) {
+        Block "Install CrashPlan" {
+            Download-File https://download.code42.com/installs/agent/latest-smb-win64.msi $env:tmp\CrashPlan.msi
+            Start-Process $env:tmp\CrashPlan.msi /passive, /norestart -Wait
+            Write-ManualStep "Sign in"
+            Write-ManualStep "Replace Existing"
+            Write-ManualStep "Skip File Transfer"
+        }
     }
 
     InstallFromGitHubBlock benallred plex-playlist-liberator
