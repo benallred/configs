@@ -157,6 +157,15 @@ function InstallFromWingetBlock {
         }
     } {
         winget list $AppId -e | sls $AppId
+    } {
+        winget upgrade | sls $AppId
+    } {
+        if ($OverrideArgs) {
+            winget upgrade --id $AppId --accept-package-agreements --override $OverrideArgs
+        }
+        else {
+            winget upgrade --id $AppId --accept-package-agreements
+        }
     }
 }
 
