@@ -75,9 +75,11 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Set-Content $env:UserProfile\.wslconfig "[wsl2]", "kernelCommandLine=sysctl.vm.max_map_count=262144"
     }
 
-    # https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-command-prompt
-    InstallFromWingetBlock Microsoft.SQLServer.2019.Developer `
-        "/Action=Install /IAcceptSqlServerLicenseTerms /InstallPath=\`"C:\Program Files\Microsoft SQL Server\`" /Features=FullText /SecurityMode=SQL /Verbose"
+    if (!(Test-ProgramInstalled "Microsoft SQL Server 2019")) {
+        # https://docs.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-command-prompt
+        InstallFromWingetBlock Microsoft.SQLServer.2019.Developer `
+            "/Action=Install /IAcceptSqlServerLicenseTerms /InstallPath=\`"C:\Program Files\Microsoft SQL Server\`" /Features=FullText /SecurityMode=SQL /Verbose"
+    }
 
     InstallFromWingetBlock Microsoft.SQLServerManagementStudio
 }
