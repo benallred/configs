@@ -1,9 +1,8 @@
 {
     "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-    "version": 1,
+    "version": 2,
     "final_space": true,
-    "console_title": true,
-    "console_title_style": "folder",
+    "console_title_template": "{{.Folder}}",
     "valid_line": {
         "foreground": "#8db07b",
         "background": "transparent",
@@ -31,9 +30,9 @@
                     "background_templates": [
                         "{{ if gt .Code 0 }}#d16969{{ end }}"
                     ],
+                    "template": " {{ if gt .Code 0 }}\uf655{{ else }}\uf42e{{ end }} ",
                     "properties": {
-                        "always_enabled": true,
-                        "template": " {{ if gt .Code 0 }}\uf655{{ else }}\uf42e{{ end }} "
+                        "always_enabled": true
                     }
                 },
                 {
@@ -42,10 +41,10 @@
                     "powerline_symbol": "\ue0b0",
                     "foreground": "#1e1e1e",
                     "background": "#d4d4d4",
+                    "template": " {{ .FormattedMs }} ",
                     "properties": {
                         "always_enabled": true,
-                        "style": "austin",
-                        "template": " {{ .FormattedMs }} "
+                        "style": "austin"
                     }
                 },
                 {
@@ -53,17 +52,13 @@
                     "style": "plain",
                     "foreground": "#d4d4d4",
                     "background": "transparent",
-                    "properties": {
-                        "template": " {{ .CurrentDate | date .Format }} "
-                    }
+                    "template": " {{ .CurrentDate | date .Format }} "
                 },
                 {
                     "type": "text",
                     "style": "plain",
                     "foreground": "#1e1e1e",
-                    "properties": {
-                        "template": "anchor123"
-                    }
+                    "template": "anchor123"
                 }
             ]
         },
@@ -78,8 +73,8 @@
                     "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#646695",
+                    "template": "git",
                     "properties": {
-                        "template": " git ",
                         "include_folders": ["C:\\\\BenLocal\\\\git.*"]
                     }
                 },
@@ -89,8 +84,8 @@
                     "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#646695",
+                    "template": "OneDrive",
                     "properties": {
-                        "template": " OneDrive ",
                         "include_folders": [
                             "C:\\\\Users\\\\Ben\\\\OneDrive.*",
                             "C:\\\\BenLocal\\\\OneDrive.*"
@@ -103,8 +98,8 @@
                     "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#646695",
+                    "template": "cricut",
                     "properties": {
-                        "template": " cricut ",
                         "include_folders": ["C:\\\\Work\\\\cricut.*"]
                     }
                 },
@@ -114,9 +109,9 @@
                     "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#569cd6",
+                    "template": " {{ .Path }} ",
                     "properties": {
                         "style": "full",
-                        "template": " {{ .Path }} ",
                         "mapped_locations": {
                             "C:\\BenLocal\\git\\": "",
                             "C:\\BenLocal\\git": "\\",
@@ -146,6 +141,7 @@
                         "{{ if gt .Ahead 0 }}#8db07b{{ end }}",
                         "{{ if gt .Behind 0 }}#d16969{{ end }}"
                     ],
+                    "template": " {{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }}<#d16969> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<#8db07b> {{ .Staging.String }}</>{{ end }}<#d4d4d4> \ue0b1</>",
                     "properties": {
                         "fetch_status": true,
                         "branch_icon": "<#d7ba7d>\ue0a0</>",
@@ -158,8 +154,7 @@
                         "templateComment_.BranchStatus": " ≡",
                         "templateComment_.Working.String": "+2 ~6",
                         "templateComment_.Staging.String": "~1",
-                        "templateComment_\ue0b1": "",
-                        "template": " {{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }}<#d16969> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<#8db07b> {{ .Staging.String }}</>{{ end }}<#d4d4d4> \ue0b1</>"
+                        "templateComment_\ue0b1": ""
                     }
                 }
             ]
