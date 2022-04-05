@@ -1,3 +1,5 @@
+$global:blocksOfInterest = @()
+
 function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$CompleteCheck, [scriptblock]$UpdateAvailable, [scriptblock]$UpdateScript, [switch]$RequiresReboot) {
     if ($Run -and $Run -ne $Comment) {
         return
@@ -22,6 +24,7 @@ function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$Comple
             if ($UpdateAvailable -and (Invoke-Command $UpdateAvailable)) {
                 Write-OrSilent "Updating" Green
                 Invoke-Command $UpdateScript
+                $global:blocksOfInterest += $Comment
             }
             Write-BlockDuration
             return
@@ -32,6 +35,9 @@ function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$Comple
             Write-OrSilent "This will take effect after a reboot" Yellow
         }
         Invoke-Command $ScriptBlock
+        if ($CompleteCheck) {
+            $global:blocksOfInterest += $Comment
+        }
     }
     else {
         Write-OrSilent "This block would execute" Green

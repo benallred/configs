@@ -84,4 +84,10 @@ if (!(Configured $forKids)) {
 #     } -RequiresReboot
 # }
 
+Block "Blocks of interest this run" {
+    $global:blocksOfInterest | % { Write-Output "`t$_" }
+} {
+    $global:blocksOfInterest.Length -eq 0
+}
+
 Write-Output "Total duration: $($totalDuration.Elapsed)"
