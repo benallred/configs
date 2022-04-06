@@ -183,5 +183,9 @@ function InstallFromScoopBlock([string]$AppId, [scriptblock]$AfterInstall) {
         }
     } {
         scoop export | sls $AppId
+    } {
+        scoop info $AppId | sls "Update to .+? available"
+    } {
+        scoop update $AppId
     }
 }

@@ -57,6 +57,10 @@ Block "Install scoop" {
     Get-Command scoop -ErrorAction Ignore
 }
 
+Block "Update scoop" {
+    scoop update
+}
+
 Block "Configure scoop nerd-fonts bucket" {
     scoop bucket add nerd-fonts
 } {
