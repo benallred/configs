@@ -52,7 +52,8 @@ Block "Configure winget argument completer" {
 }
 
 Block "Install scoop" {
-    iwr get.scoop.sh | iex
+    iwr get.scoop.sh -OutFile $env:tmp\scoop-install.ps1
+    & $env:tmp\scoop-install.ps1 -RunAsAdmin
 } {
     Get-Command scoop -ErrorAction Ignore
 }
