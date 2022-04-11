@@ -25,14 +25,17 @@ Block "PowerShell Transcripts" {
 
 Block "Configure profile.ps1" {
     Add-Content -Path $profile -Value "`n. $PSScriptRoot\profile.ps1"
-    . $profile
 } {
     (Test-Path $profile) -and (Select-String "$($PSScriptRoot -replace "\\", "\\")\\profile.ps1" $profile) # <original> is regex, <substitute> is PS string
 }
 
 Block "Set winget as default terminal application" {
-    Set-RegistryValue "HKCU:\Console\%%Startup" -Name DelegationConsole -Value "{2EACA947-7F5F-4CFA-BA87-8F7FBEEFBE69}"
-    Set-RegistryValue "HKCU:\Console\%%Startup" -Name DelegationTerminal -Value "{E12CFF52-A866-4C77-9A90-F570A7AA2C6B}"
+    $path = "HKCU:\Console\%%Startup"
+    if (!(Test-Path $path)) {
+        New-Item $path -Force | Out-Null
+    }
+    Set-ItemProperty $path -Name DelegationConsole -Value "{2EACA947-7F5F-4CFA-BA87-8F7FBEEFBE69}"
+    Set-ItemProperty $path -Name DelegationTerminal -Value "{E12CFF52-A866-4C77-9A90-F570A7AA2C6B}"
 }
 
 Block "Configure winget argument completer" {
