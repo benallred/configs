@@ -111,7 +111,7 @@ if (!(Configured $forKids)) {
         InstallVisualStudioExtension OlleWestman SubwordNavigation
         InstallVisualStudioExtension AlexanderGayko ShowInlineErrors
         InstallVisualStudioExtension MadsKristensen ResetZoom
-    }
+    } -NoUpdate
 
     InstallFromWingetBlock suse.RancherDesktop {
         DeleteDesktopShortcut "Rancher Desktop"
@@ -284,7 +284,7 @@ if (!(Configured $forKids)) {
         $discordSettings = Get-Content $env:AppData\discord\settings.json | ConvertFrom-Json
         $discordSettings | Add-Member NoteProperty START_MINIMIZED $true
         ConvertTo-Json $discordSettings | Set-Content $env:AppData\discord\settings.json
-    }
+    } -NoUpdate
 }
 
 if ((Configured $forWork) -or (Configured $forTest)) {
@@ -329,7 +329,7 @@ InstallFromWingetBlock Plex.Plexamp {
     DeleteDesktopShortcut Plexamp
     Write-ManualStep "Sign in to Plexamp"
     . $env:LocalAppData\Programs\Plexamp\Plexamp.exe
-}
+} -NoUpdate
 
 InstallFromWingetBlock 9NBLGGH1ZBKW # Dynamic Theme
 

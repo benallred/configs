@@ -149,7 +149,22 @@ function InstallFromWingetBlock {
         [string]$OverrideArgs,
         [Parameter(ParameterSetName = "DefaultArgs", Position = 1)]
         [Parameter(ParameterSetName = "OverrideArgs", Position = 2)]
-        [scriptblock]$AfterInstall)
+        [scriptblock]$AfterInstall,
+        [Parameter(ParameterSetName = "DefaultArgs", Position = 2)]
+        [Parameter(ParameterSetName = "OverrideArgs", Position = 3)]
+        [switch]$NoUpdate
+    )
+    $updateAvailable = {
+        winget upgrade | sls $AppId
+    }
+    $updateScript = {
+        if ($OverrideArgs) {
+            winget upgrade --id $AppId --accept-package-agreements --override $OverrideArgs
+        }
+        else {
+            winget upgrade --id $AppId --accept-package-agreements
+        }
+    }
     Block "Install $AppId" {
         if ($OverrideArgs) {
             winget install --id $AppId --accept-package-agreements --override $OverrideArgs
@@ -163,16 +178,9 @@ function InstallFromWingetBlock {
         }
     } {
         winget list $AppId -e | sls $AppId
-    } {
-        winget upgrade | sls $AppId
-    } {
-        if ($OverrideArgs) {
-            winget upgrade --id $AppId --accept-package-agreements --override $OverrideArgs
-        }
-        else {
-            winget upgrade --id $AppId --accept-package-agreements
-        }
-    }
+    } `
+    ($NoUpdate ? $null : $updateAvailable) `
+    ($NoUpdate ? $null : $updateScript)
 }
 
 function InstallFromScoopBlock([string]$AppId, [scriptblock]$AfterInstall) {
