@@ -1,3 +1,11 @@
+Block "Update PSReadLine" {
+    pwsh -NoProfile -c "Install-Module PSReadLine -Force"
+    Remove-Module PSReadLine
+    Import-Module PSReadLine
+} {
+    (Find-Module PSReadLine).Version -eq (Get-Module PSReadLine).Version
+}
+
 Block "Install NuGet package provider for PowerShellGet" {
     Install-PackageProvider NuGet -Force
 }
