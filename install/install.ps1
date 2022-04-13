@@ -395,7 +395,7 @@ if (!(Configured $forKids)) {
 
     InstallFromWingetBlock NickeManarin.ScreenToGif {
         DeleteDesktopShortcut ScreenToGif
-        Copy-Item2 ..\programs\ScreenToGif.xaml $env:AppData\ScreenToGif\Settings.xaml
+        Copy-Item2 $PSScriptRoot\..\programs\ScreenToGif.xaml $env:AppData\ScreenToGif\Settings.xaml
     }
 }
 
