@@ -3,7 +3,7 @@ Block "Update PSReadLine" {
     Remove-Module PSReadLine
     Import-Module PSReadLine
 } {
-    (Find-Module PSReadLine).Version -eq (Get-Module PSReadLine).Version
+    (Find-Module PSReadLine).Version -le (Get-Module PSReadLine).Version
 }
 
 Block "Install NuGet package provider for PowerShellGet" {
@@ -24,6 +24,10 @@ if (!(Configured $forKids)) {
         Install-Module BurntToast -Force
     } {
         Get-Module -ListAvailable BurntToast
+    } {
+        (Find-Module BurntToast).Version -gt (Get-Module BurntToast).Version
+    } {
+        ReallyUpdate-Module BurntToast
     }
 }
 
