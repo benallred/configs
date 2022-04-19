@@ -21,10 +21,6 @@ Block "Update PSReadLine" {
     (Find-Module PSReadLine).Version -le (Get-Module PSReadLine).Version
 }
 
-Block "Install NuGet package provider for PowerShellGet" {
-    Install-PackageProvider NuGet -Force
-}
-
 InstallPowerShellModuleBlock posh-git {
     Add-PoshGitToProfile -AllHosts
 }
