@@ -1,3 +1,18 @@
+function InstallPowerShellModuleBlock([string]$ModuleName, [scriptblock]$AfterInstall) {
+    Block "Install $ModuleName" {
+        Install-Module $ModuleName -Force
+        if ($AfterInstall) {
+            Invoke-Command $AfterInstall
+        }
+    } {
+        Get-Module -ListAvailable $ModuleName
+    } {
+        (Find-Module $ModuleName).Version -gt (Get-Module $ModuleName).Version
+    } {
+        ReallyUpdate-Module $ModuleName
+    }
+}
+
 Block "Update PSReadLine" {
     pwsh -NoProfile -c "Install-Module PSReadLine -Force"
     Remove-Module PSReadLine
@@ -10,25 +25,14 @@ Block "Install NuGet package provider for PowerShellGet" {
     Install-PackageProvider NuGet -Force
 }
 
-Block "Install posh-git" {
-    Install-Module posh-git -Force
+InstallPowerShellModuleBlock posh-git {
     Add-PoshGitToProfile -AllHosts
-} {
-    Get-Module -ListAvailable posh-git
 }
 
 InstallFromWingetBlock JanDeDobbeleer.OhMyPosh
 
 if (!(Configured $forKids)) {
-    Block "Install BurntToast" {
-        Install-Module BurntToast -Force
-    } {
-        Get-Module -ListAvailable BurntToast
-    } {
-        (Find-Module BurntToast).Version -gt (Get-Module BurntToast).Version
-    } {
-        ReallyUpdate-Module BurntToast
-    }
+    InstallPowerShellModuleBlock BurntToast
 }
 
 Block "PowerShell Transcripts" {
