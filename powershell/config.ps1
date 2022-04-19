@@ -7,7 +7,7 @@ function InstallPowerShellModuleBlock([string]$ModuleName, [scriptblock]$AfterIn
     } {
         Get-Module -ListAvailable $ModuleName
     } {
-        (Find-Module $ModuleName).Version -gt (Get-Module $ModuleName).Version
+        (Find-Module $ModuleName).Version -gt (Get-Module $ModuleName -ListAvailable | sort Version -Descending | select -First 1).Version
     } {
         ReallyUpdate-Module $ModuleName
     }
