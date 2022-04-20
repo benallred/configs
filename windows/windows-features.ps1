@@ -15,7 +15,7 @@ if (!(Configured $forKids)) {
     WindowsFeatureBlock "Hyper-V" Microsoft-Hyper-V
 
     Block "Install WSL" {
-        wsl --install
+        wsl --install -d Ubuntu
     } {
         (wsl -l) -replace "`0", "" | Select-String "Windows Subsystem for Linux Distributions:"
     } -RequiresReboot
