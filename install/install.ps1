@@ -22,6 +22,14 @@ Block "Configure scoop nonportable bucket" {
 if (!(Configured $forKids)) {
     InstallFromWingetBlock Microsoft.Edge.Dev {
         DeleteDesktopShortcut "Microsoft Edge Dev"
+        DeleteDesktopShortcut "Personal - Edge"
+        Write-ManualStep "Manage extensions"
+        Write-ManualStep "`tKeyboard shortcuts"
+        Write-ManualStep "`t`tBitwarden"
+        Write-ManualStep "`t`t`tActivate the extension = Ctrl + Shift + B"
+        Write-ManualStep "`t`t`tAuto-fill the last used login for the current website = Alt + Page down"
+        Write-ManualStep "`t`t`tGenerate and copy a new random password to the clipboard = Ctrl + Shift + G"
+        Write-ManualStep "`t`tLink to Text Fragment > Copy Link to Selected Text = Alt + C"
     }
 }
 
