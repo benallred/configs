@@ -21,6 +21,8 @@ Block "Update PSReadLine" {
     (Find-Module PSReadLine).Version -le (Get-Module PSReadLine).Version
 }
 
+InstallFromWingetBlock Microsoft.PowerShell
+
 InstallPowerShellModuleBlock posh-git {
     Add-PoshGitToProfile -AllHosts
 }
