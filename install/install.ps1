@@ -7,6 +7,8 @@ function RemoveStartupRegistryKey([string]$ValueName) {
     Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $ValueName
 }
 
+InstallFromWingetBlock Git.Git
+
 Block "Configure scoop extras bucket" {
     scoop bucket add extras
 } {
