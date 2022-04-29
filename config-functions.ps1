@@ -158,6 +158,7 @@ function InstallFromWingetBlock {
         winget upgrade | sls $AppId
     }
     $updateScript = {
+        winget list $AppId -e
         if ($OverrideArgs) {
             winget upgrade --id $AppId --accept-package-agreements --override $OverrideArgs
         }
