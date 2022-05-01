@@ -46,7 +46,7 @@ function BackupByMonth([string]$From, [string]$ToBase) {
 
 function BackupOneDrive() {
     $from = "$env:UserProfile\OneDrive"
-    $to = "M:\Backup - Monthly\OneDrive"
+    $to = "E:\Backup - Monthly\OneDrive"
     $logFile = "$to.log"
     Write-Output "Backing up $from to $to"
     Write-Output "Writing log file to $logFile"
