@@ -31,6 +31,9 @@ if (!(Configured $forKids)) {
         Write-ManualStep "`t`t`tActivate the extension = Ctrl + Shift + B"
         Write-ManualStep "`t`t`tAuto-fill the last used login for the current website = Alt + Page down"
         Write-ManualStep "`t`t`tGenerate and copy a new random password to the clipboard = Ctrl + Shift + G"
+        Write-ManualStep "`t`tDark Reader"
+        Write-ManualStep "`t`t`tToggle current site = Alt + J"
+        Write-ManualStep "`t`t`tToggle extension = Alt + Shift + J"
         Write-ManualStep "`t`tLink to Text Fragment > Copy Link to Selected Text = Alt + C"
     }
 }
