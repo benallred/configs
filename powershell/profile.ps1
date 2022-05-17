@@ -257,7 +257,6 @@ Enable-PoshLineError
 TimeBenProfile "OMP"
 
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
-Get-ChildItem "$transcriptDir\*.log" | ? { !(sls -Path $_ -Pattern "Command start time:" -SimpleMatch -Quiet) } | rm -ErrorAction SilentlyContinue
 $Transcript = "$transcriptDir\$(Get-TimestampForFileName).log"
 Start-Transcript $Transcript -NoClobber -IncludeInvocationHeader
 TimeBenProfile "Transcript"
