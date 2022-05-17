@@ -92,9 +92,24 @@ Block "Add timing to PowerShell profiles" {
         $profileContent = (Get-Content $_.path -Raw -ErrorAction Ignore) ?? ""
         $profileContent = ($profileContent -replace "(?ms)^\s*# profile timing start.+?# profile timing end\r?\n?", "").Trim()
         Set-Content $_.path @(
+            ($_.name -eq "AllUsersAllHosts" `
+                ? {
+                # profile timing start
+                $psLoadDurations = @()
+                # profile timing end
+            } `
+                : $null)
+            ($_.name -eq "CurrentUserCurrentHost" `
+                ? {
+                # profile timing start
+                if ($psLoadDurations | ? { $_.name -eq 'CurrentUserCurrentHost' }) {
+                    $psLoadDurations = @()
+                }
+                # profile timing end
+            } `
+                : $null)
             {
                 # profile timing start
-                $psLoadDurations ??= @()
                 $psLoadDurations += @{ name = "$_.name"; path = $PSCommandPath; stopwatch = [Diagnostics.Stopwatch]::StartNew() }
                 # profile timing end
             }.ToString().Replace('$_.name', $_.name)
