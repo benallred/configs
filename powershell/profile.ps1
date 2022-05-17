@@ -1,3 +1,17 @@
+# profile timing start
+$psLoadDurations += @{ name = 'Ben'; path = $PSCommandPath; stopwatch = [Diagnostics.Stopwatch]::StartNew() }
+# profile timing end
+
+$benProfileDurations = @()
+$benProfileStopwatch = [Diagnostics.Stopwatch]::StartNew()
+function TimeBenProfile([string]$Description) {
+    $script:benProfileDurations += @{
+        desc         = "Ben:$Description"
+        totalTilNow  = $benProfileStopwatch.ElapsedMilliseconds
+        milliseconds = $benProfileStopwatch.ElapsedMilliseconds - ($benProfileDurations.Length ? $benProfileDurations[-1].totalTilNow : 0)
+    }
+}
+
 $OneDrive = "$env:UserProfile\OneDrive"
 $git = "C:\BenLocal\git"
 
@@ -189,22 +203,6 @@ function winget-manifest([Parameter(Mandatory)][string]$AppId) {
     Write-Output $response.Content
 }
 
-Register-ArgumentCompleter -Native -CommandName .\config.ps1 -ScriptBlock {
-    param($wordToComplete, $commandAst, $cursorPosition)
-    if ((Get-Location).Path -ne "$git\configs") {
-        return
-    }
-
-    dir $git\configs *.ps1 -Recurse |
-    sls "Block `"(.+?)`"" |
-    % { "`"$($_.Matches.Groups[1].Value)`"" } |
-    ? { $_ -like "*$wordToComplete*" } |
-    sort |
-    % {
-        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
-    }
-}
-
 function tmpfor([Parameter(Mandatory)][string]$For, [switch]$Go) {
     $dir = "$tmp\$($For)_$(Get-TimestampForFileName)"
     if ($Go) {
@@ -230,14 +228,48 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
     Write-Host "$url`n`tadded to clipboard"
 }
 
+Register-ArgumentCompleter -Native -CommandName .\config.ps1 -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+    if ((Get-Location).Path -ne "$git\configs") {
+        return
+    }
+
+    dir $git\configs *.ps1 -Recurse |
+    sls "Block `"(.+?)`"" |
+    % { "`"$($_.Matches.Groups[1].Value)`"" } |
+    ? { $_ -like "*$wordToComplete*" } |
+    sort |
+    % {
+        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+    }
+}
+
+TimeBenProfile "Functions"
+
 . $PSScriptRoot\one-liners.ps1
+TimeBenProfile "One-Liners"
 . $PSScriptRoot\PSReadLine.ps1
+TimeBenProfile "PSReadLine"
 
 $env:POSH_GIT_ENABLED = $true
 oh-my-posh --init --shell pwsh --config $PSScriptRoot\ben.omp.json | Invoke-Expression
 Enable-PoshLineError
+TimeBenProfile "OMP"
 
 $transcriptDir = "C:\BenLocal\PowerShell Transcripts"
 Get-ChildItem "$transcriptDir\*.log" | ? { !(sls -Path $_ -Pattern "Command start time:" -SimpleMatch -Quiet) } | rm -ErrorAction SilentlyContinue
 $Transcript = "$transcriptDir\$(Get-TimestampForFileName).log"
 Start-Transcript $Transcript -NoClobber -IncludeInvocationHeader
+TimeBenProfile "Transcript"
+
+($benProfileDurations `
+| select desc, milliseconds `
+| Format-Table desc, @{ Label = "elapsed"; Expression = { "$([int]$_.milliseconds)ms" }; Alignment = "Right" } -HideTableHeaders `
+| Out-String
+).Trim()
+
+# profile timing start
+$currentDuration = ($psLoadDurations | ? { $_.name -eq 'Ben' })
+$currentDuration.stopwatch.Stop()
+$currentDuration.elapsed = $currentDuration.stopwatch.Elapsed
+# profile timing end

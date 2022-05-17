@@ -87,6 +87,49 @@ Block "Configure scoop nerd-fonts bucket" {
 
 InstallFromScoopBlock CascadiaCode-NF
 
+Block "Add timing to PowerShell profiles" {
+    $profile | Get-Member -Type NoteProperty | % { @{ name = $_.Name; path = ($profile | select -exp $_.Name) } } | % {
+        $profileContent = (Get-Content $_.path -Raw -ErrorAction Ignore) ?? ""
+        $profileContent = ($profileContent -replace "(?ms)^\s*# profile timing start.+?# profile timing end\r?\n?", "").Trim()
+        Set-Content $_.path @(
+            {
+                # profile timing start
+                $psLoadDurations ??= @()
+                $psLoadDurations += @{ name = "$_.name"; path = $PSCommandPath; stopwatch = [Diagnostics.Stopwatch]::StartNew() }
+                # profile timing end
+            }.ToString().Replace('$_.name', $_.name)
+            $profileContent
+            {
+                # profile timing start
+                $currentDuration = ($psLoadDurations | ? { $_.name -eq '$name_closed' })
+                $currentDuration.stopwatch.Stop()
+                $currentDuration.elapsed = $currentDuration.stopwatch.Elapsed
+                # profile timing end
+            }.ToString().Replace('$name_closed', $_.name)
+            ($_.name -eq "CurrentUserCurrentHost" `
+                ? {
+                # profile timing start
+                foreach ($psLoadDuration in $psLoadDurations) {
+                    if ($psLoadDuration.name -eq "CurrentUserCurrentHost") {
+                        $cuchProfile = $psLoadDuration
+                    }
+                    elseif ($cuchProfile) {
+                        $cuchProfile.elapsed -= $psLoadDuration.stopwatch.Elapsed
+                    }
+                }
+                $psLoadDurations += @{ name = "Total"; elapsed = [TimeSpan]::FromMilliseconds(($psLoadDurations | % { $_.elapsed.TotalMilliseconds } | measure -Sum).Sum) }
+                ($psLoadDurations `
+                | select name, path, stopwatch, elapsed `
+                | Format-Table name, @{ Label = "elapsed"; Expression = { "$([int]$_.elapsed.TotalMilliseconds)ms" }; Alignment = "Right" } -HideTableHeaders `
+                | Out-String
+                ).Trim()
+                # profile timing end
+            } `
+                : $null)
+        )
+    }
+}
+
 if (!(Configured $forTest)) {
     FirstRunBlock "Update PS help" {
         Update-Help -ErrorAction Ignore
