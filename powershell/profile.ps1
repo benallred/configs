@@ -252,7 +252,7 @@ TimeBenProfile "One-Liners"
 TimeBenProfile "PSReadLine"
 
 $env:POSH_GIT_ENABLED = $true
-oh-my-posh --init --shell pwsh --config $PSScriptRoot\ben.omp.json | Invoke-Expression
+oh-my-posh init pwsh --config $PSScriptRoot\ben.omp.json | Invoke-Expression
 Enable-PoshLineError
 TimeBenProfile "OMP"
 
