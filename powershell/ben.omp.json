@@ -73,7 +73,7 @@
                     "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#646695",
-                    "template": "git",
+                    "template": " git ",
                     "properties": {
                         "include_folders": ["C:\\\\BenLocal\\\\git.*"]
                     }
@@ -84,7 +84,7 @@
                     "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#646695",
-                    "template": "OneDrive",
+                    "template": " OneDrive ",
                     "properties": {
                         "include_folders": [
                             "C:\\\\Users\\\\Ben\\\\OneDrive.*",
@@ -98,7 +98,7 @@
                     "powerline_symbol": "\ue0b0",
                     "foreground": "#ffffff",
                     "background": "#646695",
-                    "template": "cricut",
+                    "template": " cricut ",
                     "properties": {
                         "include_folders": ["C:\\\\Work\\\\cricut.*"]
                     }
@@ -123,6 +123,14 @@
                             "C:\\Work\\cricut": "\\"
                         }
                     }
+                },
+                {
+                    "type": "path",
+                    "style": "powerline",
+                    "powerline_symbol": "\ue0b0",
+                    "foreground": "#1e1e1e",
+                    "background": "#d7ba7d",
+                    "template": " {{ if .StackCount }}{{ .StackCount }}{{ end }} "
                 }
             ]
         },
