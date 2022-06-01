@@ -126,11 +126,15 @@ if (!(Configured $forKids)) {
         InstallVisualStudioExtension MadsKristensen ResetZoom
     } -NoUpdate
 
-    InstallFromWingetBlock suse.RancherDesktop {
-        DeleteDesktopShortcut "Rancher Desktop"
-        New-Item -Type Directory $env:AppData\rancher-desktop
-        Set-Content $env:AppData\rancher-desktop\settings.json '{ "kubernetes": { "containerEngine": "moby" }, "telemetry": false }'
-        explorer "$env:LocalAppData\Programs\Rancher Desktop\Rancher Desktop.exe"
+    if (!(Configured $forTest)) {
+        InstallFromWingetBlock Docker.DockerDesktop {
+            DeleteDesktopShortcut "Docker Desktop"
+            RemoveStartupRegistryKey "Docker Desktop"
+            WaitForPath $env:AppData\Docker\settings.json
+            $dockerSettings = Get-Content $env:AppData\Docker\settings.json | ConvertFrom-Json
+            $dockerSettings | Add-Member NoteProperty openUIOnStartupDisabled $true
+            ConvertTo-Json $dockerSettings | Set-Content $env:AppData\Docker\settings.json
+        }
     }
 }
 
