@@ -23,6 +23,8 @@ Block "Update PSReadLine" {
 
 InstallFromWingetBlock Microsoft.PowerShell
 
+InstallFromWingetBlock Microsoft.WindowsTerminal
+
 InstallPowerShellModuleBlock posh-git {
     Add-PoshGitToProfile -AllHosts
 }
