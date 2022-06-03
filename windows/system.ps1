@@ -21,10 +21,13 @@ Block "System > Power & battery > Screen and sleep > When plugged in, put my dev
         powercfg /change standby-timeout-ac 30
     }
 }
-Block "Control Panel > Power Options > Choose what closing the lid does > When I close the lid [both On battery and Plugged in] = Do nothing" {
+Block "Control Panel > Power Options > Choose what closing the lid does > When I close the lid (On battery) = Sleep" {
+    # https://docs.microsoft.com/en-us/windows-hardware/customize/power-settings/power-button-and-lid-settings-lid-switch-close-action
+    powercfg /SetDCValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 1
+}
+Block "Control Panel > Power Options > Choose what closing the lid does > When I close the lid (Plugged in) = Do nothing" {
     # https://docs.microsoft.com/en-us/windows-hardware/customize/power-settings/power-button-and-lid-settings-lid-switch-close-action
     powercfg /SetACValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 0
-    powercfg /SetDCValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 0
 }
 Block "System > Multitasking > Alt + Tab > Pressing Alt + Tab shows = Open windows only" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" MultiTaskingAltTabFilter 3
