@@ -14,6 +14,7 @@ function flash() {
 # plex-playlist-liberator
 
 function ppl([Parameter(Mandatory)][ValidateSet("Plex", "M3U")][string]$Master) {
+    . "${env:ProgramFiles(x86)}\Plex\Plex Media Server\Plex Media Scanner.exe" --scan --refresh --force --section 1
     if ($Master -eq "Plex") {
         Copy-Item $env:OneDrive\Music\Playlists (tmpfor M3UBackup) -Recurse -Filter *.m3u
         & $git\plex-playlist-liberator\plex-playlist-liberator.ps1 -Export -Destination $env:OneDrive\Music\Playlists
@@ -23,7 +24,7 @@ function ppl([Parameter(Mandatory)][ValidateSet("Plex", "M3U")][string]$Master) 
     }
     Set-Content $env:OneDrive\Music\Playlists\ToOrganize.m3u ""
     Write-Output "Scanning for orphans"
-    $orphans = & $git\plex-playlist-liberator\plex-playlist-liberator.ps1 -ScanForOrphans -Source $env:OneDrive\Music\Playlists -MusicFolder $env:OneDrive\Music -Exclude *.mid, *.jpg, *.png, *.gif, *.txt, *.pdf, *.wpl, *.m3u, *.pdn, *.zip | select -Skip 1
+    $orphans = & $git\plex-playlist-liberator\plex-playlist-liberator.ps1 -ScanForOrphans -Source $env:OneDrive\Music\Playlists -MusicFolder $env:OneDrive\Music -Exclude *.mid, *.jpg, *.png, *.gif, *.txt, *.pdf, *.wpl, *.m3u, *.pdn, *.zip, *.no | select -Skip 1
     if ($orphans) {
         Write-Output "`tSaving to $env:OneDrive\Music\Playlists\ToOrganize.m3u"
         Set-Content $env:OneDrive\Music\Playlists\ToOrganize.m3u $orphans
