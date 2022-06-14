@@ -17,6 +17,9 @@ trim_trailing_whitespace = false
 [*.gitconfig]
 indent_style = tab
 
+[*.sh]
+end_of_line = lf
+
 # .NET (https://aka.ms/editorconfigdocs)
 [*.{cs,csx,vb,vbx}]
 dotnet_sort_system_directives_first = true
