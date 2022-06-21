@@ -228,6 +228,10 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
     Write-Host "$url`n`tadded to clipboard"
 }
 
+function awslocal([Parameter(ValueFromRemainingArguments = $true)]$Rest) {
+    aws --endpoint-url=http://localhost:4566 --region us-east-1 $Rest
+}
+
 Register-ArgumentCompleter -Native -CommandName .\config.ps1 -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
     if ((Get-Location).Path -ne "$git\configs") {

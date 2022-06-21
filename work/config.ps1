@@ -52,7 +52,7 @@ if ((Configured $forWork) -or (Configured $forTest)) {
 
     InstallFromWingetBlock Amazon.AWSCLI {
         Add-Content -Path $profile {
-            Register-ArgumentCompleter -Native -CommandName aws -ScriptBlock {
+            Register-ArgumentCompleter -Native -CommandName aws, awslocal -ScriptBlock {
                 param($wordToComplete, $commandAst, $cursorPosition)
                 $env:COMP_LINE = $commandAst
                 $env:COMP_POINT = $cursorPosition
