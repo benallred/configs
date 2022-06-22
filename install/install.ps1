@@ -180,6 +180,8 @@ Block "Configure Office" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Settings\Data" -Name global_Mail_ShowEnvelope -Value '{"value":"false"}'
     # Options > Mail > Send messages > CTRL + ENTER sends a message = On
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" -Name CtrlEnterSends -Value 1
+    # Options > Mail > Tracking > For any message received that includes a read receipt request = Never send a read receipt
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\Mail" -Name "Receipt Response" -Value 1
     # Options > Calendar > Display options > Automatically switch from vertical layout to schedule view ... = Off
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\WunderBar" -Name EnableAutoSwitchingVerticalToHorizontal -Value 0
     # Options > People > Online status and photographs > Show user photographs when available = Off
