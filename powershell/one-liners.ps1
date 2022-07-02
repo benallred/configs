@@ -51,5 +51,9 @@ function SyncKidsPmp() {
         Get-ChildItem $destinationFolder\Playlists *.m3u | % {
             (Get-Content $_ | ? { $_ -notlike "*Music\Korean*" }) -replace "$($env:OneDrive -replace "\\", "\\")\\Music", ".." | Set-Content $_
         }
+
+        sleep -s 10 # some handle hasn't been released yet
+        # 17 = ssfDRIVES (https://docs.microsoft.com/en-us/windows/win32/api/shldisp/ne-shldisp-shellspecialfolderconstants)
+        (New-Object -ComObject Shell.Application).NameSpace(17).ParseName("${destinationDrive}:\").InvokeVerb("Eject")
     }
 }
