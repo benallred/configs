@@ -1,5 +1,7 @@
 . $PSScriptRoot\..\functions.ps1
 
+git config --global --unset user.email
+
 & $PSScriptRoot\..\delete-desktop-shortcuts.ps1
 & $PSScriptRoot\..\prune-transcripts.ps1
 & $PSScriptRoot\daily-backup.ps1
