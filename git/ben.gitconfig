@@ -23,6 +23,8 @@
 	prune = true
 [difftool]
 	prompt = false
+[mergetool]
+	keepBackup = false
 [difftool "VSCode"]
 	cmd = code --wait --diff $LOCAL $REMOTE
 [mergetool "VSCode"]
