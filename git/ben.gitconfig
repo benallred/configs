@@ -37,9 +37,10 @@
 	set-email = !git config --local user.email $(git log -1 --author \"$(git config user.name)\" --format=%ae)
 	config-path = config --global --get include.path ben.gitconfig
 	config-edit = "!git config --edit --file $(git config-path)"
-	lg = log --graph --decorate -30 --all --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(15,trunc)%an%Creset%C(auto)%d %s' # log-graph
-	lgb = log --graph --decorate -30 --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(15,trunc)%an%Creset%C(auto)%d %s' # log-graph(-for)-branch
-	lgc = log --graph --decorate -30 --all --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(15,trunc)%an%Creset%C(auto)%d %s%C(green)% (trailers:key=co-authored-by,valueonly,separator=%x2C )%Creset' # log-graph(-with)-co-authors
+	log-graph-base = log --graph --decorate -30 --topo-order --date=format:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(15,trunc)%an%Creset%C(auto)%d %s'
+	lg = log-graph-base --all # log-graph
+	lgc = lg --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(15,trunc)%an%Creset%C(auto)%d %s%C(green)% (trailers:key=co-authored-by,valueonly,separator=%x2C )%Creset' # log-graph(-with)-co-authors
+	lgb = log-graph-base # log-graph(-for)-branch
 	last-message = log -1 --pretty=format:%B
 	commitwip = !git add -A && git commit -m WIP
 	continuewip = "!if [ \"$(git log -1 --pretty=format:%B)\" == \"WIP\" ]; then git reset HEAD~1; elif [ \"$1\" != \"-q\" ]; then echo 'The last commit was not \"WIP\"'; fi #"
