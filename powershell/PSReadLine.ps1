@@ -111,7 +111,7 @@ Set-PSReadLineKeyHandler -Key F9 `
     Write-Host # don't start writing on the current buffer line
     $line.ToCharArray() | select -Skip $cursor | ? { $_ -eq "`n" } | % { Write-Host } # move down a line for each newline in the buffer after the cursor
 
-    git -c color.ui=always lga | Write-Host
+    git -c color.ui=always lg | Write-Host
     git -c color.ui=always s | Write-Host
 
     (prompt).ToCharArray() | ? { $_ -eq "`n" } | % { Write-Host } # move down a line for each extra line in the prompt
