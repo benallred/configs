@@ -9,11 +9,13 @@ function InstallPowerShellModuleBlock([string]$ModuleName, [scriptblock]$AfterIn
     } {
         (Find-Module $ModuleName).Version -gt (Get-Module $ModuleName -ListAvailable | sort Version -Descending | select -First 1).Version
     } {
+        Write-Output "Updating from $((Get-Module $ModuleName).Version) to $((Find-Module $ModuleName).Version)"
         ReallyUpdate-Module $ModuleName
     }
 }
 
 Block "Update PSReadLine" {
+    Write-Output "Updating from $((Get-Module PSReadLine).Version) to $((Find-Module PSReadLine).Version)"
     pwsh -NoProfile -c "Install-Module PSReadLine -Force"
     Remove-Module PSReadLine
     Import-Module PSReadLine
