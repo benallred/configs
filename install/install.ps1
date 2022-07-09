@@ -261,6 +261,8 @@ if (!(Configured $forKids)) {
             Write-ManualStep "Sign in"
             Write-ManualStep "Replace Existing"
             Write-ManualStep "Skip File Transfer"
+        } {
+            Test-ProgramInstalled Code42
         }
     }
 
