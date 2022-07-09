@@ -419,6 +419,8 @@ if (!(Configured $forKids)) {
             Start-Process $env:tmp\ODMediaConsoleSetup.msi /passive, /norestart -Wait
             DeleteDesktopShortcut "OverDrive for Windows"
             Set-RegistryValue "HKCU:\Software\OverDrive, Inc.\OverDrive Media Console\Settings" "DownloadFolder-MP3 Audiobook" "C:\BenLocal\Audio Books"
+        } {
+            Test-ProgramInstalled "OverDrive for Windows"
         }
     }
 
