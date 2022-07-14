@@ -184,6 +184,8 @@ function dotnet-really-clean() {
         Write-Output "`t$(Resolve-Path $_ -Relative)"
         Remove-Item $_ -Recurse -Force
     }
+    Write-Output "Clearing NuGet caches"
+    dotnet nuget locals all --clear | % { Write-Output "`t$_" }
 }
 
 function winget-manifest([Parameter(Mandatory)][string]$AppId) {
