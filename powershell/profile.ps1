@@ -177,6 +177,20 @@ function ReallyUpdate-Module([Parameter(Mandatory)][string]$Name) {
 }
 
 function dotnet-really-clean() {
+    if (!(Get-ChildItem *.sln)) {
+        Write-Error "Not a dotnet project"
+        return
+    }
+
+    Write-Output "Clearing NuGet caches"
+    dotnet nuget locals all --clear | % { Write-Output "`t$_" }
+
+    Write-Output "Removing ``packages`` directory"
+    Remove-Item packages -Recurse -Force -ErrorAction Ignore
+
+    Write-Output "Removing ``TestResults`` directory"
+    Remove-Item TestResults -Recurse -Force -ErrorAction Ignore
+
     Write-Output "Removing ``bin`` and ``obj`` directories"
     Get-ChildItem bin, obj -Directory -Recurse |
     sort |
@@ -184,8 +198,6 @@ function dotnet-really-clean() {
         Write-Output "`t$(Resolve-Path $_ -Relative)"
         Remove-Item $_ -Recurse -Force
     }
-    Write-Output "Clearing NuGet caches"
-    dotnet nuget locals all --clear | % { Write-Output "`t$_" }
 }
 
 function winget-manifest([Parameter(Mandatory)][string]$AppId) {
