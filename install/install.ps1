@@ -24,7 +24,6 @@ Block "Configure scoop nonportable bucket" {
 if (!(Configured $forKids)) {
     InstallFromWingetBlock Microsoft.Edge.Dev {
         DeleteDesktopShortcut "Microsoft Edge Dev"
-        DeleteDesktopShortcut "Personal - Edge"
         Write-ManualStep "Manage extensions"
         Write-ManualStep "`tKeyboard shortcuts"
         Write-ManualStep "`t`tBitwarden"

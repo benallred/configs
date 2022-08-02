@@ -6,8 +6,10 @@ function UninstallBlock([string]$AppName) {
     }
 }
 
-FirstRunBlock "Clean up items on desktop" {
+Block "Configure Edge" {
     DeleteDesktopShortcut "Microsoft Edge"
+    DeleteDesktopShortcut "Personal - Edge"
+    Set-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Name WebWidgetAllowed -Value 0
 }
 
 if (!(Configured $forKids)) {
