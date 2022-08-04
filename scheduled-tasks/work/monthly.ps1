@@ -8,6 +8,8 @@ if (AlreadyRunThisMonth $runTimeId) {
 
 mkdir $tmp -ErrorAction Ignore | Out-Null
 
+Update-AwsAccessKey
+
 Update-Help -ErrorAction Ignore
 
 RecordRunTime $runTimeId
