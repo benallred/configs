@@ -237,6 +237,7 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
 
     $url = "$remote/blob/$permalinkCommit/$relativePath" `
         + ($BeginLine -gt 0 ? "#L$BeginLine" + ($EndLine -gt 0 ? "-L$EndLine" : "") : "")
+    $url = $url -replace " ", "%20"
 
     Set-Clipboard $url
     Write-Host "$url`n`tadded to clipboard"
