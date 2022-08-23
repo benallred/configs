@@ -66,40 +66,7 @@
     }
   ],
   // To unbind a default keybinding, set the command to "unbound"
-  // Some defaults:
-  //  Application-level Keys
-  //    { "command": { "action": "openSettings", "target": "settingsUI" }, "keys": "ctrl+," },
-  //    { "command": { "action": "openSettings", "target": "settingsFile" }, "keys": "ctrl+shift+," },
-  //    { "command": { "action": "openSettings", "target": "defaultsFile" }, "keys": "ctrl+alt+," },
-  //    { "command": "find", "keys": "ctrl+shift+f" },
-  //    { "command": "newTab", "keys": "ctrl+shift+t" },
-  //    { "command": "openNewTabDropdown", "keys": "ctrl+shift+space" },
-  //    { "command": "quakeMode", "keys":"win+`" },
-  //    { "command": { "action": "globalSummon", "name": "_quake", "dropdownDuration": 200, "toggleVisibility": true, "monitor": "toMouse", "desktop": "toCurrent" }, "keys": "win+`" },
-  //  Clipboard Integration
-  //    { "command": { "action": "copy", "singleLine": false }, "keys": "ctrl+shift+c" },
-  //    { "command": "paste", "keys": "ctrl+shift+v" },
-  //  Scrollback
-  //    { "command": "scrollDown", "keys": "ctrl+shift+down" },
-  //    { "command": "scrollDownPage", "keys": "ctrl+shift+pgdn" },
-  //    { "command": "scrollUp", "keys": "ctrl+shift+up" },
-  //    { "command": "scrollUpPage", "keys": "ctrl+shift+pgup" },
-  //  Pane Management
-  //    { "command": { "action": "splitPane", "split": "horizontal" }, "keys": "alt+shift+-" },
-  //    { "command": { "action": "splitPane", "split": "vertical" }, "keys": "alt+shift+plus" },
-  //    { "command": "closePane", "keys": "ctrl+shift+w" },
-  //    { "command": { "action": "moveFocus", "direction": "down" }, "keys": "alt+down" },
-  //    { "command": { "action": "moveFocus", "direction": "left" }, "keys": "alt+left" },
-  //    { "command": { "action": "moveFocus", "direction": "right" }, "keys": "alt+right" },
-  //    { "command": { "action": "moveFocus", "direction": "up" }, "keys": "alt+up" },
-  //    { "command": { "action": "resizePane", "direction": "down" }, "keys": "alt+shift+down" },
-  //    { "command": { "action": "resizePane", "direction": "left" }, "keys": "alt+shift+left" },
-  //    { "command": { "action": "resizePane", "direction": "right" }, "keys": "alt+shift+right" },
-  //    { "command": { "action": "resizePane", "direction": "up" }, "keys": "alt+shift+up" },
-  //  Visual Adjustments
-  //    { "command": { "action": "adjustFontSize", "delta": 1 }, "keys": "ctrl+=" },
-  //    { "command": { "action": "adjustFontSize", "delta": -1 }, "keys": "ctrl+-" },
-  //    { "command": "resetFontSize", "keys": "ctrl+0" },
+  // defaultsFile: ctrl+alt+,
   // prettier-ignore
   "actions": [
     { "command": { "action": "globalSummon", "name": "_quake", "dropdownDuration": 200, "toggleVisibility": true, "monitor": "toMouse", "desktop": "toCurrent" }, "keys": "win+`" },
@@ -111,9 +78,5 @@
     { "command": { "action": "nextTab", "tabSwitcherMode": "inOrder" }, "keys": "ctrl+pgdn" },
     { "command": { "action": "prevTab", "tabSwitcherMode": "inOrder" }, "keys": "ctrl+pgup" },
     { "command": "closePane", "keys": "ctrl+w" }
-    // { "command": { "action": "splitPane", "split": "horizontal", "splitMode": "duplicate" }, "keys": [ "alt+shift+-" ] },
-    // { "command": { "action": "splitPane", "split": "vertical", "splitMode": "duplicate" }, "keys": [ "alt+shift+plus" ] },
-    // { "command": { "action": "splitPane", "split": "horizontal" }, "keys": [ "ctrl+h" ] },
-    // { "command": { "action": "splitPane", "split": "vertical" }, "keys": [ "ctrl+i" ] },
   ]
 }
