@@ -443,14 +443,16 @@ if (Configured $forKids) {
     }
 }
 
-Block "Install Cricut Design Space" {
-    $fileName = (iwr https://s3-us-west-2.amazonaws.com/staticcontent.cricut.com/a/software/win32-native/latest.json | ConvertFrom-Json).rolloutInstallFile
-    $downloadUrl = (iwr "https://apis.cricut.com/desktopdownload/InstallerFile?shard=a&operatingSystem=win32native&fileName=$fileName" | ConvertFrom-Json).result
-    Download-File $downloadUrl $env:tmp\$fileName
-    . $env:tmp\$fileName
-    DeleteDesktopShortcut "Cricut Design Space"
-} {
-    Test-ProgramInstalled "Cricut Design Space"
+if (!(Configured $forWork)) {
+    Block "Install Cricut Design Space" {
+        $fileName = (iwr https://s3-us-west-2.amazonaws.com/staticcontent.cricut.com/a/software/win32-native/latest.json | ConvertFrom-Json).rolloutInstallFile
+        $downloadUrl = (iwr "https://apis.cricut.com/desktopdownload/InstallerFile?shard=a&operatingSystem=win32native&fileName=$fileName" | ConvertFrom-Json).result
+        Download-File $downloadUrl $env:tmp\$fileName
+        . $env:tmp\$fileName
+        DeleteDesktopShortcut "Cricut Design Space"
+    } {
+        Test-ProgramInstalled "Cricut Design Space"
+    }
 }
 
 & $PSScriptRoot\games.ps1
