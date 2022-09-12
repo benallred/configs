@@ -147,7 +147,7 @@
             "{{ if gt .Ahead 0 }}#8db07b{{ end }}",
             "{{ if gt .Behind 0 }}#d16969{{ end }}"
           ],
-          "template": " {{ .HEAD }}{{ .BranchStatus }}{{ if .Working.Changed }}<#d16969> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<#8db07b> {{ .Staging.String }}</>{{ end }}<#d4d4d4> \ue0b1</>",
+          "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<#d16969> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<#8db07b> {{ .Staging.String }}</>{{ end }}<#d4d4d4> \ue0b1</>",
           "properties": {
             "fetch_status": true,
             "branch_icon": "<#d7ba7d>\ue0a0</>",
@@ -164,7 +164,7 @@
             "templateComment__commit_icon": " ",
             "templateComment__.HEAD__normal": "master",
             "templateComment__.HEAD__rebase": " branch onto master (1/3) at  abc1234",
-            "templateComment__.BranchStatus": " ≡",
+            "templateComment__.BranchStatus": "≡",
             "templateComment__.Working.String": "+2 ~6",
             "templateComment__.Staging.String": "~1",
             "templateComment__\ue0b1": ""
