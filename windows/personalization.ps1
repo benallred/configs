@@ -16,6 +16,9 @@ if (!(Configured $forKids)) {
 Block "Personalization > Lock screen > Personalize your lock screen > Get fun facts, tips, tricks, and more on your lock screen = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" -Name RotatingLockScreenOverlayEnabled -Value 0
 }
+Block "Personalization > Start > Layout = More pins" {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name Start_Layout -Value 1
+}
 Block "Personalization > Start > Show most used apps = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name NoStartMenuMFUprogramsList -Value 1
 }
