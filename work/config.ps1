@@ -50,6 +50,13 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\Outlook\Addins\MimecastServicesForOutlook.AddinModule" -Name LoadBehavior -Value 2
     }
 
+    Block "Other Visual Studio Components" {
+        # Microsoft.VisualStudio.ComponentGroup.IISDevelopment    Development time IIS support
+        winget install --id Microsoft.VisualStudio.2022.Community --accept-package-agreements --override "--passive --norestart --wait --add Microsoft.VisualStudio.ComponentGroup.IISDevelopment"
+    } {
+        . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -format value -requires Microsoft.VisualStudio.ComponentGroup.IISDevelopment
+    }
+
     InstallFromWingetBlock Amazon.AWSCLI {
         Add-Content -Path $profile {
             Register-ArgumentCompleter -Native -CommandName aws, awslocal -ScriptBlock {
