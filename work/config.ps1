@@ -3,6 +3,17 @@ Block "Prevent `"Allow my organization to manage my device`"" {
 }
 
 if ((Configured $forWork) -or (Configured $forTest)) {
+    InstallFromWingetBlock Mozilla.Firefox {
+        DeleteDesktopShortcut Firefox
+    }
+
+    Block "Install Tor Browser" {
+        winget install --id TorProject.TorBrowser
+        Move-Item "$env:UserProfile\Desktop\Tor Browser" C:\BenLocal\Programs
+    } {
+        Test-Path "C:\BenLocal\Programs\Tor Browser"
+    }
+
     Block "Uninstall Lenovo Quick Clean" {
         winget uninstall "Lenovo Quick Clean"
     } {

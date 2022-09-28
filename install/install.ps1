@@ -314,19 +314,6 @@ if (!(Configured $forKids)) {
     } -NoUpdate
 }
 
-if ((Configured $forWork) -or (Configured $forTest)) {
-    InstallFromWingetBlock Mozilla.Firefox {
-        DeleteDesktopShortcut Firefox
-    }
-
-    Block "Install Tor Browser" {
-        winget install --id TorProject.TorBrowser
-        Move-Item "$env:UserProfile\Desktop\Tor Browser" C:\BenLocal\Programs
-    } {
-        Test-Path "C:\BenLocal\Programs\Tor Browser"
-    }
-}
-
 InstallFromWingetBlock 7zip.7zip {
     Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name ShowDots -Value 1
     Set-RegistryValue "HKCU:\SOFTWARE\7-Zip\FM" -Name ShowRealFileIcons -Value 1
