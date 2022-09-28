@@ -68,6 +68,8 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -format value -requires Microsoft.VisualStudio.ComponentGroup.IISDevelopment
     }
 
+    InstallVisualStudioExtensionBlock TechTalkSpecFlowTeam SpecFlowForVisualStudio2022
+
     InstallFromWingetBlock Amazon.AWSCLI {
         Add-Content -Path $profile {
             Register-ArgumentCompleter -Native -CommandName aws, awslocal -ScriptBlock {
