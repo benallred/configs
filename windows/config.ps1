@@ -35,6 +35,7 @@ Block "Control Panel > View by = Small icons" {
 & $PSScriptRoot\time-and-language.ps1
 & $PSScriptRoot\accessibility.ps1
 & $PSScriptRoot\privacy-and-security.ps1
+& $PSScriptRoot\windows-update.ps1
 & $PSScriptRoot\windows-features.ps1
 FirstRunBlock "Set sign-in options" {
     Write-ManualStep "Windows Hello"
