@@ -28,7 +28,7 @@
 [difftool "VSCode"]
 	cmd = code --wait --diff $LOCAL $REMOTE
 [mergetool "VSCode"]
-	cmd = code --wait $MERGED
+	cmd = code --wait --merge $LOCAL $REMOTE $BASE $MERGED
 [difftool "BeyondCompare"]
 	cmd = 'C:\\Users\\Ben\\OneDrive\\Ben\\Programs\\Scooter Software\\Beyond Compare\\Current\\BComp.exe' $LOCAL $REMOTE
 [mergetool "BeyondCompare"]
