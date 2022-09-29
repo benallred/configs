@@ -108,8 +108,11 @@ if (!(Configured $forKids)) {
             . (. "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath) $PSCommandPath
             WaitWhile { !(Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" }) } "Waiting for Visual Studio registry key"
             & "$git\configs\programs\Visual Studio - Hide dynamic nodes in Solution Explorer.ps1"
-        }
 
+            # Visual Studio > Help > Privacy > Privacy Settings... > Experience Improvement Program = No
+            $vsVersion = (. "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property installationVersion).Substring(0, 2)
+            Set-RegistryValue "HKLM:\SOFTWARE\WOW6432Node\Microsoft\VSCommon\$vsVersion.0\SQM" -Name OptIn -Value 0
+        }
     } -NoUpdate
 
     InstallVisualStudioExtensionBlock maksim-vorobiev PeasyMotion2022
