@@ -1,7 +1,3 @@
-function InstallFollowup([string]$ProgramName, [scriptblock]$Followup) {
-    ConfigFollowup "Finish $ProgramName Install" $Followup
-}
-
 function RemoveStartupRegistryKey([string]$ValueName) {
     WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $ValueName -ErrorAction Ignore) } "Waiting for `"$ValueName`" startup registry key"
     Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $ValueName
@@ -104,16 +100,14 @@ if (!(Configured $forKids)) {
         #   Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
         # https://docs.microsoft.com/en-us/visualstudio/install/command-line-parameter-examples#using---wait
 
-        InstallFollowup "Visual Studio" {
-            . (. "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property productPath) $PSCommandPath
-            WaitWhile { !(Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" }) } "Waiting for Visual Studio registry key"
-            $visualStudioVersionKey = Get-ChildItem "HKCU:\Software\Microsoft\VisualStudio" | ? { $_.PSChildName -match "^\d\d.\d_" } | Select-Object -Last 1
-            Set-RegistryValue Registry::$visualStudioVersionKey -Name UseSolutionNavigatorGraphProvider -Value 0
+        $vsInstallation = . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -format json | ConvertFrom-Json
+        $vsVersion = ($vsInstallation.installationVersion).Substring(0, 2)
 
-            # Visual Studio > Help > Privacy > Privacy Settings... > Experience Improvement Program = No
-            $vsVersion = (. "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -property installationVersion).Substring(0, 2)
-            Set-RegistryValue "HKLM:\SOFTWARE\WOW6432Node\Microsoft\VSCommon\$vsVersion.0\SQM" -Name OptIn -Value 0
-        }
+        # Hide dynamic nodes in Solution Explorer
+        Set-RegistryValue "HKCU:\Software\Microsoft\VisualStudio\$vsVersion.0_$($vsInstallation.instanceId)" -Name UseSolutionNavigatorGraphProvider -Value 0
+
+        # Visual Studio > Help > Privacy > Privacy Settings... > Experience Improvement Program = No
+        Set-RegistryValue "HKLM:\SOFTWARE\WOW6432Node\Microsoft\VSCommon\$vsVersion.0\SQM" -Name OptIn -Value 0
     } -NoUpdate
 
     InstallVisualStudioExtensionBlock maksim-vorobiev PeasyMotion2022
