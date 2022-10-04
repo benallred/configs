@@ -14,4 +14,19 @@ if not A_IsAdmin
 }
 
 programTitle = AHK Template
+iconFilePath := "shell32.dll"
+iconNumber := 44
+
+RunOnSystemStart(programTitle, iconFilePath, iconNumber)
+
+Menu, Tray, Icon, % iconFilePath, % iconNumber, 1
 TrayTip, % programTitle, Loaded
+
+RunOnSystemStart(linkName, iconFilePath, iconNumber)
+{
+    startupLinkFile := A_Startup "\" linkName ".lnk"
+    IfNotExist, % startupLinkFile
+    {
+        FileCreateShortcut, % A_ScriptFullPath, % startupLinkFile, % A_ScriptDir, , , % iconFilePath, , % iconNumber
+    }
+}
