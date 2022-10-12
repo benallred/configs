@@ -38,6 +38,7 @@ AssociateFileBlock xml VSCodeSourceFile
 AssociateFileBlock config VSCodeSourceFile
 AssociateFileBlock DotSettings VSCodeSourceFile
 AssociateFileBlock nuspec VSCodeSourceFile
+AssociateFileBlock cshtml VSCodeSourceFile
 AssociateFileBlock creds VSCodeSourceFile
 AssociateFileBlock pgpass VSCodeSourceFile
 AssociateFileBlock yarnrc VSCodeSourceFile
