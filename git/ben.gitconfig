@@ -29,10 +29,6 @@
 	cmd = code --wait --diff $LOCAL $REMOTE
 [mergetool "VSCode"]
 	cmd = code --wait --merge $LOCAL $REMOTE $BASE $MERGED
-[difftool "BeyondCompare"]
-	cmd = 'C:\\Users\\Ben\\OneDrive\\Ben\\Programs\\Scooter Software\\Beyond Compare\\Current\\BComp.exe' $LOCAL $REMOTE
-[mergetool "BeyondCompare"]
-	cmd = 'C:\\Users\\Ben\\OneDrive\\Ben\\Programs\\Scooter Software\\Beyond Compare\\Current\\BComp.exe' $LOCAL $REMOTE $BASE $MERGED
 [alias]
 	set-email = !git config --local user.email $(git log -1 --author \"$(git config user.name)\" --format=%ae)
 	config-path = config --global --get include.path ben.gitconfig
