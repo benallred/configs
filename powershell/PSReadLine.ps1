@@ -117,7 +117,7 @@ Set-PSReadLineKeyHandler -Key F9 `
     (prompt).ToCharArray() | ? { $_ -eq "`n" } | % { Write-Host } # move down a line for each extra line in the prompt
     $line.ToCharArray() | ? { $_ -eq "`n" } | % { Write-Host } # move down a line for each newline in the buffer
 
-    [Microsoft.PowerShell.PSConsoleReadLine]::InvokePrompt($key, $arg)
+    prompt | Write-Host -NoNewline
 }
 
 # From https://github.com/PowerShell/PSReadLine/blob/master/PSReadLine/SamplePSReadLineProfile.ps1
