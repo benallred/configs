@@ -243,8 +243,13 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
     Write-Host "$url`n`tadded to clipboard"
 }
 
+function awslocal-configure() {
+    aws configure --profile awslocal set aws_access_key_id not-null
+    aws configure --profile awslocal set aws_secret_access_key not-null
+}
+
 function awslocal([Parameter(ValueFromRemainingArguments = $true)]$Rest) {
-    aws --endpoint-url=http://localhost:4566 --region us-east-1 $Rest
+    aws --profile awslocal --endpoint-url=http://localhost:4566 --region us-east-1 $Rest
 }
 
 Register-ArgumentCompleter -Native -CommandName .\config.ps1 -ScriptBlock {
