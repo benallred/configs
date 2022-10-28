@@ -8,6 +8,22 @@ Set-PSReadLineOption -HistorySearchCursorMovesToEnd
 Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
 Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
 
+$doNotAddToHistory = @(
+    "git lg"
+    "git lgc"
+    "git lgr"
+    "git lgb"
+    "git s"
+    "git ss"
+    "git show"
+    "git lg; git s"
+    "git lgr; git s"
+)
+Set-PSReadLineOption -AddToHistoryHandler {
+    param($command)
+    return ($doNotAddToHistory -notcontains $command)
+}
+
 Set-PSReadLineKeyHandler -Key Ctrl+`| `
     -BriefDescription SmartGotoBrace `
     -LongDescription "Go to the matching brace, parenthesis, or square bracket" `
