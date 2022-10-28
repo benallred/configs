@@ -79,6 +79,15 @@ Set-PSReadLineKeyHandler -Key Ctrl+RightArrow `
         [Microsoft.PowerShell.PSConsoleReadLine]::AcceptSuggestion($key, $arg)
     }
 }
+Set-PSReadLineKeyHandler -Key Escape `
+    -BriefDescription ReallyRevertLine `
+    -LongDescription "Really clear the line (including lines imported from history)" `
+    -ScriptBlock {
+    param($key, $arg)
+
+    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine($key, $arg)
+    [Microsoft.PowerShell.PSConsoleReadLine]::RevertLine($key, $arg)
+}
 
 # Related: https://github.com/PowerShell/PSReadLine/issues/1778
 Set-PSReadLineKeyHandler -Key Shift+Delete `
