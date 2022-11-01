@@ -73,10 +73,12 @@ function DeleteDesktopShortcut([string]$ShortcutName) {
 }
 
 function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
+    Write-Host -ForegroundColor Yellow $WaitingFor -NoNewline
     while (Invoke-Command $ScriptBlock) {
-        Write-Host -ForegroundColor Yellow $WaitingFor
+        Write-Host -ForegroundColor Yellow "." -NoNewline
         sleep -s 10
     }
+    Write-Host
 }
 
 function WaitForPath([string]$Path) {
