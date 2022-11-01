@@ -67,7 +67,7 @@ function ConfigFollowup([string]$FileName, [scriptblock]$Followup) {
 }
 
 function DeleteDesktopShortcut([string]$ShortcutName) {
-    if ((Get-Content C:\BenLocal\.delete-desktop-shortcuts.txt) -notcontains $ShortcutName) {
+    if ((Get-Content C:\BenLocal\.delete-desktop-shortcuts.txt -ErrorAction Ignore) -notcontains $ShortcutName) {
         Add-Content C:\BenLocal\.delete-desktop-shortcuts.txt $ShortcutName
     }
 }
