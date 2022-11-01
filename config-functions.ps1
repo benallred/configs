@@ -47,8 +47,9 @@ function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$Comple
 
 function FirstRunBlock([string]$Comment, [scriptblock]$ScriptBlock, [switch]$RequiresReboot) {
     Block $Comment {
-        Invoke-Command $ScriptBlock
-        Add-Content C:\BenLocal\backup\config.done.txt $Comment
+        if (Invoke-Command $ScriptBlock) {
+            Add-Content C:\BenLocal\backup\config.done.txt $Comment
+        }
     }.GetNewClosure() {
         (Get-Content C:\BenLocal\backup\config.done.txt -ErrorAction Ignore) -contains $Comment
     } -RequiresReboot:$RequiresReboot
@@ -206,10 +207,16 @@ function InstallFromScoopBlock([string]$AppId, [scriptblock]$AfterInstall) {
 function InstallVisualStudioExtensionBlock([string]$Publisher, [string]$Extension) {
     FirstRunBlock "Install VS Extension: $Publisher.$Extension" {
         $downloadUrl = (iwr "https://marketplace.visualstudio.com/items?itemName=$Publisher.$Extension" | sls "/_apis/public/gallery/publishers/$Publisher/vsextensions/$Extension/(\d+\.?)+/vspackage").Matches.Value | % { "https://marketplace.visualstudio.com$_" }
-        Download-File $downloadUrl $env:tmp\$Publisher.$Extension.vsix
-        $vsixInstaller = . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -all -property productPath | Split-Path | % { "$_\VSIXInstaller.exe" }
-        $installArgs = "/quiet", "/admin", "$env:tmp\$Publisher.$Extension.vsix"
-        Write-Output "Installing $Extension"
-        Start-Process $vsixInstaller $installArgs -Wait
+        $downloadTo = "$env:tmp\$Publisher.$Extension.vsix"
+        Download-File $downloadUrl $downloadTo
+        if (Test-Path $downloadTo) {
+            $vsixInstaller = . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -all -property productPath | Split-Path | % { "$_\VSIXInstaller.exe" }
+            $installArgs = "/quiet", "/admin", $downloadTo
+            Write-Output "Installing $Extension"
+            Start-Process $vsixInstaller $installArgs -Wait
+        }
+        else {
+            return $false
+        }
     }
 }

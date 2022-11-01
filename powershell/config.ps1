@@ -152,5 +152,6 @@ Block "Add timing to PowerShell profiles" {
 if (!(Configured $forTest)) {
     FirstRunBlock "Update PS help" {
         Update-Help -ErrorAction Ignore
+        return $true
     }
 }
