@@ -85,11 +85,7 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         }
     }
 
-    Block "Install Microsoft.dotnet 5" {
-        winget install Microsoft.dotnet --version (winget show Microsoft.dotnet --versions | ? { $_ -like "5*" } | sort -d -t 1)
-    } {
-        winget list Microsoft.dotnet -e | sls (winget show Microsoft.dotnet --versions | ? { $_ -like "5*" } | sort -d -t 1)
-    }
+    InstallFromWingetBlock Microsoft.DotNet.SDK.5
 
     Block "Set Elasticsearch Docker settings" {
         Set-Content $env:UserProfile\.wslconfig "[wsl2]", "kernelCommandLine=sysctl.vm.max_map_count=262144"

@@ -47,7 +47,7 @@ InstallFromWingetBlock voidtools.Everything {
 }
 
 if (!(Configured $forKids)) {
-    InstallFromWingetBlock Microsoft.dotnet {
+    InstallFromWingetBlock Microsoft.DotNet.SDK.6 {
         Add-Content -Path $profile {
             Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
                 param($wordToComplete, $commandAst, $cursorPosition)
