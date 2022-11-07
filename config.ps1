@@ -61,7 +61,10 @@ if (Configured $forHome) {
 
 & $PSScriptRoot\powershell\config.ps1
 if (!$DryRun -and !$Run) {
-    . $profile # make profile available to scripts below
+    . $profile.AllUsersAllHosts
+    . $profile.AllUsersCurrentHost
+    . $profile.CurrentUserAllHosts
+    . $profile.CurrentUserCurrentHost
     Update-WindowsTerminalSettings
 }
 
