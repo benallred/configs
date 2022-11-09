@@ -111,14 +111,10 @@
           "properties": {
             "style": "full",
             "mapped_locations": {
-              "C:/BenLocal/git/": "",
-              "C:/BenLocal/git": "\\",
-              "C:/Users/Ben/OneDrive/": "",
-              "C:/Users/Ben/OneDrive": "\\",
-              "C:/BenLocal/OneDrive/": "",
-              "C:/BenLocal/OneDrive": "\\",
-              "C:/Work/cricut/": "",
-              "C:/Work/cricut": "\\"
+              "C:/BenLocal/git/": "\\",
+              "C:/Users/Ben/OneDrive/": "\\",
+              "C:/BenLocal/OneDrive/": "\\",
+              "C:/Work/cricut/": "\\"
             }
           }
         },
