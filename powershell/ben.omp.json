@@ -73,7 +73,7 @@
           "background": "#646695",
           "template": " git ",
           "properties": {
-            "include_folders": ["C:\\\\BenLocal\\\\git.*"]
+            "include_folders": ["C:/BenLocal/git.*"]
           }
         },
         {
@@ -85,8 +85,8 @@
           "template": " OneDrive ",
           "properties": {
             "include_folders": [
-              "C:\\\\Users\\\\Ben\\\\OneDrive.*",
-              "C:\\\\BenLocal\\\\OneDrive.*"
+              "C:/Users/Ben/OneDrive.*",
+              "C:/BenLocal/OneDrive.*"
             ]
           }
         },
@@ -98,7 +98,7 @@
           "background": "#646695",
           "template": " cricut ",
           "properties": {
-            "include_folders": ["C:\\\\Work\\\\cricut.*"]
+            "include_folders": ["C:/Work/cricut.*"]
           }
         },
         {
@@ -111,14 +111,14 @@
           "properties": {
             "style": "full",
             "mapped_locations": {
-              "C:\\BenLocal\\git\\": "",
-              "C:\\BenLocal\\git": "\\",
-              "C:\\Users\\Ben\\OneDrive\\": "",
-              "C:\\Users\\Ben\\OneDrive": "\\",
-              "C:\\BenLocal\\OneDrive\\": "",
-              "C:\\BenLocal\\OneDrive": "\\",
-              "C:\\Work\\cricut\\": "",
-              "C:\\Work\\cricut": "\\"
+              "C:/BenLocal/git/": "",
+              "C:/BenLocal/git": "\\",
+              "C:/Users/Ben/OneDrive/": "",
+              "C:/Users/Ben/OneDrive": "\\",
+              "C:/BenLocal/OneDrive/": "",
+              "C:/BenLocal/OneDrive": "\\",
+              "C:/Work/cricut/": "",
+              "C:/Work/cricut": "\\"
             }
           }
         },
