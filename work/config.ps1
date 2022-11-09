@@ -39,4 +39,6 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name MuteVoIPWhenJoinMeeting -Value 1
         Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name EnterFullScreenWhenViewingSharedScreen -Value 0
     }
+
+    InstallFromScoopBlock mob
 }

@@ -283,13 +283,6 @@ if (!(Configured $forKids)) {
     } {
         Test-ProgramInstalled "QMK MSYS"
     }
-
-    InstallFromGitHubBlock benallred mob {
-        if (!(Test-Path $profile) -or !(Select-String "mob\.ps1" $profile)) {
-            Add-Content -Path $profile -Value "`n"
-            Add-Content -Path $profile -Value ". $git\mob\mob.ps1"
-        }
-    }
 }
 
 if (!(Configured $forKids)) {
