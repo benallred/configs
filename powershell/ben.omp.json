@@ -96,9 +96,9 @@
           "powerline_symbol": "\ue0b0",
           "foreground": "#ffffff",
           "background": "#646695",
-          "template": " cricut ",
+          "template": " {{ if .Env.WorkReposLabel }}{{ .Env.WorkReposLabel }}{{ else }}repos{{ end }} ",
           "properties": {
-            "include_folders": ["C:/Work/cricut.*"]
+            "include_folders": ["C:/Work/repos.*"]
           }
         },
         {
@@ -114,7 +114,7 @@
               "C:/BenLocal/git/": "\\",
               "C:/Users/Ben/OneDrive/": "\\",
               "C:/BenLocal/OneDrive/": "\\",
-              "C:/Work/cricut/": "\\"
+              "C:/Work/repos/": "\\"
             }
           }
         },
