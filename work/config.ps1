@@ -16,28 +16,24 @@ if ((Configured $forWork) -or (Configured $forTest)) {
 
     InstallFromWingetBlock 9WZDNCRFJBLK # Arc Touch Bluetooth Mouse
 
-    InstallFromWingetBlock Zoom.Zoom {
-        DeleteDesktopShortcut Zoom
-
-        # Configure during install:
-        #   https://support.zoom.us/hc/en-us/articles/201362163-Mass-Installation-and-Configuration-for-Windows#h_b82f0349-4d8f-45dd-898a-1ab98389a4b7
-        #   Code
-        #       Download-File https://zoom.us/client/latest/ZoomInstallerFull.msi $env:tmp\ZoomInstallerFull.msi
-        #       msiexec /package "$env:tmp\ZoomInstallerFull.msi" ZRecommend="AutoHideToolbar=1"
-        #   I can't get ZRecommend or ZConfig to work (settings are not changed)
-        # Group policy:
-        #   https://support.zoom.us/hc/en-us/articles/360039100051-Group-Policy-Options-for-the-Windows-Desktop-Client-and-Zoom-Rooms#h_e5b756c6-5e06-4a22-ad78-f19922a6e94f
-        #   This works but the downside is the options are uneditable from the UI
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name AlwaysShowMeetingControls -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name EnableRemindMeetingTime -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name MuteWhenLockScreen -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name TurnOffVideoCameraOnJoin -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name AlwaysShowVideoPreviewDialog -Value 0
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name SetUseSystemDefaultMicForVOIP -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name SetUseSystemDefaultSpeakerForVOIP -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name AutoJoinVoIP -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name MuteVoIPWhenJoinMeeting -Value 1
-        Set-RegistryValue "HKLM:\SOFTWARE\Policies\Zoom\Zoom Meetings\General" -Name EnterFullScreenWhenViewingSharedScreen -Value 0
+    InstallFromWingetBlock Zoom.Zoom `
+        'zNoDesktopShortCut="true"' + `
+        ' ZRecommend="' + `
+        'AutoHideToolbar=0' + `
+        ';EnableRemindMeetingTime=1' + `
+        ';MuteWhenLockScreen=1' + `
+        ';DisableVideo=1' + `
+        ';AlwaysShowVideoPreviewDialog=0' + `
+        ';SetUseSystemDefaultMicForVoip=1' + `
+        ';SetUseSystemDefaultSpeakerForVoip=1' + `
+        ';AutoJoinVOIP=1' + `
+        ';MuteVoipWhenJoin=1' + `
+        ';AutoFullScreenWhenViewShare=0' + `
+        '"' `
+    {
+        . $env:ProgramFiles\Zoom\bin\Zoom.exe
+        WaitForPath $env:AppData\Zoom\data\Zoom.us.ini
+        Add-Content $env:AppData\Zoom\data\Zoom.us.ini "com.zoom.client.theme.mode=3"
     }
 
     InstallFromScoopBlock mob
