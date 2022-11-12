@@ -4,5 +4,7 @@
     ExcludeRules = @(
         'PSAvoidUsingCmdletAliases'
         'PSAvoidUsingPositionalParameters'
+        'PSUseShouldProcessForStateChangingFunctions'
+        'PSUseSingularNouns'
     )
 }
