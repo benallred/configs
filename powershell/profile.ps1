@@ -26,7 +26,7 @@ function Test-IsAdmin() {
     ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
 }
 
-function Run-AsAdmin([Parameter(Mandatory)][string]$FilePath) {
+function Start-AsAdmin([Parameter(Mandatory)][string]$FilePath) {
     Start-Process wt -Verb RunAs -ArgumentList "-w run-as-admin pwsh -File `"$FilePath`""
 }
 
@@ -34,7 +34,7 @@ function Get-FunctionContents([Parameter(Mandatory)][string]$FunctionName) {
     Get-Command $FunctionName | select -exp ScriptBlock
 }
 
-function Create-Shortcut([Parameter(Mandatory)][string]$Target, [Parameter(Mandatory)][string]$Link, [string]$Arguments) {
+function New-Shortcut([Parameter(Mandatory)][string]$Target, [Parameter(Mandatory)][string]$Link, [string]$Arguments) {
     $dir = Split-Path $Link
     if (!(Test-Path $dir)) {
         New-Item $dir -ItemType Directory -Force | Out-Null
@@ -46,13 +46,13 @@ function Create-Shortcut([Parameter(Mandatory)][string]$Target, [Parameter(Manda
     $shortcut.Save()
 }
 
-function Create-RunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$Command) {
+function New-RunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$Command) {
     # https://docs.microsoft.com/en-us/windows/win32/setupapi/run-and-runonce-registry-keys
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\RunOnce" -Name $Description -Value $Command
 }
 
-function Create-FileRunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$FilePath) {
-    Create-RunOnce $Description "$((Get-Command wt).Source) -w run-once pwsh -Command `"Run-AsAdmin '$FilePath'`""
+function New-FileRunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$FilePath) {
+    New-RunOnce $Description "$((Get-Command wt).Source) -w run-once pwsh -Command `"Start-AsAdmin '$FilePath'`""
 }
 
 function Get-TimestampForFileName() {

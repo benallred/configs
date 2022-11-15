@@ -63,7 +63,7 @@ function ConfigFollowup([string]$FileName, [scriptblock]$Followup) {
         Write-Output "Done. Press Enter to close."
         Read-Host
     }.ToString().Replace('$FileName', $FileName).Replace('$Followup', $Followup)
-    Create-FileRunOnce $FileName "$env:tmp\$FileName.ps1"
+    New-FileRunOnce $FileName "$env:tmp\$FileName.ps1"
     Add-Content C:\BenLocal\backup\runonce.txt ". $env:tmp\$FileName.ps1"
 }
 
