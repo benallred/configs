@@ -39,4 +39,6 @@ if ((Configured $forWork) -or (Configured $forTest)) {
     InstallFromScoopBlock mob
 
     InstallFromWingetBlock JetBrains.Rider
+
+    InstallPowerShellModuleBlock Az
 }

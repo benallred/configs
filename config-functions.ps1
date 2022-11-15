@@ -220,3 +220,19 @@ function InstallVisualStudioExtensionBlock([string]$Publisher, [string]$Extensio
         }
     }
 }
+
+function InstallPowerShellModuleBlock([string]$ModuleName, [scriptblock]$AfterInstall) {
+    Block "Install $ModuleName" {
+        Install-Module $ModuleName -Force
+        if ($AfterInstall) {
+            Invoke-Command $AfterInstall
+        }
+    } {
+        Get-Module -ListAvailable $ModuleName
+    } {
+        (Find-Module $ModuleName).Version -gt (Get-Module $ModuleName -ListAvailable | sort Version -Descending | select -First 1).Version
+    } {
+        Write-Output "Updating from $((Get-Module $ModuleName).Version) to $((Find-Module $ModuleName).Version)"
+        ReallyUpdate-Module $ModuleName
+    }
+}
