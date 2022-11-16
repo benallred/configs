@@ -38,7 +38,24 @@ if ((Configured $forWork) -or (Configured $forTest)) {
 
     InstallFromScoopBlock mob
 
-    InstallFromWingetBlock JetBrains.Rider
+    InstallFromWingetBlock JetBrains.Rider {
+        WaitForPath "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\JetBrains\JetBrains Rider *.lnk"
+        . "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\JetBrains\JetBrains Rider *.lnk"
+        WaitForPath $env:AppData\JetBrains\Rider*
+        $globalDotSettingsPath = "$(Get-ChildItem $env:AppData\JetBrains Rider* | sort Name | select -Last 1)\resharper-host\GlobalSettingsStorage.DotSettings"
+        WaitForPath $globalDotSettingsPath
+        $settingsFileGuid = (New-Guid).ToString("N").ToUpper()
+        $dotSettings = Get-Content $globalDotSettingsPath -Raw
+        $dotSettings = $dotSettings -replace '\</wpf:ResourceDictionary\>', @"
+
+            <s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=$settingsFileGuid/@KeyIndexDefined">True</s:Boolean>
+            <s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=$settingsFileGuid/AbsolutePath/@EntryValue">$git\configs\programs\Rider.DotSettings</s:String>
+            <s:Boolean x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File$settingsFileGuid/@KeyIndexDefined">True</s:Boolean>
+            <s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File$settingsFileGuid/RelativePriority/@EntryValue">1</s:Double>
+        </wpf:ResourceDictionary>
+"@
+        Set-Content $globalDotSettingsPath $dotSettings
+    }
 
     InstallPowerShellModuleBlock Az
 }
