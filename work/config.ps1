@@ -41,12 +41,18 @@ if ((Configured $forWork) -or (Configured $forTest)) {
     InstallFromWingetBlock JetBrains.Rider {
         WaitForPath "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\JetBrains\JetBrains Rider *.lnk"
         . "$env:ProgramData\Microsoft\Windows\Start Menu\Programs\JetBrains\JetBrains Rider *.lnk"
+    }
+
+    Block "Configure Rider" {
         WaitForPath $env:AppData\JetBrains\Rider*
-        $globalDotSettingsPath = "$(Get-ChildItem $env:AppData\JetBrains Rider* | sort Name | select -Last 1)\resharper-host\GlobalSettingsStorage.DotSettings"
+        $riderSettingsBaseDir = Get-ChildItem $env:AppData\JetBrains Rider* | sort Name | select -Last 1
+
+        $globalDotSettingsPath = "$riderSettingsBaseDir\resharper-host\GlobalSettingsStorage.DotSettings"
         WaitForPath $globalDotSettingsPath
         $settingsFileGuid = (New-Guid).ToString("N").ToUpper()
         $dotSettings = Get-Content $globalDotSettingsPath -Raw
-        $dotSettings = $dotSettings -replace '\</wpf:ResourceDictionary\>', @"
+        if ($dotSettings -notlike "*Rider.DotSettings*") {
+            $dotSettings = $dotSettings -replace '\</wpf:ResourceDictionary\>', @"
 
             <s:Boolean x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=$settingsFileGuid/@KeyIndexDefined">True</s:Boolean>
             <s:String x:Key="/Default/Environment/InjectedLayers/FileInjectedLayer/=$settingsFileGuid/AbsolutePath/@EntryValue">$git\configs\programs\Rider.DotSettings</s:String>
@@ -54,7 +60,48 @@ if ((Configured $forWork) -or (Configured $forTest)) {
             <s:Double x:Key="/Default/Environment/InjectedLayers/InjectedLayerCustomization/=File$settingsFileGuid/RelativePriority/@EntryValue">1</s:Double>
         </wpf:ResourceDictionary>
 "@
-        Set-Content $globalDotSettingsPath $dotSettings
+            Set-Content $globalDotSettingsPath $dotSettings
+        }
+
+        function SetMachineSetting($SettingFile, $ComponentName, $Name, $Value) {
+            $settings = [xml](Get-Content "$riderSettingsBaseDir\options\$SettingFile.xml" -ErrorAction Ignore)
+            if (!$settings) {
+                $settings = [xml]"<application><component name=`"$ComponentName`"></component></application>"
+            }
+            $component = $settings.application.component | ? { $_.name -eq $ComponentName }
+            if (!$component) {
+                $component = $settings.CreateElement("component")
+                $component.SetAttribute("name", $ComponentName)
+                $settings.application.AppendChild($component)
+            }
+            $option = $component.option | ? { $_.name -eq $Name }
+            if (!$option) {
+                $option = $settings.CreateElement("option")
+                $option.SetAttribute("name", $Name)
+                $option.SetAttribute("value", $Value)
+                $component.AppendChild($option)
+            }
+            else {
+                $option.value = $Value
+            }
+            if (!(Test-Path $riderSettingsBaseDir\options)) {
+                New-Item $riderSettingsBaseDir\options -ItemType Directory -Force | Out-Null
+            }
+            $settings.Save("$riderSettingsBaseDir\options\$SettingFile.xml")
+        }
+
+        SetMachineSetting editor EditorSettings IS_WHITESPACES_SHOWN true
+        SetMachineSetting editor EditorSettings USE_EDITOR_FONT_IN_INLAYS true
+        SetMachineSetting editor EditorSettings SHOW_BREADCRUMBS false
+        SetMachineSetting editor CodeInsightSettings PARAMETER_INFO_DELAY 0
+        SetMachineSetting editor CodeFoldingSettings COLLAPSE_IMPORTS false
+        SetMachineSetting ui.lnf UISettings SCROLL_TAB_LAYOUT_IN_EDITOR false
+        SetMachineSetting ui.lnf UISettings SHOW_PINNED_TABS_IN_A_SEPARATE_ROW true
+        SetMachineSetting ui.lnf UISettings MARK_MODIFIED_TABS_WITH_ASTERISK true
+        SetMachineSetting ui.lnf UISettings SHOW_CLOSE_BUTTON false
+        SetMachineSetting ui.lnf UISettings OPEN_TABS_AT_THE_END true
+        SetMachineSetting ui.lnf UISettings EDITOR_TAB_LIMIT 100
+        SetMachineSetting editor CodeVisionSettings enabled false
     }
 
     InstallPowerShellModuleBlock Az
