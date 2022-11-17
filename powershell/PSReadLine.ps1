@@ -133,7 +133,7 @@ Set-PSReadLineKeyHandler -Key F9 `
     $cursor = $null
     [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
 
-    if (!$line) {
+    if (!$line -and (Test-Path .git)) {
         [Microsoft.PowerShell.PSConsoleReadLine]::Insert("git lg; git s")
         [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine($key, $arg)
     }
