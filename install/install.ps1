@@ -238,10 +238,12 @@ InstallFromScoopBlock sysinternals {
     Set-RegistryValue "HKCU:\Software\Sysinternals" EulaAccepted 1
 }
 
-InstallFromGitHubBlock benallred SnapX { . $git\SnapX\SnapX.ahk }
+InstallFromGitHubBlock benallred SnapX
+. $git\SnapX\SnapX.ahk
 
 if (!(Configured $forKids)) {
-    InstallFromGitHubBlock benallred Bahk { . $git\Bahk\Ben.ahk }
+    InstallFromGitHubBlock benallred Bahk
+    . $git\Bahk\Ben.ahk
 
     if (Configured $forHome) {
         Block "Install CrashPlan" {
