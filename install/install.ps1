@@ -371,6 +371,10 @@ if (!(Configured $forKids)) {
         speedtest --accept-license --version
     }
 
+    InstallFromWingetBlock Rufus.Rufus {
+        New-Shortcut (Get-ChildItem "$env:LocalAppData\Microsoft\WinGet\Packages\Rufus.Rufus_Microsoft.Winget.Source_8wekyb3d8bbwe" rufus*.exe) "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\Rufus.lnk"
+    }
+
     Block "Install RegFromApp" {
         Download-File https://www.nirsoft.net/utils/regfromapp-x64.zip $env:tmp\regfromapp-x64.zip
         Expand-Archive $env:tmp\regfromapp-x64.zip C:\BenLocal\Programs\RegFromApp64
