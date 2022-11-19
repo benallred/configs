@@ -54,21 +54,21 @@ function BackupOneDrive() {
     start $logFile
 }
 
-BackupByMonth "C:\Ben" "J:\Backup - Monthly\Ben"
-Backup "C:\BenEx" "J:\Backup - Monthly\BenEx"
-Backup "C:\BenEx2" "J:\Backup - Monthly\BenEx2"
-BackupByMonth "$env:UserProfile\OneDrive\Ben" "J:\Backup - Monthly\OneDrive_Ben"
-BackupByMonth "$env:UserProfile\OneDrive\Music" "J:\Backup - Monthly\OneDrive_Music"
-BackupByMonth "$env:UserProfile\OneDrive\BenEx" "J:\Backup - Monthly\OneDrive_BenEx"
+BackupByMonth "C:\Ben" "E:\Backup - Monthly\Ben"
+Backup "C:\BenEx" "E:\Backup - Monthly\BenEx"
+Backup "C:\BenEx2" "E:\Backup - Monthly\BenEx2"
+BackupByMonth "$env:UserProfile\OneDrive\Ben" "E:\Backup - Monthly\OneDrive_Ben"
+BackupByMonth "$env:UserProfile\OneDrive\Music" "E:\Backup - Monthly\OneDrive_Music"
+BackupByMonth "$env:UserProfile\OneDrive\BenEx" "E:\Backup - Monthly\OneDrive_BenEx"
 BackupOneDrive
 
-Backup E:\Media\Ben N:\MediaBackup\Media\Ben -IsMediaBackup
-Backup "E:\Media (Korean)" "N:\MediaBackup\Media (Korean)" -IsMediaBackup
+Backup E:\Media\Ben J:\MediaBackup\Media\Ben -IsMediaBackup
+Backup "E:\Media (Korean)" "J:\MediaBackup\Media (Korean)" -IsMediaBackup
 Backup "$env:LOCALAPPDATA\Plex Media Server" "E:\Media\Tools\PlexBK\AppData\Local\Plex Media Server"
-Backup E:\Media\Tools N:\MediaBackup\Media\Tools
+Backup E:\Media\Tools J:\MediaBackup\Media\Tools
 
-StopOnError { reg export "HKCU\SOFTWARE\Plex, Inc.\Plex Media Server" "J:\Backup - Monthly\reg-Plex Media Server.reg" /y }
-StopOnError { reg export "HKCU\SOFTWARE\PlexPlaylistLiberator" "J:\Backup - Monthly\reg-PlexPlaylistLiberator.reg" /y }
+StopOnError { reg export "HKCU\SOFTWARE\Plex, Inc.\Plex Media Server" "E:\Backup - Monthly\reg-Plex Media Server.reg" /y }
+StopOnError { reg export "HKCU\SOFTWARE\PlexPlaylistLiberator" "E:\Backup - Monthly\reg-PlexPlaylistLiberator.reg" /y }
 
 Update-Help -ErrorAction Ignore
 
