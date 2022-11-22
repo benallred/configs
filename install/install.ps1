@@ -66,7 +66,7 @@ if (!(Configured $forKids)) {
 
     InstallFromScoopBlock nvm {
         nvm install latest
-        nvm use (nvm list)
+        nvm use (nvm list | Out-String -NoNewline)
     }
 
     InstallFromWingetBlock Yarn.Yarn
