@@ -3,6 +3,10 @@ Block "Prevent `"Allow my organization to manage my device`"" {
 }
 
 if ((Configured $forWork) -or (Configured $forTest)) {
+    UninstallBlock "McAfee Small Business - PC Security"
+    UninstallBlock "McAfee"
+    UninstallBlock "WebAdvisor by McAfee"
+
     InstallFromWingetBlock Mozilla.Firefox {
         DeleteDesktopShortcut Firefox
     }

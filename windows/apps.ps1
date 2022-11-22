@@ -1,11 +1,3 @@
-function UninstallBlock([string]$AppName) {
-    Block "Uninstall Appx package $AppName" {
-        winget uninstall $AppName
-    } {
-        !(winget list $AppName | sls $AppName)
-    }
-}
-
 Block "Configure Edge" {
     DeleteDesktopShortcut "Microsoft Edge"
     DeleteDesktopShortcut "Personal - Edge"

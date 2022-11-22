@@ -236,3 +236,11 @@ function InstallPowerShellModuleBlock([string]$ModuleName, [scriptblock]$AfterIn
         ReallyUpdate-Module $ModuleName
     }
 }
+
+function UninstallBlock([string]$AppName) {
+    Block "Uninstall $AppName" {
+        winget uninstall $AppName
+    } {
+        !(winget list $AppName | sls $AppName)
+    }
+}
