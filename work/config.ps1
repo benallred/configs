@@ -20,24 +20,28 @@ if ((Configured $forWork) -or (Configured $forTest)) {
 
     InstallFromWingetBlock 9WZDNCRFJBLK # Arc Touch Bluetooth Mouse
 
-    InstallFromWingetBlock Zoom.Zoom `
-        'zNoDesktopShortCut="true"' + `
-        ' ZRecommend="' + `
-        'AutoHideToolbar=0' + `
-        ';EnableRemindMeetingTime=1' + `
-        ';MuteWhenLockScreen=1' + `
-        ';DisableVideo=1' + `
-        ';AlwaysShowVideoPreviewDialog=0' + `
-        ';SetUseSystemDefaultMicForVoip=1' + `
-        ';SetUseSystemDefaultSpeakerForVoip=1' + `
-        ';AutoJoinVOIP=1' + `
-        ';MuteVoipWhenJoin=1' + `
-        ';AutoFullScreenWhenViewShare=0' + `
-        '"' `
-    {
+    Block "Install Zoom" {
+        winget install Zoom.Zoom --scope machine --override `
+        ('zNoDesktopShortCut="true"' + `
+                ' ZRecommend="' + `
+                'KeepSignedIn=1' + `
+                ';AutoHideToolbar=0' + `
+                ';EnableRemindMeetingTime=1' + `
+                ';MuteWhenLockScreen=1' + `
+                ';DisableVideo=1' + `
+                ';AlwaysShowVideoPreviewDialog=0' + `
+                ';SetUseSystemDefaultMicForVoip=1' + `
+                ';SetUseSystemDefaultSpeakerForVoip=1' + `
+                ';AutoJoinVOIP=1' + `
+                ';MuteVoipWhenJoin=1' + `
+                ';AutoFullScreenWhenViewShare=0' + `
+                '"')
+
         . $env:ProgramFiles\Zoom\bin\Zoom.exe
         WaitForPath $env:AppData\Zoom\data\Zoom.us.ini
         Add-Content $env:AppData\Zoom\data\Zoom.us.ini "com.zoom.client.theme.mode=3"
+    } {
+        winget list Zoom.Zoom -e | sls Zoom.Zoom
     }
 
     InstallFromScoopBlock mob
