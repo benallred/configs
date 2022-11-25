@@ -84,10 +84,7 @@
           "background": "#646695",
           "template": " OneDrive ",
           "properties": {
-            "include_folders": [
-              "C:/Users/Ben/OneDrive.*",
-              "C:/BenLocal/OneDrive.*"
-            ]
+            "include_folders": ["C:/Users/[^/]+/OneDrive(/.+)?"]
           }
         },
         {
@@ -112,8 +109,7 @@
             "style": "full",
             "mapped_locations": {
               "C:/BenLocal/git/": "\\",
-              "C:/Users/Ben/OneDrive/": "\\",
-              "C:/BenLocal/OneDrive/": "\\",
+              "{{ .Env.OneDrive }}": "\\",
               "C:/Work/repos/": "\\"
             }
           }
