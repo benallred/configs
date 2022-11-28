@@ -1,3 +1,6 @@
+Block "System > Power & battery > Power mode = Balanced" {
+    powercfg /SetActive SCHEME_BALANCED
+}
 Block "System > Power & battery > Screen and sleep > On battery power, turn off my screen after = 10 minutes" {
     powercfg /change monitor-timeout-dc 10
 }
@@ -24,11 +27,11 @@ Block "System > Power & battery > Screen and sleep > When plugged in, put my dev
 Block "Control Panel > Power Options > Choose what closing the lid does > When I close the lid (On battery) = Sleep" {
     # https://docs.microsoft.com/en-us/windows-hardware/customize/power-settings/power-button-and-lid-settings-lid-switch-close-action
     powercfg /SetDCValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 1
-}
+} -RequiresReboot
 Block "Control Panel > Power Options > Choose what closing the lid does > When I close the lid (Plugged in) = Do nothing" {
     # https://docs.microsoft.com/en-us/windows-hardware/customize/power-settings/power-button-and-lid-settings-lid-switch-close-action
     powercfg /SetACValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 0
-}
+} -RequiresReboot
 Block "System > Multitasking > Alt + Tab > Pressing Alt + Tab shows = Open windows only" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" MultiTaskingAltTabFilter 3
 } -RequiresReboot
