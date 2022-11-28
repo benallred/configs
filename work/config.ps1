@@ -44,6 +44,24 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         winget list Zoom.Zoom -e | sls Zoom.Zoom
     }
 
+    if (!(Configured $forTest)) {
+        InstallFromWingetBlock Docker.DockerDesktop {
+            DeleteDesktopShortcut "Docker Desktop"
+            RemoveStartupRegistryKey "Docker Desktop"
+            WaitForPath $env:AppData\Docker\settings.json
+            $dockerSettings = Get-Content $env:AppData\Docker\settings.json | ConvertFrom-Json
+            $dockerSettings | Add-Member NoteProperty openUIOnStartupDisabled $true
+            ConvertTo-Json $dockerSettings | Set-Content $env:AppData\Docker\settings.json
+        }
+    }
+
+    InstallFromGitHubBlock benallred dc {
+        if (!(Test-Path $profile) -or !(Select-String "dc\.ps1" $profile)) {
+            Add-Content -Path $profile -Value "`n"
+            Add-Content -Path $profile -Value ". $git\dc\dc.ps1"
+        }
+    }
+
     InstallFromScoopBlock mob
 
     InstallFromWingetBlock JetBrains.Rider {

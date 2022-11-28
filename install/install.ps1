@@ -114,17 +114,6 @@ if (!(Configured $forKids)) {
     InstallVisualStudioExtensionBlock OlleWestman SubwordNavigation
     InstallVisualStudioExtensionBlock AlexanderGayko ShowInlineErrors
     InstallVisualStudioExtensionBlock MadsKristensen ResetZoom
-
-    if (!(Configured $forTest)) {
-        InstallFromWingetBlock Docker.DockerDesktop {
-            DeleteDesktopShortcut "Docker Desktop"
-            RemoveStartupRegistryKey "Docker Desktop"
-            WaitForPath $env:AppData\Docker\settings.json
-            $dockerSettings = Get-Content $env:AppData\Docker\settings.json | ConvertFrom-Json
-            $dockerSettings | Add-Member NoteProperty openUIOnStartupDisabled $true
-            ConvertTo-Json $dockerSettings | Set-Content $env:AppData\Docker\settings.json
-        }
-    }
 }
 
 InstallFromWingetBlock Lexikos.AutoHotkey "/S /IsHostApp"
@@ -261,12 +250,6 @@ if (!(Configured $forKids)) {
         }
     }
 
-    InstallFromGitHubBlock benallred dc {
-        if (!(Test-Path $profile) -or !(Select-String "dc\.ps1" $profile)) {
-            Add-Content -Path $profile -Value "`n"
-            Add-Content -Path $profile -Value ". $git\dc\dc.ps1"
-        }
-    }
     InstallFromGitHubBlock benallred plex-playlist-liberator
 
     InstallFromGitHubBlock benallred YouTubeToPlex
