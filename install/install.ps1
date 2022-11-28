@@ -139,6 +139,10 @@ if (!(Configured $forKids)) {
     }
 }
 
+if ((Test-ProgramInstalled "Microsoft 365 - en-us") -and ((Read-Host "Use key to activate Office? (y/n)") -eq "y")) {
+    winget uninstall "Microsoft 365 - en-us"
+}
+
 if (!((Test-ProgramInstalled "Microsoft Office Professional Plus 2019") -or (Test-ProgramInstalled "Microsoft Office 365") -or (Test-ProgramInstalled "Microsoft 365"))) {
     InstallFromWingetBlock Microsoft.Office "/configure $PSScriptRoot\OfficeConfiguration.xml" {
         $officeKey = SecureRead-Host "Office key"
