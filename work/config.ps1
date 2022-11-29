@@ -128,6 +128,8 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         SetMachineSetting ui.lnf UISettings OPEN_TABS_AT_THE_END true
         SetMachineSetting ui.lnf UISettings EDITOR_TAB_LIMIT 100
         SetMachineSetting editor CodeVisionSettings enabled false
+        SetMachineSetting ide.general GeneralSettings confirmExit false
+        SetMachineSetting ide.general GeneralSettings confirmOpenNewProject2 0
 
         if (!(Test-Path $riderSettingsBaseDir\plugins\AceJump)) {
             Download-File https://plugins.jetbrains.com/files/$((Invoke-RestMethod "https://plugins.jetbrains.com/api/plugins/7086/updates?size=1").file) $env:tmp\AceJump.zip
