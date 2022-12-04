@@ -43,13 +43,13 @@ function RestoreMonthlyBackup([string]$FromBase, [string]$To) {
 }
 
 RestoreBackup "E:\Backup - Monthly\AppData\Local\Plex Media Server" "$env:LOCALAPPDATA\Plex Media Server"
-reg import "J:\Backup - Monthly\reg-Plex Media Server.reg"
-reg import "J:\Backup - Monthly\reg-PlexPlaylistLiberator.reg"
+reg import "E:\Backup - Monthly\reg-Plex Media Server.reg"
+reg import "E:\Backup - Monthly\reg-PlexPlaylistLiberator.reg"
 
-RestoreDailyBackup "J:\Backup - Daily\OneDrive_Ben" "$env:UserProfile\OneDrive\Ben"
-RestoreDailyBackup "J:\Backup - Daily\OneDrive_Music" "$env:UserProfile\OneDrive\Music"
-RestoreMonthlyBackup "J:\Backup - Monthly\OneDrive_BenEx" "$env:UserProfile\OneDrive\BenEx"
-RestoreBackup "J:\Backup - Monthly\OneDrive_BenEx2" "$env:UserProfile\OneDrive\BenEx2"
-RestoreDailyBackup "J:\Backup - Daily\Ben" "C:\Ben"
-RestoreBackup "J:\Backup - Monthly\BenEx" "C:\BenEx"
-RestoreBackup "J:\Backup - Monthly\BenEx2" "C:\BenEx2"
+RestoreDailyBackup "E:\Backup - Daily\OneDrive_Ben" "$env:UserProfile\OneDrive\Ben"
+RestoreDailyBackup "E:\Backup - Daily\OneDrive_Music" "$env:UserProfile\OneDrive\Music"
+RestoreMonthlyBackup "E:\Backup - Monthly\OneDrive_BenEx" "$env:UserProfile\OneDrive\BenEx"
+RestoreBackup "E:\Backup - Monthly\OneDrive_BenEx2" "$env:UserProfile\OneDrive\BenEx2"
+RestoreDailyBackup "E:\Backup - Daily\Ben" "C:\Ben"
+RestoreBackup "E:\Backup - Monthly\BenEx" "C:\BenEx"
+RestoreBackup "E:\Backup - Monthly\BenEx2" "C:\BenEx2"
