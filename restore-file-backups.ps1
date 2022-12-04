@@ -42,7 +42,7 @@ function RestoreMonthlyBackup([string]$FromBase, [string]$To) {
     RestoreBackup $from $To (Split-Path $FromBase -Leaf)
 }
 
-RestoreBackup "E:\Media\Tools\PlexBK\AppData\Local\Plex Media Server" "$env:LOCALAPPDATA\Plex Media Server"
+RestoreBackup "E:\Backup - Monthly\AppData\Local\Plex Media Server" "$env:LOCALAPPDATA\Plex Media Server"
 reg import "J:\Backup - Monthly\reg-Plex Media Server.reg"
 reg import "J:\Backup - Monthly\reg-PlexPlaylistLiberator.reg"
 

@@ -64,9 +64,9 @@ BackupOneDrive
 
 Backup E:\Media\Ben J:\MediaBackup\Media\Ben -IsMediaBackup
 Backup "E:\Media (Korean)" "J:\MediaBackup\Media (Korean)" -IsMediaBackup
-Backup "$env:LOCALAPPDATA\Plex Media Server" "E:\Media\Tools\PlexBK\AppData\Local\Plex Media Server"
 Backup E:\Media\Tools J:\MediaBackup\Media\Tools
 
+Backup "$env:LOCALAPPDATA\Plex Media Server" "E:\Backup - Monthly\AppData\Local\Plex Media Server"
 StopOnError { reg export "HKCU\SOFTWARE\Plex, Inc.\Plex Media Server" "E:\Backup - Monthly\reg-Plex Media Server.reg" /y }
 StopOnError { reg export "HKCU\SOFTWARE\PlexPlaylistLiberator" "E:\Backup - Monthly\reg-PlexPlaylistLiberator.reg" /y }
 
