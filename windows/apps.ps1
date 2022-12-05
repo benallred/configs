@@ -1,7 +1,10 @@
 Block "Configure Edge" {
     DeleteDesktopShortcut "Microsoft Edge"
     DeleteDesktopShortcut "Personal - Edge"
+
+    # https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies
     Set-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Name WebWidgetAllowed -Value 0
+    Set-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -Name HubsSidebarEnabled -Value 0
 }
 
 if (!(Configured $forKids)) {
