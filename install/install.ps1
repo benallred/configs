@@ -124,7 +124,7 @@ if (!(Configured $forKids)) {
             RemoveStartupRegistryKey com.squirrel.slack.slack
         }
         DeleteDesktopShortcut Slack
-        ConfigureNotifications Slack
+        ConfigureNotifications com.squirrel.slack.slack
     }
 }
 

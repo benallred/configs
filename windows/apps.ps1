@@ -11,7 +11,7 @@ if (!(Configured $forKids)) {
     FirstRunBlock "Connect phone" {
         Write-ManualStep "Connect phone"
         start ms-phone:
-        ConfigureNotifications "Messages (via Your Phone)"
+        ConfigureNotifications Microsoft.YourPhone_8wekyb3d8bbwe!YourPhoneMessages
     }
 }
 

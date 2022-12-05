@@ -96,12 +96,8 @@ function Write-ManualStep([string]$Comment) {
     Start-Sleep -Seconds ([Math]::Ceiling($Comment.Length / 10))
 }
 
-function ConfigureNotifications([string]$ProgramName) {
-    WaitWhileProcess SystemSettings
-    Write-ManualStep "Configure notifications for: $ProgramName"
-    start ms-settings:notifications
-    Write-ManualStep "`tShow notifications in action center = Off"
-    Write-ManualStep "`tClose settings when done"
+function ConfigureNotifications([string]$AppId) {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\$AppId" ShowInActionCenter 0
 }
 
 function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone, [int]$CloneDepth) {
