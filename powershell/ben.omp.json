@@ -104,13 +104,13 @@
           "powerline_symbol": "\ue0b0",
           "foreground": "#ffffff",
           "background": "#569cd6",
-          "template": " {{ .Path }} ",
+          "template": " {{ regexReplaceAll \"^\\\\\\\\(.+)\" .Path \"$1\" }} ",
           "properties": {
             "style": "full",
             "mapped_locations": {
-              "C:/BenLocal/git/": "\\",
+              "C:/BenLocal/git": "\\",
               "{{ .Env.OneDrive }}": "\\",
-              "C:/Work/repos/": "\\"
+              "C:/Work/repos": "\\"
             }
           }
         },
