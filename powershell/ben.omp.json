@@ -66,36 +66,19 @@
       "alignment": "left",
       "segments": [
         {
-          "type": "text",
+          "type": "path",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
           "foreground": "#ffffff",
-          "background": "#646695",
-          "template": " git ",
+          "background": "#284e6b",
+          "templates": [
+            "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"C:/BenLocal/git(/.+)?$\") .Path }} git {{ end }}",
+            "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"C:/Work/repos(/.+)?$\") .Path }} {{- if .Env.WorkReposLabel }} {{ .Env.WorkReposLabel }} {{ else }} repos {{ end -}} {{ end }}",
+            "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"~/OneDrive(/.+)?$\") .Path }} OneDrive {{ end }}"
+          ],
+          "templates_logic": "first_match",
           "properties": {
-            "include_folders": ["C:/BenLocal/git.*"]
-          }
-        },
-        {
-          "type": "text",
-          "style": "powerline",
-          "powerline_symbol": "\ue0b0",
-          "foreground": "#ffffff",
-          "background": "#646695",
-          "template": " OneDrive ",
-          "properties": {
-            "include_folders": ["C:/Users/[^/]+/OneDrive(/.+)?"]
-          }
-        },
-        {
-          "type": "text",
-          "style": "powerline",
-          "powerline_symbol": "\ue0b0",
-          "foreground": "#ffffff",
-          "background": "#646695",
-          "template": " {{ if .Env.WorkReposLabel }}{{ .Env.WorkReposLabel }}{{ else }}repos{{ end }} ",
-          "properties": {
-            "include_folders": ["C:/Work/repos.*"]
+            "style": "full"
           }
         },
         {
@@ -109,8 +92,8 @@
             "style": "full",
             "mapped_locations": {
               "C:/BenLocal/git": "\\",
-              "{{ .Env.OneDrive }}": "\\",
-              "C:/Work/repos": "\\"
+              "C:/Work/repos": "\\",
+              "{{ .Env.OneDrive }}": "\\"
             }
           }
         },
