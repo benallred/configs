@@ -414,6 +414,11 @@ if (!(Configured $forKids)) {
         Write-Host "New VeraCrypt version: $script:veraCryptNewVersion"
         $script:veraCryptNewVersion -eq $script:veraCryptOldVersion
     }
+
+    InstallFromWingetBlock Microsoft.PowerToys {
+        Copy-Item2 $PSScriptRoot\..\programs\PowerToys.settings.json $env:LocalAppData\Microsoft\PowerToys\settings.json
+        Copy-Item2 $PSScriptRoot\..\programs\PowerToys.VideoConference.settings.json "$env:LocalAppData\Microsoft\PowerToys\Video Conference\settings.json"
+    }
 }
 
 InstallFromScoopBlock paint.net

@@ -1,0 +1,27 @@
+{
+  "startup": true,
+  "enabled": {
+    "AlwaysOnTop": false,
+    "Awake": false,
+    "ColorPicker": false,
+    "FancyZones": false,
+    "File Explorer": true,
+    "File Locksmith": false,
+    "FindMyMouse": false,
+    "Hosts": false,
+    "Image Resizer": false,
+    "Keyboard Manager": false,
+    "Measure Tool": false,
+    "MouseHighlighter": false,
+    "MousePointerCrosshairs": false,
+    "PowerRename": false,
+    "PowerToys Run": false,
+    "QuickAccent": false,
+    "Shortcut Guide": false,
+    "TextExtractor": false,
+    "Video Conference": true
+  },
+  "is_elevated": true,
+  "run_elevated": true,
+  "theme": "system"
+}
