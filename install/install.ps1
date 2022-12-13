@@ -277,6 +277,7 @@ if (!(Configured $forKids)) {
 if (!(Configured $forKids)) {
     InstallFromWingetBlock Discord.Discord {
         DeleteDesktopShortcut Discord
+        ConfigureNotifications com.squirrel.Discord.Discord
         WaitForPath "$env:AppData\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"
         . "$env:AppData\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"
         WaitForPath $env:AppData\discord\settings.json
