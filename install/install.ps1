@@ -30,6 +30,13 @@ if (!(Configured $forKids)) {
         Write-ManualStep "`t`tToggle current site = Alt + J"
         Write-ManualStep "`t`tToggle extension = Alt + Shift + J"
         Write-ManualStep "`tLink to Text Fragment > Copy Link to Selected Text = Alt + C"
+        if (Configured $forWork) {
+            Write-ManualStep "BitWarden > Settings > Vault timeout = 5 minutes"
+
+            Write-ManualStep "System > Notifications > Set priority notifications > Apps > Add apps > calendar.google.com (via Microsoft Edge Dev)"
+            WaitWhileProcess SystemSettings
+            start ms-settings:notifications
+        }
     }
 }
 
