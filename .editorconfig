@@ -6,7 +6,7 @@ tab_width = 4
 insert_final_newline = true
 charset = utf-8-bom
 
-[*.{json,md}]
+[*.{json,code-workspace,md}]
 indent_size = 2
 tab_width = 2
 
