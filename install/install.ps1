@@ -239,11 +239,19 @@ InstallFromScoopBlock sysinternals {
 }
 
 InstallFromGitHubBlock benallred SnapX
-. $git\SnapX\SnapX.ahk
+Block "Start SnapX" {
+    . $git\SnapX\SnapX.ahk
+} {
+    (Get-Process AutoHotkey).CommandLine | sls SnapX.ahk
+}
 
 if (!(Configured $forKids)) {
     InstallFromGitHubBlock benallred Bahk
-    . $git\Bahk\Ben.ahk
+    Block "Start Bahk" {
+        . $git\Bahk\Ben.ahk
+    } {
+        (Get-Process AutoHotkey).CommandLine | sls Ben.ahk
+    }
 
     if (Configured $forHome) {
         Block "Install CrashPlan" {
