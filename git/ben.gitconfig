@@ -15,8 +15,6 @@
 	insteadOf = git://
 [url "https://github.com/"]
 	insteadOf = git@github.com:
-[push]
-	default = upstream
 [pull]
 	rebase = true
 [fetch]
