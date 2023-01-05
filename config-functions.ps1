@@ -47,7 +47,8 @@ function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$Comple
 
 function FirstRunBlock([string]$Comment, [scriptblock]$ScriptBlock, [switch]$RequiresReboot) {
     Block $Comment {
-        if (Invoke-Command $ScriptBlock) {
+        Invoke-Command $ScriptBlock -ErrorVariable scriptBlockError
+        if (!$scriptBlockError) {
             Add-Content C:\BenLocal\backup\config.done.txt $Comment
         }
     }.GetNewClosure() {
@@ -212,7 +213,7 @@ function InstallVisualStudioExtensionBlock([string]$Publisher, [string]$Extensio
             Start-Process $vsixInstaller $installArgs -Wait
         }
         else {
-            return $false
+            Write-Error "Could not download $Publisher.$Extension"
         }
     }
 }
