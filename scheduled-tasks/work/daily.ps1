@@ -4,4 +4,4 @@ git config --global --unset user.email
 
 & $PSScriptRoot\..\delete-desktop-shortcuts.ps1
 & $PSScriptRoot\..\prune-transcripts.ps1
-& $cricutConfigs\cricut-config.ps1
+& $emConfigs\em-config.ps1
