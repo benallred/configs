@@ -21,6 +21,9 @@ if (!(Configured $forKids)) {
     InstallFromWingetBlock Microsoft.Edge.Dev {
         DeleteDesktopShortcut "Microsoft Edge Dev"
         Write-ManualStep "Navigate to"
+        Write-ManualStep "edge://settings/appearance"
+        Write-ManualStep "`tCustomize toolbar > Hide title bar while in vertical tabs = On"
+        Write-ManualStep "Navigate to"
         Write-ManualStep "edge://extensions/shortcuts"
         Write-ManualStep "`tBitwarden"
         Write-ManualStep "`t`tActivate the extension = Ctrl + Shift + B"
