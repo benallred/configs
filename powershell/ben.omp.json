@@ -3,13 +3,27 @@
   "version": 2,
   "final_space": true,
   "console_title_template": "{{.Folder}}",
+  "palette": {
+    "error": "#d16969",
+    "success": "#8db07b",
+    "console:foreground": "#d4d4d4",
+    "console:bright_foreground": "#ffffff",
+    "console:background": "#1e1e1e",
+    "cyan": "#569cd6",
+    "half_cyan": "#284e6b",
+    "yellow": "#d7ba7d",
+    "bright_purple": "#c586c0",
+    "git:ahead": "p:success",
+    "git:behind": "p:error",
+    "git:ahead_and_behind": "p:yellow"
+  },
   "valid_line": {
-    "foreground": "#8db07b",
+    "foreground": "p:success",
     "background": "transparent",
     "template": " "
   },
   "error_line": {
-    "foreground": "#d16969",
+    "foreground": "p:error",
     "background": "transparent",
     "template": "\uf12a"
   },
@@ -25,9 +39,9 @@
           "type": "exit",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
-          "foreground": "#d4d4d4",
-          "background": "#8db07b",
-          "background_templates": ["{{ if gt .Code 0 }}#d16969{{ end }}"],
+          "foreground": "p:console:bright_foreground",
+          "background": "p:success",
+          "background_templates": ["{{ if gt .Code 0 }}p:error{{ end }}"],
           "template": " {{ if gt .Code 0 }}\uf655{{ else }}\uf42e{{ end }} ",
           "properties": {
             "always_enabled": true
@@ -37,8 +51,8 @@
           "type": "executiontime",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
-          "foreground": "#1e1e1e",
-          "background": "#d4d4d4",
+          "foreground": "p:console:background",
+          "background": "p:console:foreground",
           "template": " {{ .FormattedMs }} ",
           "properties": {
             "always_enabled": true,
@@ -48,14 +62,14 @@
         {
           "type": "time",
           "style": "plain",
-          "foreground": "#d4d4d4",
+          "foreground": "p:console:foreground",
           "background": "transparent",
           "template": " {{ .CurrentDate | date .Format }} "
         },
         {
           "type": "text",
           "style": "plain",
-          "foreground": "#1e1e1e",
+          "foreground": "p:console:background",
           "template": "anchor123"
         }
       ]
@@ -69,8 +83,8 @@
           "type": "path",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
-          "foreground": "#ffffff",
-          "background": "#284e6b",
+          "foreground": "p:console:bright_foreground",
+          "background": "p:half_cyan",
           "templates": [
             "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"C:/BenLocal/git(/.+)?$\") .Path }} git {{ end }}",
             "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"C:/Work/repos(/.+)?$\") .Path }} {{- if .Env.WorkReposLabel }} {{ .Env.WorkReposLabel }} {{ else }} repos {{ end -}} {{ end }}",
@@ -85,8 +99,8 @@
           "type": "path",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
-          "foreground": "#ffffff",
-          "background": "#569cd6",
+          "foreground": "p:console:bright_foreground",
+          "background": "p:cyan",
           "template": " {{ regexReplaceAll \"^\\\\\\\\(.+)\" .Path \"$1\" }} ",
           "properties": {
             "style": "full",
@@ -101,8 +115,8 @@
           "type": "path",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
-          "foreground": "#1e1e1e",
-          "background": "#d7ba7d",
+          "foreground": "p:console:background",
+          "background": "p:yellow",
           "template": " {{ if .StackCount }}{{ .StackCount }}{{ end }} "
         }
       ]
@@ -115,21 +129,21 @@
         {
           "type": "git",
           "style": "diamond",
-          "foreground": "#d4d4d4",
-          "background": "#1e1e1e",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
           "foreground_templates": [
-            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}#d7ba7d{{ end }}",
-            "{{ if gt .Ahead 0 }}#8db07b{{ end }}",
-            "{{ if gt .Behind 0 }}#d16969{{ end }}"
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:git:ahead_and_behind{{ end }}",
+            "{{ if gt .Ahead 0 }}p:git:ahead{{ end }}",
+            "{{ if gt .Behind 0 }}p:git:behind{{ end }}"
           ],
-          "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<#d16969> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<#8db07b> {{ .Staging.String }}</>{{ end }}<#d4d4d4> \ue0b1</>",
+          "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<p:git:behind> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<p:git:ahead> {{ .Staging.String }}</>{{ end }}<p:console:foreground> \ue0b1</>",
           "properties": {
             "fetch_status": true,
-            "branch_icon": "<#d7ba7d>\ue0a0</>",
-            "branch_identical_icon": "<#569cd6>\u2261</>",
-            "branch_ahead_icon": "<#8db07b>\u2191</>",
-            "branch_behind_icon": "<#d16969>\u2193</>",
-            "branch_gone_icon": "<#c586c0>\u2262</>",
+            "branch_icon": "<p:yellow>\ue0a0</>",
+            "branch_identical_icon": "<p:cyan>\u2261</>",
+            "branch_ahead_icon": "<p:git:ahead>\u2191</>",
+            "branch_behind_icon": "<p:git:behind>\u2193</>",
+            "branch_gone_icon": "<p:bright_purple>\u2262</>",
             "commit_icon": "\uf417 ",
             "templateComment__branch_icon": "",
             "templateComment__branch_identical_icon": "≡",
