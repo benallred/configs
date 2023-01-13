@@ -17,6 +17,19 @@ InstallPowerShellModuleBlock posh-git {
 
 InstallFromWingetBlock JanDeDobbeleer.OhMyPosh
 
+Block "Uninstall Pester for Windows PowerShell" {
+    # from https://pester.dev/docs/introduction/installation#removing-the-built-in-version-of-pester
+    $module = "C:\Program Files\WindowsPowerShell\Modules\Pester"
+    takeown /F $module /A /R
+    icacls $module /reset
+    icacls $module /grant "*S-1-5-32-544:F" /inheritance:d /T
+    Remove-Item -Path $module -Recurse -Force -Confirm:$false
+} {
+    !(Test-Path "C:\Program Files\WindowsPowerShell\Modules\Pester")
+}
+
+InstallPowerShellModuleBlock Pester
+
 if (!(Configured $forKids)) {
     InstallPowerShellModuleBlock BurntToast
 }

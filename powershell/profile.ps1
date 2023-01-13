@@ -167,8 +167,10 @@ function GitAudit([switch]$ReturnSuccess) {
 function ReallyUpdate-Module([Parameter(Mandatory)][string]$Name) {
     Update-Module $Name -Force
 
-    Remove-Module $Name
-    Import-Module $Name
+    if (Get-Module $Name) {
+        Remove-Module $Name
+        Import-Module $Name
+    }
 
     Get-Module $Name -ListAvailable |
     sort Version -Descending |

@@ -229,7 +229,7 @@ function InstallPowerShellModuleBlock([string]$ModuleName, [scriptblock]$AfterIn
     } {
         (Find-Module $ModuleName).Version -gt (Get-Module $ModuleName -ListAvailable | sort Version -Descending | select -First 1).Version
     } {
-        Write-Output "Updating from $((Get-Module $ModuleName).Version) to $((Find-Module $ModuleName).Version)"
+        Write-Output "Updating from $((Get-Module $ModuleName -ListAvailable | sort Version -Descending | select -First 1).Version) to $((Find-Module $ModuleName).Version)"
         ReallyUpdate-Module $ModuleName
     }
 }
