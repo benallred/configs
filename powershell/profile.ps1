@@ -116,7 +116,7 @@ function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)
     }
     Write-Host "Downloading $Uri`n`tto $OutFile"
     $downloadFolder = Split-Path $OutFile
-    if (!(Test-Path $downloadFolder)) {
+    if ($downloadFolder -and !(Test-Path $downloadFolder)) {
         New-Item $downloadFolder -ItemType Directory -Force | Out-Null
     }
     Invoke-WebRequest $Uri -OutFile $OutFile -MaximumRetryCount 3 -RetryIntervalSec 30
