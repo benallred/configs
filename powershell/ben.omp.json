@@ -176,6 +176,31 @@
           ]
         },
         {
+          "type": "battery",
+          "style": "plain",
+          "foreground_templates": [
+            "{{if and (eq .State.String \"Discharging\") (lt .Percentage 30)}}p:error{{end}}",
+            "{{if eq .State.String \"Discharging\"}}p:yellow{{end}}",
+            "{{if and (eq .State.String \"Charging\") (lt .Percentage 60)}}p:yellow{{end}}",
+            "{{if eq .State.String \"Charging\"}}p:success{{end}}",
+            "{{if eq .State.String \"Full\"}}p:success{{end}}",
+            "p:error"
+          ],
+          "background": "transparent",
+          "template": " {{ if and (not .Error) (lt .Percentage 100) }}{{ .Icon }}<p:console:foreground>{{ .Percentage }}%</>{{ end }}",
+          "properties": {
+            "display_error": true,
+            "discharging_icon": "\udb85\udfe4",
+            "charging_icon": "\udb85\udfe6",
+            "charged_icon": "\udb85\udfe2",
+            "not_charging_icon": "\udb85\udfe8",
+            "comment_discharging_icon": "f17e4/󱟤",
+            "comment_charging_icon": "f17e6/󱟦",
+            "comment_charged_icon": "f17e2/󱟢",
+            "comment_not_charging_icon": "f17e8/󱟨"
+          }
+        },
+        {
           "type": "text",
           "style": "plain",
           "foreground": "p:console:foreground",
@@ -185,7 +210,8 @@
             " {{ if .Segments.Contains \"Node\" }}\ue0b1{{ end }}",
             " {{ if .Segments.Contains \"Angular\" }}\ue0b1{{ end }}",
             " {{ if .Segments.Contains \"Terraform\" }}\ue0b1{{ end }}",
-            " {{ if .Segments.Contains \"FileTypes\" }}\ue0b1{{ end }}"
+            " {{ if .Segments.Contains \"FileTypes\" }}\ue0b1{{ end }}",
+            " {{ if .Segments.Contains \"Battery\" }}\ue0b1{{ end }}"
           ],
           "templates_logic": "first_match"
         },
