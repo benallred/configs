@@ -127,8 +127,52 @@
       "alignment": "left",
       "segments": [
         {
+          "type": "dotnet",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "template": " \ue77f{{ if .Full }} {{ .Full }}{{ end }}",
+          "properties": { "fetch_version": false }
+        },
+        {
+          "type": "node",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "template": " {{ .PackageManagerIcon }} \ue718{{ if .Full }} {{ .Full }}{{ end }}",
+          "properties": {
+            "fetch_version": true,
+            "fetch_package_manager": true,
+            "yarn_icon": "\uf61a",
+            "npm_icon": "\ue71e",
+            "comment_yarn_icon": "",
+            "comment_yarn_icon_2": "I would prefer e6a7 but that is showing as a box",
+            "comment_npm_icon": ""
+          }
+        },
+        {
+          "type": "angular",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "template": " \ue753{{ if .Full }} {{ .Full }}{{ end }}",
+          "properties": { "fetch_version": true }
+        },
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "templates": [
+            " {{ if .Segments.Contains \"Dotnet\" }}\ue0b1{{ end }}",
+            " {{ if .Segments.Contains \"Node\" }}\ue0b1{{ end }}",
+            " {{ if .Segments.Contains \"Angular\" }}\ue0b1{{ end }}"
+          ],
+          "templates_logic": "first_match"
+        },
+        {
           "type": "git",
-          "style": "diamond",
+          "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
           "foreground_templates": [
