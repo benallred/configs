@@ -277,6 +277,11 @@ TimeBenProfile "One-Liners"
 . $PSScriptRoot\PSReadLine.ps1
 TimeBenProfile "PSReadLine"
 
+function Set-PoshContext_Override {
+    $env:omp_files_readme = (Test-Path readme*) ? " " : $null
+    $env:omp_files_dockercompose = (Test-Path docker-compose.y*ml) ? " " : $null
+}
+New-Alias -Name 'Set-PoshContext' -Value 'Set-PoshContext_Override' -Scope Global -Force
 $env:POSH_GIT_ENABLED = $true
 oh-my-posh init pwsh --config $PSScriptRoot\ben.omp.json | Invoke-Expression
 Enable-PoshLineError

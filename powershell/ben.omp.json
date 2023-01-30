@@ -159,6 +159,16 @@
           "properties": { "fetch_version": true }
         },
         {
+          "alias": "FileTypes",
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "templates": [
+            "{{ .Env.omp_files_readme }}{{ .Env.omp_files_dockercompose }}"
+          ]
+        },
+        {
           "type": "text",
           "style": "plain",
           "foreground": "p:console:foreground",
@@ -166,7 +176,8 @@
           "templates": [
             " {{ if .Segments.Contains \"Dotnet\" }}\ue0b1{{ end }}",
             " {{ if .Segments.Contains \"Node\" }}\ue0b1{{ end }}",
-            " {{ if .Segments.Contains \"Angular\" }}\ue0b1{{ end }}"
+            " {{ if .Segments.Contains \"Angular\" }}\ue0b1{{ end }}",
+            " {{ if .Segments.Contains \"FileTypes\" }}\ue0b1{{ end }}"
           ],
           "templates_logic": "first_match"
         },
