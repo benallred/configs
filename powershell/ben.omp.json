@@ -42,7 +42,7 @@
           "foreground": "p:console:bright_foreground",
           "background": "p:success",
           "background_templates": ["{{ if gt .Code 0 }}p:error{{ end }}"],
-          "template": " {{ if gt .Code 0 }}\uf655{{ else }}\uf42e{{ end }} ",
+          "template": " {{ if gt .Code 0 }}\uf467{{ else }}\uf42e{{ end }} ",
           "properties": {
             "always_enabled": true
           }
@@ -143,10 +143,9 @@
           "properties": {
             "fetch_version": true,
             "fetch_package_manager": true,
-            "yarn_icon": "\uf61a",
+            "yarn_icon": "\ue6a7",
             "npm_icon": "\ue71e",
-            "comment_yarn_icon": "",
-            "comment_yarn_icon_2": "I would prefer e6a7 but that is showing as a box",
+            "comment_yarn_icon": "",
             "comment_npm_icon": ""
           }
         },
