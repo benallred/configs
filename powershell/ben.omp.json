@@ -158,6 +158,14 @@
           "properties": { "fetch_version": true }
         },
         {
+          "type": "terraform",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "template": " \ue69a{{ if .Version }} {{ .Version }}{{ end }} {{ .WorkspaceName }}",
+          "properties": { "fetch_version": true }
+        },
+        {
           "alias": "FileTypes",
           "type": "text",
           "style": "plain",
@@ -176,6 +184,7 @@
             " {{ if .Segments.Contains \"Dotnet\" }}\ue0b1{{ end }}",
             " {{ if .Segments.Contains \"Node\" }}\ue0b1{{ end }}",
             " {{ if .Segments.Contains \"Angular\" }}\ue0b1{{ end }}",
+            " {{ if .Segments.Contains \"Terraform\" }}\ue0b1{{ end }}",
             " {{ if .Segments.Contains \"FileTypes\" }}\ue0b1{{ end }}"
           ],
           "templates_logic": "first_match"
