@@ -131,7 +131,7 @@
           "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
-          "template": " \ue77f{{ if .Full }} {{ .Full }}{{ end }}",
+          "template": " <#8931ff>\ue77f</>{{ if .Full }} {{ .Full }}{{ end }}",
           "properties": { "fetch_version": false }
         },
         {
@@ -139,12 +139,12 @@
           "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
-          "template": " {{ .PackageManagerIcon }} \ue718{{ if .Full }} {{ .Full }}{{ end }}",
+          "template": " {{ .PackageManagerIcon }} <#5fa04e>\ue718</>{{ if .Full }} {{ .Full }}{{ end }}",
           "properties": {
             "fetch_version": true,
             "fetch_package_manager": true,
-            "yarn_icon": "\ue6a7",
-            "npm_icon": "\ue71e",
+            "yarn_icon": "<#2c8ebb>\ue6a7</>",
+            "npm_icon": "<#ff4300>\ue71e</>",
             "comment_yarn_icon": "",
             "comment_npm_icon": ""
           }
@@ -154,7 +154,7 @@
           "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
-          "template": " \ue753{{ if .Full }} {{ .Full }}{{ end }}",
+          "template": " <#ff4300>\ue753</>{{ if .Full }} {{ .Full }}{{ end }}",
           "properties": { "fetch_version": true }
         },
         {
@@ -162,7 +162,7 @@
           "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
-          "template": " \ue69a{{ if .Version }} {{ .Version }}{{ end }} {{ .WorkspaceName }}",
+          "template": " <#a659ff>\ue69a</>{{ if .Version }} {{ .Version }}{{ end }} {{ .WorkspaceName }}",
           "properties": { "fetch_version": true }
         },
         {
