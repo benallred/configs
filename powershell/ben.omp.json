@@ -131,7 +131,7 @@
           "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
-          "template": " <#8931ff>\ue77f</>{{ if .Full }} {{ .Full }}{{ end }}",
+          "template": " <#8931ff>\ue77f</> {{ if .Full }}{{ .Full }}{{ end }}",
           "properties": { "fetch_version": false }
         },
         {
@@ -139,7 +139,7 @@
           "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
-          "template": " {{ .PackageManagerIcon }} <#5fa04e>\ue718</>{{ if .Full }} {{ .Full }}{{ end }}",
+          "template": " {{ .PackageManagerIcon }} <#5fa04e>\ue718</> {{ if .Full }}{{ .Full }}{{ end }}",
           "properties": {
             "fetch_version": true,
             "fetch_package_manager": true,
@@ -154,7 +154,7 @@
           "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
-          "template": " <#ff4300>\ue753</>{{ if .Full }} {{ .Full }}{{ end }}",
+          "template": " <#ff4300>\ue753</> {{ if .Full }}{{ .Full }}{{ end }}",
           "properties": { "fetch_version": true }
         },
         {
@@ -162,7 +162,7 @@
           "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
-          "template": " <#a659ff>\ue69a</>{{ if .Version }} {{ .Version }}{{ end }} {{ .WorkspaceName }}",
+          "template": " <#a659ff>\ue69a</> {{ if .Version }}{{ .Version }} {{ end }}{{ .WorkspaceName }}",
           "properties": { "fetch_version": true }
         },
         {
@@ -172,7 +172,7 @@
           "foreground": "p:console:foreground",
           "background": "transparent",
           "templates": [
-            "{{ .Env.omp_files_readme }}{{ .Env.omp_files_dockercompose }}"
+            "{{ .Env.omp_files_readme }}{{ .Env.omp_files_dockercompose }} "
           ]
         },
         {
