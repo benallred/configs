@@ -28,7 +28,7 @@
 [mergetool "VSCode"]
 	cmd = code --wait --merge $LOCAL $REMOTE $BASE $MERGED
 [alias]
-	set-email = !git config --local user.email $(git log -1 --author \"$(git config user.name)\" --format=%ae)
+	set-email = "!f() { author=$(git config user.name); email=$(git log -1 --author \"$author\" --format=%ae); if [ $email ]; then git config --local user.email $email; echo \"Local email set to \\\"$email\\\"\"; else echo \"Author \\\"$author\\\" not found in this repo\"; fi }; f"
 	config-path = config --global --get include.path ben.gitconfig
 	config-edit = "!git config --edit --file $(git config-path)"
 	log-graph-base = log --graph --decorate -30 --topo-order --date=format-local:'%Y-%m-%d %H:%M:%S' --pretty=format:'%C(cyan)%h%Creset %C(black bold)%ad%Creset %C(green)%<(15,trunc)%an%Creset%C(auto)%d %s'
