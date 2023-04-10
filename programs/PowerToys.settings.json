@@ -13,10 +13,13 @@
     "Keyboard Manager": false,
     "Measure Tool": false,
     "MouseHighlighter": false,
+    "MouseJump": false,
     "MousePointerCrosshairs": false,
+    "PastePlain": false,
     "PowerRename": false,
     "PowerToys Run": false,
     "QuickAccent": false,
+    "RegistryPreview": false,
     "Shortcut Guide": false,
     "TextExtractor": false,
     "Video Conference": true
