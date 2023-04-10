@@ -64,12 +64,12 @@ function Get-SafeFileName([Parameter(Mandatory)][string]$FileName) {
     $FileName -replace "[$invalidFileNameChars]", ""
 }
 
-function Copy-Item2([Parameter(Mandatory)][string[]]$Path, [string]$Destination) {
+function Copy-Item2([Parameter(Mandatory)][string[]]$Path, [Parameter(Mandatory)][string]$Destination, [switch]$Recurse) {
     $destinationDir = Split-Path $Destination
     if (!(Test-Path $destinationDir)) {
         New-Item $destinationDir -ItemType Directory -Force | Out-Null
     }
-    Copy-Item $Path $Destination
+    Copy-Item $Path $Destination -Recurse:$Recurse
 }
 
 function Set-RegistryValue([Parameter(Mandatory)][string]$Path, [string]$Name = "(Default)", [Parameter(Mandatory)][object]$Value) {

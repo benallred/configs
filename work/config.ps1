@@ -2,6 +2,13 @@ Block "Prevent `"Allow my organization to manage my device`"" {
     Set-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WorkplaceJoin" -Name BlockAADWorkplaceJoin -Value 1
 }
 
+InstallFromGitHubAssetBlock tom-englert RegionToShare RegionToShare.zip {
+    Copy-Item2 .\* C:\BenLocal\Programs\RegionToShare -Recurse
+    New-Shortcut C:\BenLocal\Programs\RegionToShare\RegionToShare.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\RegionToShare.lnk"
+} {
+    Test-Path C:\BenLocal\Programs\RegionToShare
+}
+
 if ((Configured $forWork) -or (Configured $forTest)) {
     InstallFromWingetBlock Mozilla.Firefox {
         DeleteDesktopShortcut Firefox
