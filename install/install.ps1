@@ -245,7 +245,7 @@ InstallFromGitHubBlock benallred SnapX
 Block "Start SnapX" {
     . $git\SnapX\SnapX.ahk
 } {
-    (Get-Process AutoHotkey).CommandLine | sls SnapX.ahk
+    (Get-Process AutoHotkey -ErrorAction Ignore).CommandLine | sls SnapX.ahk
 }
 
 if (!(Configured $forKids)) {
@@ -253,7 +253,7 @@ if (!(Configured $forKids)) {
     Block "Start Bahk" {
         . $git\Bahk\Ben.ahk
     } {
-        (Get-Process AutoHotkey).CommandLine | sls Ben.ahk
+        (Get-Process AutoHotkey -ErrorAction Ignore).CommandLine | sls Ben.ahk
     }
 
     if (Configured $forHome) {
