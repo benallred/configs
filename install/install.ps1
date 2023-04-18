@@ -274,6 +274,10 @@ if (!(Configured $forKids)) {
 
     InstallFromGitHubBlock benallred DilbertImageDownloader
 
+    InstallFromGitHubBlock benallred what-i-use
+
+    InstallFromGitHubBlock benallred presentations
+
     InstallFromGitHubBlock benallred qmk_firmware {
         git pull --unshallow
         git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
