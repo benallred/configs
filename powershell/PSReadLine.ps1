@@ -249,23 +249,30 @@ Set-PSReadLineKeyHandler -Key '(', '{', '[' `
         <#case#> '[' { [char]']'; break }
     }
 
-    $selectionStart = $null
-    $selectionLength = $null
-    [Microsoft.PowerShell.PSConsoleReadLine]::GetSelectionState([ref]$selectionStart, [ref]$selectionLength)
-
     $line = $null
     $cursor = $null
     [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
 
+    if ($key.KeyChar -eq "{" -and $line[$cursor - 1] -ne "$") {
+        $extraSpace = " "
+    }
+    else {
+        $extraSpace = ""
+    }
+
+    $selectionStart = $null
+    $selectionLength = $null
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetSelectionState([ref]$selectionStart, [ref]$selectionLength)
+
     if ($selectionStart -ne -1) {
         # Text is selected, wrap it in brackets
-        [Microsoft.PowerShell.PSConsoleReadLine]::Replace($selectionStart, $selectionLength, $key.KeyChar + $line.SubString($selectionStart, $selectionLength) + $closeChar)
+        [Microsoft.PowerShell.PSConsoleReadLine]::Replace($selectionStart, $selectionLength, $key.KeyChar + $extraSpace + $line.SubString($selectionStart, $selectionLength) + $extraSpace + $closeChar)
         [Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition($selectionStart + $selectionLength + 2)
     }
     else {
         # No text is selected, insert a pair
-        [Microsoft.PowerShell.PSConsoleReadLine]::Insert("$($key.KeyChar)$closeChar")
-        [Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition($cursor + 1)
+        [Microsoft.PowerShell.PSConsoleReadLine]::Insert("$($key.KeyChar)$extraSpace$extraSpace$closeChar")
+        [Microsoft.PowerShell.PSConsoleReadLine]::SetCursorPosition($cursor + ($extraSpace ? 2 : 1))
     }
 }
 
