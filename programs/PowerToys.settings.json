@@ -3,7 +3,7 @@
   "enabled": {
     "AlwaysOnTop": false,
     "Awake": false,
-    "ColorPicker": false,
+    "ColorPicker": true,
     "FancyZones": false,
     "File Explorer": true,
     "File Locksmith": false,
