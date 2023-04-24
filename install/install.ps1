@@ -185,6 +185,8 @@ Block "Configure Office" {
     # If home machine: Options > Advanced > AutoArchive > AutoArchive Settings > Archive or delete old items = Off
     # If work machine: Options > Advanced > AutoArchive > AutoArchive Settings > Clean out items older than: 2 months
     # If work machine: Options > Advanced > AutoArchive > AutoArchive Settings > Move old items to: <Current Year>.pst
+    # Options > Advanced > Outlook panes > Show Apps in Outlook = No
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Preferences" -Name EnableAppsInOutlook -Value 0
     # Options > Advanced > Reminders > Show reminders = Off
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\Reminders" -Name Type -Value 0
     # Options > Advanced > Other > Allow analysis ... = Off
