@@ -97,8 +97,11 @@ function Write-ManualStep([string]$Comment) {
     Start-Sleep -Seconds ([Math]::Ceiling($Comment.Length / 10))
 }
 
-function ConfigureNotifications([string]$AppId) {
-    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\$AppId" ShowInActionCenter 0
+function ConfigureNotifications(
+    [Parameter(Mandatory)][string]$AppId,
+    [Parameter(Mandatory)][ValidateSet("ShowInActionCenter", "AllowUrgentNotifications")][string]$Setting,
+    [Parameter(Mandatory)][bool]$Value) {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\$AppId" $Setting ($Value ? 1 : 0)
 }
 
 function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone, [int]$CloneDepth) {

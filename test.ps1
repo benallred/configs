@@ -1,5 +1,5 @@
 param (
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory)]
     [ValidateSet("Start", "Stop", "Checkpoint", "Destroy", "Status", "Connect")]
     [string]
     $Action

@@ -36,9 +36,7 @@ if (!(Configured $forKids)) {
         if (Configured $forWork) {
             Write-ManualStep "BitWarden > Settings > Vault timeout = 5 minutes"
 
-            Write-ManualStep "System > Notifications > Set priority notifications > Apps > Add apps > calendar.google.com (via Microsoft Edge Dev)"
-            WaitWhileProcess SystemSettings
-            start ms-settings:notifications
+            ConfigureNotifications Microsoft.MicrosoftEdge.Dev_8wekyb3d8bbwe!https://calendar.google.com/ AllowUrgentNotifications $true
         }
     }
 }
@@ -134,7 +132,7 @@ if (!(Configured $forKids)) {
             RemoveStartupRegistryKey com.squirrel.slack.slack
         }
         DeleteDesktopShortcut Slack
-        ConfigureNotifications com.squirrel.slack.slack
+        ConfigureNotifications com.squirrel.slack.slack ShowInActionCenter $false
     }
 }
 
@@ -301,7 +299,7 @@ if (!(Configured $forKids)) {
 if (!(Configured $forKids)) {
     InstallFromWingetBlock Discord.Discord {
         DeleteDesktopShortcut Discord
-        ConfigureNotifications com.squirrel.Discord.Discord
+        ConfigureNotifications com.squirrel.Discord.Discord ShowInActionCenter $false
         WaitForPath "$env:AppData\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"
         . "$env:AppData\Microsoft\Windows\Start Menu\Programs\Discord Inc\Discord.lnk"
         WaitForPath $env:AppData\discord\settings.json

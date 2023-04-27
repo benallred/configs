@@ -29,7 +29,7 @@ Block "Configure for" {
     Add-Content -Path $profile $configureForOptions
     Add-Content -Path $profile -Value "`$configureFor = `"$configureFor`""
     Add-Content -Path $profile {
-        function Configured([Parameter(Mandatory = $true)][ValidateSet("home", "work", "kids", "test")][string]$for) {
+        function Configured([Parameter(Mandatory)][ValidateSet("home", "work", "kids", "test")][string]$for) {
             if (!$configureFor) {
                 throw '$configureFor not set'
             }

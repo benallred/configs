@@ -72,11 +72,11 @@ function Copy-Item2([Parameter(Mandatory)][string[]]$Path, [Parameter(Mandatory)
     Copy-Item $Path $Destination -Recurse:$Recurse
 }
 
-function Set-RegistryValue([Parameter(Mandatory)][string]$Path, [string]$Name = "(Default)", [Parameter(Mandatory)][object]$Value) {
-    if (!(Test-Path $Path)) {
-        New-Item $Path -Force | Out-Null
-    }
-    Set-ItemProperty $Path -Name $Name -Value $Value
+function Set-RegistryValue([Parameter(Mandatory)][string]$Path, [string]$Name = $null, [Parameter(Mandatory)][object]$Value) {
+    $hiveAndSubKey = $Path.Split("\", 2)
+    $hive = Get-Item $hiveAndSubKey[0]
+    $key = $hive.CreateSubKey($hiveAndSubKey[1])
+    $key.SetValue($Name, $Value)
 }
 
 function Set-EnvironmentVariable([Parameter(Mandatory)][string]$Variable, [string]$Value) {
