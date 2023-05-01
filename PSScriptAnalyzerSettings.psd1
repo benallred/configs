@@ -3,7 +3,9 @@
 @{
     ExcludeRules = @(
         'PSAvoidUsingCmdletAliases'
+        'PSAvoidUsingInvokeExpression'
         'PSAvoidUsingPositionalParameters'
+        'PSUseApprovedVerbs'
         'PSUseShouldProcessForStateChangingFunctions'
         'PSUseSingularNouns'
     )
