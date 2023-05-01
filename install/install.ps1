@@ -379,6 +379,15 @@ if (!(Configured $forKids)) {
 
     InstallFromWingetBlock yt-dlp.yt-dlp
 
+    Block "Install Python" {
+        $latestPython = winget search Python | sls "Python\.Python\.\d+\.(\d+)" | % { @{ id = $_.Matches.Value; sort = [int]$_.Matches.Groups[1].Value } } | sort sort -Descending | select -First 1 -ExpandProperty id
+        InstallFromWingetBlock $latestPython
+    }
+
+    Block "Install mutagen" {
+        pip install mutagen
+    }
+
     InstallFromScoopBlock scrcpy
 
     InstallFromScoopBlock speedtest-cli {
