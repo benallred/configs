@@ -377,7 +377,7 @@ if (!(Configured $forKids)) {
         Copy-Item $PSScriptRoot\..\programs\Tagscan.ini $env:AppData\TagScanner
     }
 
-    InstallFromScoopBlock youtube-dl
+    InstallFromWingetBlock yt-dlp.yt-dlp
 
     InstallFromScoopBlock scrcpy
 
