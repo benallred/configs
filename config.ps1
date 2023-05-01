@@ -1,3 +1,4 @@
+[Diagnostics.CodeAnalysis.SuppressMessage("PSReviewUnusedParameter", "SkipBackup")]
 param([switch]$DryRun, [switch]$SkipBackup, [string]$Run)
 
 $totalDuration = [Diagnostics.Stopwatch]::StartNew()
@@ -7,9 +8,13 @@ mkdir C:\BenLocal\backup -ErrorAction Ignore
 
 Block "Configure for" {
     $configureForOptions = {
+        [Diagnostics.CodeAnalysis.SuppressMessage("PSUseDeclaredVarsMoreThanAssignments")]
         $forHome = "home"
+        [Diagnostics.CodeAnalysis.SuppressMessage("PSUseDeclaredVarsMoreThanAssignments")]
         $forWork = "work"
+        [Diagnostics.CodeAnalysis.SuppressMessage("PSUseDeclaredVarsMoreThanAssignments")]
         $forKids = "kids"
+        [Diagnostics.CodeAnalysis.SuppressMessage("PSUseDeclaredVarsMoreThanAssignments")]
         $forTest = "test"
     }
     . $configureForOptions
