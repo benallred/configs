@@ -121,6 +121,9 @@ function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)
     }
     Invoke-WebRequest $Uri -OutFile $OutFile -MaximumRetryCount 3 -RetryIntervalSec 30
     $ProgressPreference = $savedProgressPreference
+    if ($AutoDetermineExtension) {
+        return $OutFile
+    }
 }
 
 function Find-RepoRoot() {
