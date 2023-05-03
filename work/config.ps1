@@ -24,6 +24,7 @@ if ((Configured $forWork) -or (Configured $forTest)) {
     InstallFromWingetBlock 9WZDNCRFJBLK # Arc Touch Bluetooth Mouse
 
     Block "Install Zoom" {
+        # https://support.zoom.us/hc/en-us/articles/201362163-Mass-deploying-with-preconfigured-settings-for-Windows
         winget install Zoom.Zoom --scope machine --override `
         ('zNoDesktopShortCut="true"' + `
                 ' ZRecommend="' + `
@@ -43,6 +44,10 @@ if ((Configured $forWork) -or (Configured $forTest)) {
         . $env:ProgramFiles\Zoom\bin\Zoom.exe
         WaitForPath $env:AppData\Zoom\data\Zoom.us.ini
         Add-Content $env:AppData\Zoom\data\Zoom.us.ini "com.zoom.client.theme.mode=3"
+
+        Write-ManualStep "Settings > Share Screen > Share applications = Share all windows from an application"
+        Write-ManualStep "Settings > Keyboard Shortcuts > Meeting > Start/Stop Screen Sharing = Enable Global Shortcut"
+        Write-ManualStep "Settings > Keyboard Shortcuts > Meeting > End Meeting = Enable Global Shortcut"
     } {
         winget list Zoom.Zoom -e | sls Zoom.Zoom
     }
