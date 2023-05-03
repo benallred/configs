@@ -1,3 +1,6 @@
+Block "Privacy & security > Windows Security > Open Windows Security > Settings > Manage notifications > Virus & threat protection notifications > Recent activity and scan results = No" {
+    Set-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows Defender Security Center\Virus and threat protection" -Name SummaryNotificationDisabled -Value 1
+}
 FirstRunBlock "Privacy & security > Device encryption > BitLocker drive encryption > Back up your recovery key" {
     $recoveryKey = (Get-BitLockerVolume).KeyProtector | ? { $_.KeyProtectorType -eq "RecoveryPassword" }
     Add-Content "$OneDrive\BitLocker Recovery Key ($env:ComputerName) $($recoveryKey.KeyProtectorId.Trim('{', '}')).txt" $recoveryKey.RecoveryPassword
