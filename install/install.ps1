@@ -1,8 +1,3 @@
-function RemoveStartupRegistryKey([string]$ValueName) {
-    WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $ValueName -ErrorAction Ignore) } "Waiting for `"$ValueName`" startup registry key"
-    Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $ValueName
-}
-
 InstallFromWingetBlock Git.Git
 
 Block "Configure scoop extras bucket" {

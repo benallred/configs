@@ -74,6 +74,11 @@ function DeleteDesktopShortcut([string]$ShortcutName) {
     }
 }
 
+function RemoveStartupRegistryKey([string]$ValueName) {
+    WaitWhile { !(Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $ValueName -ErrorAction Ignore) } "Waiting for `"$ValueName`" startup registry key"
+    Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $ValueName
+}
+
 function Write-ManualStep([string]$Comment) {
     $esc = [char]27
     Write-Output "$esc[1;43;22;30;52mManual step:$esc[0;1;33m $Comment$esc[0m"
