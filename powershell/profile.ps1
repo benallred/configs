@@ -84,11 +84,28 @@ function Set-EnvironmentVariable([Parameter(Mandatory)][string]$Variable, [strin
     [Environment]::SetEnvironmentVariable($Variable, $Value, "Process")
 }
 
+function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
+    Write-Host -ForegroundColor Yellow $WaitingFor -NoNewline
+    while (Invoke-Command $ScriptBlock) {
+        Write-Host -ForegroundColor Yellow "." -NoNewline
+        sleep -s 10
+    }
+    Write-Host
+}
+
+function WaitForPath([string]$Path) {
+    WaitWhile { !(Test-Path $Path) } "Waiting for path $Path"
+}
+
+function WaitWhileProcess([string]$ProcessName) {
+    WaitWhile { Get-Process $ProcessName -ErrorAction Ignore } "Waiting for $ProcessName to close"
+}
+
 function Get-ProgramsInstalled() {
     return (Get-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName +
     (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName +
     (Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName |
-    sort
+        sort
 }
 
 function Test-ProgramInstalled([Parameter(Mandatory)][string]$NameLike) {
@@ -161,7 +178,7 @@ function GitAudit([switch]$ReturnSuccess) {
     }
     (Get-ChildItem $git) +
     (Get-ChildItem C:\Work -ErrorAction Ignore | Get-ChildItem) |
-    % { CheckDir $_.FullName }
+        % { CheckDir $_.FullName }
     if ($ReturnSuccess) {
         return $script:GitAudit_success
     }
@@ -176,9 +193,9 @@ function ReallyUpdate-Module([Parameter(Mandatory)][string]$Name) {
     }
 
     Get-Module $Name -ListAvailable |
-    sort Version -Descending |
-    select -Skip 1 |
-    % { Uninstall-Module $Name -RequiredVersion $_.Version }
+        sort Version -Descending |
+        select -Skip 1 |
+        % { Uninstall-Module $Name -RequiredVersion $_.Version }
 }
 
 function dotnet-really-clean() {
@@ -198,11 +215,11 @@ function dotnet-really-clean() {
 
     Write-Output "Removing ``bin`` and ``obj`` directories"
     Get-ChildItem bin, obj -Directory -Recurse |
-    sort |
-    % {
-        Write-Output "`t$(Resolve-Path $_ -Relative)"
-        Remove-Item $_ -Recurse -Force
-    }
+        sort |
+        % {
+            Write-Output "`t$(Resolve-Path $_ -Relative)"
+            Remove-Item $_ -Recurse -Force
+        }
 }
 
 function winget-manifest([Parameter(Mandatory)][string]$AppId) {
@@ -264,13 +281,13 @@ Register-ArgumentCompleter -Native -CommandName .\config.ps1 -ScriptBlock {
     }
 
     dir $git\configs *.ps1 -Recurse |
-    sls "Block `"(.+?)`"" |
-    % { "`"$($_.Matches.Groups[1].Value)`"" } |
-    ? { $_ -like "*$wordToComplete*" } |
-    sort |
-    % {
-        [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
-    }
+        sls "Block `"(.+?)`"" |
+        % { "`"$($_.Matches.Groups[1].Value)`"" } |
+        ? { $_ -like "*$wordToComplete*" } |
+        sort |
+        % {
+            [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
 }
 
 TimeBenProfile "Functions"

@@ -74,23 +74,6 @@ function DeleteDesktopShortcut([string]$ShortcutName) {
     }
 }
 
-function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
-    Write-Host -ForegroundColor Yellow $WaitingFor -NoNewline
-    while (Invoke-Command $ScriptBlock) {
-        Write-Host -ForegroundColor Yellow "." -NoNewline
-        sleep -s 10
-    }
-    Write-Host
-}
-
-function WaitForPath([string]$Path) {
-    WaitWhile { !(Test-Path $Path) } "Waiting for path $Path"
-}
-
-function WaitWhileProcess([string]$ProcessName) {
-    WaitWhile { Get-Process $ProcessName -ErrorAction Ignore } "Waiting for $ProcessName to close"
-}
-
 function Write-ManualStep([string]$Comment) {
     $esc = [char]27
     Write-Output "$esc[1;43;22;30;52mManual step:$esc[0;1;33m $Comment$esc[0m"
