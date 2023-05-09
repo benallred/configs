@@ -172,7 +172,7 @@
           "foreground": "p:console:foreground",
           "background": "transparent",
           "templates": [
-            "{{ .Env.omp_files_readme }}{{ .Env.omp_files_dockercompose }} "
+            "{{ .Env.omp_files_readme }}{{ .Env.omp_files_dockercompose }}"
           ]
         },
         {

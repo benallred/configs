@@ -298,8 +298,8 @@ TimeBenProfile "One-Liners"
 TimeBenProfile "PSReadLine"
 
 function Set-PoshContext_Override {
-    $env:omp_files_readme = (Test-Path readme*) ? " " : $null
-    $env:omp_files_dockercompose = (Test-Path docker-compose.y*ml) ? " " : $null
+    $env:omp_files_readme = (Test-Path readme*) ? " 󰈙" : $null # f0219
+    $env:omp_files_dockercompose = (Test-Path docker-compose.y*ml) ? " " : $null # f308
 }
 New-Alias -Name 'Set-PoshContext' -Value 'Set-PoshContext_Override' -Scope Global -Force
 $env:POSH_GIT_ENABLED = $true

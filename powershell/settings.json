@@ -7,7 +7,7 @@
     "defaults": {
       "colorScheme": "VS Code DarkPlus",
       "font": {
-        "face": "CaskaydiaCove NF",
+        "face": "CaskaydiaCove Nerd Font",
         "size": 10
       },
       "padding": "4",
