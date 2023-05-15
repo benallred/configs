@@ -199,6 +199,8 @@ Block "Configure Office" {
     # UI Changes > Open new e-mail > Remove items in Quick Access Toolbar
     # UI Changes > Open new e-mail > Add "Save Sent Item To"
 
+    ConfigureNotifications Microsoft.Office.OUTLOOK.EXE.15 ShowInActionCenter $false
+
     function UpdatePontString([int]$id) {
         $pontString = (Get-ItemProperty "HKCU:\SOFTWARE\Microsoft\Office\16.0\Outlook\Options\General" -ErrorAction Ignore).PONT_STRING
         if ($pontString -notmatch "$id,") {
