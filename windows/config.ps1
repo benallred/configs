@@ -19,6 +19,7 @@ FirstRunBlock "Add Microsoft account" {
 FirstRunBlock "Configure OneDrive" {
     Write-ManualStep "Start OneDrive syncing"
     . "$env:LocalAppData\Microsoft\OneDrive\OneDrive.exe"
+    ConfigureNotifications Microsoft.SkyDrive.Desktop ShowInActionCenter $false
 }
 Block "Control Panel > View by = Small icons" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name AllItemsIconView -Value 1
