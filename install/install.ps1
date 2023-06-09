@@ -137,10 +137,9 @@ if ((Test-ProgramInstalled "Microsoft 365 - en-us") -and ((Read-Host "Use key to
 
 if (!((Test-ProgramInstalled "Microsoft Office Professional Plus 2019") -or (Test-ProgramInstalled "Microsoft Office 365") -or (Test-ProgramInstalled "Microsoft 365"))) {
     InstallFromWingetBlock Microsoft.Office "/configure $PSScriptRoot\OfficeConfiguration.xml" {
-        $officeKey = SecureRead-Host "Office key"
-        cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /inpkey:$officeKey
-        cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /act
-        cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /dstatus
+        if (Configured $forHome) {
+            Activate-Office
+        }
     }
 }
 

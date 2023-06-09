@@ -96,3 +96,13 @@ function New-VeraCryptContainer([Parameter(Mandatory)][string]$FilePath, [Parame
     $filename = Split-Path $FilePath -Leaf
     . $veraCryptFormatPath /create $FilePath /password (SecureRead-Host "$filename Password") /pim (SecureRead-Host "$filename PIM") /encryption AES /hash sha512 /size $Size
 }
+
+##################################################
+# Activation
+
+function Activate-Office() {
+    $officeKey = SecureRead-Host "Office key"
+    cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /inpkey:$officeKey
+    cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /act
+    cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /dstatus
+}
