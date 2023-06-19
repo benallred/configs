@@ -12,7 +12,7 @@ Block "Configure scoop nonportable bucket" {
     scoop bucket list | Select-String nonportable
 }
 
-if (!(Configured $forKids)) {
+if (Configured $forHome, $forWork, $forTest) {
     InstallFromWingetBlock Microsoft.Edge.Dev {
         DeleteDesktopShortcut "Microsoft Edge Dev"
         Write-ManualStep "Navigate to"
@@ -34,22 +34,11 @@ if (!(Configured $forKids)) {
             ConfigureNotifications Microsoft.MicrosoftEdge.Dev_8wekyb3d8bbwe!https://calendar.google.com/ AllowUrgentNotifications $true
         }
     }
-}
 
-if (!(Configured $forKids)) {
     InstallFromWingetBlock Twilio.Authy {
         DeleteDesktopShortcut "Authy Desktop"
     }
-}
 
-InstallFromWingetBlock voidtools.Everything {
-    DeleteDesktopShortcut Everything
-    Copy-Item $PSScriptRoot\..\programs\Everything.ini $env:ProgramFiles\Everything\
-    . $env:ProgramFiles\Everything\Everything.exe -install-run-on-system-startup
-    . $env:ProgramFiles\Everything\Everything.exe -startup
-}
-
-if (!(Configured $forKids)) {
     InstallFromWingetBlock Microsoft.DotNet.SDK.6 {
         Add-Content -Path $profile {
             Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
@@ -85,6 +74,13 @@ if (!(Configured $forKids)) {
     }
 }
 
+InstallFromWingetBlock voidtools.Everything {
+    DeleteDesktopShortcut Everything
+    Copy-Item $PSScriptRoot\..\programs\Everything.ini $env:ProgramFiles\Everything\
+    . $env:ProgramFiles\Everything\Everything.exe -install-run-on-system-startup
+    . $env:ProgramFiles\Everything\Everything.exe -startup
+}
+
 InstallFromWingetBlock Microsoft.VisualStudioCode {
     Write-ManualStep "Turn on Settings Sync"
     Write-ManualStep "`tReplace Local"
@@ -94,7 +90,9 @@ InstallFromWingetBlock Microsoft.VisualStudioCode {
     code
 }
 
-if (!(Configured $forKids)) {
+InstallFromWingetBlock Lexikos.AutoHotkey "/S /IsHostApp"
+
+if (Configured $forHome, $forWork, $forTest) {
     InstallFromWingetBlock Microsoft.VisualStudio.2022.Community `
         "--passive --norestart --wait --includeRecommended --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb" `
     {
@@ -117,11 +115,7 @@ if (!(Configured $forKids)) {
     InstallVisualStudioExtensionBlock OlleWestman SubwordNavigation
     InstallVisualStudioExtensionBlock AlexanderGayko ShowInlineErrors
     InstallVisualStudioExtensionBlock MadsKristensen ResetZoom
-}
 
-InstallFromWingetBlock Lexikos.AutoHotkey "/S /IsHostApp"
-
-if (!(Configured $forKids)) {
     InstallFromWingetBlock SlackTechnologies.Slack {
         if (!(Configured $forWork)) {
             RemoveStartupRegistryKey com.squirrel.slack.slack
@@ -135,10 +129,12 @@ if ((Test-ProgramInstalled "Microsoft 365 - en-us") -and ((Read-Host "Use key to
     winget uninstall "Microsoft 365 - en-us"
 }
 
-if (!((Test-ProgramInstalled "Microsoft Office Professional Plus 2019") -or (Test-ProgramInstalled "Microsoft Office 365") -or (Test-ProgramInstalled "Microsoft 365"))) {
-    InstallFromWingetBlock Microsoft.Office "/configure $PSScriptRoot\OfficeConfiguration.xml" {
-        if (Configured $forHome) {
-            Activate-Office
+if (!(Configured $forHtpc)) {
+    if (!((Test-ProgramInstalled "Microsoft Office Professional Plus 2019") -or (Test-ProgramInstalled "Microsoft Office 365") -or (Test-ProgramInstalled "Microsoft 365"))) {
+        InstallFromWingetBlock Microsoft.Office "/configure $PSScriptRoot\OfficeConfiguration.xml" {
+            if (Configured $forHome) {
+                Activate-Office
+            }
         }
     }
 }
@@ -244,7 +240,7 @@ Block "Start SnapX" {
     (Get-Process AutoHotkey -ErrorAction Ignore).CommandLine | sls SnapX.ahk
 }
 
-if (!(Configured $forKids)) {
+if (Configured $forHome, $forWork, $forTest) {
     InstallFromGitHubBlock benallred Bahk
     Block "Start Bahk" {
         . $git\Bahk\Ben.ahk
@@ -290,9 +286,7 @@ if (!(Configured $forKids)) {
     } {
         Test-ProgramInstalled "QMK MSYS"
     }
-}
 
-if (!(Configured $forKids)) {
     InstallFromWingetBlock Discord.Discord {
         DeleteDesktopShortcut Discord
         ConfigureNotifications com.squirrel.Discord.Discord ShowInActionCenter $false
@@ -330,16 +324,18 @@ if (Configured $forHome) {
     InstallFromWingetBlock Plex.PlexMediaServer
 }
 
-InstallFromWingetBlock Plex.Plexamp {
-    DeleteDesktopShortcut Plexamp
-    Copy-Item2 $PSScriptRoot\..\programs\Plexamp.MainWindow.json $env:AppData\Plexamp\MainWindow.json
-    Write-ManualStep "Sign in to Plexamp"
-    . $env:LocalAppData\Programs\Plexamp\Plexamp.exe
-} -NoUpdate
+if (!(Configured $forHtpc)) {
+    InstallFromWingetBlock Plex.Plexamp {
+        DeleteDesktopShortcut Plexamp
+        Copy-Item2 $PSScriptRoot\..\programs\Plexamp.MainWindow.json $env:AppData\Plexamp\MainWindow.json
+        Write-ManualStep "Sign in to Plexamp"
+        . $env:LocalAppData\Programs\Plexamp\Plexamp.exe
+    } -NoUpdate
+}
 
 InstallFromWingetBlock 9NBLGGH1ZBKW # Dynamic Theme
 
-if (!(Configured $forKids)) {
+if (Configured $forHome, $forWork, $forTest) {
     InstallFromWingetBlock 9NBLGGH5R558 # Microsoft To Do
 
     InstallFromWingetBlock 9WZDNCRFJB8P # Surface
@@ -450,7 +446,9 @@ if (!(Configured $forKids)) {
     }
 }
 
-InstallFromScoopBlock paint.net
+if (!(Configured $forHtpc)) {
+    InstallFromScoopBlock paint.net
+}
 
 InstallFromWingetBlock VideoLAN.VLC {
     DeleteDesktopShortcut "VLC media player"
@@ -464,7 +462,7 @@ if (Configured $forKids) {
     }
 }
 
-if (!(Configured $forWork)) {
+if (Configured $forHome, $forKids, $forTest) {
     Block "Install Cricut Design Space" {
         $fileName = (iwr https://s3-us-west-2.amazonaws.com/staticcontent.cricut.com/a/software/win32-native/latest.json | ConvertFrom-Json).rolloutInstallFile
         $downloadUrl = (iwr "https://apis.cricut.com/desktopdownload/InstallerFile?shard=a&operatingSystem=win32native&fileName=$fileName" | ConvertFrom-Json).result

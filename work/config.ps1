@@ -9,7 +9,7 @@ InstallFromGitHubAssetBlock tom-englert RegionToShare RegionToShare.zip {
     Test-Path C:\BenLocal\Programs\RegionToShare
 }
 
-if ((Configured $forWork) -or (Configured $forTest)) {
+if (Configured $forWork, $forTest) {
     InstallFromWingetBlock Mozilla.Firefox {
         DeleteDesktopShortcut Firefox
     }

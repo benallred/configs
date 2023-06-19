@@ -1,7 +1,7 @@
 Block "File Explorer > Options > General > Open File Explorer to = This PC" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name LaunchTo -Value 1
 }
-if (!(Configured $forKids)) {
+if (Configured $forHome, $forWork, $forTest) {
     Block "File Explorer > Options > View > Advanced settings > Files and Folders > Hidden files and folders = Show hidden files, folders, and drives" {
         Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name Hidden -Value 1
     }
@@ -15,7 +15,7 @@ Block "File Explorer > Options > View > Advanced settings > Files and Folders > 
 Block "File Explorer > Options > View > Advanced settings > Files and Folders > Hide folder merge conflicts = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name HideMergeConflicts -Value 0
 }
-if (!(Configured $forKids)) {
+if (Configured $forHome, $forWork, $forTest) {
     Block "File Explorer > Options > View > Advanced settings > Files and Folders > Hide protected operating system files (Recommended) = Off" {
         Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name ShowSuperHidden -Value 1
     } -RequiresReboot

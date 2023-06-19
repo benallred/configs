@@ -15,11 +15,13 @@ Block "Configure for" {
         [Diagnostics.CodeAnalysis.SuppressMessage("PSUseDeclaredVarsMoreThanAssignments")]
         $forKids = "kids"
         [Diagnostics.CodeAnalysis.SuppressMessage("PSUseDeclaredVarsMoreThanAssignments")]
+        $forHtpc = "htpc"
+        [Diagnostics.CodeAnalysis.SuppressMessage("PSUseDeclaredVarsMoreThanAssignments")]
         $forTest = "test"
     }
     . $configureForOptions
 
-    while (($configureFor = (Read-Host "Configure for ($forHome,$forWork,$forKids,$forTest)")) -notin @($forHome, $forWork, $forKids, $forTest)) { }
+    while (($configureFor = (Read-Host "Configure for ($forHome,$forWork,$forKids,$forHtpc,$forTest)")) -notin @($forHome, $forWork, $forKids, $forHtpc, $forTest)) { }
 
     if (!(Test-Path $profile)) {
         New-Item $profile -Force
@@ -29,11 +31,8 @@ Block "Configure for" {
     Add-Content -Path $profile $configureForOptions
     Add-Content -Path $profile -Value "`$configureFor = `"$configureFor`""
     Add-Content -Path $profile {
-        function Configured([Parameter(Mandatory)][ValidateSet("home", "work", "kids", "test")][string]$for) {
-            if (!$configureFor) {
-                throw '$configureFor not set'
-            }
-            $for -eq $configureFor
+        function Configured([Parameter(Mandatory)][ValidateSet("home", "work", "kids", "htpc", "test")][string[]]$for) {
+            return $configureFor -in $for
         }
     }
 } {
@@ -81,7 +80,7 @@ Block "Git config" {
 
 & $PSScriptRoot\windows\config.ps1
 & $PSScriptRoot\install\install.ps1
-if (!(Configured $forKids)) {
+if (Configured $forHome, $forWork, $forTest) {
     & $PSScriptRoot\work\config.ps1
 }
 & $PSScriptRoot\scheduled-tasks\config.ps1

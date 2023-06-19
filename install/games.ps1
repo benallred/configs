@@ -9,7 +9,7 @@ InstallFromWingetBlock Valve.Steam {
     }
 }
 
-if ((Configured $forHome) -or (Configured $forKids)) {
+if (Configured $forHome, $forKids) {
     Block "Install Battle.net" {
         Download-File https://www.battle.net/download/getInstallerForGame $env:tmp\Battle.net-Setup.exe
         $battleNetSettings = @{

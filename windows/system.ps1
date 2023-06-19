@@ -11,7 +11,7 @@ Block "System > Power & battery > Screen and sleep > On battery power, put my de
     powercfg /change standby-timeout-dc 20
 }
 Block "System > Power & battery > Screen and sleep > When plugged in, put my device to sleep after =" {
-    if ((Configured $forHome) -or (Configured $forTest)) {
+    if (Configured $forHome, $forTest) {
         Write-Output "Never"
         powercfg /change standby-timeout-ac 0
     }
