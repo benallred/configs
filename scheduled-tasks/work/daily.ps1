@@ -4,7 +4,7 @@ git config --global --unset user.email
 
 & $PSScriptRoot\..\delete-desktop-shortcuts.ps1
 & $PSScriptRoot\..\prune-transcripts.ps1
-StopOnError { & $emConfigs\em-config.ps1 }
+StopOnError { & $workConfigs\work-config.ps1 }
 
 StopOnError {
     Stop-Process -Name PowerToys
