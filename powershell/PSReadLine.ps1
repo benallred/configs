@@ -18,6 +18,7 @@ $doNotAddToHistory = @(
     "git show"
     "git lg; git s"
     "git lgr; git s"
+    "dir"
 )
 Set-PSReadLineOption -AddToHistoryHandler {
     param($command)
@@ -135,6 +136,22 @@ Set-PSReadLineKeyHandler -Key F9 `
 
     if (!$line -and (git rev-parse --is-inside-work-tree 2>$null)) {
         [Microsoft.PowerShell.PSConsoleReadLine]::Insert("git lg; git s")
+        [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine($key, $arg)
+    }
+}
+
+Set-PSReadLineKeyHandler -Key F10 `
+    -BriefDescription DirectoryInfo `
+    -LongDescription "Show directory information" `
+    -ScriptBlock {
+    param($key, $arg)
+
+    $line = $null
+    $cursor = $null
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+
+    if (!$line) {
+        [Microsoft.PowerShell.PSConsoleReadLine]::Insert("dir")
         [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine($key, $arg)
     }
 }
