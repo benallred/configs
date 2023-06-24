@@ -91,6 +91,13 @@ Set-PSReadLineKeyHandler -Key Escape `
 }
 
 # Related: https://github.com/PowerShell/PSReadLine/issues/1778
+function RemoveFromHistory([Parameter(Mandatory)][string]$command) {
+    $toRemove = [Regex]::Escape(($command -replace "\n", "```n"))
+    $history = Get-Content (Get-PSReadLineOption).HistorySavePath -Raw
+    $history = $history -replace "(?m)^$toRemove\r\n", ""
+    Set-Content (Get-PSReadLineOption).HistorySavePath $history
+}
+
 Set-PSReadLineKeyHandler -Key Shift+Delete `
     -BriefDescription RemoveFromHistory `
     -LongDescription "Removes the content of the current line from history" `
@@ -101,10 +108,18 @@ Set-PSReadLineKeyHandler -Key Shift+Delete `
     $cursor = $null
     [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
 
-    $toRemove = [Regex]::Escape(($line -replace "\n", "```n"))
-    $history = Get-Content (Get-PSReadLineOption).HistorySavePath -Raw
-    $history = $history -replace "(?m)^$toRemove\r\n", ""
-    Set-Content (Get-PSReadLineOption).HistorySavePath $history
+    RemoveFromHistory $line
+}
+
+Set-PSReadLineKeyHandler -Key Ctrl+Shift+Delete `
+    -BriefDescription RemovePreviousCommandFromHistory `
+    -LongDescription "Removes the previous command from history" `
+    -ScriptBlock {
+    param($key, $arg)
+
+    $previousCommand = [Microsoft.PowerShell.PSConsoleReadLine]::GetHistoryItems() | select -Last 1
+
+    RemoveFromHistory $previousCommand.CommandLine
 }
 
 Set-PSReadLineKeyHandler -Key Ctrl+x `
