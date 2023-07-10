@@ -75,6 +75,19 @@
       ]
     },
     {
+      "type": "prompt",
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "upgrade",
+          "style": "plain",
+          "foreground": "p:yellow",
+          "background": "transparent",
+          "template": "Oh My Posh upgrade available ({{ .Version }})"
+        }
+      ]
+    },
+    {
       "newline": true,
       "type": "prompt",
       "alignment": "left",
