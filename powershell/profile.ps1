@@ -143,15 +143,8 @@ function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)
     }
 }
 
-function Find-RepoRoot() {
-    $repoRoot = Get-Location
-    while (!(Test-Path $repoRoot\.git)) {
-        if ($repoRoot -like "*:\") {
-            throw "No git repo found between $pwd and $repoRoot"
-        }
-        $repoRoot = Resolve-Path "$repoRoot\.."
-    }
-    return $repoRoot
+function Get-RepoRoot() {
+    git rev-parse --show-toplevel
 }
 
 function GitAudit([switch]$ReturnSuccess) {
