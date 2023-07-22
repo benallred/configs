@@ -444,6 +444,15 @@ if (Configured $forHome, $forWork, $forTest) {
         Copy-Item2 $PSScriptRoot\..\programs\PowerToys.VideoConference.settings.json "$env:LocalAppData\Microsoft\PowerToys\Video Conference\settings.json"
         Copy-Item2 $PSScriptRoot\..\programs\PowerToys.ColorPicker.settings.json "$env:LocalAppData\Microsoft\PowerToys\ColorPicker\settings.json"
     }
+
+    Block "Install nanDECK" {
+        Download-File ((iwr https://www.nandeck.com).Content | sls https://www\.nandeck\.com/download/\d+ | select -exp Matches | select -exp Value) $env:tmp\nandeck.zip
+        Expand-Archive $env:tmp\nandeck.zip C:\BenLocal\Programs\nanDECK
+        Copy-Item $PSScriptRoot\..\programs\nanDECK.ini C:\BenLocal\Programs\nanDECK\
+        New-Shortcut C:\BenLocal\Programs\nanDECK\nanDECK.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\nanDECK.lnk"
+    } {
+        Test-Path C:\BenLocal\Programs\nanDECK
+    }
 }
 
 if (!(Configured $forHtpc)) {
