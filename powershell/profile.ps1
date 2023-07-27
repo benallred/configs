@@ -84,6 +84,10 @@ function Set-EnvironmentVariable([Parameter(Mandatory)][string]$Variable, [strin
     [Environment]::SetEnvironmentVariable($Variable, $Value, "Process")
 }
 
+function Refresh-Path() {
+    $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
+}
+
 function WaitWhile([scriptblock]$ScriptBlock, [string]$WaitingFor) {
     Write-Host -ForegroundColor Yellow $WaitingFor -NoNewline
     while (Invoke-Command $ScriptBlock) {

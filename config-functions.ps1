@@ -166,7 +166,7 @@ function InstallFromWingetBlock {
         else {
             winget install --id $AppId --accept-package-agreements
         }
-        $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
+        Refresh-Path
         if ($AfterInstall) {
             Invoke-Command $AfterInstall
         }
