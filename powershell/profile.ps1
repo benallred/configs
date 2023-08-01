@@ -72,6 +72,20 @@ function Copy-Item2([Parameter(Mandatory)][string[]]$Path, [Parameter(Mandatory)
     Copy-Item $Path $Destination -Recurse:$Recurse
 }
 
+function clip2([Parameter(Mandatory, ValueFromPipeline)][string]$Value) {
+    $containsNewLine = $Value -match "\n"
+    if ($containsNewLine) {
+        Write-Output "$($PSStyle.Foreground.Yellow)------------------$($PSStyle.Reset)"
+        Write-Output "$($PSStyle.Foreground.Yellow)Setting clipboard:$($PSStyle.Reset)"
+        Write-Output $Value
+        Write-Output "$($PSStyle.Foreground.Yellow)------------------$($PSStyle.Reset)"
+    }
+    else {
+        Write-Output "$($PSStyle.Foreground.Yellow)Setting clipboard:$($PSStyle.Reset) $Value"
+    }
+    $Value | Set-Clipboard
+}
+
 function Set-RegistryValue([Parameter(Mandatory)][string]$Path, [string]$Name = $null, [Parameter(Mandatory)][object]$Value) {
     $hiveAndSubKey = $Path.Split("\", 2)
     $hive = Get-Item $hiveAndSubKey[0]
