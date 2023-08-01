@@ -22,11 +22,12 @@ if ($Action -eq "Start") {
         Start-VM $vm
     }
     else {
+        Write-Output "Windows 11 download: https://www.microsoft.com/en-us/software-download/windows11"
+        $windowsIsoPath = (Read-Host "Path to Windows ISO").Trim('"')
         Write-Output "Creating VM '$vmName'"
         $vm = New-VM -Name $vmName -NewVHDPath $vhdx -NewVHDSizeBytes 60GB -MemoryStartupBytes 4GB -Generation 2 -SwitchName "Default Switch"
         Set-VMProcessor $vm.Name -Count 2 -ExposeVirtualizationExtensions $true
-        Write-Output "Windows 11 download: https://www.microsoft.com/en-us/software-download/windows11"
-        $dvdDrive = Add-VMDvdDrive $vm.Name -Path (Read-Host "Path to Windows ISO").Trim('"') -Passthru
+        $dvdDrive = Add-VMDvdDrive $vm.Name -Path $windowsIsoPath -Passthru
         Set-VMFirmware $vm.Name -EnableSecureBoot On -BootOrder $dvdDrive, (Get-VMHardDiskDrive $vm.Name)
         Set-VMKeyProtector $vm.Name -NewLocalKeyProtector
         Enable-VMTPM $vm.Name

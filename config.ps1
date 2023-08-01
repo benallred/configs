@@ -79,6 +79,23 @@ Block "Git config" {
 }
 
 & $PSScriptRoot\windows\config.ps1
+
+if (Configured $forHome, $forWork, $forTest) {
+    Block "Set up configs test VM" {
+        if (Test-Path C:\BenLocal\Win*.iso) {
+            Get-ChildItem C:\BenLocal\Win*.iso | clip2
+            & $PSScriptRoot\test.ps1 Start
+        }
+        else {
+            "C:\BenLocal" | clip2
+            Write-ManualStep "Download Windows ISO"
+            start https://www.microsoft.com/en-us/software-download/windows11
+        }
+    } {
+        Get-VM
+    }
+}
+
 & $PSScriptRoot\install\install.ps1
 if (Configured $forHome, $forWork, $forTest) {
     & $PSScriptRoot\work\config.ps1
