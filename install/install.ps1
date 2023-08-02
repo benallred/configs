@@ -327,6 +327,7 @@ if (Configured $forHome) {
 if (!(Configured $forHtpc)) {
     InstallFromWingetBlock Plex.Plexamp {
         DeleteDesktopShortcut Plexamp
+        ConfigureNotifications tv.plex.plexamp ShowInActionCenter $false
         Copy-Item2 $PSScriptRoot\..\programs\Plexamp.MainWindow.json $env:AppData\Plexamp\MainWindow.json
         Write-ManualStep "Sign in to Plexamp"
         . $env:LocalAppData\Programs\Plexamp\Plexamp.exe
