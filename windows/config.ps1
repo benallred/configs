@@ -25,6 +25,9 @@ Block "Control Panel > View by = Small icons" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name AllItemsIconView -Value 1
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\ControlPanel" -Name StartupPage -Value 1
 }
+Block "Configure Registry" {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit\Favorites" "Notifications\Settings" "Computer\HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings"
+}
 & $PSScriptRoot\desktop.ps1
 & $PSScriptRoot\explorer.ps1
 & $PSScriptRoot\file-handlers.ps1
