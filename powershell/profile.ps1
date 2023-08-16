@@ -59,7 +59,7 @@ function Get-TimestampForFileName() {
     (Get-Date -Format o) -replace ":", "_"
 }
 
-function Get-SafeFileName([Parameter(Mandatory)][string]$FileName) {
+function Get-SafeFileName([Parameter(Mandatory, ValueFromPipeline)][string]$FileName) {
     $invalidFileNameChars = [Regex]::Escape([IO.Path]::GetInvalidFileNameChars() -join "")
     $FileName -replace "[$invalidFileNameChars]", ""
 }
