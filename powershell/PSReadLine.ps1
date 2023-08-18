@@ -22,7 +22,7 @@ $doNotAddToHistory = @(
 )
 Set-PSReadLineOption -AddToHistoryHandler {
     param($command)
-    return ($doNotAddToHistory -notcontains $command)
+    return ($doNotAddToHistory -notcontains $command) -and ($command -notmatch ' ##$')
 }
 
 Set-PSReadLineKeyHandler -Key Ctrl+`| `
@@ -137,6 +137,22 @@ Set-PSReadLineKeyHandler -Key Ctrl+x `
     }
 
     [Microsoft.PowerShell.PSConsoleReadLine]::Cut($key, $arg)
+}
+
+Set-PSReadLineKeyHandler -Key F5 `
+    -BriefDescription ReloadProfile `
+    -LongDescription "Dot source (reload) `$profile" `
+    -ScriptBlock {
+    param($key, $arg)
+
+    $line = $null
+    $cursor = $null
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+
+    if (!$line) {
+        [Microsoft.PowerShell.PSConsoleReadLine]::Insert(". `$profile ##")
+        [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine($key, $arg)
+    }
 }
 
 Set-PSReadLineKeyHandler -Key F9 `
