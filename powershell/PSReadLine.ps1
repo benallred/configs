@@ -187,6 +187,22 @@ Set-PSReadLineKeyHandler -Key F10 `
     }
 }
 
+Set-PSReadLineKeyHandler -Key F12 `
+    -BriefDescription OpenVSCode `
+    -LongDescription "Open this directory in VS Code" `
+    -ScriptBlock {
+    param($key, $arg)
+
+    $line = $null
+    $cursor = $null
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+
+    if (!$line) {
+        [Microsoft.PowerShell.PSConsoleReadLine]::Insert("code . ##")
+        [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine($key, $arg)
+    }
+}
+
 # From https://github.com/PowerShell/PSReadLine/blob/master/PSReadLine/SamplePSReadLineProfile.ps1
 #   with some changes
 
