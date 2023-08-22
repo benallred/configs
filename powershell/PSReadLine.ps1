@@ -203,6 +203,22 @@ Set-PSReadLineKeyHandler -Key F12 `
     }
 }
 
+Set-PSReadLineKeyHandler -Key Alt+R `
+    -BriefDescription OpenExplorer `
+    -LongDescription "Reveal this directory in File Explorer" `
+    -ScriptBlock {
+    param($key, $arg)
+
+    $line = $null
+    $cursor = $null
+    [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
+
+    if (!$line) {
+        [Microsoft.PowerShell.PSConsoleReadLine]::Insert("start . ##")
+        [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine($key, $arg)
+    }
+}
+
 # From https://github.com/PowerShell/PSReadLine/blob/master/PSReadLine/SamplePSReadLineProfile.ps1
 #   with some changes
 
