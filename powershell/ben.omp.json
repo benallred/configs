@@ -36,7 +36,7 @@
       "alignment": "left",
       "segments": [
         {
-          "type": "exit",
+          "type": "status",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
           "foreground": "p:console:bright_foreground",
