@@ -69,7 +69,8 @@ if (Configured $forHome, $forWork, $forTest) {
             (gh completion -s powershell) -join "`n" | iex
         }
         if (!(Configured $forTest)) {
-            gh auth login -w
+            $ghPat_Cli = SecureRead-Host "GH PAT (CLI)"
+            $ghPat_Cli | gh auth login --with-token
         }
     }
 }
