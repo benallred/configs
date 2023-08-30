@@ -108,7 +108,9 @@ Set-PSReadLineKeyHandler -Key Shift+Delete `
     $cursor = $null
     [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
 
-    RemoveFromHistory $line
+    if ($line) {
+        RemoveFromHistory $line
+    }
 }
 
 Set-PSReadLineKeyHandler -Key Ctrl+Shift+Delete `
