@@ -15,6 +15,10 @@ InstallPowerShellModuleBlock posh-git {
     Add-PoshGitToProfile -AllHosts
 }
 
+function Refresh-Path() {
+    $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
+}
+
 InstallFromWingetBlock JanDeDobbeleer.OhMyPosh
 
 Block "Uninstall Pester for Windows PowerShell" {
