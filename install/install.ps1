@@ -380,9 +380,9 @@ if (Configured $forHome, $forWork, $forTest) {
         pip install mutagen
     }
 
-    InstallFromScoopBlock scrcpy
+    InstallFromWingetBlock Genymobile.scrcpy
 
-    InstallFromScoopBlock speedtest-cli {
+    InstallFromWingetBlock Ookla.Speedtest.CLI {
         speedtest --accept-license --version
     }
 
@@ -458,7 +458,7 @@ if (Configured $forHome, $forWork, $forTest) {
 }
 
 if (!(Configured $forHtpc)) {
-    InstallFromScoopBlock paint.net
+    InstallFromWingetBlock dotPDNLLC.paintdotnet
 }
 
 InstallFromWingetBlock VideoLAN.VLC {
