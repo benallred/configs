@@ -137,6 +137,14 @@ function SecureRead-Host([string]$Prompt) {
     return $string
 }
 
+function Read-YesNo([Parameter(Mandatory)][string]$Prompt) {
+    do {
+        $yesNo = Read-Host "$Prompt (y/n)"
+    } while (('y', 'n') -notcontains $yesNo)
+
+    return $yesNo -eq 'y'
+}
+
 function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)][string]$OutFile, [switch]$AutoDetermineExtension) {
     $savedProgressPreference = $ProgressPreference
     $ProgressPreference = "SilentlyContinue"
