@@ -145,6 +145,10 @@ function Read-YesNo([Parameter(Mandatory)][string]$Prompt) {
     return $yesNo -eq 'y'
 }
 
+function ConvertTo-Base64([Parameter(Mandatory)][string]$Value) {
+    return [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Value))
+}
+
 function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)][string]$OutFile, [switch]$AutoDetermineExtension) {
     $savedProgressPreference = $ProgressPreference
     $ProgressPreference = "SilentlyContinue"
