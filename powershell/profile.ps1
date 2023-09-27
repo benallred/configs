@@ -144,6 +144,22 @@ function Read-YesNo([Parameter(Mandatory)][string]$Prompt) {
     return $yesNo -eq 'y'
 }
 
+function Read-Option([Parameter(Mandatory)][string]$Prompt, [Parameter(Mandatory)][string[]]$Options) {
+    $paddingTotalWidth = [Math]::Floor([Math]::Log10($Options.Count)) + 1
+    $i = 0
+    $Options | % {
+        $i++
+        Write-Host -Separator "" $PSStyle.Foreground.Blue, $i.ToString().PadLeft($paddingTotalWidth, " "), $PSStyle.Reset, "  $_"
+    }
+    do {
+        try {
+            $option = [int](Read-Host "$Prompt (1-$($Options.Count))")
+        }
+        catch { }
+    } while ($option -lt 1 -or $option -gt $Options.Count)
+    return $option - 1
+}
+
 function ConvertTo-Base64([Parameter(Mandatory)][string]$Value) {
     return [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Value))
 }

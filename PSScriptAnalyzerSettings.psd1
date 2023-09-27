@@ -5,6 +5,7 @@
         'PSAvoidUsingCmdletAliases'
         'PSAvoidUsingInvokeExpression'
         'PSAvoidUsingPositionalParameters'
+        'PSAvoidUsingWriteHost'
         'PSUseApprovedVerbs'
         'PSUseShouldProcessForStateChangingFunctions'
         'PSUseSingularNouns'
