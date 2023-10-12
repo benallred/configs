@@ -299,8 +299,7 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
         + ($BeginLine -gt 0 ? "#L$BeginLine" + ($EndLine -gt 0 ? "-L$EndLine" : "") : "")
     $url = $url -replace " ", "%20"
 
-    Set-Clipboard $url
-    Write-Host "$url`n`tadded to clipboard"
+    $url | clip2
 }
 
 function awslocal-configure() {
