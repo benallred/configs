@@ -346,11 +346,11 @@ if (Configured $forHome, $forWork, $forTest) {
         DeleteDesktopShortcut Todoist
     }
 
-    Block "Install Wally" {
-        Download-File https://configure.ergodox-ez.com/wally/win $env:tmp\Wally.exe
-        . $env:tmp\Wally.exe /SILENT /NORESTART /LOG=$env:tmp\WallyInstallLog.txt
+    Block "Install Keymapp" {
+        Download-File https://oryx.nyc3.cdn.digitaloceanspaces.com/keymapp/keymapp-latest.exe $env:tmp\keymapp-latest.exe
+        . $env:tmp\keymapp-latest.exe /SILENT /NORESTART /LOG=$env:tmp\KeymappInstallLog.txt
     } {
-        Test-ProgramInstalled Wally
+        Test-ProgramInstalled Keymapp
     }
 
     InstallFromWingetBlock Logitech.LGS
