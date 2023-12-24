@@ -29,7 +29,7 @@ function ppl([Parameter(Mandatory)][ValidateSet("Plex", "M3U")][string]$Master) 
         Write-Output "`tSaving to $env:OneDrive\Music\Playlists\ToOrganize.m3u"
         Set-Content $env:OneDrive\Music\Playlists\ToOrganize.m3u $orphans
     }
-    & $git\plex-playlist-liberator\plex-playlist-liberator.ps1 -Sort -Source $env:OneDrive\Music\Playlists -Exclude Minecraft*
+    & $git\plex-playlist-liberator\plex-playlist-liberator.ps1 -Sort -Source $env:OneDrive\Music\Playlists
     & $git\plex-playlist-liberator\plex-playlist-liberator.ps1 -Import -Source $env:OneDrive\Music\Playlists
 }
 
