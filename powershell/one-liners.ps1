@@ -46,7 +46,7 @@ function SyncKidsPmp() {
         Remove-Item $destinationFolder\Playlists\Ignore.m3u -ErrorAction Ignore
         Remove-Item $destinationFolder\Playlists\Korean.m3u -ErrorAction Ignore
         Remove-Item $destinationFolder\Playlists\ToOrganize.m3u -ErrorAction Ignore
-        robocopy $env:OneDrive\Music $destinationFolder /XD Korean Ringtones /XF *Best.m3u Ignore.m3u Korean.m3u ToOrganize.m3u /Z /DCOPY:T /MIR /X /NDL
+        robocopy $env:OneDrive\Music $destinationFolder /XD Korean Ringtones /XF *Best.m3u Ignore.m3u Korean.m3u ToOrganize.m3u /Z /DCOPY:T /MIR /X /NDL /DST
 
         Get-ChildItem $destinationFolder\Playlists *.m3u | % {
             (Get-Content $_ | ? { $_ -notlike "*Music\Korean*" }) -replace "$($env:OneDrive -replace "\\", "\\")\\Music", ".." | Set-Content $_
