@@ -21,6 +21,15 @@ function Refresh-Path() {
 
 InstallFromWingetBlock JanDeDobbeleer.OhMyPosh
 
+InstallFromScoopBlock nvm {
+    nvm install latest
+    nvm use (nvm list | Out-String -NoNewline).Trim()
+}
+
+Block "Install inshellisense" {
+    npm install -g @microsoft/inshellisense
+}
+
 Block "Uninstall Pester for Windows PowerShell" {
     # from https://pester.dev/docs/introduction/installation#removing-the-built-in-version-of-pester
     $module = "C:\Program Files\WindowsPowerShell\Modules\Pester"

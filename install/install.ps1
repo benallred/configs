@@ -56,11 +56,6 @@ if (Configured $forHome, $forWork, $forTest) {
         dotnet nuget list source | sls nuget.org
     }
 
-    InstallFromScoopBlock nvm {
-        nvm install latest
-        nvm use (nvm list | Out-String -NoNewline).Trim()
-    }
-
     InstallFromWingetBlock Yarn.Yarn
 
     InstallFromWingetBlock GitHub.cli {
