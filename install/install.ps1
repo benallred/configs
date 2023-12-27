@@ -353,7 +353,12 @@ if (Configured $forHome, $forWork, $forTest) {
         Test-ProgramInstalled Keymapp
     }
 
-    InstallFromWingetBlock Logitech.LGS
+    Block "Install Razer Synapse" {
+        Download-File https://rzr.to/synapse-3-pc-download $env:tmp\RazerSynapseInstaller.exe
+        . $env:tmp\RazerSynapseInstaller.exe
+        Write-ManualStep "Install only Razer Synapse (no optional modules)"
+        WaitWhileProcess RazerInstaller
+    }
 
     InstallFromWingetBlock Logitech.Options
 
