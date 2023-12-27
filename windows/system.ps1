@@ -38,3 +38,12 @@ Block "System > Multitasking > Alt + Tab > Pressing Alt + Tab shows = Open windo
 Block "System > Clipboard > Clipboard history = On" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Clipboard" EnableClipboardHistory 1
 }
+Block "System > Clipboard > Sync across your devices = On" {
+    WaitWhileProcess SystemSettings
+    Write-ManualStep "System > Clipboard > Sync across your devices = On"
+    start ms-settings:clipboard
+    # Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Clipboard" EnableCloudClipboard 1
+}
+Block "System > Clipboard > Sync across your devices = Manually sync text that I copy" {
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Clipboard" CloudClipboardAutomaticUpload 0
+}
