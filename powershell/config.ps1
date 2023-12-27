@@ -1,3 +1,8 @@
+Block "Opt out of PowerShell telemetry" {
+    [Environment]::SetEnvironmentVariable("POWERSHELL_TELEMETRY_OPTOUT", $true, "User")
+    [Environment]::SetEnvironmentVariable("POWERSHELL_TELEMETRY_OPTOUT", $true, "Process")
+}
+
 Block "Update PSReadLine" {
     Write-Output "Updating from $((Get-Module PSReadLine).Version) to $((Find-Module PSReadLine).Version)"
     pwsh -NoProfile -c "Install-Module PSReadLine -Force"
