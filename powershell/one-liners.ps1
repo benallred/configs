@@ -58,6 +58,25 @@ function SyncKidsPmp() {
     }
 }
 
+function BackupAndroid() {
+    $path = (adb shell pm path com.noinnion.android.greader.reader) -replace '^package:(.+)$', '$1'
+    adb pull $path .
+
+    # @(
+    #     "com.noinnion.android.greader.reader"
+    #     "com.cstewart.android.trycamel"
+    # ) | % {
+    (adb shell pm list packages) -replace '^package:(.+)$', '$1' | % {
+        $package = $_
+        $path = (adb shell pm path $package) -replace '^package:(.+)$', '$1' | ? { $_ -like "*base.apk" }
+        $version = (adb shell dumpsys package $package | sls "versionName=(.+)").Matches.Groups[1].Value
+        $localPath = ".\${package}_$version.apk"
+        if (!(Test-Path $localPath)) {
+            adb pull $path $localPath
+        }
+    }
+}
+
 ##################################################
 # AWS
 
