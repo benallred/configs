@@ -6,8 +6,6 @@ Block "Opt out of PowerShell telemetry" {
 Block "Update PSReadLine" {
     Write-Output "Updating from $((Get-Module PSReadLine).Version) to $((Find-Module PSReadLine).Version)"
     pwsh -NoProfile -c "Install-Module PSReadLine -Force"
-    Remove-Module PSReadLine
-    Import-Module PSReadLine
 } {
     (Find-Module PSReadLine).Version -le (Get-Module PSReadLine).Version
 }
