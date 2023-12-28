@@ -275,7 +275,8 @@ if (Configured $forHome, $forWork, $forTest) {
         git pull --unshallow
         git config remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
         git submodule update --init --recursive
-        git remote add upstream https://github.com/zsa/qmk_firmware.git
+        git remote add upstream_qmk https://github.com/qmk/qmk_firmware.git
+        git remote add upstream_zsa https://github.com/zsa/qmk_firmware.git
         git co ben
     } -CloneDepth 1
 
