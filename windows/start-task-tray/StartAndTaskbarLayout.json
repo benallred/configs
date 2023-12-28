@@ -1,0 +1,21 @@
+{
+    "pinnedList": [
+        { "packagedAppId": "Microsoft.WindowsStore_8wekyb3d8bbwe!App" },
+        { "desktopAppId": "Microsoft.Office.WINWORD.EXE.15" },
+        { "desktopAppId": "Microsoft.Office.EXCEL.EXE.15" },
+        { "packagedAppId": "Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe!App" },
+        { "packagedAppId": "Microsoft.YourPhone_8wekyb3d8bbwe!App" },
+        { "packagedAppId": "Microsoft.Todos_8wekyb3d8bbwe!App" },
+        { "desktopAppId": "com.squirrel.slack.slack" },
+        { "desktopAppId": "{7C5A40EF-A0FB-4BFC-874A-C0F2E0B9FA8E}\\Canon\\MF Toolbox Ver4.9\\MFTBOX.exe" },
+        { "desktopAppId": "com.cricut.design" },
+        { "packagedAppId": "Microsoft.GamingApp_8wekyb3d8bbwe!Microsoft.Xbox.App" },
+        { "desktopAppId": "{7C5A40EF-A0FB-4BFC-874A-C0F2E0B9FA8E}\\Steam\\Steam.exe" },
+        { "desktopAppId": "{7C5A40EF-A0FB-4BFC-874A-C0F2E0B9FA8E}\\Battle.net\\Battle.net Launcher.exe" },
+        { "desktopAppId": "{7C5A40EF-A0FB-4BFC-874A-C0F2E0B9FA8E}\\Epic Games\\Launcher\\Portal\\Binaries\\Win32\\EpicGamesLauncher.exe" },
+        { "desktopAppId": "{6D809377-6AF0-444B-8957-A3773F02200E}\\Logitech Gaming Software\\LCore.exe" },
+        { "desktopAppId": "Logitech.LogiOptions" },
+        { "packagedAppId": "Microsoft.SurfaceAudio_8wekyb3d8bbwe!App" },
+        { "packagedAppId": "55888ChristopheLavalle.DynamicTheme_jdggxwd41xcr0!App" }
+    ]
+}
