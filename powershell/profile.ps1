@@ -349,10 +349,10 @@ $Transcript = "$transcriptDir\$(Get-TimestampForFileName).log"
 Start-Transcript $Transcript -NoClobber -IncludeInvocationHeader
 TimeBenProfile "Transcript"
 
-($benProfileDurations `
-| select desc, milliseconds `
-| Format-Table desc, @{ Label = "elapsed"; Expression = { "$([int]$_.milliseconds)ms" }; Alignment = "Right" } -HideTableHeaders `
-| Out-String
+($benProfileDurations |
+    select desc, milliseconds |
+    Format-Table desc, @{ Label = "elapsed"; Expression = { "$([int]$_.milliseconds)ms" }; Alignment = "Right" } -HideTableHeaders |
+    Out-String
 ).Trim()
 
 # profile timing start
