@@ -226,8 +226,8 @@ Block "Configure Office" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Shared Tools\Proofing Tools\1.0\Office" -Name OneNoteSpellingOptions -Value 7
     # Options > Advanced > Editing > Include link to source when pasting from the Web = Off
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Editing" -Name PasteIncludeURL -Value 0
-    # UI Changes > Pin Notebook Pane to Side
-    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Other" -Name NavigationBarExpColState -Value 0
+    # UI Changes > Pin Notebook Pane to Side = Off
+    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Other" -Name NavigationBarExpColState -Value 1
 }
 
 InstallFromScoopBlock sysinternals {
