@@ -52,6 +52,8 @@ if (Configured $forHome, $forKids) {
     } {
         Test-ProgramInstalled "Battle.net"
     }
+
+    InstallFromWingetBlock Mojang.MinecraftLauncher
 }
 
 if (Configured $forHome) {
