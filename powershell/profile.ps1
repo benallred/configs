@@ -203,13 +203,14 @@ function GitAudit([switch]$ReturnSuccess) {
                 $script:GitAudit_success = $false
                 Write-Host ('*' * 100)
                 Write-Host $dir -ForegroundColor Red
-                git unsynced | Write-Host
+                git unsynced --color=always | Write-Host
                 git status --porcelain | Write-Host
             }
             popd
         }
         elseif (Test-Path $dir -PathType Container) {
             $script:GitAudit_success = $false
+            Write-Host ('*' * 100)
             Write-Host $dir -ForegroundColor Red
             Write-Host "`tNot in source control"
         }

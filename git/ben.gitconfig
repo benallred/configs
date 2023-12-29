@@ -62,7 +62,7 @@
 	pr = !start $(git config remote.origin.url | sed s/\\\\.git//)/pull/new/$(git branch --show-current)
 	b = branch -a
 	forget-branch = !branch=$(git branch --show-current) && git co - && git branch -d $branch
-	unsynced = log --branches --not --remotes --no-walk --oneline
+	unsynced = log --branches --not --remotes --no-walk --oneline --decorate=short
 	ri = rebase -i
 	rc = !git -c core.editor=true rebase --continue
 	rs = rebase --skip
