@@ -53,3 +53,4 @@ RestoreBackup "E:\Backup - Monthly\OneDrive_BenEx2" "$env:UserProfile\OneDrive\B
 RestoreDailyBackup "E:\Backup - Daily\Ben" "C:\Ben"
 RestoreBackup "E:\Backup - Monthly\BenEx" "C:\BenEx"
 RestoreBackup "E:\Backup - Monthly\BenEx2" "C:\BenEx2"
+RestoreBackup "E:\Backup - Daily\UserProfile\Documents\Heroes of the Storm\Accounts" "$env:UserProfile\Documents\Heroes of the Storm\Accounts" "UserProfile_Heroes of the Storm"
