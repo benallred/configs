@@ -1,0 +1,24 @@
+<!--
+  https://docs.microsoft.com/en-us/deployoffice/configuration-options-for-the-office-2016-deployment-tool
+  https://config.office.com/deploymentsettings
+-->
+<Configuration>
+    <Add>
+        <!-- https://docs.microsoft.com/en-us/office365/troubleshoot/installation/product-ids-supported-office-deployment-click-to-run -->
+        <Product ID="O365ProPlusRetail" PIDKEY="">
+            <Language ID="en-us" />
+            <ExcludeApp ID="Access" />
+            <ExcludeApp ID="Groove" />
+            <ExcludeApp ID="Lync" />
+            <ExcludeApp ID="OneDrive" />
+            <ExcludeApp ID="Publisher" />
+        </Product>
+    </Add>
+    <Property Name="PinIconsToTaskbar" Value="FALSE" />
+    <RemoveMSI />
+    <AppSettings>
+        <User Key="software\microsoft\office\16.0\common" Name="default ui theme" Value="4" Type="REG_DWORD" App="office16" Id="L_DefaultUIThemeUser" />
+    </AppSettings>
+    <Display AcceptEULA="TRUE" />
+    <Logging Path="%tmp%\OfficeInstallLog" />
+</Configuration>

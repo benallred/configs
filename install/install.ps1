@@ -132,11 +132,7 @@ if ((Test-ProgramInstalled "Microsoft 365 - en-us") -and ((Read-Host "Use key to
 
 if (!(Configured $forHtpc)) {
     if (!((Test-ProgramInstalled "Microsoft Office Professional Plus 2019") -or (Test-ProgramInstalled "Microsoft Office 365") -or (Test-ProgramInstalled "Microsoft 365"))) {
-        InstallFromWingetBlock Microsoft.Office "/configure $PSScriptRoot\OfficeConfiguration.xml" {
-            if (Configured $forHome) {
-                Activate-Office
-            }
-        }
+        InstallFromWingetBlock Microsoft.Office "/configure $PSScriptRoot\OfficeConfiguration.M365.xml"
     }
 }
 
