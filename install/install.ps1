@@ -246,14 +246,10 @@ if (Configured $forHome, $forWork, $forTest) {
     }
 
     if (Configured $forHome) {
-        Block "Install CrashPlan" {
-            Download-File https://download.code42.com/installs/agent/latest-smb-win64.msi $env:tmp\CrashPlan.msi
-            Start-Process $env:tmp\CrashPlan.msi /passive, /norestart -Wait
+        InstallFromWingetBlock CrashPlan.CrashPlanSMB {
             Write-ManualStep "Sign in"
             Write-ManualStep "Replace Existing"
             Write-ManualStep "Skip File Transfer"
-        } {
-            Test-ProgramInstalled Code42
         }
     }
 
