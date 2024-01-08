@@ -20,9 +20,6 @@ if (Configured $forHome, $forKids) {
                 }
             }
         }
-        if (Configured $forHome) {
-            $battleNetSettings.Client.Install.DefaultInstallPath = "D:/Installs/Blizzard"
-        }
         New-Item $env:AppData\Battle.net -Type Directory
         ConvertTo-Json $battleNetSettings -Depth 10 | Set-Content $env:AppData\Battle.net\Battle.net.config
         . $env:tmp\Battle.net-Setup.exe
