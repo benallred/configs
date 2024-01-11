@@ -11,11 +11,6 @@ Block "Rename computer" {
 Block "Disable UAC" {
     & "$PSScriptRoot\Disable UAC.ps1"
 }
-FirstRunBlock "Add Microsoft account" {
-    Write-ManualStep "Sign in with a Microsoft account instead"
-    start ms-settings:yourinfo
-    WaitWhileProcess SystemSettings
-}
 FirstRunBlock "Configure OneDrive" {
     Write-ManualStep "Start OneDrive syncing"
     . "$env:LocalAppData\Microsoft\OneDrive\OneDrive.exe"
