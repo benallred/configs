@@ -118,6 +118,7 @@ if (Configured $forHome, $forWork, $forTest) {
     InstallVisualStudioExtensionBlock MadsKristensen ResetZoom
 
     InstallFromWingetBlock SlackTechnologies.Slack {
+        . $env:ProgramFiles\Slack\slack.exe
         if (!(Configured $forWork)) {
             RemoveStartupRegistryKey com.squirrel.slack.slack
         }
