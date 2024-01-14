@@ -332,8 +332,6 @@ if (!(Configured $forHtpc)) {
 InstallFromWingetBlock 9NBLGGH1ZBKW # Dynamic Theme
 
 if (Configured $forHome, $forWork, $forTest) {
-    InstallFromWingetBlock 9NBLGGH5R558 # Microsoft To Do
-
     InstallFromWingetBlock 9WZDNCRFJB8P # Surface
 
     InstallFromWingetBlock Doist.Todoist {
