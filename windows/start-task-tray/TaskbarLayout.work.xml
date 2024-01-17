@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LayoutModificationTemplate xmlns="http://schemas.microsoft.com/Start/2014/LayoutModification"
+    xmlns:defaultlayout="http://schemas.microsoft.com/Start/2014/FullDefaultLayout"
+    xmlns:start="http://schemas.microsoft.com/Start/2014/StartLayout"
+    xmlns:taskbar="http://schemas.microsoft.com/Start/2014/TaskbarLayout" Version="1">
+    <CustomTaskbarLayoutCollection PinListPlacement="Replace">
+        <defaultlayout:TaskbarLayout>
+            <taskbar:TaskbarPinList>
+                <taskbar:DesktopApp DesktopApplicationID="Microsoft.Windows.Explorer" />
+                <taskbar:DesktopApp DesktopApplicationID="Microsoft.Office.OUTLOOK.EXE.15" />
+                <taskbar:DesktopApp DesktopApplicationID="MSEdgeDev" />
+                <taskbar:DesktopApp DesktopApplicationID="Microsoft.Office.ONENOTE.EXE.15" />
+                <taskbar:DesktopApp DesktopApplicationID="Microsoft.VisualStudioCode" />
+                <taskbar:DesktopApp DesktopApplicationID="VisualStudio.1063c8f0" />
+                <taskbar:UWA AppUserModelID="Microsoft.WindowsTerminal_8wekyb3d8bbwe!App" />
+                <taskbar:DesktopApp DesktopApplicationID="com.squirrel.Discord.Discord" />
+                <taskbar:DesktopApp DesktopApplicationID="com.todoist" />
+                <taskbar:DesktopApp DesktopApplicationID="tv.plex.plexamp" />
+            </taskbar:TaskbarPinList>
+        </defaultlayout:TaskbarLayout>
+    </CustomTaskbarLayoutCollection>
+</LayoutModificationTemplate>

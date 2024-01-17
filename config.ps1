@@ -85,11 +85,14 @@ if (Configured $forHome, $forWork, $forTest) {
 }
 & $PSScriptRoot\scheduled-tasks\config.ps1
 
-# if (!(Configured $forKids)) {
-#     FirstRunBlock "Defer config for Start Menu, Taskbar, and System Tray" {
-#         New-FileRunOnce "Config for Start Menu, Taskbar, and System Tray" "$PSScriptRoot\windows\start-task-tray\start-task-tray.ps1"
-#     } -RequiresReboot
-# }
+if (Configured $forHome, $forWork, $forTest) {
+    Block "Configure taskbar" {
+        $taskbarVersion = (Configured $forWork) ? "work" : "home"
+        Import-StartLayout $PSScriptRoot\windows\start-task-tray\TaskbarLayout.$taskbarVersion.xml $env:SystemDrive\
+    } {
+        Get-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Taskband" -Name LayoutXMLLastModified -ErrorAction Ignore
+    } -RequiresReboot
+}
 
 Block "Blocks of interest this run" {
     $global:blocksOfInterest | % { Write-Output "`t$_" }
