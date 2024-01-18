@@ -83,7 +83,7 @@
           "style": "plain",
           "foreground": "p:yellow",
           "background": "transparent",
-          "template": "Oh My Posh upgrade available ({{ .Version }})"
+          "template": "Oh My Posh upgrade available ({{ .Current }} -> {{ .Latest }})"
         }
       ]
     },
