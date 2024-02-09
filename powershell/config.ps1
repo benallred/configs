@@ -37,6 +37,8 @@ Block "Uninstall Pester for Windows PowerShell" {
 
 InstallPowerShellModuleBlock Pester
 
+InstallPowerShellModuleBlock CompletionPredictor
+
 if (!(Configured $forKids)) {
     InstallPowerShellModuleBlock BurntToast
 }

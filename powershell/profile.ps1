@@ -17,6 +17,8 @@ $git = "C:\BenLocal\git"
 
 $tmp = "C:\BenLocal\ToDelete\$(Get-Date -Format "yyyyMM")"
 
+Import-Module CompletionPredictor
+
 function Update-WindowsTerminalSettings() {
     Import-Module Appx -UseWindowsPowerShell
     Copy-Item $PSScriptRoot\settings.json "$env:LocalAppData\Packages\$((Get-AppxPackage -Name Microsoft.WindowsTerminal).PackageFamilyName)\LocalState\settings.json"
