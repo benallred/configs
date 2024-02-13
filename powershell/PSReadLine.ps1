@@ -168,7 +168,12 @@ Set-PSReadLineKeyHandler -Key F9 `
     [Microsoft.PowerShell.PSConsoleReadLine]::GetBufferState([ref]$line, [ref]$cursor)
 
     if (!$line -and (git rev-parse --is-inside-work-tree 2>$null)) {
-        [Microsoft.PowerShell.PSConsoleReadLine]::Insert("git lg; git s")
+        if ((git log --oneline --all -75 | sls Merge | measure | select -exp Count) -ge 5) {
+            [Microsoft.PowerShell.PSConsoleReadLine]::Insert("git lgr; git s")
+        }
+        else {
+            [Microsoft.PowerShell.PSConsoleReadLine]::Insert("git lg; git s")
+        }
         [Microsoft.PowerShell.PSConsoleReadLine]::AcceptLine($key, $arg)
     }
 }
