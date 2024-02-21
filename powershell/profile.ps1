@@ -162,8 +162,12 @@ function Read-Option([Parameter(Mandatory)][string]$Prompt, [Parameter(Mandatory
     return $option - 1
 }
 
-function ConvertTo-Base64([Parameter(Mandatory)][string]$Value) {
+function ConvertTo-Base64([Parameter(Mandatory, ValueFromPipeline)][string]$Value) {
     return [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes($Value))
+}
+
+function ConvertFrom-Base64([Parameter(Mandatory, ValueFromPipeline)][string]$Value) {
+    return [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($Value))
 }
 
 function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)][string]$OutFile, [switch]$AutoDetermineExtension) {
