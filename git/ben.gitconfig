@@ -55,7 +55,7 @@
 	cc = commit -c
 	co = checkout
 	cob = checkout -b
-	wippull = "!git commitwip && git pull && git continuewip"
+	wippull = "!(git commitwip || true) && git pull && git continuewip"
 	pushu = "!git push -u origin $(git branch --show-current)"
 	pushnv = push --no-verify
 	pushprev = "!f() { if [ $1 ]; then ref=$1; shift; git push origin $ref:$(git branch --show-current) $@; else echo 'No commit-ish specified\nUsage: git pushprev <commit-ish> [options]'; fi }; f"
