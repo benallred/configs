@@ -38,3 +38,6 @@ Block "Personalization > Taskbar > Taskbar items > Chat = Off" {
 Block "Personalization > Taskbar > Taskbar behaviors > When using multiple displays, show my taskbar apps on = Taskbar where window is open" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name MMTaskbarMode -Value 2
 } -RequiresReboot
+Block "Personalization > Taskbar > Taskbar behaviors > Combine taskbar buttons and hide labels = Never" {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarGlomLevel -Value 2
+} -RequiresReboot
