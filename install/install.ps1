@@ -220,8 +220,6 @@ Block "Configure Office" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Other" -Name NavBarOnLeft -Value 1
     # Options > Proofing > AutoCorrect Options... > AutoCorrect > Capitalize first letter of sentences = Off
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\Common\AutoCorrect" -Name CapitalizeSentence -Value 0
-    # Options > Proofing > Hide spelling and grammar errors = On
-    Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Shared Tools\Proofing Tools\1.0\Office" -Name OneNoteSpellingOptions -Value 7
     # Options > Advanced > Editing > Include link to source when pasting from the Web = Off
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Office\16.0\OneNote\Options\Editing" -Name PasteIncludeURL -Value 0
     # UI Changes > Pin Notebook Pane to Side = Off
