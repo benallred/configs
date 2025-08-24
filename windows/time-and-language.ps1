@@ -10,7 +10,7 @@ Block "Time & language > Date & time > Additional clocks" {
     SetAdditionalClock 1 "UTC" "UTC"
     SetAdditionalClock 2 "Korea" "Korea Standard Time"
 }
-Block "Time & language > Typing > Advanced keyboard settings > Input language hot keys > Between input languages > Change Key Sequence > Switch Input Language = Not Assigned" {
+Block "Time & language > Typing > Advanced keyboard settings > Input language hot keys > Advanced Key Settings > Between input languages > Change Key Sequence > Switch Input Language = Not Assigned" {
     Set-RegistryValue "HKCU:\Keyboard Layout\Toggle" -Name "Language Hotkey" -Value "3"
     Set-RegistryValue "HKCU:\Keyboard Layout\Toggle" -Name "Layout Hotkey" -Value "3"
 }
