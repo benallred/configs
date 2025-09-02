@@ -2,6 +2,10 @@ function Get-RepoRoot() {
     git rev-parse --show-toplevel
 }
 
+function Get-GitHubDefaultBranch() {
+    gh repo view --json defaultBranchRef --jq ".defaultBranchRef.name"
+}
+
 function GitAudit([switch]$ReturnSuccess) {
     $script:GitAudit_success = $true
     function CheckDir($dir) {
