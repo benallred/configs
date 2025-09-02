@@ -170,7 +170,7 @@ function ConvertFrom-Base64([Parameter(Mandatory, ValueFromPipeline)][string]$Va
     return [System.Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($Value))
 }
 
-function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)][string]$OutFile, [switch]$AutoDetermineExtension) {
+function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)][string]$OutFile, [hashtable]$Headers, [switch]$AutoDetermineExtension) {
     $savedProgressPreference = $ProgressPreference
     $ProgressPreference = "SilentlyContinue"
     if ($AutoDetermineExtension) {
@@ -187,7 +187,7 @@ function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)
     if ($downloadFolder -and !(Test-Path $downloadFolder)) {
         New-Item $downloadFolder -ItemType Directory -Force | Out-Null
     }
-    Invoke-WebRequest $Uri -OutFile $OutFile -MaximumRetryCount 3 -RetryIntervalSec 30
+    Invoke-WebRequest $Uri -OutFile $OutFile -MaximumRetryCount 3 -RetryIntervalSec 30 -Headers $Headers
     $ProgressPreference = $savedProgressPreference
     if ($AutoDetermineExtension) {
         return $OutFile
