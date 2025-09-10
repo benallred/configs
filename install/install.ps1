@@ -428,6 +428,7 @@ if (Configured $forHome, $forWork, $forTest) {
         start $veraCryptRootDir
         . $downloadPath
         WaitWhileProcess *VeraCrypt*
+        New-Shortcut $currentDir\VeraCrypt-x64.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\VeraCrypt.lnk"
     } {
         $script:veraCryptOldVersion = Get-ChildItem $veraCryptRootDir -Directory -Exclude Current | sort Name | select -Last 1 | Split-Path -Leaf
         $script:veraCryptNewVersion = (winget show IDRIX.VeraCrypt | sls "(?<=Version: ).*").Matches.Value
