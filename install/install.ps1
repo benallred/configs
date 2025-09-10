@@ -414,23 +414,22 @@ if (Configured $forHome, $forWork, $forTest) {
     }
 
     Block "Update VeraCrypt" {
-        $currentDir = "$script:veraCryptRootDir\Current"
-        $newVersionDir = "$script:veraCryptRootDir\$script:veraCryptNewVersion"
-        $downloadPath = "$script:veraCryptRootDir\VeraCrypt Portable $script:veraCryptNewVersion.exe"
+        $currentDir = "$veraCryptRootDir\Current"
+        $newVersionDir = "$veraCryptRootDir\$script:veraCryptNewVersion"
+        $downloadPath = "$veraCryptRootDir\VeraCrypt Portable $script:veraCryptNewVersion.exe"
 
-        rm $script:veraCryptRootDir\$script:veraCryptOldVersion
+        rm $veraCryptRootDir\$script:veraCryptOldVersion
         Rename-Item $currentDir $script:veraCryptOldVersion
 
         Download-File https://launchpad.net/veracrypt/trunk/$script:veraCryptNewVersion/+download/VeraCrypt%20Portable%20$script:veraCryptNewVersion.exe $downloadPath
         mkdir $newVersionDir | Out-Null
         $currentDir | Set-Clipboard
         Write-ManualStep "Extract to `"$currentDir`" (copied to clipboard)"
-        start $script:veraCryptRootDir
+        start $veraCryptRootDir
         . $downloadPath
         WaitWhileProcess *VeraCrypt*
     } {
-        $script:veraCryptRootDir = "$OneDrive\Ben\Programs\VeraCrypt"
-        $script:veraCryptOldVersion = Get-ChildItem $script:veraCryptRootDir -Directory -Exclude Current | sort Name | select -Last 1 | Split-Path -Leaf
+        $script:veraCryptOldVersion = Get-ChildItem $veraCryptRootDir -Directory -Exclude Current | sort Name | select -Last 1 | Split-Path -Leaf
         $script:veraCryptNewVersion = (winget show IDRIX.VeraCrypt | sls "(?<=Version: ).*").Matches.Value
         Write-Host "Old VeraCrypt version: $script:veraCryptOldVersion"
         Write-Host "New VeraCrypt version: $script:veraCryptNewVersion"

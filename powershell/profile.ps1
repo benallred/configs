@@ -14,6 +14,7 @@ function TimeBenProfile([string]$Description) {
 
 $OneDrive = "$env:UserProfile\OneDrive"
 $git = "C:\BenLocal\git"
+$veraCryptRootDir = (Configured $forHome) ? "$OneDrive\Ben\Programs\VeraCrypt" : "C:\BenLocal\Programs\VeraCrypt"
 
 $tmp = "C:\BenLocal\ToDelete\$(Get-Date -Format "yyyyMM")"
 
@@ -178,7 +179,7 @@ function Download-File([Parameter(Mandatory)][string]$Uri, [Parameter(Mandatory)
         $ext = switch ($contentType) {
             "image/jpeg" { ".jpg" }
             "image/png" { ".png" }
-            Default { throw "Unknown content type `"$contentType`"" }
+            default { throw "Unknown content type `"$contentType`"" }
         }
         $OutFile += $ext
     }
