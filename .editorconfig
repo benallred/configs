@@ -6,11 +6,17 @@ tab_width = 4
 insert_final_newline = true
 charset = utf-8-bom
 
-[*.{json,code-workspace,md}]
+[*.{json,code-workspace}]
+indent_size = 2
+tab_width = 2
+
+[*.{http}]
 indent_size = 2
 tab_width = 2
 
 [*.md]
+indent_size = 2
+tab_width = 2
 trim_trailing_whitespace = false
 
 [*.gitconfig]
