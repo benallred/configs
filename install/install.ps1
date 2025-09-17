@@ -59,7 +59,7 @@ if (Configured $forHome, $forWork, $forTest) {
 
     InstallFromScoopBlock nvm {
         nvm install latest
-        nvm use (nvm list | Out-String -NoNewline).Trim()
+        nvm use latest
     }
 
     InstallFromWingetBlock Yarn.Yarn
