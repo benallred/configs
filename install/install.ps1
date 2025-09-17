@@ -62,8 +62,6 @@ if (Configured $forHome, $forWork, $forTest) {
         nvm use latest
     }
 
-    InstallFromWingetBlock Yarn.Yarn
-
     InstallFromWingetBlock GitHub.cli {
         gh config set editor (git config core.editor)
         Add-Content -Path $profile {
