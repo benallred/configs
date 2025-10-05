@@ -106,3 +106,10 @@ function Activate-Office() {
     cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /act
     cscript "$env:ProgramFiles\Microsoft Office\Office16\OSPP.VBS" /dstatus
 }
+
+##################################################
+# Docker
+
+function Remove-OldDockerImages() {
+    docker images -f "dangling=true" --quiet | % { docker image remove $_ }
+}
