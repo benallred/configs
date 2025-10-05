@@ -225,6 +225,22 @@ function InstallPowerShellModuleBlock([string]$ModuleName, [scriptblock]$AfterIn
     }
 }
 
+function InstallFromNpmBlock([string]$PackageName, [scriptblock]$AfterInstall) {
+    Block "Install $PackageName" {
+        npm install -g $PackageName
+        if ($AfterInstall) {
+            Invoke-Command $AfterInstall
+        }
+    } {
+        npm list -g | sls " $PackageName@"
+    } {
+        (npm view $PackageName version) -ne ((npm list -g --depth=0 | sls " $PackageName@" | % { $_.ToString().Trim() -replace "^.+@$" }))
+    } {
+        Write-Output "Updating from $((npm list -g --depth=0 | sls " $PackageName@" | % { $_.ToString().Trim() -replace "^.+@$" })) to $(npm view $PackageName version)"
+        npm install -g $PackageName
+    }
+}
+
 function UninstallBlock([string]$AppName) {
     Block "Uninstall $AppName" {
         winget uninstall $AppName
