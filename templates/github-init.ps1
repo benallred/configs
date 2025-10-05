@@ -3,9 +3,14 @@ $repo = $pwd | Split-Path -Leaf
 $workRepo = $owner -ne "benallred"
 gh repo create "$owner/$repo" ($workRepo ? "--private" : "--public") --source . --description (Read-Host Description)
 
+if (!$?) {
+    throw "Failed to create repository"
+}
+
 gh repo edit --enable-merge-commit=false
 gh repo edit --enable-squash-merge=false
 gh repo edit --delete-branch-on-merge
+gh repo edit --allow-update-branch
 
 Write-Host "When ready run ``git pushu``" -ForegroundColor Yellow
 
