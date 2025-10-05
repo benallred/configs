@@ -91,6 +91,7 @@ function Update-AwsAccessKey() {
 ##################################################
 # VeraCrypt
 
+# 1G = 1000000000
 function New-VeraCryptContainer([Parameter(Mandatory)][string]$FilePath, [Parameter(Mandatory)][string]$Size) {
     $veraCryptFormatPath = "$veraCryptRootDir\Current\VeraCrypt Format-x64.exe"
     $filename = Split-Path $FilePath -Leaf
