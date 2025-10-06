@@ -105,9 +105,9 @@
           ],
           "templates_logic": "first_match",
           "include_folders": [
-            "C:\\\\BenLocal\\\\git(\\\\.*)?",
-            "C:\\\\Work\\\\repos(\\\\.*)?",
-            "~\\\\OneDrive(\\\\.*)?"
+            "C:/BenLocal/git(/.*)?",
+            "C:/Work/repos(/.*)?",
+            "~/OneDrive(/.*)?"
           ],
           "properties": {
             "style": "full"
