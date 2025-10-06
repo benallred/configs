@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-  "version": 2,
+  "version": 3,
   "final_space": true,
   "console_title_template": "{{.Folder}}",
   "palette": {
@@ -104,6 +104,11 @@
             "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"~/OneDrive(/.+)?$\") .Path }} OneDrive {{ end }}"
           ],
           "templates_logic": "first_match",
+          "include_folders": [
+            "C:\\\\BenLocal\\\\git(\\\\.*)?",
+            "C:\\\\Work\\\\repos(\\\\.*)?",
+            "~\\\\OneDrive(\\\\.*)?"
+          ],
           "properties": {
             "style": "full"
           }
@@ -145,7 +150,9 @@
           "foreground": "p:console:foreground",
           "background": "transparent",
           "template": " <#8931ff>\ue77f</> {{ if .Full }}{{ .Full }}{{ end }}",
-          "properties": { "fetch_version": false }
+          "properties": {
+            "fetch_version": false
+          }
         },
         {
           "type": "node",
@@ -168,7 +175,9 @@
           "foreground": "p:console:foreground",
           "background": "transparent",
           "template": " <#ff4300>\ue753</> {{ if .Full }}{{ .Full }}{{ end }}",
-          "properties": { "fetch_version": true }
+          "properties": {
+            "fetch_version": true
+          }
         },
         {
           "type": "terraform",
@@ -176,7 +185,9 @@
           "foreground": "p:console:foreground",
           "background": "transparent",
           "template": " <#a659ff>\ue69a</> {{ if .Version }}{{ .Version }} {{ end }}{{ .WorkspaceName }}",
-          "properties": { "fetch_version": true }
+          "properties": {
+            "fetch_version": true
+          }
         },
         {
           "alias": "FileTypes",
@@ -191,6 +202,7 @@
         {
           "type": "battery",
           "style": "plain",
+          "background": "transparent",
           "foreground_templates": [
             "{{if and (eq .State.String \"Discharging\") (lt .Percentage 30)}}p:error{{end}}",
             "{{if eq .State.String \"Discharging\"}}p:yellow{{end}}",
@@ -199,7 +211,6 @@
             "{{if eq .State.String \"Full\"}}p:success{{end}}",
             "p:error"
           ],
-          "background": "transparent",
           "template": " {{ if and (not .Error) (lt .Percentage 100) }}{{ .Icon }}<p:console:foreground>{{ .Percentage }}%</>{{ end }}",
           "properties": {
             "display_error": true,
