@@ -411,28 +411,39 @@ if (Configured $forHome, $forWork, $forTest) {
         Copy-Item2 $PSScriptRoot\..\programs\ScreenToGif.xaml $env:AppData\ScreenToGif\Settings.xaml
     }
 
-    Block "Update VeraCrypt" {
-        $currentDir = "$veraCryptRootDir\Current"
-        $newVersionDir = "$veraCryptRootDir\$script:veraCryptNewVersion"
-        $downloadPath = "$veraCryptRootDir\VeraCrypt Portable $script:veraCryptNewVersion.exe"
+    function DownloadAndExtractVeraCrypt([string]$Version, [string]$TargetDir) {
+        $downloadPath = "$veraCryptRootDir\VeraCrypt Portable $Version.exe"
+        $versionDir = "$veraCryptRootDir\$Version"
 
-        rm $veraCryptRootDir\$script:veraCryptOldVersion
-        Rename-Item $currentDir $script:veraCryptOldVersion
-
-        Download-File https://launchpad.net/veracrypt/trunk/$script:veraCryptNewVersion/+download/VeraCrypt%20Portable%20$script:veraCryptNewVersion.exe $downloadPath
-        mkdir $newVersionDir | Out-Null
-        $currentDir | Set-Clipboard
-        Write-ManualStep "Extract to `"$currentDir`" (copied to clipboard)"
+        Download-File https://launchpad.net/veracrypt/trunk/$Version/+download/VeraCrypt%20Portable%20$Version.exe $downloadPath
+        mkdir $versionDir | Out-Null
+        $TargetDir | Set-Clipboard
+        Write-ManualStep "Extract to `"$TargetDir`" (copied to clipboard)"
         start $veraCryptRootDir
         . $downloadPath
         WaitWhileProcess *VeraCrypt*
+    }
+
+    Block "Install VeraCrypt" {
+        $version = (winget show IDRIX.VeraCrypt | sls "(?<=Version: ).*").Matches.Value
+        $currentDir = "$veraCryptRootDir\Current"
+
+        DownloadAndExtractVeraCrypt $version $currentDir
         New-Shortcut $currentDir\VeraCrypt-x64.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\VeraCrypt.lnk"
+    } {
+        Test-Path "$veraCryptRootDir\Current"
     } {
         $script:veraCryptOldVersion = Get-ChildItem $veraCryptRootDir -Directory -Exclude Current | sort Name | select -Last 1 | Split-Path -Leaf
         $script:veraCryptNewVersion = (winget show IDRIX.VeraCrypt | sls "(?<=Version: ).*").Matches.Value
         Write-Host "Old VeraCrypt version: $script:veraCryptOldVersion"
         Write-Host "New VeraCrypt version: $script:veraCryptNewVersion"
-        $script:veraCryptNewVersion -eq $script:veraCryptOldVersion
+        $script:veraCryptNewVersion -ne $script:veraCryptOldVersion
+    } {
+        $currentDir = "$veraCryptRootDir\Current"
+
+        rm $veraCryptRootDir\$script:veraCryptOldVersion
+        Rename-Item $currentDir $script:veraCryptOldVersion
+        DownloadAndExtractVeraCrypt $script:veraCryptNewVersion $currentDir
     }
 
     InstallFromWingetBlock Microsoft.PowerToys {
