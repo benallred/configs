@@ -32,10 +32,6 @@ if (Configured $forHome, $forWork, $forTest) {
         }
     }
 
-    InstallFromWingetBlock Twilio.Authy {
-        DeleteDesktopShortcut "Authy Desktop"
-    }
-
     InstallFromWingetBlock Microsoft.DotNet.SDK.8 {
         Set-EnvironmentVariable MSBUILDTERMINALLOGGER auto
         Add-Content -Path $profile {
