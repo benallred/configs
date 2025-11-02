@@ -13,8 +13,7 @@ Block "Configure scoop nonportable bucket" {
 }
 
 if (Configured $forHome, $forWork, $forTest) {
-    InstallFromWingetBlock Microsoft.Edge.Dev {
-        DeleteDesktopShortcut "Microsoft Edge Dev"
+    FirstRunBlock "Configure Edge" {
         Write-ManualStep "Navigate to"
         Write-ManualStep "edge://settings/appearance"
         Write-ManualStep "`tCustomize toolbar > Hide title bar while in vertical tabs = On"
@@ -29,8 +28,6 @@ if (Configured $forHome, $forWork, $forTest) {
         Write-ManualStep "`t`tToggle extension = Alt + Shift + J"
         Write-ManualStep "`tLink to Text Fragment > Copy Link to Selected Text = Alt + C"
         if (Configured $forWork) {
-            Write-ManualStep "BitWarden > Settings > Vault timeout = 5 minutes"
-
             ConfigureNotifications Microsoft.MicrosoftEdge.Dev_8wekyb3d8bbwe!https://calendar.google.com/ AllowUrgentNotifications $true
         }
     }
