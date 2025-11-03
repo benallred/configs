@@ -417,11 +417,4 @@ if (Configured $forHome, $forKids, $forTest) {
     }
 }
 
-if (Configured $forHome) {
-    Block "GeForce Experience > Settings > In-Game Overlay = Off" {
-        Set-RegistryValue "HKCU:\Software\NVIDIA Corporation\Ansel" -Name IPCenabled -Value "0"
-        Set-RegistryValue "HKCU:\Software\NVIDIA Corporation\Ansel" -Name FreestyleEnabled -Value False
-    }
-}
-
 & $PSScriptRoot\games.ps1

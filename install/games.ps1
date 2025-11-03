@@ -1,3 +1,10 @@
+if (Configured $forHome) {
+    Block "GeForce Experience > Settings > In-Game Overlay = Off" {
+        Set-RegistryValue "HKCU:\Software\NVIDIA Corporation\Ansel" -Name IPCenabled -Value "0"
+        Set-RegistryValue "HKCU:\Software\NVIDIA Corporation\Ansel" -Name FreestyleEnabled -Value False
+    }
+}
+
 InstallFromWingetBlock Valve.Steam {
     DeleteDesktopShortcut Steam
     Set-RegistryValue "HKCU:\Software\Valve\Steam" RememberPassword 1
@@ -59,8 +66,8 @@ if (Configured $forHome) {
         . "${env:ProgramFiles(x86)}\Epic Games\Launcher\Portal\Binaries\Win32\EpicGamesLauncher.exe"
         RemoveStartupRegistryKey EpicGamesLauncher
         $epicGamesSettingsFile = "$env:LocalAppData\EpicGamesLauncher\Saved\Config\Windows\GameUserSettings.ini"
-            (Get-Content $epicGamesSettingsFile) -replace "\[Launcher\]", "`$0`nDefaultAppInstallLocation=D:\Installs\Epic Games" | Set-Content $epicGamesSettingsFile
-            (Get-Content $epicGamesSettingsFile) -replace "\[.+?_General\]", "`$0`nNotificationsEnabled_Adverts=False" | Set-Content $epicGamesSettingsFile
+        (Get-Content $epicGamesSettingsFile) -replace "\[Launcher\]", "`$0`nDefaultAppInstallLocation=D:\Installs\Epic Games" | Set-Content $epicGamesSettingsFile
+        (Get-Content $epicGamesSettingsFile) -replace "\[.+?_General\]", "`$0`nNotificationsEnabled_Adverts=False" | Set-Content $epicGamesSettingsFile
     }
 
     InstallFromWingetBlock ElectronicArts.EADesktop {
