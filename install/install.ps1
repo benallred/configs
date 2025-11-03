@@ -12,6 +12,8 @@ Block "Configure scoop nonportable bucket" {
     scoop bucket list | Select-String nonportable
 }
 
+& $PSScriptRoot\dev.ps1
+
 if (Configured $forHome, $forWork, $forTest) {
     FirstRunBlock "Configure Edge" {
         Write-ManualStep "Navigate to"
@@ -31,40 +33,6 @@ if (Configured $forHome, $forWork, $forTest) {
             ConfigureNotifications Microsoft.MicrosoftEdge.Dev_8wekyb3d8bbwe!https://calendar.google.com/ AllowUrgentNotifications $true
         }
     }
-
-    InstallFromWingetBlock Microsoft.DotNet.SDK.8 {
-        Set-EnvironmentVariable MSBUILDTERMINALLOGGER auto
-        Add-Content -Path $profile {
-            Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
-                param($wordToComplete, $commandAst, $cursorPosition)
-                dotnet complete --position $cursorPosition $commandAst | ForEach-Object {
-                    [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
-                }
-            }
-        }
-    }
-
-    Block "Add nuget.org source" {
-        dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
-    } {
-        dotnet nuget list source | sls nuget.org
-    }
-
-    InstallFromScoopBlock nvm {
-        nvm install latest
-        nvm use latest
-    }
-
-    InstallFromWingetBlock GitHub.cli {
-        gh config set editor (git config core.editor)
-        Add-Content -Path $profile {
-            (gh completion -s powershell) -join "`n" | iex
-        }
-        if (!(Configured $forTest)) {
-            $ghPat_Cli = SecureRead-Host "GH PAT (CLI)"
-            $ghPat_Cli | gh auth login --with-token
-        }
-    }
 }
 
 InstallFromWingetBlock voidtools.Everything {
@@ -73,17 +41,6 @@ InstallFromWingetBlock voidtools.Everything {
     . $env:ProgramFiles\Everything\Everything.exe -install-run-on-system-startup
     . $env:ProgramFiles\Everything\Everything.exe -startup
 }
-
-InstallFromWingetBlock Microsoft.VisualStudioCode {
-    Write-ManualStep "Turn on Settings Sync"
-    Write-ManualStep "`tReplace Local"
-    Write-ManualStep "Watch log with ctrl+shift+u"
-    Write-ManualStep "Show synced data"
-    Write-ManualStep "`tUpdate name of synced machine"
-    code
-}
-
-InstallFromWingetBlock Lexikos.AutoHotkey "/S /IsHostApp"
 
 if (Configured $forHome, $forWork, $forTest) {
     InstallFromWingetBlock SlackTechnologies.Slack {
