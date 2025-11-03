@@ -145,16 +145,6 @@ Block "Configure Office" {
 }
 
 if (Configured $forHome, $forWork, $forTest) {
-    InstallFromGitHubBlock benallred plex-playlist-liberator
-
-    InstallFromGitHubBlock benallred YouTubeToPlex
-
-    InstallFromGitHubBlock benallred DilbertImageDownloader
-
-    InstallFromGitHubBlock benallred what-i-use
-
-    InstallFromGitHubBlock benallred presentations
-
     InstallFromWingetBlock Discord.Discord {
         DeleteDesktopShortcut Discord
         ConfigureNotifications com.squirrel.Discord.Discord ShowInActionCenter $false
@@ -172,6 +162,8 @@ if (Configured $forHome, $forWork, $forTest) {
 & $PSScriptRoot\system-utils.ps1
 
 & $PSScriptRoot\media.ps1
+
+& $PSScriptRoot\repos.ps1
 
 if (Configured $forHome, $forWork, $forTest) {
     InstallFromWingetBlock Doist.Todoist {
