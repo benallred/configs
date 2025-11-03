@@ -71,6 +71,4 @@ if (Configured $forWork, $forTest) {
     }
 
     InstallFromScoopBlock mob
-
-    InstallPowerShellModuleBlock Az
 }
