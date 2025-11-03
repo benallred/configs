@@ -190,12 +190,6 @@ if (Configured $forHome, $forWork, $forTest) {
     }
 }
 
-if (Configured $forKids) {
-    InstallFromWingetBlock MITMediaLab.Scratch.3 {
-        DeleteDesktopShortcut "Scratch 3"
-    }
-}
-
 if (Configured $forHome, $forKids, $forTest) {
     Block "Install Cricut Design Space" {
         $fileName = (iwr https://s3-us-west-2.amazonaws.com/staticcontent.cricut.com/a/software/win32-native/latest.json | ConvertFrom-Json).rolloutInstallFile
