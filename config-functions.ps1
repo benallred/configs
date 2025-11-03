@@ -134,7 +134,7 @@ function InstallFromGitHubAssetBlock([string]$User, [string]$Repo, [string]$Asse
 
 function InstallFromWingetBlock {
     [CmdletBinding(DefaultParameterSetName = "DefaultArgs")]
-    Param(
+    param(
         [Parameter(ParameterSetName = "DefaultArgs", Mandatory, Position = 0)]
         [Parameter(ParameterSetName = "OverrideArgs", Mandatory, Position = 0)]
         [string]$AppId,
@@ -189,23 +189,6 @@ function InstallFromScoopBlock([string]$AppId, [scriptblock]$AfterInstall) {
         scoop info $AppId | sls "Update to .+? available"
     } {
         scoop update $AppId
-    }
-}
-
-function InstallVisualStudioExtensionBlock([string]$Publisher, [string]$Extension) {
-    FirstRunBlock "Install VS Extension: $Publisher.$Extension" {
-        $downloadUrl = (iwr "https://marketplace.visualstudio.com/items?itemName=$Publisher.$Extension" | sls "/_apis/public/gallery/publishers/$Publisher/vsextensions/$Extension/(\d+\.?)+/vspackage").Matches.Value | % { "https://marketplace.visualstudio.com$_" }
-        $downloadTo = "$env:tmp\$Publisher.$Extension.vsix"
-        Download-File $downloadUrl $downloadTo
-        if (Test-Path $downloadTo) {
-            $vsixInstaller = . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -all -property productPath | Split-Path | % { "$_\VSIXInstaller.exe" }
-            $installArgs = "/quiet", "/admin", $downloadTo
-            Write-Output "Installing $Extension"
-            Start-Process $vsixInstaller $installArgs -Wait
-        }
-        else {
-            Write-Error "Could not download $Publisher.$Extension"
-        }
     }
 }
 

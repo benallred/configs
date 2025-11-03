@@ -86,29 +86,6 @@ InstallFromWingetBlock Microsoft.VisualStudioCode {
 InstallFromWingetBlock Lexikos.AutoHotkey "/S /IsHostApp"
 
 if (Configured $forHome, $forWork, $forTest) {
-    InstallFromWingetBlock Microsoft.VisualStudio.2022.Community `
-        "--passive --norestart --wait --includeRecommended --add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NetWeb" `
-    {
-        # https://docs.microsoft.com/en-us/visualstudio/install/workload-and-component-ids
-        #   Microsoft.VisualStudio.Workload.ManagedDesktop    .NET desktop development
-        #   Microsoft.VisualStudio.Workload.NetWeb            ASP.NET and web development
-        # https://docs.microsoft.com/en-us/visualstudio/install/command-line-parameter-examples#using---wait
-
-        $vsInstallation = . "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -format json | ConvertFrom-Json
-        $vsVersion = ($vsInstallation.installationVersion).Substring(0, 2)
-
-        # Hide dynamic nodes in Solution Explorer
-        Set-RegistryValue "HKCU:\Software\Microsoft\VisualStudio\$vsVersion.0_$($vsInstallation.instanceId)" -Name UseSolutionNavigatorGraphProvider -Value 0
-
-        # Visual Studio > Help > Privacy > Privacy Settings... > Experience Improvement Program = No
-        Set-RegistryValue "HKLM:\SOFTWARE\WOW6432Node\Microsoft\VSCommon\$vsVersion.0\SQM" -Name OptIn -Value 0
-    } -NoUpdate
-
-    InstallVisualStudioExtensionBlock maksim-vorobiev PeasyMotion2022
-    InstallVisualStudioExtensionBlock OlleWestman SubwordNavigation
-    InstallVisualStudioExtensionBlock AlexanderGayko ShowInlineErrors
-    InstallVisualStudioExtensionBlock MadsKristensen ResetZoom
-
     InstallFromWingetBlock SlackTechnologies.Slack {
         . $env:ProgramFiles\Slack\slack.exe
         if (!(Configured $forWork)) {
