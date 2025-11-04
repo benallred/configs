@@ -48,6 +48,27 @@ You are running on Windows.
 
 Instead of `2>nul`, commands should use `2>/dev/null` - the proper null device for Git Bash/MSYS environments.
 
+## File Naming Conventions
+
+### Avoid ALL CAPS Filenames
+
+All files that allow lowercase naming should be created in lowercase. ALL CAPS filenames (like `README.md`, `LICENSE`) should only be used when absolutely required.
+
+**Examples:**
+
+- Use `readme.md` instead of `README.md`
+- Use `license` instead of `LICENSE`
+- Use `changelog.md` instead of `CHANGELOG.md`
+- Use `contributing.md` instead of `CONTRIBUTING.md`
+
+Title case (like `Main.java`, `HelloWorld.ts`) is acceptable when appropriate for the language or project conventions.
+
+**When ALL CAPS Are Acceptable:**
+
+Only use ALL CAPS filenames when:
+- Required by a specific tool or framework (e.g., `CODEOWNERS`)
+- Required by project standards that cannot be changed
+
 ## File Reference Links in Multi-Root Workspaces
 
 **IMPORTANT: Only apply this section when a `.code-workspace` file is present in the working directory.**
