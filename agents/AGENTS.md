@@ -33,6 +33,7 @@ When crafting commit messages, follow these guidelines:
 - Prefer a single line summary
 - If you would normally include a reason for the change in the detail of the commit message, the single line summary should state the reason
 - If not stating a reason for the change, the single line summary should use the imperative mood (e.g., "Fix bug" instead of "Fixed bug" or "Fixes bug")
+- After creating a commit, display the complete commit message
 
 ## Pull Request Guidelines
 
