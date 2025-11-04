@@ -102,16 +102,20 @@ function Set-EnvironmentVariable([Parameter(Mandatory)][string]$Variable, [strin
 
 function AddTo-Path([Parameter(Mandatory)][string]$Path) {
     $currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
-    if ($currentPath -notlike "*$Path*") {
-        Set-EnvironmentVariable "Path" "$currentPath;$Path"
+    $pathList = $currentPath -split ';'
+    if ($Path -notin $pathList) {
+        $newPath = ($pathList + $Path) -join ';'
+        Set-EnvironmentVariable Path $newPath
         Refresh-Path
     }
 }
 
 function RemoveFrom-Path([Parameter(Mandatory)][string]$Path) {
     $currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
-    if ($currentPath -like "*;$Path*") {
-        Set-EnvironmentVariable "Path" "$($currentPath -replace [Regex]::Escape(";$Path"), '')"
+    $pathList = $currentPath -split ';'
+    if ($Path -in $pathList) {
+        $newPath = ($pathList | ? { $_ -ne $Path }) -join ';'
+        Set-EnvironmentVariable Path $newPath
         Refresh-Path
     }
 }
