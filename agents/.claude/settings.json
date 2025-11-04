@@ -1,0 +1,39 @@
+{
+  "includeCoAuthoredBy": false,
+  "alwaysThinkingEnabled": true,
+  "permissions": {
+    "defaultMode": "plan",
+    "allow": [
+      "Edit",
+      "MultiEdit",
+      "Write",
+      "WebSearch",
+      "WebFetch",
+      "Glob",
+      "Grep",
+      "Read(//c/Users/*/.claude/**)",
+      "Read(//c/Users/*/Downloads/**)",
+      "Read(//c/Work/**)",
+      "Read(//c/BenLocal/git/**)",
+      "Read(//c/Users/**/work-configs/**)",
+      "Bash(echo:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(where:*)",
+      "Bash(where.exe:*)",
+      "Bash(tree:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(docker:*)",
+      "Bash(docker-compose:*)",
+      "Bash(dotnet:*)",
+      "Bash(npm:*)",
+      "Bash(yarn:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
