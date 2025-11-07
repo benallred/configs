@@ -33,7 +33,7 @@ When crafting commit messages, follow these guidelines:
 - Prefer a single line summary
 - If you would normally include a reason for the change in the detail of the commit message, the single line summary should state the reason
 - If not stating a reason for the change, the single line summary should use the imperative mood (e.g., "Fix bug" instead of "Fixed bug" or "Fixes bug")
-- After creating a commit, display the complete commit message
+- After creating a commit, display the entire commit message including all lines (summary, body, and any additional details)
 
 ## Pull Request Guidelines
 
@@ -67,6 +67,7 @@ Title case (like `Main.java`, `HelloWorld.ts`) is acceptable when appropriate fo
 **When ALL CAPS Are Acceptable:**
 
 Only use ALL CAPS filenames when:
+
 - Required by a specific tool or framework (e.g., `CODEOWNERS`)
 - Required by project standards that cannot be changed
 
