@@ -93,6 +93,8 @@ If the workspace is at `/home/user/workspace-folder/project.code-workspace` and 
 
 ## Git Worktree Workflow
 
+**CRITICAL: No work should ever be done directly in `C:\Work\repos`. All work MUST be done in a worktree located in `C:\Work\repos-worktrees`.**
+
 When instructed to use a worktree, follow these steps:
 
 ### Creating a Worktree
@@ -138,5 +140,6 @@ When work is complete and you are told to clean up:
 
 1. **Remove the git worktree** - Use `git worktree remove` to remove the worktree
 2. **Delete the folder** - Remove the `C:\Work\repos-worktrees\{folder-name}` directory
-3. **Return to original directory** - Navigate back to the original working directory
-4. **Pull latest changes** - Pull the latest changes from the default branch in the main repository
+3. **Delete the branch** - Delete the branch that was created for the worktree
+4. **Return to original directory** - Navigate back to the original working directory
+5. **Pull latest changes** - Pull the latest changes from the default branch in the main repository
