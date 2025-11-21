@@ -51,3 +51,23 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
     $url | clip2
 }
 
+$gwtArgumentCompleter = {
+    param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameter)
+    $worktrees = git worktree list --porcelain 2>$null
+    $worktreePaths = $worktrees | ? { $_ -match '^worktree (.+)$' } | % {
+        $Matches[1]
+    }
+    $worktreePaths |
+        % { $_ -replace '/', '\' } |
+        ? { $_ -ne (pwd) -and $_ -like "*$wordToComplete*" }
+}
+
+Register-ArgumentCompleter -CommandName gwt -ParameterName Path -ScriptBlock $gwtArgumentCompleter
+
+function gwt([string]$Path) {
+    if (!$Path) {
+        git worktree list
+        return
+    }
+    pushd $Path
+}
