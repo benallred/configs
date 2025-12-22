@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-  "version": 3,
+  "version": 4,
   "final_space": true,
   "console_title_template": "{{.Folder}}",
   "palette": {
@@ -43,7 +43,7 @@
           "background": "p:success",
           "background_templates": ["{{ if gt .Code 0 }}p:error{{ end }}"],
           "template": " {{ if gt .Code 0 }}\uf467{{ else }}\uf42e{{ end }} ",
-          "properties": {
+          "options": {
             "always_enabled": true
           }
         },
@@ -54,7 +54,7 @@
           "foreground": "p:console:background",
           "background": "p:console:foreground",
           "template": " {{ .FormattedMs }} ",
-          "properties": {
+          "options": {
             "always_enabled": true,
             "style": "austin"
           }
@@ -109,7 +109,7 @@
             "C:/Work/repos(/.*)?",
             "~/OneDrive(/.*)?"
           ],
-          "properties": {
+          "options": {
             "style": "full"
           }
         },
@@ -120,7 +120,7 @@
           "foreground": "p:console:bright_foreground",
           "background": "p:cyan",
           "template": " {{ regexReplaceAll \"^\\\\\\\\(.+)\" .Path \"$1\" }} ",
-          "properties": {
+          "options": {
             "style": "full",
             "mapped_locations": {
               "C:/BenLocal/git": "\\",
@@ -150,7 +150,7 @@
           "foreground": "p:console:foreground",
           "background": "transparent",
           "template": " <#8931ff>\ue77f</> {{ if .Full }}{{ .Full }}{{ end }}",
-          "properties": {
+          "options": {
             "fetch_version": false
           }
         },
@@ -160,7 +160,7 @@
           "foreground": "p:console:foreground",
           "background": "transparent",
           "template": " {{ .PackageManagerIcon }} <#5fa04e>\ue718</> {{ if .Full }}{{ .Full }}{{ end }}",
-          "properties": {
+          "options": {
             "fetch_version": true,
             "fetch_package_manager": true,
             "yarn_icon": "<#2c8ebb>\ue6a7</>",
@@ -175,7 +175,7 @@
           "foreground": "p:console:foreground",
           "background": "transparent",
           "template": " <#ff4300>\ue753</> {{ if .Full }}{{ .Full }}{{ end }}",
-          "properties": {
+          "options": {
             "fetch_version": true
           }
         },
@@ -185,7 +185,7 @@
           "foreground": "p:console:foreground",
           "background": "transparent",
           "template": " <#a659ff>\ue69a</> {{ if .Version }}{{ .Version }} {{ end }}{{ .WorkspaceName }}",
-          "properties": {
+          "options": {
             "fetch_version": true
           }
         },
@@ -212,7 +212,7 @@
             "p:error"
           ],
           "template": " {{ if and (not .Error) (lt .Percentage 100) }}{{ .Icon }}<p:console:foreground>{{ .Percentage }}%</>{{ end }}",
-          "properties": {
+          "options": {
             "display_error": true,
             "discharging_icon": "\udb85\udfe4",
             "charging_icon": "\udb85\udfe6",
@@ -250,7 +250,7 @@
             "{{ if gt .Behind 0 }}p:git:behind{{ end }}"
           ],
           "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<p:git:behind> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<p:git:ahead> {{ .Staging.String }}</>{{ end }}<p:console:foreground> \ue0b1</>",
-          "properties": {
+          "options": {
             "fetch_status": true,
             "source": "pwsh",
             "branch_icon": "<p:yellow>\udb81\ude2c</> ",
