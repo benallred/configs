@@ -114,3 +114,10 @@ function Activate-Office() {
 function Remove-OldDockerImages() {
     docker images -f "dangling=true" --quiet | % { docker image remove $_ }
 }
+
+##################################################
+# Oh My Posh
+
+function Time-OMP() {
+    oh-my-posh debug | ? { $_ -like '*ms' }
+}
