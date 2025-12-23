@@ -10,8 +10,7 @@ InstallFromWingetBlock Microsoft.VisualStudioCode {
 InstallFromWingetBlock Lexikos.AutoHotkey "/S /IsHostApp"
 
 if (Configured $forHome, $forWork, $forTest) {
-    InstallFromWingetBlock Microsoft.DotNet.SDK.8 {
-        Set-EnvironmentVariable MSBUILDTERMINALLOGGER auto
+    InstallFromWingetBlock Microsoft.DotNet.SDK.10 {
         Add-Content -Path $profile {
             Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock {
                 param($wordToComplete, $commandAst, $cursorPosition)
