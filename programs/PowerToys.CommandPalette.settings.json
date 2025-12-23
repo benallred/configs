@@ -1,0 +1,12 @@
+{
+  "Hotkey": {
+    "win": false,
+    "ctrl": true,
+    "alt": true,
+    "shift": false,
+    "code": 32,
+    "key": ""
+  },
+  "ShowSystemTrayIcon": false,
+  "SummonOn": "ToFocusedWindow"
+}

@@ -56,8 +56,9 @@ if (Configured $forHome, $forWork, $forTest) {
 
     InstallFromWingetBlock Microsoft.PowerToys {
         Copy-Item2 $PSScriptRoot\..\programs\PowerToys.settings.json $env:LocalAppData\Microsoft\PowerToys\settings.json
-        Copy-Item2 $PSScriptRoot\..\programs\PowerToys.VideoConference.settings.json "$env:LocalAppData\Microsoft\PowerToys\Video Conference\settings.json"
         Copy-Item2 $PSScriptRoot\..\programs\PowerToys.ColorPicker.settings.json "$env:LocalAppData\Microsoft\PowerToys\ColorPicker\settings.json"
+        Copy-Item2 $PSScriptRoot\..\programs\PowerToys.CommandPalette.settings.json "$env:LocalAppData\Packages\Microsoft.CommandPalette_8wekyb3d8bbwe\LocalState\settings.json"
+        Copy-Item2 $PSScriptRoot\..\programs\PowerToys.FileLocksmith.settings.json "$env:LocalAppData\Microsoft\PowerToys\File Locksmith\file-locksmith-settings.json"
     }
 
     Block "Install RegFromApp" {
