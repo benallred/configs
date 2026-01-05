@@ -249,7 +249,7 @@
             "{{ if gt .Ahead 0 }}p:git:ahead{{ end }}",
             "{{ if gt .Behind 0 }}p:git:behind{{ end }}"
           ],
-          "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<p:git:behind> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<p:git:ahead> {{ .Staging.String }}</>{{ end }}<p:console:foreground> \ue0b1</>",
+          "template": " <p:console:foreground>{{ .UpstreamIcon }}</>{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<p:git:behind> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<p:git:ahead> {{ .Staging.String }}</>{{ end }}<p:console:foreground> \ue0b1</>",
           "options": {
             "fetch_status": false,
             "source": "pwsh",
@@ -260,6 +260,11 @@
             "branch_gone_icon": "<p:bright_purple>\u2262</>",
             "commit_icon": "\uf417 ",
             "tag_icon": "\uf412 ",
+            "fetch_upstream_icon": true,
+            "upstream_icons": {
+              "github": "\uf408 ",
+              "": "\ue5fb "
+            },
             "templateComment__branch_icon": "f062c/󰘬",
             "templateComment__branch_identical_icon": "≡",
             "templateComment__branch_ahead_icon": "↑",
@@ -272,7 +277,9 @@
             "templateComment__.BranchStatus": "≡",
             "templateComment__.Working.String": "+2 ~6",
             "templateComment__.Staging.String": "~1",
-            "templateComment__\ue0b1": ""
+            "templateComment__\ue0b1": "",
+            "templateComment__git_icon": " ",
+            "templateComment__github_icon": " "
           }
         }
       ]
