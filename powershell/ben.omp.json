@@ -149,7 +149,7 @@
           "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
-          "template": " <#8931ff>\ue77f</> {{ if .Full }}{{ .Full }}{{ end }}",
+          "template": " <#8931ff>\ue77f</>{{ if .Full }} {{ .Full }}{{ end }}",
           "options": {
             "fetch_version": false
           }
@@ -251,7 +251,7 @@
           ],
           "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<p:git:behind> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<p:git:ahead> {{ .Staging.String }}</>{{ end }}<p:console:foreground> \ue0b1</>",
           "options": {
-            "fetch_status": true,
+            "fetch_status": false,
             "source": "pwsh",
             "branch_icon": "<p:yellow>\udb81\ude2c</> ",
             "branch_identical_icon": "<p:cyan>\u2261</>",
