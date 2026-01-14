@@ -93,6 +93,135 @@
       "alignment": "left",
       "segments": [
         {
+          "type": "aws",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "template": " <#fb9e2d>\ue7ad</> {{.Profile}}",
+          "templateComment__\ue7ad": ""
+        },
+        {
+          "type": "terraform",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "template": " <#a659ff>\ue69a</> {{ if .Version }}{{ .Version }} {{ end }}{{ .WorkspaceName }}",
+          "options": {
+            "fetch_version": true
+          }
+        },
+        {
+          "type": "dotnet",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "template": " <#8931ff>\ue77f</>{{ if .Full }} {{ .Full }}{{ end }}",
+          "options": {
+            "fetch_version": false
+          }
+        },
+        {
+          "type": "node",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "template": " {{ .PackageManagerIcon }} <#5fa04e>\ue718</> {{ if .Full }}{{ .Full }}{{ end }}",
+          "options": {
+            "fetch_version": true,
+            "fetch_package_manager": true,
+            "yarn_icon": "<#2c8ebb>\ue6a7</>",
+            "npm_icon": "<#ff4300>\ue71e</>",
+            "comment_yarn_icon": "",
+            "comment_npm_icon": ""
+          }
+        },
+        {
+          "type": "angular",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "template": " <#ff4300>\ue753</> {{ if .Full }}{{ .Full }}{{ end }}",
+          "options": {
+            "fetch_version": true
+          }
+        },
+        {
+          "alias": "FileTypes",
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "templates": [
+            "{{ .Env.omp_files_readme }}{{ .Env.omp_files_dockercompose }}"
+          ]
+        },
+        {
+          "type": "battery",
+          "style": "plain",
+          "background": "transparent",
+          "foreground_templates": [
+            "{{if and (eq .State.String \"Discharging\") (lt .Percentage 30)}}p:error{{end}}",
+            "{{if eq .State.String \"Discharging\"}}p:yellow{{end}}",
+            "{{if and (eq .State.String \"Charging\") (lt .Percentage 60)}}p:yellow{{end}}",
+            "{{if eq .State.String \"Charging\"}}p:success{{end}}",
+            "{{if eq .State.String \"Full\"}}p:success{{end}}",
+            "p:error"
+          ],
+          "template": " {{ if and (not .Error) (lt .Percentage 100) }}{{ .Icon }}<p:console:foreground>{{ .Percentage }}%</>{{ end }}",
+          "options": {
+            "display_error": true,
+            "discharging_icon": "\udb85\udfe4",
+            "charging_icon": "\udb85\udfe6",
+            "charged_icon": "\udb85\udfe2",
+            "not_charging_icon": "\udb85\udfe8",
+            "comment_discharging_icon": "f17e4/󱟤",
+            "comment_charging_icon": "f17e6/󱟦",
+            "comment_charged_icon": "f17e2/󱟢",
+            "comment_not_charging_icon": "f17e8/󱟨"
+          }
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "foreground_templates": [
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:git:ahead_and_behind{{ end }}",
+            "{{ if gt .Ahead 0 }}p:git:ahead{{ end }}",
+            "{{ if gt .Behind 0 }}p:git:behind{{ end }}"
+          ],
+          "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<p:git:behind> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<p:git:ahead> {{ .Staging.String }}</>{{ end }}",
+          "options": {
+            "fetch_status": false,
+            "source": "pwsh",
+            "branch_icon": "<p:yellow>\udb81\ude2c</> ",
+            "branch_identical_icon": "<p:cyan>\u2261</>",
+            "branch_ahead_icon": "<p:git:ahead>\u2191</>",
+            "branch_behind_icon": "<p:git:behind>\u2193</>",
+            "branch_gone_icon": "<p:bright_purple>\u2262</>",
+            "commit_icon": "\uf417 ",
+            "tag_icon": "\uf412 ",
+            "templateComment__branch_icon": "f062c/󰘬",
+            "templateComment__branch_identical_icon": "≡",
+            "templateComment__branch_ahead_icon": "↑",
+            "templateComment__branch_behind_icon": "↓",
+            "templateComment__branch_gone_icon": "≢",
+            "templateComment__commit_icon": " ",
+            "templateComment__tag_icon": " ",
+            "templateComment__.HEAD__normal": "󰘬master",
+            "templateComment__.HEAD__rebase": " 󰘬branch onto 󰘬master (1/3) at  abc1234",
+            "templateComment__.BranchStatus": "≡",
+            "templateComment__.Working.String": "+2 ~6",
+            "templateComment__.Staging.String": "~1"
+          }
+        }
+      ]
+    },
+    {
+      "newline": true,
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
           "type": "path",
           "style": "powerline",
           "powerline_symbol": "\ue0b0",
@@ -136,144 +265,6 @@
           "foreground": "p:console:background",
           "background": "p:yellow",
           "template": " {{ if .StackCount }}{{ .StackCount }}{{ end }} "
-        }
-      ]
-    },
-    {
-      "newline": true,
-      "type": "prompt",
-      "alignment": "left",
-      "segments": [
-        {
-          "type": "dotnet",
-          "style": "plain",
-          "foreground": "p:console:foreground",
-          "background": "transparent",
-          "template": " <#8931ff>\ue77f</>{{ if .Full }} {{ .Full }}{{ end }}",
-          "options": {
-            "fetch_version": false
-          }
-        },
-        {
-          "type": "node",
-          "style": "plain",
-          "foreground": "p:console:foreground",
-          "background": "transparent",
-          "template": " {{ .PackageManagerIcon }} <#5fa04e>\ue718</> {{ if .Full }}{{ .Full }}{{ end }}",
-          "options": {
-            "fetch_version": true,
-            "fetch_package_manager": true,
-            "yarn_icon": "<#2c8ebb>\ue6a7</>",
-            "npm_icon": "<#ff4300>\ue71e</>",
-            "comment_yarn_icon": "",
-            "comment_npm_icon": ""
-          }
-        },
-        {
-          "type": "angular",
-          "style": "plain",
-          "foreground": "p:console:foreground",
-          "background": "transparent",
-          "template": " <#ff4300>\ue753</> {{ if .Full }}{{ .Full }}{{ end }}",
-          "options": {
-            "fetch_version": true
-          }
-        },
-        {
-          "type": "terraform",
-          "style": "plain",
-          "foreground": "p:console:foreground",
-          "background": "transparent",
-          "template": " <#a659ff>\ue69a</> {{ if .Version }}{{ .Version }} {{ end }}{{ .WorkspaceName }}",
-          "options": {
-            "fetch_version": true
-          }
-        },
-        {
-          "alias": "FileTypes",
-          "type": "text",
-          "style": "plain",
-          "foreground": "p:console:foreground",
-          "background": "transparent",
-          "templates": [
-            "{{ .Env.omp_files_readme }}{{ .Env.omp_files_dockercompose }}"
-          ]
-        },
-        {
-          "type": "battery",
-          "style": "plain",
-          "background": "transparent",
-          "foreground_templates": [
-            "{{if and (eq .State.String \"Discharging\") (lt .Percentage 30)}}p:error{{end}}",
-            "{{if eq .State.String \"Discharging\"}}p:yellow{{end}}",
-            "{{if and (eq .State.String \"Charging\") (lt .Percentage 60)}}p:yellow{{end}}",
-            "{{if eq .State.String \"Charging\"}}p:success{{end}}",
-            "{{if eq .State.String \"Full\"}}p:success{{end}}",
-            "p:error"
-          ],
-          "template": " {{ if and (not .Error) (lt .Percentage 100) }}{{ .Icon }}<p:console:foreground>{{ .Percentage }}%</>{{ end }}",
-          "options": {
-            "display_error": true,
-            "discharging_icon": "\udb85\udfe4",
-            "charging_icon": "\udb85\udfe6",
-            "charged_icon": "\udb85\udfe2",
-            "not_charging_icon": "\udb85\udfe8",
-            "comment_discharging_icon": "f17e4/󱟤",
-            "comment_charging_icon": "f17e6/󱟦",
-            "comment_charged_icon": "f17e2/󱟢",
-            "comment_not_charging_icon": "f17e8/󱟨"
-          }
-        },
-        {
-          "type": "text",
-          "style": "plain",
-          "foreground": "p:console:foreground",
-          "background": "transparent",
-          "templates": [
-            " {{ if .Segments.Contains \"Dotnet\" }}\ue0b1{{ end }}",
-            " {{ if .Segments.Contains \"Node\" }}\ue0b1{{ end }}",
-            " {{ if .Segments.Contains \"Angular\" }}\ue0b1{{ end }}",
-            " {{ if .Segments.Contains \"Terraform\" }}\ue0b1{{ end }}",
-            " {{ if .Segments.Contains \"FileTypes\" }}\ue0b1{{ end }}",
-            " {{ if .Segments.Contains \"Battery\" }}\ue0b1{{ end }}"
-          ],
-          "templates_logic": "first_match"
-        },
-        {
-          "type": "git",
-          "style": "plain",
-          "foreground": "p:console:foreground",
-          "background": "transparent",
-          "foreground_templates": [
-            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:git:ahead_and_behind{{ end }}",
-            "{{ if gt .Ahead 0 }}p:git:ahead{{ end }}",
-            "{{ if gt .Behind 0 }}p:git:behind{{ end }}"
-          ],
-          "template": " {{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}<p:git:behind> {{ .Working.String }}</>{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }}{{ end }}{{ if .Staging.Changed }}<p:git:ahead> {{ .Staging.String }}</>{{ end }}<p:console:foreground> \ue0b1</>",
-          "options": {
-            "fetch_status": false,
-            "source": "pwsh",
-            "branch_icon": "<p:yellow>\udb81\ude2c</> ",
-            "branch_identical_icon": "<p:cyan>\u2261</>",
-            "branch_ahead_icon": "<p:git:ahead>\u2191</>",
-            "branch_behind_icon": "<p:git:behind>\u2193</>",
-            "branch_gone_icon": "<p:bright_purple>\u2262</>",
-            "commit_icon": "\uf417 ",
-            "tag_icon": "\uf412 ",
-            "templateComment__branch_icon": "f062c/󰘬",
-            "templateComment__branch_identical_icon": "≡",
-            "templateComment__branch_ahead_icon": "↑",
-            "templateComment__branch_behind_icon": "↓",
-            "templateComment__branch_gone_icon": "≢",
-            "templateComment__commit_icon": " ",
-            "templateComment__tag_icon": " ",
-            "templateComment__.HEAD__normal": "󰘬master",
-            "templateComment__.HEAD__rebase": " 󰘬branch onto 󰘬master (1/3) at  abc1234",
-            "templateComment__.BranchStatus": "≡",
-            "templateComment__.Working.String": "+2 ~6",
-            "templateComment__.Staging.String": "~1",
-            "templateComment__\ue0b1": ""
-          }
         }
       ]
     }
