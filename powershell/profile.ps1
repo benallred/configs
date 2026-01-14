@@ -310,6 +310,8 @@ TimeBenProfile "Functions"
 
 . $PSScriptRoot\git-functions.ps1
 TimeBenProfile "Git Functions"
+. $PSScriptRoot\aws-functions.ps1
+TimeBenProfile "AWS Functions"
 . $PSScriptRoot\one-liners.ps1
 TimeBenProfile "One-Liners"
 . $PSScriptRoot\PSReadLine.ps1
