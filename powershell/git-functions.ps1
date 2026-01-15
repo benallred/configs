@@ -9,6 +9,7 @@ function Get-GitHubDefaultBranch() {
 function GitAudit([switch]$ReturnSuccess) {
     $script:GitAudit_success = $true
     function CheckDir($dir) {
+        Write-Progress -Activity "Git Audit" -Status "Checking: $dir"
         if (Test-Path (Join-Path $dir .git)) {
             pushd $dir
             $unsynced = git unsynced
@@ -32,6 +33,7 @@ function GitAudit([switch]$ReturnSuccess) {
     (Get-ChildItem $git) +
     (Get-ChildItem C:\Work -ErrorAction Ignore | Get-ChildItem) |
         % { CheckDir $_.FullName }
+    Write-Progress -Activity "Git Audit" -Completed
     if ($ReturnSuccess) {
         return $script:GitAudit_success
     }
