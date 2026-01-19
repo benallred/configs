@@ -195,12 +195,14 @@
           "templates": [
             "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"C:/BenLocal/git(/.+)?$\") .Path }} git {{ end }}",
             "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"C:/Work/repos(/.+)?$\") .Path }} {{- if .Env.WorkReposLabel }} {{ .Env.WorkReposLabel }} {{ else }} repos {{ end -}} {{ end }}",
+            "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"C:/Work/repos-worktrees(/.+)?$\") .Path }} {{- if .Env.WorkReposLabel }} {{ .Env.WorkReposLabel }}-worktrees {{ else }} worktrees {{ end -}} {{ end }}",
             "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"~/OneDrive(/.+)?$\") .Path }} OneDrive {{ end }}"
           ],
           "templates_logic": "first_match",
           "include_folders": [
             "C:/BenLocal/git(/.*)?",
             "C:/Work/repos(/.*)?",
+            "C:/Work/repos-worktrees(/.*)?",
             "~/OneDrive(/.*)?"
           ],
           "options": {
@@ -219,6 +221,7 @@
             "mapped_locations": {
               "C:/BenLocal/git": "\\",
               "C:/Work/repos": "\\",
+              "C:/Work/repos-worktrees": "\\",
               "{{ .Env.OneDrive }}": "\\"
             }
           }
