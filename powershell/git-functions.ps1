@@ -31,7 +31,7 @@ function GitAudit([switch]$ReturnSuccess) {
         }
     }
     (Get-ChildItem $git) +
-    (Get-ChildItem C:\Work -ErrorAction Ignore | Get-ChildItem) |
+    (Get-ChildItem C:\Work\repos -ErrorAction Ignore) |
         % { CheckDir $_.FullName }
     Write-Progress -Activity "Git Audit" -Completed
     if ($ReturnSuccess) {
