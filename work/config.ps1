@@ -1,4 +1,4 @@
-Block "Prevent `"Allow my organization to manage my device`"" {
+﻿Block "Prevent `"Allow my organization to manage my device`"" {
     Set-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WorkplaceJoin" -Name BlockAADWorkplaceJoin -Value 1
 }
 
@@ -45,9 +45,9 @@ if (Configured $forWork, $forTest) {
         WaitForPath $env:AppData\Zoom\data\Zoom.us.ini
         Add-Content $env:AppData\Zoom\data\Zoom.us.ini "com.zoom.client.theme.mode=3"
 
-        Write-ManualStep "Settings > Share Screen > Share applications = Share all windows from an application"
-        Write-ManualStep "Settings > Keyboard Shortcuts > Meeting > Start/Stop Screen Sharing = Enable Global Shortcut"
-        Write-ManualStep "Settings > Keyboard Shortcuts > Meeting > End Meeting = Enable Global Shortcut"
+        Write-ManualStep "Settings > Share screen > When I share > Windows shared from an application = Share all windows from an application"
+        Write-ManualStep "Settings > Keyboard shortcuts > Meeting > Start/stop screen sharing = Enable Global Shortcut"
+        Write-ManualStep "Settings > Keyboard shortcuts > Meeting > End meeting = Enable Global Shortcut"
     } {
         winget list Zoom.Zoom -e | sls Zoom.Zoom
     }

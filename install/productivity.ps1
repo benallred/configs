@@ -1,8 +1,8 @@
-if (Configured $forHome, $forWork, $forTest) {
+﻿if (Configured $forHome, $forWork, $forTest) {
     FirstRunBlock "Configure Edge" {
         Write-ManualStep "Navigate to"
         Write-ManualStep "edge://settings/appearance"
-        Write-ManualStep "`tCustomize toolbar > Hide title bar while in vertical tabs = On"
+        Write-ManualStep "`tOther appearance settings > Tabs > Hide title bar while in vertical tabs = On"
         Write-ManualStep "Navigate to"
         Write-ManualStep "edge://extensions/shortcuts"
         Write-ManualStep "`tBitwarden"

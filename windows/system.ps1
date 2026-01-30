@@ -1,16 +1,16 @@
-Block "System > Power & battery > Power mode = Balanced" {
+﻿Block "System > Power & battery > Power mode = Recommended" {
     powercfg /SetActive SCHEME_BALANCED
 }
-Block "System > Power & battery > Screen and sleep > On battery power, turn off my screen after = 10 minutes" {
-    powercfg /change monitor-timeout-dc 10
+Block "System > Power & battery > Screen, sleep, & hibernate timeouts > On battery > Turn off my screen after = 3 minutes" {
+    powercfg /change monitor-timeout-dc 3
 }
-Block "System > Power & battery > Screen and sleep > When plugged in, turn off my screen after = 20 minutes" {
-    powercfg /change monitor-timeout-ac 20
+Block "System > Power & battery > Screen, sleep, & hibernate timeouts > Plugged in > Turn off my screen after = 5 minutes" {
+    powercfg /change monitor-timeout-ac 5
 }
-Block "System > Power & battery > Screen and sleep > On battery power, put my device to sleep after = 20 minutes" {
-    powercfg /change standby-timeout-dc 20
+Block "System > Power & battery > Screen, sleep, & hibernate timeouts > On battery > Make my device sleep after = 5 minutes" {
+    powercfg /change standby-timeout-dc 5
 }
-Block "System > Power & battery > Screen and sleep > When plugged in, put my device to sleep after =" {
+Block "System > Power & battery > Screen, sleep, & hibernate timeouts > Plugged in > Make my device sleep after =" {
     if (Configured $forHome, $forTest) {
         Write-Output "Never"
         powercfg /change standby-timeout-ac 0
@@ -24,11 +24,11 @@ Block "System > Power & battery > Screen and sleep > When plugged in, put my dev
         powercfg /change standby-timeout-ac 30
     }
 }
-Block "Control Panel > Power Options > Choose what closing the lid does > When I close the lid (On battery) = Sleep" {
+Block "System > Power & battery > Lid & power button controls > On battery > Closing the lid will make my PC = Sleep" {
     # https://docs.microsoft.com/en-us/windows-hardware/customize/power-settings/power-button-and-lid-settings-lid-switch-close-action
     powercfg /SetDCValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 1
 } -RequiresReboot
-Block "Control Panel > Power Options > Choose what closing the lid does > When I close the lid (Plugged in) = Do nothing" {
+Block "System > Power & battery > Lid & power button controls > Plugged in > Closing the lid will make my PC = Do Nothing" {
     # https://docs.microsoft.com/en-us/windows-hardware/customize/power-settings/power-button-and-lid-settings-lid-switch-close-action
     powercfg /SetACValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 0
 } -RequiresReboot
