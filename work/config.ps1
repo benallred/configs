@@ -56,10 +56,11 @@ if (Configured $forWork, $forTest) {
         InstallFromWingetBlock Docker.DockerDesktop {
             DeleteDesktopShortcut "Docker Desktop"
             RemoveStartupRegistryKey "Docker Desktop"
-            WaitForPath $env:AppData\Docker\settings.json
-            $dockerSettings = Get-Content $env:AppData\Docker\settings.json | ConvertFrom-Json
-            $dockerSettings | Add-Member NoteProperty openUIOnStartupDisabled $true
-            ConvertTo-Json $dockerSettings | Set-Content $env:AppData\Docker\settings.json
+            WaitForPath $env:AppData\Docker\settings-store.json
+            $dockerSettings = Get-Content $env:AppData\Docker\settings-store.json | ConvertFrom-Json
+            $dockerSettings | Add-Member NoteProperty OpenUIOnStartupDisabled $true
+            $dockerSettings | Add-Member NoteProperty AnalyticsEnabled $false
+            ConvertTo-Json $dockerSettings | Set-Content $env:AppData\Docker\settings-store.json
         }
     }
 
