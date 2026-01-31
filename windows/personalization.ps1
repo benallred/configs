@@ -1,4 +1,4 @@
-Block "Personalization > Colors > Choose your mode = Dark" {
+﻿Block "Personalization > Colors > Choose your mode = Dark" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name AppsUseLightTheme -Value 0
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize" -Name SystemUsesLightTheme -Value 0
 }
@@ -30,7 +30,12 @@ Block "Personalization > Taskbar > Taskbar items > Task view = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name ShowTaskViewButton -Value 0
 }
 Block "Personalization > Taskbar > Taskbar items > Widgets = Off" {
-    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarDa -Value 0
+    # UCPD blocks programatic access to this key
+    # https://www.elevenforum.com/t/enable-or-disable-userchoice-protection-driver-ucpd-in-windows-11-and-10.24267/#post-492449
+    $pwshDir = Split-Path (Get-Command pwsh).Source
+    Copy-Item $pwshDir\pwsh.exe $pwshDir\pwsh-tmp.exe
+    . $pwshDir\pwsh-tmp.exe -c 'Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarDa -Value 0'
+    Remove-Item $pwshDir\pwsh-tmp.exe
 }
 Block "Personalization > Taskbar > Taskbar items > Chat = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name TaskbarMn -Value 0
