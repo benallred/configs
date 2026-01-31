@@ -1,6 +1,7 @@
-if (Configured $forHome, $forWork, $forTest) {
-    InstallFromGitHubAssetBlock imbushuo mac-precision-touchpad Drivers-amd64-ReleaseMSSigned.zip {
-        pnputil /add-driver .\drivers\amd64\AmtPtpDevice.inf /install
+﻿if (Configured $forHome, $forWork, $forTest) {
+    $driverArch = (Test-IsArm) ? "arm64" : "amd64"
+    InstallFromGitHubAssetBlock imbushuo mac-precision-touchpad Drivers-$driverArch-ReleaseMSSigned.zip {
+        pnputil /add-driver .\drivers\$driverArch\AmtPtpDevice.inf /install
     } {
         pnputil /enum-drivers | sls AmtPtpDevice.inf
     }
