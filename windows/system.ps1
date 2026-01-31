@@ -24,6 +24,9 @@ Block "System > Power & battery > Screen, sleep, & hibernate timeouts > Plugged 
         powercfg /change standby-timeout-ac 30
     }
 }
+Block "System > Power & battery > Battery percentage = On" {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" IsBatteryPercentageEnabled 1
+}
 Block "System > Power & battery > Lid & power button controls > On battery > Closing the lid will make my PC = Sleep" {
     # https://docs.microsoft.com/en-us/windows-hardware/customize/power-settings/power-button-and-lid-settings-lid-switch-close-action
     powercfg /SetDCValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 1
