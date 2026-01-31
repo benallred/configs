@@ -1,4 +1,4 @@
-InstallFromWingetBlock Microsoft.VisualStudioCode {
+﻿InstallFromWingetBlock Microsoft.VisualStudioCode {
     Write-ManualStep "Turn on Settings Sync"
     Write-ManualStep "`tReplace Local"
     Write-ManualStep "Watch log with ctrl+shift+u"
@@ -7,7 +7,9 @@ InstallFromWingetBlock Microsoft.VisualStudioCode {
     code
 }
 
-InstallFromWingetBlock Lexikos.AutoHotkey "/S /IsHostApp"
+Block "Install AutoHotkey" {
+    winget install AutoHotkey.AutoHotkey --override "/S /IsHostApp" --version 1.1.37.02
+}
 
 if (Configured $forHome, $forWork, $forTest) {
     InstallFromWingetBlock Microsoft.DotNet.SDK.10 {
