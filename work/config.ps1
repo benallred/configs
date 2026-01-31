@@ -4,7 +4,7 @@
 
 InstallFromGitHubAssetBlock tom-englert RegionToShare RegionToShare.zip {
     Copy-Item2 .\* C:\BenLocal\Programs\RegionToShare -Recurse
-    New-Shortcut C:\BenLocal\Programs\RegionToShare\RegionToShare.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\RegionToShare.lnk"
+    New-StartMenuShortcut C:\BenLocal\Programs\RegionToShare\RegionToShare.exe RegionToShare
 } {
     Test-Path C:\BenLocal\Programs\RegionToShare
 }

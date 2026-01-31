@@ -1,4 +1,4 @@
-# profile timing start
+﻿# profile timing start
 $psLoadDurations += @{ name = 'Ben'; path = $PSCommandPath; stopwatch = [Diagnostics.Stopwatch]::StartNew() }
 # profile timing end
 
@@ -33,6 +33,10 @@ function Start-AsAdmin([Parameter(Mandatory)][string]$FilePath) {
     Start-Process wt -Verb RunAs -ArgumentList "-w run-as-admin pwsh -File `"$FilePath`""
 }
 
+function Test-IsArm() {
+    (Get-CimInstance Win32_OperatingSystem | Select-Object OSArchitecture) -like "*ARM*"
+}
+
 function Get-FunctionContents([Parameter(Mandatory)][string]$FunctionName) {
     Get-Command $FunctionName | select -exp ScriptBlock
 }
@@ -47,6 +51,10 @@ function New-Shortcut([Parameter(Mandatory)][string]$Target, [Parameter(Mandator
     $shortcut.WorkingDirectory = Split-Path $Target
     $shortcut.Arguments = $Arguments
     $shortcut.Save()
+}
+
+function New-StartMenuShortcut([Parameter(Mandatory)][string]$Target, [Parameter(Mandatory)][string]$Name, [string]$Arguments) {
+    New-Shortcut $Target "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\$Name.lnk" $Arguments
 }
 
 function New-RunOnce([Parameter(Mandatory)][string]$Description, [Parameter(Mandatory)][string]$Command) {

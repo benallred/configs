@@ -1,4 +1,4 @@
-InstallFromGitHubBlock benallred SnapX
+﻿InstallFromGitHubBlock benallred SnapX
 Block "Start SnapX" {
     . $git\SnapX\SnapX.ahk
 } {
@@ -7,9 +7,15 @@ Block "Start SnapX" {
 
 InstallFromWingetBlock voidtools.Everything {
     DeleteDesktopShortcut Everything
-    Copy-Item $PSScriptRoot\..\programs\Everything.ini $env:ProgramFiles\Everything\
-    . $env:ProgramFiles\Everything\Everything.exe -install-run-on-system-startup
-    . $env:ProgramFiles\Everything\Everything.exe -startup
+    $installFolder = (Test-IsArm) <# parens required #> `
+        ? "$env:LocalAppData\Microsoft\WinGet\Packages\voidtools.Everything_Microsoft.Winget.Source_8wekyb3d8bbwe" `
+        : "$env:ProgramFiles\Everything\"
+    Copy-Item $PSScriptRoot\..\programs\Everything.ini $installFolder
+    . $installFolder\Everything*.exe -install-run-on-system-startup
+    . $installFolder\Everything*.exe -startup
+    if (Test-IsArm) {
+        New-StartMenuShortcut (Get-ChildItem $installFolder Everything*.exe) Everything
+    }
 }
 
 InstallFromWingetBlock 7zip.7zip {
@@ -64,10 +70,10 @@ if (Configured $forHome, $forWork, $forTest) {
     Block "Install RegFromApp" {
         Download-File https://www.nirsoft.net/utils/regfromapp-x64.zip $env:tmp\regfromapp-x64.zip
         Expand-Archive $env:tmp\regfromapp-x64.zip C:\BenLocal\Programs\RegFromApp64
-        New-Shortcut C:\BenLocal\Programs\RegFromApp64\RegFromApp.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\RegFromApp64.lnk"
+        New-StartMenuShortcut C:\BenLocal\Programs\RegFromApp64\RegFromApp.exe RegFromApp64
         Download-File https://www.nirsoft.net/utils/regfromapp.zip $env:tmp\regfromapp.zip
         Expand-Archive $env:tmp\regfromapp.zip C:\BenLocal\Programs\RegFromApp
-        New-Shortcut C:\BenLocal\Programs\RegFromApp\RegFromApp.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\RegFromApp.lnk"
+        New-StartMenuShortcut C:\BenLocal\Programs\RegFromApp\RegFromApp.exe RegFromApp
     } {
         Test-Path C:\BenLocal\Programs\RegFromApp64
     }
@@ -90,7 +96,7 @@ if (Configured $forHome, $forWork, $forTest) {
         $currentDir = "$veraCryptRootDir\Current"
 
         DownloadAndExtractVeraCrypt $version $currentDir
-        New-Shortcut $currentDir\VeraCrypt-x64.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\VeraCrypt.lnk"
+        New-StartMenuShortcut $currentDir\VeraCrypt-x64.exe VeraCrypt
     } {
         Test-Path "$veraCryptRootDir\Current"
     } {

@@ -1,4 +1,4 @@
-if (Configured $forHome, $forWork, $forTest) {
+﻿if (Configured $forHome, $forWork, $forTest) {
     InstallFromWingetBlock Genymobile.scrcpy
 
     InstallFromWingetBlock Ookla.Speedtest.CLI {
@@ -6,14 +6,14 @@ if (Configured $forHome, $forWork, $forTest) {
     }
 
     InstallFromWingetBlock Rufus.Rufus {
-        New-Shortcut (Get-ChildItem "$env:LocalAppData\Microsoft\WinGet\Packages\Rufus.Rufus_Microsoft.Winget.Source_8wekyb3d8bbwe" rufus*.exe) "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\Rufus.lnk"
+        New-StartMenuShortcut (Get-ChildItem "$env:LocalAppData\Microsoft\WinGet\Packages\Rufus.Rufus_Microsoft.Winget.Source_8wekyb3d8bbwe" rufus*.exe) Rufus
     }
 
     Block "Install nanDECK" {
         Download-File ((iwr https://www.nandeck.com).Content | sls https://www\.nandeck\.com/download/\d+ | select -exp Matches | select -exp Value) $env:tmp\nandeck.zip
         Expand-Archive $env:tmp\nandeck.zip C:\BenLocal\Programs\nanDECK
         Copy-Item $PSScriptRoot\..\programs\nanDECK.ini C:\BenLocal\Programs\nanDECK\
-        New-Shortcut C:\BenLocal\Programs\nanDECK\nanDECK.exe "$env:AppData\Microsoft\Windows\Start Menu\Programs\Ben\nanDECK.lnk"
+        New-StartMenuShortcut C:\BenLocal\Programs\nanDECK\nanDECK.exe nanDECK
     } {
         Test-Path C:\BenLocal\Programs\nanDECK
     }
