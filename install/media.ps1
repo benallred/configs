@@ -1,4 +1,4 @@
-InstallFromWingetBlock VideoLAN.VLC {
+﻿InstallFromWingetBlock VideoLAN.VLC {
     DeleteDesktopShortcut "VLC media player"
 }
 
@@ -31,10 +31,12 @@ if (!(Configured $forHtpc)) {
 }
 
 if (Configured $forHome, $forWork, $forTest) {
-    InstallFromWingetBlock SergeySerkov.TagScanner {
-        DeleteDesktopShortcut TagScanner
-        New-Item $env:AppData\TagScanner -ItemType Directory
-        Copy-Item $PSScriptRoot\..\programs\Tagscan.ini $env:AppData\TagScanner
+    if (!(Test-IsArm)) {
+        InstallFromWingetBlock SergeySerkov.TagScanner {
+            DeleteDesktopShortcut TagScanner
+            New-Item $env:AppData\TagScanner -ItemType Directory
+            Copy-Item $PSScriptRoot\..\programs\Tagscan.ini $env:AppData\TagScanner
+        }
     }
 
     InstallFromWingetBlock yt-dlp.yt-dlp
