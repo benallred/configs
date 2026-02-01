@@ -24,7 +24,9 @@
         Test-ProgramInstalled "Razer Synapse"
     }
 
-    InstallFromWingetBlock Logitech.Options
+    InstallFromWingetBlock Logitech.OptionsPlus {
+        DeleteDesktopShortcut "Logi Options+"
+    }
 
     InstallFromGitHubBlock benallred qmk_firmware {
         git pull --unshallow
