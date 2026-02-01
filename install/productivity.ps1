@@ -21,10 +21,10 @@
     InstallFromWingetBlock SlackTechnologies.Slack {
         . $env:ProgramFiles\Slack\slack.exe
         if (!(Configured $forWork)) {
-            RemoveStartupRegistryKey com.squirrel.slack.slack
+            Set-RegistryValue "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppModel\SystemAppData\com.tinyspeck.slackdesktop_8yrtsj140pw4g\SlackStartup" State 1
         }
         DeleteDesktopShortcut Slack
-        ConfigureNotifications com.squirrel.slack.slack ShowInActionCenter $false
+        ConfigureNotifications com.tinyspeck.slackdesktop_8yrtsj140pw4g!Slack ShowInActionCenter $false
     }
 
     InstallFromWingetBlock Discord.Discord {
