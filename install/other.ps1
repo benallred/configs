@@ -10,12 +10,15 @@
     }
 
     Block "Install nanDECK" {
-        Download-File ((iwr https://www.nandeck.com).Content | sls https://www\.nandeck\.com/download/\d+ | select -exp Matches | select -exp Value) $env:tmp\nandeck.zip
-        Expand-Archive $env:tmp\nandeck.zip C:\BenLocal\Programs\nanDECK
-        Copy-Item $PSScriptRoot\..\programs\nanDECK.ini C:\BenLocal\Programs\nanDECK\
-        New-StartMenuShortcut C:\BenLocal\Programs\nanDECK\nanDECK.exe nanDECK
+        start https://nandeck.com
+        Write-ManualStep "Copy link to installer"
+        $downloadUrl = Read-Host "Installer link"
+        Download-File $downloadUrl $env:tmp\nanDECK_installer.zip
+        Expand-Archive $env:tmp\nanDECK_installer.zip $env:tmp
+        Start-Process $env:tmp\nanDECK_installer.exe "/silent" -Wait
+        Copy-Item $PSScriptRoot\..\programs\nanDECK.ini $env:AppData\nanDECK\
     } {
-        Test-Path C:\BenLocal\Programs\nanDECK
+        Test-ProgramInstalled nanDECK
     }
 }
 
