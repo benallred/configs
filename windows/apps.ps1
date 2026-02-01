@@ -1,4 +1,4 @@
-Block "Configure Edge" {
+﻿Block "Configure Edge" {
     DeleteDesktopShortcut "Microsoft Edge"
     DeleteDesktopShortcut "Personal - Edge"
 
@@ -36,6 +36,6 @@ if (Configured $forHtpc) {
 }
 else {
     Block "Teams > Settings > General > Auto-start Teams = Off" {
-        Set-RegistryValue "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppModel\SystemAppData\MicrosoftTeams_8wekyb3d8bbwe\TeamsStartupTask" State 0
+        RemoveStartupRegistryKey Teams
     }
 }
