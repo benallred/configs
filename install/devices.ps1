@@ -20,6 +20,8 @@
         . $env:tmp\RazerSynapseInstaller.exe
         Write-ManualStep "Install only Razer Synapse (no optional modules)"
         WaitWhileProcess RazerInstaller
+    } {
+        Test-ProgramInstalled "Razer Synapse"
     }
 
     InstallFromWingetBlock Logitech.Options
