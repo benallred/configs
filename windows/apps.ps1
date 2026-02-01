@@ -35,7 +35,7 @@ if (Configured $forHtpc) {
     UninstallBlock MicrosoftTeams_8wekyb3d8bbwe
 }
 else {
-    Block "Teams > Settings > General > Auto-start Teams = Off" {
+    FirstRunBlock "Teams > Settings > General > Auto-start Teams = Off" {
         RemoveStartupRegistryKey Teams
     }
 }
