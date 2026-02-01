@@ -35,7 +35,7 @@ Block "System > Power & battery > Lid & power button controls > Plugged in > Clo
     # https://docs.microsoft.com/en-us/windows-hardware/customize/power-settings/power-button-and-lid-settings-lid-switch-close-action
     powercfg /SetACValueIndex SCHEME_BALANCED SUB_BUTTONS LIDACTION 0
 } -RequiresReboot
-Block "System > Multitasking > Alt + Tab > Pressing Alt + Tab shows = Open windows only" {
+Block "System > Multitasking > Show tabs from apps when snapping or pressing Alt+Tab = Don't show tabs" {
     Set-RegistryValue "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" MultiTaskingAltTabFilter 3
 } -RequiresReboot
 Block "System > Clipboard > Clipboard history = On" {
