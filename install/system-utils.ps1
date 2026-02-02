@@ -78,9 +78,10 @@ if (Configured $forHome, $forWork, $forTest) {
         Test-Path C:\BenLocal\Programs\RegFromApp64
     }
 
-    InstallFromWingetBlock IDRIX.VeraCrypt
-
-    Block "Preserve latest VeraCrypt" {
+    Block "Install VeraCrypt" {
+        Download-File https://launchpad.net/veracrypt/trunk/$script:vcVersion/+download/VeraCrypt%20Setup%20$script:vcVersion.exe "$env:tmp\VeraCrypt Setup $script:vcVersion.exe"
+        Start-Process "$env:tmp\VeraCrypt Setup $script:vcVersion.exe" -Wait
+        DeleteDesktopShortcut VeraCrypt
         Download-File https://launchpad.net/veracrypt/trunk/$script:vcVersion/+download/VeraCrypt%20Portable%20$script:vcVersion.exe $script:vcCurrentVersionPath
     } {
         $script:vcVersion = (winget show IDRIX.VeraCrypt | sls "(?<=Version: ).*").Matches.Value
