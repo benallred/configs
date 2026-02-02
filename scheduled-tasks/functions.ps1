@@ -17,6 +17,7 @@ function StopOnError(
     [Parameter(ParameterSetName = "MinimumErrorCode", Mandatory, Position = 1)]
     [Parameter(ParameterSetName = "NonZero", Mandatory, Position = 0)]
     [scriptblock]$ScriptBlock) {
+    $global:LastExitCode = 0
     $ErrorActionPreference = 'Stop'
     Invoke-Command $ScriptBlock
     if (($PSCmdlet.ParameterSetName -eq "NonZero" -and $LastExitCode) -or ($PSCmdlet.ParameterSetName -eq "MinimumErrorCode" -and $LastExitCode -ge $MinimumErrorCode)) {
