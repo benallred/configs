@@ -24,7 +24,6 @@ UninstallBlock Microsoft.MicrosoftOfficeHub_8wekyb3d8bbwe
 UninstallBlock Microsoft.MicrosoftSolitaireCollection_8wekyb3d8bbwe
 UninstallBlock Microsoft.SkypeApp_kzf8qxf38zg5c
 UninstallBlock microsoft.windowscommunicationsapps_8wekyb3d8bbwe # Mail and Calendar
-UninstallBlock Microsoft.WindowsFeedbackHub_8wekyb3d8bbwe
 UninstallBlock Microsoft.WindowsMaps_8wekyb3d8bbwe
 UninstallBlock Microsoft.Todos_8wekyb3d8bbwe
 UninstallBlock Disney.37853FC22B2CE_6rarf9sa4v8jt # Disney+
