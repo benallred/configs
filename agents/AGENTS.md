@@ -1,4 +1,4 @@
-## Model Response Guidelines
+﻿## Model Response Guidelines
 
 Start every response with "{model} @ {working directory}" followed by a blank line.
 
@@ -25,23 +25,6 @@ When creating a git branch, follow these guidelines:
 
 - With issue number: `abc-123-fix-some-bug`
 - Without issue number: `fix-some-bug`
-
-## Commit Message Guidelines
-
-When crafting commit messages, follow these guidelines:
-
-- Prefer a single line summary
-- If you would normally include a reason for the change in the detail of the commit message, the single line summary should state the reason
-- If not stating a reason for the change, the single line summary should use the imperative mood (e.g., "Fix bug" instead of "Fixed bug" or "Fixes bug")
-- After creating a commit, display the entire commit message including all lines (summary, body, and any additional details)
-
-## Pull Request Guidelines
-
-When creating pull requests:
-
-- Do not include issue numbers in the pull request title
-- Do not include test plans in the pull request summary
-- After creating a pull request, give me something in this format that I can copy/paste elsewhere: `PR: <pr description>: <pr url>`
 
 ## OS and Shell Guidelines
 
@@ -95,51 +78,4 @@ If the workspace is at `/home/user/workspace-folder/project.code-workspace` and 
 
 **CRITICAL: No work should ever be done directly in `C:\Work\repos`. All work MUST be done in a worktree located in `C:\Work\repos-worktrees`.**
 
-When instructed to use a worktree, follow these steps:
-
-### Creating a Worktree
-
-1. **Determine issue tracker context** - Check if there is an issue or ticket already mentioned in the conversation or if you were asked to create one. If not explicitly mentioned, assume there is no issue.
-
-2. **Create short work description** - Develop a very short, descriptive name for the work (e.g., "fix-auth-bug", "add-export-feature"). This will be used in folder and branch names.
-
-3. **Determine repository name** - Use the folder name of the git root directory.
-
-4. **Check for existing worktrees** - Before creating, verify that no worktree already exists with:
-
-   - The same issue ID, or
-   - The same folder name
-
-   If a worktree already exists, notify the user and stop.
-
-5. **Note original working directory** - Record the current working directory for potential cleanup operations.
-
-6. **Pull latest from default branch** - In the original repository, pull the latest changes from the default branch (master/main).
-
-7. **Create worktree folder** - Create a new folder with the naming pattern:
-
-   - With issue ID: `C:\Work\repos-worktrees\{repo}-{issue-id}-{short-description}`
-   - Without issue ID: `C:\Work\repos-worktrees\{repo}-{short-description}`
-
-8. **Create worktree and branch** - Create the worktree from the default branch with a new branch:
-
-   - With issue ID: Branch name `{issue-id}-{short-description}`
-   - Without issue ID: Branch name `{short-description}`
-
-9. **Work exclusively in worktree** - All subsequent work should be performed in the worktree directory.
-
-### Branch Management
-
-- Always create worktree branches from the default branch
-- Do not push the branch to remote until explicitly instructed to do so
-- Do not set up remote tracking automatically
-
-### Cleaning Up a Worktree
-
-When work is complete and you are told to clean up:
-
-1. **Remove the git worktree** - Use `git worktree remove` to remove the worktree
-2. **Delete the folder** - Remove the `C:\Work\repos-worktrees\{folder-name}` directory
-3. **Delete the branch** - Delete the branch that was created for the worktree
-4. **Return to original directory** - Navigate back to the original working directory
-5. **Pull latest changes** - Pull the latest changes from the default branch in the main repository
+Use the `/worktree` command to create a new worktree for any work that needs to be done.

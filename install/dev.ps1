@@ -54,4 +54,13 @@ if (Configured $forHome, $forWork, $forTest) {
     } {
         Get-Command claude
     }
+
+    InstallFromGitHubBlock benallred claude.ben
+
+    Block "Configure personal Claude Code plugin" {
+        claude plugin marketplace add ((Resolve-Path $git\claude.ben -Relative) -replace '\\', '/')
+        claude plugin install ben@ben-marketplace
+    } {
+        claude plugin marketplace list | sls ben-marketplace
+    }
 }
