@@ -1,4 +1,4 @@
-﻿## Model Response Guidelines
+## Model Response Guidelines
 
 Start every response with "{model} @ {working directory}" followed by a blank line.
 
@@ -56,9 +56,13 @@ Only use ALL CAPS filenames when:
 
 ## File Reference Links in Multi-Root Workspaces
 
-**IMPORTANT: Only apply this section when a `.code-workspace` file is present in the working directory.**
+When creating markdown links to files in multi-root workspaces, calculate relative paths using this procedure:
 
-When creating markdown links to files in multi-root workspaces, use relative paths from the current working directory to the target file location.
+**Steps:**
+
+1. **Determine the workspace directory** - Find the directory containing the `.code-workspace` file (not the file itself, but its parent directory)
+2. **Determine the target file path** - Get the absolute path to the file you want to link to
+3. **Calculate the relative path** - Compute the relative path from the workspace directory to the target file
 
 **Format:**
 
@@ -68,7 +72,15 @@ When creating markdown links to files in multi-root workspaces, use relative pat
 
 **Example:**
 
-If the workspace is at `/home/user/workspace-folder/project.code-workspace` and the target file is at `/home/user/projects/repo-name/src/config.ts`, the relative path from the workspace directory would be:
+Given:
+
+- Workspace file: `/home/user/workspace-folder/project.code-workspace`
+- Workspace directory: `/home/user/workspace-folder/`
+- Target file: `/home/user/projects/repo-name/src/config.ts`
+
+Relative path calculation: From `/home/user/workspace-folder/` to `/home/user/projects/repo-name/src/config.ts` = `../projects/repo-name/src/config.ts`
+
+Result:
 
 - `[config.ts](../projects/repo-name/src/config.ts)`
 - `[config.ts:25](../projects/repo-name/src/config.ts#L25)`
