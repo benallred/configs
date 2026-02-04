@@ -1,4 +1,4 @@
-$global:blocksOfInterest = @()
+﻿$global:blocksOfInterest = @()
 
 function Block([string]$Comment, [scriptblock]$ScriptBlock, [scriptblock]$CompleteCheck, [scriptblock]$UpdateAvailable, [scriptblock]$UpdateScript, [switch]$RequiresReboot) {
     if ($Run -and $Run -ne $Comment) {
@@ -87,7 +87,7 @@ function Write-ManualStep([string]$Comment) {
 
 function ConfigureNotifications(
     [Parameter(Mandatory)][string]$AppId,
-    [Parameter(Mandatory)][ValidateSet("ShowInActionCenter", "AllowUrgentNotifications")][string]$Setting,
+    [Parameter(Mandatory)][ValidateSet("Enabled", "ShowInActionCenter", "AllowUrgentNotifications")][string]$Setting,
     [Parameter(Mandatory)][bool]$Value) {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\$AppId" $Setting ($Value ? 1 : 0)
 }

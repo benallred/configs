@@ -3,6 +3,7 @@
 git config --global --unset user.email
 
 & $PSScriptRoot\..\delete-desktop-shortcuts.ps1
+& $PSScriptRoot\..\configure-phone-link-notifications.ps1
 & $PSScriptRoot\..\prune-transcripts.ps1
 StopOnError { & $workConfigs\work-config.ps1 }
 

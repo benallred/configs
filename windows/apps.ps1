@@ -11,7 +11,10 @@ if (Configured $forHome, $forWork, $forTest) {
     FirstRunBlock "Connect phone" {
         Write-ManualStep "Connect phone"
         start ms-phone:
-        ConfigureNotifications Microsoft.YourPhone_8wekyb3d8bbwe!YourPhoneMessages ShowInActionCenter $false
+        $phoneLinkMessagesAppId = Get-ChildItem "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings" |
+            ? { $_.PSChildName -like "Microsoft.YourPhone_8wekyb3d8bbwe!YourPhoneMessages_*" } |
+            select -exp PSChildName
+        ConfigureNotifications $phoneLinkMessagesAppId ShowInActionCenter $false
     }
 }
 
