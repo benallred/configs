@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VeraCrypt>
+	<configuration>
+		<config key="CloseBackgroundTaskOnNoVolumes">1</config>
+	</configuration>
+</VeraCrypt>

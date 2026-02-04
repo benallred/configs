@@ -83,6 +83,7 @@ if (Configured $forHome, $forWork, $forTest) {
         Start-Process "$env:tmp\VeraCrypt Setup $script:vcVersion.exe" -Wait
         DeleteDesktopShortcut VeraCrypt
         Download-File https://launchpad.net/veracrypt/trunk/$script:vcVersion/+download/VeraCrypt%20Portable%20$script:vcVersion.exe $script:vcCurrentVersionPath
+        Copy-Item2 $PSScriptRoot\..\programs\VeraCrypt.Configuration.xml $env:AppData\VeraCrypt\Configuration.xml
     } {
         $script:vcVersion = (winget show IDRIX.VeraCrypt | sls "(?<=Version: ).*").Matches.Value
         $script:vcCurrentVersionPath = Join-Path $veraCryptRootDir "VeraCrypt Portable $script:vcVersion.exe"
