@@ -27,6 +27,9 @@ Block "Personalization > Start > Layout = More pins" {
 Block "Personalization > Start > Show most used apps = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer" -Name NoStartMenuMFUprogramsList -Value 1
 }
+Block "Personalization > Start > Show mobile device in Start = Off" {
+    Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Start\Companions\Microsoft.YourPhone_8wekyb3d8bbwe" -Name IsEnabled -Value 0
+}
 Block "Personalization > Taskbar > Taskbar items > Search = Off" {
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Search" -Name SearchboxTaskbarMode -Value 0
 }
