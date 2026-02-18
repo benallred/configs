@@ -38,6 +38,7 @@ if (Configured $forHtpc) {
 }
 else {
     FirstRunBlock "Teams > Settings > General > Auto-start Teams = Off" {
+        Set-RegistryValue "HKCU:\Software\Classes\Local Settings\Software\Microsoft\Windows\CurrentVersion\AppModel\SystemAppData\MSTeams_8wekyb3d8bbwe\TeamsTfwStartupTask" State 1
         RemoveStartupRegistryKey Teams
     }
 }
