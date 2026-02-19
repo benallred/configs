@@ -1,11 +1,11 @@
-# EditorConfig (https://editorconfig-specification.readthedocs.io/)
+﻿# EditorConfig (https://editorconfig-specification.readthedocs.io/)
 [*]
 indent_style = space
 indent_size = 4
 tab_width = 4
 insert_final_newline = true
 trim_trailing_whitespace = true
-charset = utf-8-bom
+charset = utf-8
 
 [*.{csproj,runsettings}]
 indent_size = 2
@@ -46,3 +46,6 @@ charset = utf-8
 # .NET (https://aka.ms/editorconfigdocs)
 [*.{cs,csx,vb,vbx}]
 dotnet_sort_system_directives_first = true
+
+[*.ahk]
+charset = utf-8-bom

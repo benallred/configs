@@ -1,10 +1,10 @@
-# EditorConfig (https://editorconfig-specification.readthedocs.io/)
+﻿# EditorConfig (https://editorconfig-specification.readthedocs.io/)
 [*]
 indent_style = space
 indent_size = 4
 tab_width = 4
 insert_final_newline = true
-charset = utf-8-bom
+charset = utf-8
 
 [*.{json,code-workspace}]
 indent_size = 2
@@ -21,3 +21,6 @@ trim_trailing_whitespace = false
 
 [*.gitconfig]
 indent_style = tab
+
+[*.ahk]
+charset = utf-8-bom
