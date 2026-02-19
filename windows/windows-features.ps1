@@ -1,4 +1,4 @@
-function WindowsFeatureBlock([string]$Comment, [string]$FeatureName) {
+﻿function WindowsFeatureBlock([string]$Comment, [string]$FeatureName) {
     Block "Windows Features > $Comment = On" {
         # https://github.com/PowerShell/PowerShell/issues/13866
         powershell -Command "Enable-WindowsOptionalFeature -Online -FeatureName $FeatureName -All -NoRestart"
@@ -14,7 +14,8 @@ if (Configured $forHome, $forWork, $forTest) {
 
     Block "Install WSL" {
         wsl --install -d Ubuntu
+        wsl --set-default Ubuntu
     } {
-        (wsl -l) -replace "`0", "" | Select-String "Windows Subsystem for Linux Distributions:"
+        (wsl -l) -replace "`0", "" | Select-String "Ubuntu"
     } -RequiresReboot
 }
