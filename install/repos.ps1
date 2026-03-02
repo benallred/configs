@@ -4,4 +4,5 @@ if (Configured $forHome, $forWork, $forTest) {
     InstallFromGitHubBlock benallred DilbertImageDownloader
     InstallFromGitHubBlock benallred what-i-use
     InstallFromGitHubBlock benallred presentations
+    InstallFromGitHubBlock benallred my-bg-stats
 }
