@@ -1,9 +1,10 @@
-. $PSScriptRoot\..\functions.ps1
+﻿. $PSScriptRoot\..\functions.ps1
 
 git config --global --unset user.email
 
 & $PSScriptRoot\..\delete-desktop-shortcuts.ps1
 & $PSScriptRoot\..\configure-phone-link-notifications.ps1
+& $PSScriptRoot\..\show-all-system-tray-icons.ps1
 & $PSScriptRoot\..\prune-transcripts.ps1
 & $PSScriptRoot\daily-backup.ps1
 
