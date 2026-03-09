@@ -46,13 +46,13 @@ if (Configured $forHome, $forWork, $forTest) {
     }
 
     Block "Install Claude Code" {
-        irm https://claude.ai/install.ps1 | iex
+        & ([scriptblock]::Create((irm https://claude.ai/install.ps1))) stable
         AddTo-Path $env:UserProfile\.local\bin
         Copy-Item2 $PSScriptRoot\..\agents\.claude\settings.json $env:UserProfile\.claude\
         Add-Content -Path $env:UserProfile\.claude\CLAUDE.md -Value "IMPORTANT: The files loaded below using @ syntax contain critical agent definitions and instructions that you MUST read and follow at the start of EVERY conversation before proceeding with any task. These instructions OVERRIDE default behavior."
         Add-Content -Path $env:UserProfile\.claude\CLAUDE.md -Value "@$git\configs\agents\AGENTS.md"
     } {
-        Get-Command claude
+        Get-Command claude -ErrorAction Ignore
     }
 
     InstallFromGitHubBlock benallred claude.ben
