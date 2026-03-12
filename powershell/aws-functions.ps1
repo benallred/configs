@@ -34,4 +34,7 @@ function ap([ArgumentCompleter({
                 Where-Object { $_ -like "*$wordToComplete*" }
         })]$AwsProfile) {
     $env:AWS_PROFILE = $AwsProfile
+    if ($AwsProfile -and !(aws sts get-caller-identity)) {
+        aws sso login
+    }
 }
