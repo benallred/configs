@@ -20,6 +20,7 @@
         . $env:tmp\RazerSynapseInstaller.exe
         Write-ManualStep "Install only Razer Synapse (no optional modules)"
         WaitWhileProcess RazerInstaller
+        RemoveStartupRegistryKey Synapse3
     } {
         Test-ProgramInstalled "Razer Synapse"
     }
