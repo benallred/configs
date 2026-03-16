@@ -45,6 +45,14 @@ if (Configured $forHome, $forWork, $forTest) {
         }
     }
 
+    Block "Install Python" {
+        $latestPython = winget search Python | sls "Python\.Python\.\d+\.(\d+)" | % { @{ id = $_.Matches.Value; sort = [int]$_.Matches.Groups[1].Value } } | sort sort -Descending | select -First 1 -ExpandProperty id
+        InstallFromWingetBlock $latestPython
+        # Claude sometimes invokes python3
+        $pythonDir = Split-Path (Get-Command python).Source
+        Copy-Item "$pythonDir\python.exe" "$pythonDir\python3.exe"
+    }
+
     Block "Install Claude Code" {
         & ([scriptblock]::Create((irm https://claude.ai/install.ps1))) stable
         AddTo-Path $env:UserProfile\.local\bin
