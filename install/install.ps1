@@ -12,6 +12,10 @@ Block "Configure scoop nonportable bucket" {
     scoop bucket list | Select-String nonportable
 }
 
+InstallFromWingetBlock jdx.mise {
+    AddTo-Path "$env:LocalAppData\mise\shims"
+}
+
 & $PSScriptRoot\productivity.ps1
 & $PSScriptRoot\dev.ps1
 & $PSScriptRoot\devices.ps1
