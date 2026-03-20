@@ -6,36 +6,49 @@ function Get-GitHubDefaultBranch() {
     gh repo view --json defaultBranchRef --jq ".defaultBranchRef.name"
 }
 
-function GitAudit([switch]$ReturnSuccess) {
-    $script:GitAudit_success = $true
-    function CheckDir($dir) {
-        Write-Progress -Activity "Git Audit" -Status "Checking: $dir"
-        if (Test-Path (Join-Path $dir .git)) {
-            pushd $dir
-            $unsynced = git unsynced
-            $status = git status --porcelain
-            if ($unsynced -or $status) {
-                $script:GitAudit_success = $false
-                Write-Host ('*' * 100)
-                Write-Host $dir -ForegroundColor Red
-                git unsynced --color=always | Write-Host
-                git status --porcelain | Write-Host
-            }
-            popd
+function Test-GitRepoClean([string]$Dir = (Get-Location).Path) {
+    if (!(Test-Path (Join-Path $Dir .git))) {
+        if (Test-Path $Dir -PathType Container) {
+            Write-Host "Not in source control"
         }
-        elseif (Test-Path $dir -PathType Container) {
-            $script:GitAudit_success = $false
+        else {
+            Write-Host "Not a folder"
+        }
+        return $false
+    }
+
+    pushd $Dir
+    $unsynced = git unsynced
+    $status = git status --porcelain
+    $stashes = git stash list
+    popd
+
+    if ($unsynced -or $status -or $stashes) {
+        if ($unsynced) { git -C $Dir unsynced --color=always | Write-Host }
+        if ($status) { git -C $Dir -c color.status=always status --short | Write-Host }
+        if ($stashes) { $stashes | Write-Host }
+        return $false
+    }
+
+    return $true
+}
+
+function GitAudit([switch]$ReturnSuccess) {
+    $results = (Get-ChildItem $git) +
+    (Get-ChildItem C:\Work\repos -ErrorAction Ignore) |
+        % {
+            $dir = $_.FullName
             Write-Host ('*' * 100)
             Write-Host $dir -ForegroundColor Red
-            Write-Host "`tNot in source control"
-        }
-    }
-    (Get-ChildItem $git) +
-    (Get-ChildItem C:\Work\repos -ErrorAction Ignore) |
-        % { CheckDir $_.FullName }
-    Write-Progress -Activity "Git Audit" -Completed
+            $clean = Test-GitRepoClean $dir
+            if ($clean) {
+                Write-Host "`e[2A`e[J" -NoNewline
+            }
+            $clean
+        } |
+        ? { !$_ }
     if ($ReturnSuccess) {
-        return $script:GitAudit_success
+        return !$results
     }
 }
 
