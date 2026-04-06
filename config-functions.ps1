@@ -151,26 +151,18 @@ function InstallFromWingetBlock {
         [ValidateSet("x64", "arm64")]
         [string]$Architecture
     )
-    $archArgs = if ($Architecture) { @("--architecture", $Architecture) } else { @() }
+    $extraArgs = @()
+    if ($Architecture) { $extraArgs += "--architecture", $Architecture }
+    if ($OverrideArgs) { $extraArgs += "--override", $OverrideArgs }
     $updateAvailable = {
         winget upgrade | sls $AppId
     }
     $updateScript = {
         winget list $AppId -e
-        if ($OverrideArgs) {
-            winget upgrade --id $AppId --accept-package-agreements @archArgs --override $OverrideArgs
-        }
-        else {
-            winget upgrade --id $AppId --accept-package-agreements @archArgs
-        }
+        winget upgrade --id $AppId --accept-package-agreements @extraArgs
     }
     Block "Install $AppId" {
-        if ($OverrideArgs) {
-            winget install --id $AppId --accept-package-agreements @archArgs --override $OverrideArgs
-        }
-        else {
-            winget install --id $AppId --accept-package-agreements @archArgs
-        }
+        winget install --id $AppId --accept-package-agreements @extraArgs
         Refresh-Path
         if ($AfterInstall) {
             Invoke-Command $AfterInstall
