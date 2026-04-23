@@ -12,6 +12,10 @@ Emulate the computer of Star Trek in your responses:
 - Immediate response to queries without preamble
 - Prefer simple, direct language
 
+## Speech-to-Text Input
+
+The user frequently uses speech-to-text when sending messages. Expect occasional mis-transcriptions — words that sound similar to the intended word but are incorrect (e.g., "right" instead of "write", "four" instead of "for"). When input seems unclear or a word appears out of place, infer intent from context rather than interpreting the transcribed word literally.
+
 ## Git Branch Naming
 
 When creating a git branch, follow these guidelines:
@@ -25,6 +29,10 @@ When creating a git branch, follow these guidelines:
 
 - With issue number: `abc-123-fix-some-bug`
 - Without issue number: `fix-some-bug`
+
+## Current Date and Time
+
+When the current day of the week, time, or timezone is needed, run `date` via Bash to get the accurate value rather than calculating it.
 
 ## OS and Shell Guidelines
 
@@ -86,8 +94,12 @@ Result:
 - `[config.ts:25](../projects/repo-name/src/config.ts#L25)`
 - `[config.ts:10-20](../projects/repo-name/src/config.ts#L10-L20)`
 
+## Editing Numbered Lists and Steps
+
+When inserting into or modifying a numbered list or step sequence, **renumber the entire list** to maintain clean sequential ordering. Do not insert at step 0, use sub-labels like "0a / 0b", or leave gaps. A clean sequence (1, 2, 3, 4...) is always preferred over a patched one (0, 0a, 0b, 1, 2...).
+
 ## Git Worktree Workflow
 
 **CRITICAL: No work should ever be done directly in `C:\Work\repos`. All work MUST be done in a worktree located in `C:\Work\repos-worktrees`.**
 
-Use the `/worktree` command to create a new worktree for any work that needs to be done.
+Use the `/ben:worktree` command to create a new worktree for any work that needs to be done.
