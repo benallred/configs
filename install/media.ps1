@@ -43,5 +43,7 @@ if (Configured $forHome, $forWork, $forTest) {
 
     Block "Install mutagen" {
         pip install mutagen
+    } {
+        pip show mutagen 2>$null
     }
 }
