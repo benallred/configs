@@ -25,6 +25,48 @@ function Update-AwsAccessKey() {
     aws iam delete-access-key --access-key-id $oldKey
 }
 
+function Get-AwsSsoAccounts {
+    $token = Get-ChildItem "$env:UserProfile\.aws\sso\cache" -Filter "*.json" -ErrorAction SilentlyContinue |
+        ForEach-Object { $_ | Get-Content -Raw | ConvertFrom-Json } |
+        Where-Object { $_.accessToken -and (Get-Date $_.expiresAt) -gt (Get-Date) } |
+        Sort-Object { Get-Date $_.expiresAt } -Descending |
+        Select-Object -First 1 -ExpandProperty accessToken
+
+    if (!$token) {
+        Write-Error "No valid SSO token found. Run 'aws sso login --profile <profile>' first."
+        return
+    }
+
+    $accounts = aws sso list-accounts --access-token $token --output json |
+        ConvertFrom-Json |
+        Select-Object -ExpandProperty accountList |
+        Sort-Object accountName
+
+    $total = $accounts.Count
+    $results = for ($i = 0; $i -lt $total; $i++) {
+        $account = $accounts[$i]
+        Write-Progress -Activity "Fetching roles" -Status $account.accountName -PercentComplete (($i / $total) * 100)
+
+        $roles = aws sso list-account-roles --access-token $token --account-id $account.accountId --output json |
+            ConvertFrom-Json |
+            Select-Object -ExpandProperty roleList |
+            Select-Object -ExpandProperty roleName
+
+        foreach ($role in $roles) {
+            $accountSlug = ($account.accountName -replace '\s+', '-' -replace '[^a-zA-Z0-9\-]', '').ToLower()
+            [PSCustomObject]@{
+                AccountName = $account.accountName
+                ProfileName = "$accountSlug-$role"
+                AccountId   = $account.accountId
+                Role        = $role
+            }
+        }
+    }
+    Write-Progress -Activity "Fetching roles" -Completed
+
+    $results | Sort-Object ProfileName, Role | Format-Table -AutoSize
+}
+
 function ap([ArgumentCompleter({
             param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
             $configFile = if ($env:AWS_CONFIG_FILE) { $env:AWS_CONFIG_FILE } else { "$env:USERPROFILE\.aws\config" }
