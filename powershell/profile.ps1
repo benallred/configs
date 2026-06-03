@@ -238,7 +238,7 @@ function ReallyUpdate-Module([Parameter(Mandatory)][string]$Name) {
 }
 
 function dotnet-really-clean() {
-    if (!(Get-ChildItem *.sln)) {
+    if (!(Get-ChildItem *.sln*)) {
         Write-Error "Not a dotnet project"
         return
     }
