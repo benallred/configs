@@ -34,6 +34,8 @@ if (Configured $forHome, $forWork, $forTest) {
         nvm use latest
     }
 
+    InstallFromWingetBlock pnpm.pnpm
+
     InstallFromWingetBlock GitHub.cli {
         gh config set editor (git config core.editor)
         Add-Content -Path $profile {
