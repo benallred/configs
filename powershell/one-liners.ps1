@@ -79,13 +79,6 @@ function Activate-Office() {
 }
 
 ##################################################
-# Docker
-
-function Remove-OldDockerImages() {
-    docker images -f "dangling=true" --quiet | % { docker image remove $_ }
-}
-
-##################################################
 # Oh My Posh
 
 function Time-OMP() {
