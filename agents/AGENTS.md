@@ -40,6 +40,19 @@ You are running on Windows.
 
 Instead of `2>nul`, commands should use `2>/dev/null` - the proper null device for Git Bash/MSYS environments.
 
+## Code Comments
+
+Default to writing no comments. Prefer self-documenting code — clear names, small functions, explicit types — so the code carries its own intent. Add a comment only when it earns its place.
+
+- **Explain the why, not the what.** A comment exists to justify a non-obvious decision — a constraint, a tradeoff, a subtle correctness reason. Never narrate what the code plainly does.
+- **Do not restate the code.** If the type name, method name, or signature already conveys the intent, no comment is needed.
+- **No history or changelog narration.** Do not describe what changed, what the code used to be, or the refactor that produced it. That is what git and the PR are for.
+- **Keep comments true and in-layer.** Do not state facts that can drift out of date or that leak another layer's concerns (e.g., naming an infrastructure detail like DynamoDB in a domain-layer comment).
+
+## MCP Server Availability
+
+If a needed MCP server is ever down or unreachable, do not work around it or fall back to another approach. Stop immediately and let the user know so they can re-authenticate or restore it.
+
 ## File Naming Conventions
 
 ### Avoid ALL CAPS Filenames
