@@ -40,6 +40,10 @@ You are running on Windows.
 
 Instead of `2>nul`, commands should use `2>/dev/null` - the proper null device for Git Bash/MSYS environments.
 
+## AWS CLI Profile
+
+AWS CLI commands must always specify an explicit `--profile` argument. Never rely on an environment variable, the default profile, or an inherited `AWS_PROFILE`. If the correct profile is not known, ask rather than assume.
+
 ## Code Comments
 
 Default to writing no comments. Prefer self-documenting code — clear names, small functions, explicit types — so the code carries its own intent. Add a comment only when it earns its place.
