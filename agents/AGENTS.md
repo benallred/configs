@@ -113,7 +113,13 @@ Result:
 
 ## Editing Numbered Lists and Steps
 
-When inserting into or modifying a numbered list or step sequence, **renumber the entire list** to maintain clean sequential ordering. Do not insert at step 0, use sub-labels like "0a / 0b", or leave gaps. A clean sequence (1, 2, 3, 4...) is always preferred over a patched one (0, 0a, 0b, 1, 2...).
+When inserting into or modifying a numbered list or step sequence, **renumber the entire list** to maintain clean sequential ordering. Do not insert at step 0, use sub-labels like "0a / 0b", use half-steps like "2.5", or leave gaps. A clean sequence (1, 2, 3, 4...) is always preferred over a patched one (0, 0a, 0b, 1, 2... or 1, 2, 2.5, 3...).
+
+## Markdown Line Wrapping
+
+Do not hard-wrap lines in markdown. Write each paragraph, list item, and table row as a single unbroken line and let the editor soft-wrap it. Targeting a column width (80, 100, 120, etc.) is not a reason to wrap — hard wraps render as jagged paragraphs in narrower views and produce noisy diffs when text is edited.
+
+Insert a line break only when the break itself is part of the rendered output — poetry or lyrics, address blocks, deliberate `<br>`-style breaks, or content inside fenced code blocks.
 
 ## Git Worktree Workflow
 
