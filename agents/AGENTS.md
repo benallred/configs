@@ -121,6 +121,10 @@ Do not hard-wrap lines in markdown. Write each paragraph, list item, and table r
 
 Insert a line break only when the break itself is part of the rendered output — poetry or lyrics, address blocks, deliberate `<br>`-style breaks, or content inside fenced code blocks.
 
+## Behavioral Fixes and Feedback
+
+When the user points out incorrect or unwanted agent behavior, fix the root cause in the skill or reference file where the behavior is defined — do not save it to memory. Memory is lost on machine reinstalls and drifts out of sync; skill files are the durable, authoritative source of agent behavior. Use `/skill-creator` to edit skill files.
+
 ## Git Worktree Workflow
 
 **CRITICAL: No work should ever be done directly in `C:\Work\repos`. All work MUST be done in a worktree located in `C:\Work\repos-worktrees`.**
