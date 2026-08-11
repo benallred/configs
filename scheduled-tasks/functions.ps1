@@ -24,3 +24,8 @@ function StopOnError(
         throw "Received exit code $LastExitCode"
     }
 }
+
+function Write-SeparatorAndHeader([Parameter(Mandatory)][string]$Header) {
+    Write-Output ("*" * $Host.UI.RawUI.WindowSize.Width)
+    Write-Output $Header
+}

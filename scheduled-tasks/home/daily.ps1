@@ -7,6 +7,7 @@ git config --global --unset user.email
 & $PSScriptRoot\..\show-all-system-tray-icons.ps1
 & $PSScriptRoot\..\prune-transcripts.ps1
 & $PSScriptRoot\daily-backup.ps1
+& $PSScriptRoot\update-my-bg-stats.ps1
 
 StopOnError 8 {
     $saveFolder = "C:\BenEx\Humor\Dilbert"

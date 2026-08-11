@@ -1,3 +1,5 @@
+﻿Write-SeparatorAndHeader "Running daily backup"
+
 function BackupByDay([string]$From, [string]$ToBase) {
     $weekday = Get-Date -Format "ddd"
     $weekdayNumber = (Get-Date).DayOfWeek.value__
