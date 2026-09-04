@@ -79,6 +79,7 @@ Default to writing no comments. Prefer self-documenting code — clear names, sm
 - **Do not restate the code.** If the type name, method name, or signature already conveys the intent, no comment is needed.
 - **No history or changelog narration.** Do not describe what changed, what the code used to be, or the refactor that produced it. That is what git and the PR are for.
 - **Keep comments true and in-layer.** Do not state facts that can drift out of date or that leak another layer's concerns (e.g., naming an infrastructure detail like DynamoDB in a domain-layer comment).
+- **Surrounding comments do not license more comments.** This rule holds even when the file, the module, or the whole repo is heavily commented. Comment density is not a convention to match — do not add a comment because neighboring code has one, and do not treat existing comments as precedent when reviewing. Match the surrounding code's naming and idiom; do not match its comment density. Leave existing comments alone unless the change makes one wrong or obsolete.
 
 ## MCP Server Availability
 
