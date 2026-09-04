@@ -6,6 +6,12 @@ function Get-GitHubDefaultBranch() {
     gh repo view --json defaultBranchRef --jq ".defaultBranchRef.name"
 }
 
+function Get-RemoteWebUrl([string]$Remote = "origin") {
+    (git config "remote.$Remote.url") `
+        -replace '^(?:ssh://)?git@([^:/]+)[:/]', 'https://$1/' `
+        -replace '\.git$', ''
+}
+
 function Test-GitRepoClean([string]$Dir = (Get-Location).Path) {
     if (!(Test-Path (Join-Path $Dir .git))) {
         if (Test-Path $Dir -PathType Container) {
@@ -54,7 +60,7 @@ function GitAudit([switch]$ReturnSuccess) {
 
 function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$EndLine) {
     pushd (Split-Path $FilePath)
-    $remote = (git config remote.origin.url) -replace "\.git", ""
+    $remote = Get-RemoteWebUrl
     $permalinkCommit = git rev-parse --short head
     $relativePath = git ls-files --full-name $FilePath
     popd
@@ -64,6 +70,14 @@ function togh([Parameter(Mandatory)][string]$FilePath, [int]$BeginLine, [int]$En
     $url = $url -replace " ", "%20"
 
     $url | clip2
+}
+
+function comparegh([Parameter(Mandatory)][string]$FromCommit, [Parameter(Mandatory)][string]$ToCommit) {
+    $remote = Get-RemoteWebUrl
+    $from = git rev-parse $FromCommit
+    $to = git rev-parse $ToCommit
+
+    Start-Process "$remote/compare/$from..$to"
 }
 
 $gwtArgumentCompleter = {
