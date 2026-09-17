@@ -7,7 +7,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 charset = utf-8
 
-[*.{csproj,runsettings}]
+[*.{csproj,props,runsettings,slnx,targets}]
 indent_size = 2
 tab_width = 2
 
