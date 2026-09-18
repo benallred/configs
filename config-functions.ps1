@@ -79,6 +79,12 @@ function RemoveStartupRegistryKey([string]$ValueName) {
     Remove-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name $ValueName
 }
 
+function RemoveStartupLink([string]$LinkName) {
+    $linkPath = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup\$LinkName.lnk"
+    WaitWhile { !(Test-Path $linkPath -ErrorAction Ignore) } "Waiting for `"$LinkName`" startup link"
+    Remove-Item $linkPath
+}
+
 function Write-ManualStep([string]$Comment) {
     $esc = [char]27
     Write-Output "$esc[1;43;22;30;52mManual step:$esc[0;1;33m $Comment$esc[0m"
