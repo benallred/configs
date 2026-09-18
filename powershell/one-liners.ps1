@@ -84,3 +84,7 @@ function Activate-Office() {
 function Time-OMP() {
     oh-my-posh debug | ? { $_ -like '*ms' }
 }
+
+function Reset-OMP {
+    Get-Process oh-my-posh -ErrorAction SilentlyContinue | Stop-Process
+}
