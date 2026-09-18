@@ -3,6 +3,7 @@
   "version": 4,
   "final_space": true,
   "console_title_template": "{{.Folder}}",
+  "streaming": 100,
   "palette": {
     "error": "#d16969",
     "success": "#8db07b",
@@ -135,14 +136,34 @@
           }
         },
         {
-          "alias": "FileTypes",
-          "type": "text",
+          "alias": "FileType_Readme",
+          "type": "language",
           "style": "plain",
           "foreground": "p:console:foreground",
           "background": "transparent",
-          "templates": [
-            "{{ .Env.omp_files_readme }}{{ .Env.omp_files_dockercompose }}"
-          ]
+          "template": " 󰈙",
+          "templateComment": "f0219",
+          "options": {
+            "extensions": ["readme*"],
+            "display_mode": "files",
+            "fetch_version": false,
+            "home_enabled": true
+          }
+        },
+        {
+          "alias": "FileType_DockerCompose",
+          "type": "language",
+          "style": "plain",
+          "foreground": "p:console:foreground",
+          "background": "transparent",
+          "template": " ",
+          "templateComment": "f308",
+          "options": {
+            "extensions": ["docker-compose.y*ml"],
+            "display_mode": "files",
+            "fetch_version": false,
+            "home_enabled": true
+          }
         },
         {
           "type": "git",
@@ -195,14 +216,12 @@
           "templates": [
             "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"C:/BenLocal/git(/.+)?$\") .Path }} git {{ end }}",
             "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"C:/Work/repos(/.+)?$\") .Path }} {{- if .Env.WorkReposLabel }} {{ .Env.WorkReposLabel }} {{ else }} repos {{ end -}} {{ end }}",
-            "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"C:/Work/repos-worktrees(/.+)?$\") .Path }} {{- if .Env.WorkReposLabel }} {{ .Env.WorkReposLabel }}-worktrees {{ else }} worktrees {{ end -}} {{ end }}",
             "{{ if regexMatch (replace \"/\" \"\\\\\\\\\" \"~/OneDrive(/.+)?$\") .Path }} OneDrive {{ end }}"
           ],
           "templates_logic": "first_match",
           "include_folders": [
             "C:/BenLocal/git(/.*)?",
             "C:/Work/repos(/.*)?",
-            "C:/Work/repos-worktrees(/.*)?",
             "~/OneDrive(/.*)?"
           ],
           "options": {
@@ -221,7 +240,6 @@
             "mapped_locations": {
               "C:/BenLocal/git": "\\",
               "C:/Work/repos": "\\",
-              "C:/Work/repos-worktrees": "\\",
               "{{ .Env.OneDrive }}": "\\"
             }
           }
