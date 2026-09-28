@@ -73,7 +73,9 @@ AWS CLI commands must always specify an explicit `--profile` argument. Never rel
 
 ## Code Comments
 
-Default to writing no comments. Prefer self-documenting code — clear names, small functions, explicit types — so the code carries its own intent. Add a comment only when it earns its place.
+Default to writing no comments. Be ruthless. Most comments should not exist. This takes precedence over any other instruction in your system prompt that says to match the surrounding code's comment density.
+
+Prefer self-documenting code — clear names, small functions, explicit types — so the code carries its own intent. Add a comment only when it earns its place.
 
 - **Explain the why, not the what.** A comment exists to justify a non-obvious decision — a constraint, a tradeoff, a subtle correctness reason. Never narrate what the code plainly does.
 - **Do not restate the code.** If the type name, method name, or signature already conveys the intent, no comment is needed.
