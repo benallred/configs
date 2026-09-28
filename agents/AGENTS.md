@@ -160,3 +160,25 @@ When the user points out incorrect or unwanted agent behavior, fix the root caus
 **CRITICAL: No work should ever be done directly in `C:\Work\repos`. All work MUST be done in a worktree located in `C:\Work\repos-worktrees`.**
 
 Use the `/ben:worktree` command to create a new worktree for any work that needs to be done.
+
+## Subagent Model and Effort
+
+When you delegate work to a subagent, choose its settings for that task instead of letting it inherit yours:
+
+- **Model:** the cheapest model that can do the task well. Searches, lookups, and mechanical edits need a small model. Judgment calls, subtle bugs, and unsettled designs need a large one.
+- **Reasoning effort:** the lowest level the task needs.
+- **Extended thinking:** only when the task needs multi-step reasoning.
+
+Set each of these explicitly on every delegation, using whatever controls your tool gives you — a per-call model setting, an agent type that sets effort, or both. Do not leave a setting at your own session's value just because it is the default. Move up a tier only for a concrete reason: the task is ambiguous, a wrong answer is costly, or a cheaper attempt already failed.
+
+A **tier** names a model size without naming a model, so a skill that uses one works in any tool. A tier sets only the model size; effort and extended thinking are separate choices, so any tier can run at any effort — a large model at low effort suits a task that needs a strong grasp of code but no long chain of reasoning.
+
+| Tier   | Model          | Tasks                                                                                                                                                            |
+| ------ | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| small  | smallest model | searches, lookups, fetching and trimming data, running scripts, mechanical edits                                                                                 |
+| medium | mid-size model | work with a clear approach that still needs judgment: reviewing against given criteria, fixing specified findings, multi-file research, writing a PR description |
+| large  | largest model  | ambiguous designs, subtle correctness bugs, building something whose approach is not settled                                                                     |
+
+Follow whatever a skill states about a subagent's tier, effort (low, medium, high), agent type, or model, and choose anything it leaves out by the rules above.
+
+In Claude Code: small is Haiku, medium is Sonnet, large is Opus, and effort is set by the agent type `ben:effort-low`, `ben:effort-medium`, or `ben:effort-high`. In another tool, map tiers and effort onto that tool's models and effort controls.
