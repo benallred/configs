@@ -181,4 +181,8 @@ A **tier** names a model size without naming a model, so a skill that uses one w
 
 Follow whatever a skill states about a subagent's tier, effort (low, medium, high), agent type, or model, and choose anything it leaves out by the rules above.
 
-In Claude Code: small is Haiku, medium is Sonnet, large is Opus, and effort is set by the agent type `ben:effort-low`, `ben:effort-medium`, or `ben:effort-high`. In another tool, map tiers and effort onto that tool's models and effort controls.
+In Claude Code: small is Haiku, medium is Sonnet, large is Opus, and effort is set by the agent type `ben:effort-low`, `ben:effort-medium`, or `ben:effort-high`.
+
+In Codex: map small to the newest available Luna model, medium to the newest available Terra model, and large to the newest available Astra model. Use the exact model identifiers exposed by the delegation tool and set `reasoning_effort` explicitly.
+
+In another tool, map tiers and effort onto that tool's models and effort controls.
