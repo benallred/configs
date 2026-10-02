@@ -59,10 +59,27 @@ if (Configured $forHome, $forWork, $forTest) {
         & ([scriptblock]::Create((irm https://claude.ai/install.ps1))) stable
         AddTo-Path $env:UserProfile\.local\bin
         Copy-Item2 $PSScriptRoot\..\agents\.claude\settings.json $env:UserProfile\.claude\
-        Add-Content -Path $env:UserProfile\.claude\CLAUDE.md -Value "IMPORTANT: The files loaded below using @ syntax contain critical agent definitions and instructions that you MUST read and follow at the start of EVERY conversation before proceeding with any task. These instructions OVERRIDE default behavior."
         Add-Content -Path $env:UserProfile\.claude\CLAUDE.md -Value "@$(($git -replace '\\', '/'))/configs/agents/AGENTS.md"
     } {
         Get-Command claude -ErrorAction Ignore
+    }
+
+    Block "Install Codex" {
+        $env:CODEX_NON_INTERACTIVE = 1
+        irm https://chatgpt.com/codex/install.ps1 | iex
+
+        Write-ManualStep "/permissions = Approve for me"
+        codex
+
+        Add-Content -Path $env:UserProfile\.codex\AGENTS.md -Value "Before responding to the first user message or taking any action, read these files in full and apply their instructions:"
+        Add-Content -Path $env:UserProfile\.codex\AGENTS.md -Value "@$(($git -replace '\\', '/'))/configs/agents/AGENTS.md"
+    } {
+        Get-Command codex -ErrorAction Ignore
+    } {
+        $true
+    } {
+        $env:CODEX_NON_INTERACTIVE = 1
+        irm https://chatgpt.com/codex/install.ps1 | iex
     }
 
     InstallFromGitHubBlock benallred claude.ben
