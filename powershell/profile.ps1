@@ -149,6 +149,10 @@ function WaitWhileProcess([string]$ProcessName) {
     WaitWhile { Get-Process $ProcessName -ErrorAction Ignore } "Waiting for $ProcessName to close"
 }
 
+function WaitForProcess([string]$ProcessName) {
+    WaitWhile { !(Get-Process $ProcessName -ErrorAction Ignore) } "Waiting for $ProcessName to start"
+}
+
 function Get-ProgramsInstalled() {
     return (Get-ItemProperty HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName +
     (Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*).DisplayName +
