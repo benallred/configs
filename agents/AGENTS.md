@@ -151,6 +151,27 @@ Do not hard-wrap lines in markdown. Write each paragraph, list item, and table r
 
 Insert a line break only when the break itself is part of the rendered output — poetry or lyrics, address blocks, deliberate `<br>`-style breaks, or content inside fenced code blocks.
 
+## Presenting Decisions to the User
+
+Whenever you ask the user to choose between options — not just in a dedicated ticket-refinement flow, but any time in any conversation — number the questions and letter the options, so the user can answer in one line: `1b, 2c, 3a but do xyz`.
+
+```
+## 1. Which unit of work does restore commit through?
+
+`ICreateJobUnitOfWork` is create-shaped.
+
+- **1a.** New `IRestoreJobUnitOfWork` alongside it. (Recommended, strength 4/5 — keeps the create path untouched.)
+- **1b.** Generalize the existing one, and update the ADR.
+```
+
+- **Always give a recommendation when you have one**, marked `(Recommended, strength N/5 — reason)`. Don't signal it by ordering — put it in whatever letter position it naturally falls in.
+- **Strength is your confidence this is the right call**, not how much the options differ. 5 means you'd be surprised to be wrong; 1 means you're barely leaning one way and the user's judgment matters more than yours here.
+- **Numbers are stable, not clean.** If new questions come up later in the conversation, append them at the next free number. Don't renumber to close gaps — the numbers are handles the user is already using to answer, and renumbering breaks a reply that's in flight.
+- **Letters are stable too, and always listed in letter order** regardless of age or which one you currently recommend. A revised option keeps its letter; a genuinely new option (even a variant of an existing one) gets the next free letter and names what it varies, e.g. `1c. Like 1a, but also updates the ADR.`
+- **When re-listing a question you asked earlier, restate every option in full** — never "as before". Prefix ones that haven't changed with `(unchanged)` so the user can skip them; that's what signals a different option actually changed.
+- **Ruling out an option leaves its letter in place** with a note on why, rather than deleting it or reusing the letter.
+- This is for genuine decisions, not rhetorical ones — don't manufacture lettered options for a question that only has one reasonable answer.
+
 ## Behavioral Fixes and Feedback
 
 When the user points out incorrect or unwanted agent behavior, fix the root cause in the skill or reference file where the behavior is defined — do not save it to memory. Memory is lost on machine reinstalls and drifts out of sync; skill files are the durable, authoritative source of agent behavior. Use `/skill-creator` to edit skill files.
