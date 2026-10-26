@@ -17,6 +17,8 @@ if (Configured $forHome) {
         Test-ProgramInstalled "OverDrive for Windows"
     }
 
+    InstallFromWingetBlock calibre.calibre
+
     Block "Install Adobe Digital Editions" {
         Download-File https://adedownload.adobe.com/pub/adobe/digitaleditions/ADE_4.5_Installer.exe $env:tmp\ADE_4.5_Installer.exe
         Start-Process $env:tmp\ADE_4.5_Installer.exe /S -Wait
