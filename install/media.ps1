@@ -16,6 +16,16 @@ if (Configured $forHome) {
     } {
         Test-ProgramInstalled "OverDrive for Windows"
     }
+
+    Block "Install Adobe Digital Editions" {
+        Download-File https://adedownload.adobe.com/pub/adobe/digitaleditions/ADE_4.5_Installer.exe $env:tmp\ADE_4.5_Installer.exe
+        Start-Process $env:tmp\ADE_4.5_Installer.exe /S -Wait
+        DeleteDesktopShortcut "Adobe Digital Editions 4.5"
+        . "${env:ProgramFiles(x86)}\Adobe\Adobe Digital Editions 4.5\DigitalEditions.exe"
+        Write-ManualStep "Help > Authorize Computer... (ctrl+shift+u)"
+    } {
+        Test-ProgramInstalled "Adobe Digital Editions"
+    }
 }
 
 if (!(Configured $forHtpc)) {
