@@ -98,13 +98,23 @@ function ConfigureNotifications(
     Set-RegistryValue "HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\$AppId" $Setting ($Value ? 1 : 0)
 }
 
-function InstallFromGitHubBlock([string]$User, [string]$Repo, [scriptblock]$AfterClone, [int]$CloneDepth) {
+function InstallFromGitHubBlock(
+    [string]$User,
+    [string]$Repo,
+    [scriptblock]$AfterClone,
+    [int]$CloneDepth,
+    [string]$Branch) {
     Block "Install $User/$Repo" {
         if (!$CloneDepth) {
             git clone https://github.com/$User/$Repo.git $git\$Repo
         }
         else {
             git clone https://github.com/$User/$Repo.git $git\$Repo --depth $CloneDepth
+        }
+        if ($Branch) {
+            pushd $git\$Repo
+            git co $Branch
+            popd
         }
         if ($AfterClone) {
             pushd $git\$Repo

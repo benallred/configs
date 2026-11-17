@@ -5,4 +5,5 @@ if (Configured $forHome, $forWork, $forTest) {
     InstallFromGitHubBlock benallred what-i-use
     InstallFromGitHubBlock benallred presentations
     InstallFromGitHubBlock benallred my-bg-stats
+    InstallFromGitHubBlock benallred zmk-keyboard-cornix -Branch ben
 }
